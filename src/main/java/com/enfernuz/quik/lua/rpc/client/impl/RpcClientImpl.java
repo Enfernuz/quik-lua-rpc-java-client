@@ -1,11 +1,8 @@
-package com.enfernuz.quik.lua.rpc.client.api.com.enfernuz.quik.lua.rpc.client.impl;
+package com.enfernuz.quik.lua.rpc.client.impl;
 
 import com.enfernuz.quik.lua.rpc.client.api.RpcClient;
 import com.enfernuz.quik.lua.rpc.client.api.exception.RpcClientException;
-import com.google.protobuf.MessageLite;
 import qlua.rpc.*;
-
-import java.io.IOException;
 
 import static java.util.Objects.requireNonNull;
 

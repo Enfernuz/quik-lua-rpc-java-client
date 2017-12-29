@@ -1,6 +1,5 @@
 package com.enfernuz.quik.lua.rpc.client.api;
 
-import com.enfernuz.quik.lua.rpc.client.api.exception.RpcClientException;
 import qlua.rpc.*;
 
 public interface RpcClient  {
@@ -74,5 +73,17 @@ public interface RpcClient  {
      * @throws NullPointerException if the {@code args} argument is {@code null}
      */
     Message.Result message(Message.Request args);
+
+    final class RpcClientException extends RuntimeException {
+
+        public RpcClientException(String message) {
+            super(message);
+        }
+
+        public RpcClientException(String message, Throwable cause) {
+            super(message, cause);
+        }
+
+    }
 
 }

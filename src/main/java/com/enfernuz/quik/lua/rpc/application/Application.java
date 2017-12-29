@@ -1,8 +1,5 @@
 package com.enfernuz.quik.lua.rpc.application;
 
-import com.enfernuz.quik.lua.rpc.client.api.RpcClient;
-import com.enfernuz.quik.lua.rpc.client.api.com.enfernuz.quik.lua.rpc.client.impl.RpcClientImpl;
-
 public class Application {
 
     public static void main(String[] args) {

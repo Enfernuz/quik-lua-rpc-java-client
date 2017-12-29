@@ -1,4 +1,4 @@
-package com.enfernuz.quik.lua.rpc.client.api.com.enfernuz.quik.lua.rpc.client.impl;
+package com.enfernuz.quik.lua.rpc.client.impl;
 
 import com.enfernuz.quik.lua.rpc.client.api.RpcGateway;
 import com.enfernuz.quik.lua.rpc.client.api.exception.RpcGatewayException;
