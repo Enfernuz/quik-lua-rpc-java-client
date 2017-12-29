@@ -1,111 +1,199 @@
 package com.enfernuz.quik.lua.rpc.client.api.com.enfernuz.quik.lua.rpc.client.impl;
 
 import com.enfernuz.quik.lua.rpc.client.api.RpcClient;
-import org.zeromq.ZFrame;
-import org.zeromq.ZMQ;
-import org.zeromq.ZMsg;
+import com.enfernuz.quik.lua.rpc.client.api.exception.RpcClientException;
+import com.google.protobuf.MessageLite;
+import qlua.rpc.*;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Objects;
+
+import static java.util.Objects.requireNonNull;
 
 public class RpcClientImpl implements RpcClient {
 
-    private final ZMQ.Context context;
-    private final String uri;
-    private final ZMQ.Socket socket;
-    private boolean isConnected;
+    private final RpcGatewayImpl rpcGateway;
 
-    private RpcClientImpl(final ZMQ.Context ctx, final String uri, final ZMQ.Socket socket) {
-
-        this.context = ctx;
-        this.uri = uri;
-        this.socket = socket;
+    public RpcClientImpl(final RpcGatewayImpl rpcGateway) {
+        this.rpcGateway = rpcGateway;
     }
 
-    public static RpcClientImpl create(final String host, final int port) {
-
-        // TO-DO: add validation for the host and port parameters
-
-        final ZMQ.Context ctx = ZMQ.context(1);
-        final String uri = String.format("tcp://%s:%d", host, port);
-        final ZMQ.Socket socket = ctx.socket(ZMQ.REQ);
-
-        return new RpcClientImpl(ctx, uri, socket);
-    }
-
+    /**
+     *
+     * @param args
+     * @return
+     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     * @throws NullPointerException if the {@code args} argument is {@code null}
+     */
     @Override
-    public void connect() throws IOException {
+    public AddColumn.Result AddColumn(AddColumn.Request args) {
 
-        this.isConnected = socket.connect(uri);
-        if( !this.isConnected ) {
-            throw new IOException( String.format("Couldn't connect to %s. Error number: %d.", uri, socket.errno()) );
-        }
-    }
-
-    @Override
-    public void disconnect() throws IOException {
+        requireNonNull(args, "The 'args' parameter must not be null.");
 
         try {
-            socket.close();
-            this.isConnected = false;
-        } catch (final Exception ex) {
-            throw new IOException("Unable to close the ZMQ socket.", ex);
-        }
-    }
 
-    @Override
-    public void close() throws Exception {
-
-        if ( !context.isTerminated() ) {
-            try {
-                context.term();
-            } catch (final Exception ex) {
-                throw new IOException("Unable to terminate the ZMQ Context.", ex);
-            }
-        }
-    }
-
-    public qlua.rpc.Message.Result message(qlua.rpc.Message.Request request) {
-
-        Objects.requireNonNull(request, "The 'request' parameter must not be null.");
-
-        final qlua.rpc.RPC.Request qluaRequest =
-                qlua.rpc.RPC.Request
-                        .newBuilder()
-                        .setType(qlua.rpc.RPC.ProcedureType.MESSAGE)
-                        .setArgs( request.toByteString() )
-                        .build();
-
-        final ZMsg zRequest =  ZMsg.newStringMsg( qluaRequest.toByteString().toStringUtf8() );
-        zRequest.send(socket);
-
-        final ZMsg zResponse = ZMsg.recvMsg(socket);
-
-        final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream( (int) zResponse.contentSize() );
-        for (final ZFrame frame : zResponse) {
-
-            try {
-                byteArrayOutputStream.write( frame.getData() );
-            } catch (final Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-
-        final byte[] responseData = byteArrayOutputStream.toByteArray();
-
-        try {
-            final qlua.rpc.RPC.Response qluaResponse = qlua.rpc.RPC.Response.parseFrom(responseData);
-
-            final qlua.rpc.Message.Result result =
-                    qlua.rpc.Message.Result.parseFrom( qluaResponse.getResult() );
-
-            System.out.println("Message result: " + result.getResult());
+            final RPC.Response rpcResponse = rpcGateway.callWithArguments(RPC.ProcedureType.ADD_COLUMN, args);
+            final AddColumn.Result result = AddColumn.Result.parseFrom( rpcResponse.getResult() );
 
             return result;
-        } catch (final Exception ex) {
-            ex.printStackTrace();
-            return null;
+        } catch (final Exception e) {
+            throw new RpcClientException("An error occured while making the remote procedure call.", e);
+        }
+    }
+
+    /**
+     *
+     * @param args
+     * @return
+     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     * @throws NullPointerException if the {@code args} argument is {@code null}
+     */
+    @Override
+    public AddLabel.Result AddLabel(AddLabel.Request args) {
+
+        requireNonNull(args, "The 'args' parameter must not be null.");
+
+        try {
+
+            final RPC.Response rpcResponse = rpcGateway.callWithArguments(RPC.ProcedureType.ADD_LABEL, args);
+            final AddLabel.Result result = AddLabel.Result.parseFrom( rpcResponse.getResult() );
+
+            return result;
+        } catch (final Exception e) {
+            throw new RpcClientException("An error occured while making the remote procedure call.", e);
+        }
+    }
+
+    /**
+     *
+     * @return
+     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     */
+    @Override
+    public AllocTable.Result AllocTable() {
+
+        try {
+
+            final RPC.Response rpcResponse = rpcGateway.call(RPC.ProcedureType.ALLOC_TABLE);
+            final AllocTable.Result result = AllocTable.Result.parseFrom( rpcResponse.getResult() );
+
+            return result;
+        } catch (final Exception e) {
+            throw new RpcClientException("An error occured while making the remote procedure call.", e);
+        }
+    }
+
+    /**
+     *
+     * @param args
+     * @return
+     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     * @throws NullPointerException if the {@code args} argument is {@code null}
+     */
+    @Override
+    public CalcBuySell.Result CalcBuySell(CalcBuySell.Request args) {
+
+        requireNonNull(args, "The 'args' parameter must not be null.");
+
+        try {
+
+            final RPC.Response rpcResponse = rpcGateway.callWithArguments(RPC.ProcedureType.CALC_BUY_SELL, args);
+            final CalcBuySell.Result result = CalcBuySell.Result.parseFrom( rpcResponse.getResult() );
+
+            return result;
+        } catch (final Exception e) {
+            throw new RpcClientException("An error occured while making the remote procedure call.", e);
+        }
+    }
+
+    /**
+     *
+     * @param args
+     * @return
+     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     * @throws NullPointerException if the {@code args} argument is {@code null}
+     */
+    @Override
+    public CancelParamRequest.Result CancelParamRequest(CancelParamRequest.Request args) {
+
+        requireNonNull(args, "The 'args' parameter must not be null.");
+
+        try {
+
+            final RPC.Response rpcResponse = rpcGateway.callWithArguments(RPC.ProcedureType.CANCEL_PARAM_REQUEST, args);
+            final CancelParamRequest.Result result = CancelParamRequest.Result.parseFrom( rpcResponse.getResult() );
+
+            return result;
+        } catch (final Exception e) {
+            throw new RpcClientException("An error occured while making the remote procedure call.", e);
+        }
+    }
+
+    /**
+     *
+     * @param args
+     * @return
+     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     * @throws NullPointerException if the {@code args} argument is {@code null}
+     */
+    @Override
+    public Clear.Result Clear(Clear.Request args) {
+
+        requireNonNull(args, "The 'args' parameter must not be null.");
+
+        try {
+
+            final RPC.Response rpcResponse = rpcGateway.callWithArguments(RPC.ProcedureType.CLEAR, args);
+            final Clear.Result result = Clear.Result.parseFrom( rpcResponse.getResult() );
+
+            return result;
+        } catch (final Exception e) {
+            throw new RpcClientException("An error occured while making the remote procedure call.", e);
+        }
+    }
+
+    /**
+     *
+     * @param args
+     * @return
+     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     * @throws NullPointerException if the {@code args} argument is {@code null}
+     */
+    @Override
+    public CreateWindow.Result CreateWindow(CreateWindow.Request args) {
+
+        requireNonNull(args, "The 'args' parameter must not be null.");
+
+        try {
+
+            final RPC.Response rpcResponse = rpcGateway.callWithArguments(RPC.ProcedureType.CREATE_WINDOW, args);
+            final CreateWindow.Result result = CreateWindow.Result.parseFrom( rpcResponse.getResult() );
+
+            return result;
+        } catch (final Exception e) {
+            throw new RpcClientException("An error occured while making the remote procedure call.", e);
+        }
+    }
+
+    /**
+     *
+     * @param args
+     * @return
+     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     * @throws NullPointerException if the {@code args} argument is {@code null}
+     */
+    @Override
+    public Message.Result message(Message.Request args) {
+
+        requireNonNull(args, "The 'args' parameter must not be null.");
+
+        try {
+
+            final RPC.Response rpcResponse = rpcGateway.callWithArguments(RPC.ProcedureType.MESSAGE, args);
+            final Message.Result result = Message.Result.parseFrom( rpcResponse.getResult() );
+
+            return result;
+        } catch (final Exception e) {
+            throw new RpcClientException("An error occured while making the remote procedure call.", e);
         }
     }
 }
