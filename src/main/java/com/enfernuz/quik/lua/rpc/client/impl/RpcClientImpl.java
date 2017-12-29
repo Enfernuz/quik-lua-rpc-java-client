@@ -1,7 +1,6 @@
 package com.enfernuz.quik.lua.rpc.client.impl;
 
 import com.enfernuz.quik.lua.rpc.client.api.RpcClient;
-import com.enfernuz.quik.lua.rpc.client.api.exception.RpcClientException;
 import qlua.rpc.*;
 
 import static java.util.Objects.requireNonNull;
@@ -164,6 +163,94 @@ public class RpcClientImpl implements RpcClient {
 
             final RPC.Response rpcResponse = rpcGateway.callWithArguments(RPC.ProcedureType.CREATE_WINDOW, args);
             final CreateWindow.Result result = CreateWindow.Result.parseFrom( rpcResponse.getResult() );
+
+            return result;
+        } catch (final Exception e) {
+            throw new RpcClientException("An error occured while making the remote procedure call.", e);
+        }
+    }
+
+    /**
+     * @param args
+     * @return
+     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     * @throws NullPointerException if the {@code args} argument is {@code null}
+     */
+    @Override
+    public DelAllLabels.Result DelAllLabels(DelAllLabels.Request args) {
+
+        requireNonNull(args, "The 'args' parameter must not be null.");
+
+        try {
+
+            final RPC.Response rpcResponse = rpcGateway.callWithArguments(RPC.ProcedureType.DEL_ALL_LABELS, args);
+            final DelAllLabels.Result result = DelAllLabels.Result.parseFrom( rpcResponse.getResult() );
+
+            return result;
+        } catch (final Exception e) {
+            throw new RpcClientException("An error occured while making the remote procedure call.", e);
+        }
+    }
+
+    /**
+     * @param args
+     * @return
+     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     * @throws NullPointerException if the {@code args} argument is {@code null}
+     */
+    @Override
+    public DeleteRow.Result DeleteRow(DeleteRow.Request args) {
+
+        requireNonNull(args, "The 'args' parameter must not be null.");
+
+        try {
+
+            final RPC.Response rpcResponse = rpcGateway.callWithArguments(RPC.ProcedureType.DELETE_ROW, args);
+            final DeleteRow.Result result = DeleteRow.Result.parseFrom( rpcResponse.getResult() );
+
+            return result;
+        } catch (final Exception e) {
+            throw new RpcClientException("An error occured while making the remote procedure call.", e);
+        }
+    }
+
+    /**
+     * @param args
+     * @return
+     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     * @throws NullPointerException if the {@code args} argument is {@code null}
+     */
+    @Override
+    public DelLabel.Result DelLabel(DelLabel.Request args) {
+
+        requireNonNull(args, "The 'args' parameter must not be null.");
+
+        try {
+
+            final RPC.Response rpcResponse = rpcGateway.callWithArguments(RPC.ProcedureType.DEL_LABEL, args);
+            final DelLabel.Result result = DelLabel.Result.parseFrom( rpcResponse.getResult() );
+
+            return result;
+        } catch (final Exception e) {
+            throw new RpcClientException("An error occured while making the remote procedure call.", e);
+        }
+    }
+
+    /**
+     * @param args
+     * @return
+     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     * @throws NullPointerException if the {@code args} argument is {@code null}
+     */
+    @Override
+    public DestroyTable.Result DestroyTable(DestroyTable.Request args) {
+
+        requireNonNull(args, "The 'args' parameter must not be null.");
+
+        try {
+
+            final RPC.Response rpcResponse = rpcGateway.callWithArguments(RPC.ProcedureType.DESTROY_TABLE, args);
+            final DestroyTable.Result result = DestroyTable.Result.parseFrom( rpcResponse.getResult() );
 
             return result;
         } catch (final Exception e) {

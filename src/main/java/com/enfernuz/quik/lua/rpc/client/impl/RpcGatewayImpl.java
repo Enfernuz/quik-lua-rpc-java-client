@@ -1,7 +1,6 @@
 package com.enfernuz.quik.lua.rpc.client.impl;
 
 import com.enfernuz.quik.lua.rpc.client.api.RpcGateway;
-import com.enfernuz.quik.lua.rpc.client.api.exception.RpcGatewayException;
 import com.google.protobuf.MessageLite;
 import org.zeromq.ZFrame;
 import org.zeromq.ZMQ;
