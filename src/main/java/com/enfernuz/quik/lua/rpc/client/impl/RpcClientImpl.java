@@ -5,7 +5,7 @@ import qlua.rpc.*;
 
 import static java.util.Objects.requireNonNull;
 
-public class RpcClientImpl implements RpcClient {
+public final class RpcClientImpl implements RpcClient {
 
     private final RpcGatewayImpl rpcGateway;
 
@@ -17,11 +17,11 @@ public class RpcClientImpl implements RpcClient {
      *
      * @param args
      * @return
-     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     * @throws RpcClientException if there is an error occurred while making the remote procedure call
      * @throws NullPointerException if the {@code args} argument is {@code null}
      */
     @Override
-    public AddColumn.Result AddColumn(AddColumn.Request args) {
+    public AddColumn.Result AddColumn(final AddColumn.Request args) {
 
         requireNonNull(args, "The 'args' parameter must not be null.");
 
@@ -32,7 +32,7 @@ public class RpcClientImpl implements RpcClient {
 
             return result;
         } catch (final Exception e) {
-            throw new RpcClientException("An error occured while making the remote procedure call.", e);
+            throw new RpcClientException("An error occurred while making the remote procedure call.", e);
         }
     }
 
@@ -40,11 +40,11 @@ public class RpcClientImpl implements RpcClient {
      *
      * @param args
      * @return
-     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     * @throws RpcClientException if there is an error occurred while making the remote procedure call
      * @throws NullPointerException if the {@code args} argument is {@code null}
      */
     @Override
-    public AddLabel.Result AddLabel(AddLabel.Request args) {
+    public AddLabel.Result AddLabel(final AddLabel.Request args) {
 
         requireNonNull(args, "The 'args' parameter must not be null.");
 
@@ -55,14 +55,14 @@ public class RpcClientImpl implements RpcClient {
 
             return result;
         } catch (final Exception e) {
-            throw new RpcClientException("An error occured while making the remote procedure call.", e);
+            throw new RpcClientException("An error occurred while making the remote procedure call.", e);
         }
     }
 
     /**
      *
      * @return
-     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     * @throws RpcClientException if there is an error occurred while making the remote procedure call
      */
     @Override
     public AllocTable.Result AllocTable() {
@@ -74,7 +74,7 @@ public class RpcClientImpl implements RpcClient {
 
             return result;
         } catch (final Exception e) {
-            throw new RpcClientException("An error occured while making the remote procedure call.", e);
+            throw new RpcClientException("An error occurred while making the remote procedure call.", e);
         }
     }
 
@@ -82,11 +82,11 @@ public class RpcClientImpl implements RpcClient {
      *
      * @param args
      * @return
-     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     * @throws RpcClientException if there is an error occurred while making the remote procedure call
      * @throws NullPointerException if the {@code args} argument is {@code null}
      */
     @Override
-    public CalcBuySell.Result CalcBuySell(CalcBuySell.Request args) {
+    public CalcBuySell.Result CalcBuySell(final CalcBuySell.Request args) {
 
         requireNonNull(args, "The 'args' parameter must not be null.");
 
@@ -97,7 +97,7 @@ public class RpcClientImpl implements RpcClient {
 
             return result;
         } catch (final Exception e) {
-            throw new RpcClientException("An error occured while making the remote procedure call.", e);
+            throw new RpcClientException("An error occurred while making the remote procedure call.", e);
         }
     }
 
@@ -105,11 +105,11 @@ public class RpcClientImpl implements RpcClient {
      *
      * @param args
      * @return
-     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     * @throws RpcClientException if there is an error occurred while making the remote procedure call
      * @throws NullPointerException if the {@code args} argument is {@code null}
      */
     @Override
-    public CancelParamRequest.Result CancelParamRequest(CancelParamRequest.Request args) {
+    public CancelParamRequest.Result CancelParamRequest(final CancelParamRequest.Request args) {
 
         requireNonNull(args, "The 'args' parameter must not be null.");
 
@@ -120,7 +120,7 @@ public class RpcClientImpl implements RpcClient {
 
             return result;
         } catch (final Exception e) {
-            throw new RpcClientException("An error occured while making the remote procedure call.", e);
+            throw new RpcClientException("An error occurred while making the remote procedure call.", e);
         }
     }
 
@@ -128,11 +128,11 @@ public class RpcClientImpl implements RpcClient {
      *
      * @param args
      * @return
-     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     * @throws RpcClientException if there is an error occurred while making the remote procedure call
      * @throws NullPointerException if the {@code args} argument is {@code null}
      */
     @Override
-    public Clear.Result Clear(Clear.Request args) {
+    public Clear.Result Clear(final Clear.Request args) {
 
         requireNonNull(args, "The 'args' parameter must not be null.");
 
@@ -143,7 +143,7 @@ public class RpcClientImpl implements RpcClient {
 
             return result;
         } catch (final Exception e) {
-            throw new RpcClientException("An error occured while making the remote procedure call.", e);
+            throw new RpcClientException("An error occurred while making the remote procedure call.", e);
         }
     }
 
@@ -151,11 +151,11 @@ public class RpcClientImpl implements RpcClient {
      *
      * @param args
      * @return
-     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     * @throws RpcClientException if there is an error occurred while making the remote procedure call
      * @throws NullPointerException if the {@code args} argument is {@code null}
      */
     @Override
-    public CreateWindow.Result CreateWindow(CreateWindow.Request args) {
+    public CreateWindow.Result CreateWindow(final CreateWindow.Request args) {
 
         requireNonNull(args, "The 'args' parameter must not be null.");
 
@@ -166,18 +166,18 @@ public class RpcClientImpl implements RpcClient {
 
             return result;
         } catch (final Exception e) {
-            throw new RpcClientException("An error occured while making the remote procedure call.", e);
+            throw new RpcClientException("An error occurred while making the remote procedure call.", e);
         }
     }
 
     /**
      * @param args
      * @return
-     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     * @throws RpcClientException if there is an error occurred while making the remote procedure call
      * @throws NullPointerException if the {@code args} argument is {@code null}
      */
     @Override
-    public DelAllLabels.Result DelAllLabels(DelAllLabels.Request args) {
+    public DelAllLabels.Result DelAllLabels(final DelAllLabels.Request args) {
 
         requireNonNull(args, "The 'args' parameter must not be null.");
 
@@ -188,18 +188,18 @@ public class RpcClientImpl implements RpcClient {
 
             return result;
         } catch (final Exception e) {
-            throw new RpcClientException("An error occured while making the remote procedure call.", e);
+            throw new RpcClientException("An error occurred while making the remote procedure call.", e);
         }
     }
 
     /**
      * @param args
      * @return
-     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     * @throws RpcClientException if there is an error occurred while making the remote procedure call
      * @throws NullPointerException if the {@code args} argument is {@code null}
      */
     @Override
-    public DeleteRow.Result DeleteRow(DeleteRow.Request args) {
+    public DeleteRow.Result DeleteRow(final DeleteRow.Request args) {
 
         requireNonNull(args, "The 'args' parameter must not be null.");
 
@@ -210,18 +210,18 @@ public class RpcClientImpl implements RpcClient {
 
             return result;
         } catch (final Exception e) {
-            throw new RpcClientException("An error occured while making the remote procedure call.", e);
+            throw new RpcClientException("An error occurred while making the remote procedure call.", e);
         }
     }
 
     /**
      * @param args
      * @return
-     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     * @throws RpcClientException if there is an error occurred while making the remote procedure call
      * @throws NullPointerException if the {@code args} argument is {@code null}
      */
     @Override
-    public DelLabel.Result DelLabel(DelLabel.Request args) {
+    public DelLabel.Result DelLabel(final DelLabel.Request args) {
 
         requireNonNull(args, "The 'args' parameter must not be null.");
 
@@ -232,18 +232,18 @@ public class RpcClientImpl implements RpcClient {
 
             return result;
         } catch (final Exception e) {
-            throw new RpcClientException("An error occured while making the remote procedure call.", e);
+            throw new RpcClientException("An error occurred while making the remote procedure call.", e);
         }
     }
 
     /**
      * @param args
      * @return
-     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     * @throws RpcClientException if there is an error occurred while making the remote procedure call
      * @throws NullPointerException if the {@code args} argument is {@code null}
      */
     @Override
-    public DestroyTable.Result DestroyTable(DestroyTable.Request args) {
+    public DestroyTable.Result DestroyTable(final DestroyTable.Request args) {
 
         requireNonNull(args, "The 'args' parameter must not be null.");
 
@@ -254,7 +254,135 @@ public class RpcClientImpl implements RpcClient {
 
             return result;
         } catch (final Exception e) {
-            throw new RpcClientException("An error occured while making the remote procedure call.", e);
+            throw new RpcClientException("An error occurred while making the remote procedure call.", e);
+        }
+    }
+
+    /**
+     * @param args
+     * @return
+     * @throws RpcClientException if there is an error occurred while making the remote procedure call
+     * @throws NullPointerException if the {@code args} argument is {@code null}
+     */
+    @Override
+    public GetBuySellInfo.Result getBuySellInfo(final GetBuySellInfo.Request args) {
+
+        requireNonNull(args, "The 'args' parameter must not be null.");
+
+        try {
+
+            final RPC.Response rpcResponse = rpcGateway.callWithArguments(RPC.ProcedureType.GET_BUY_SELL_INFO, args);
+            final GetBuySellInfo.Result result = GetBuySellInfo.Result.parseFrom( rpcResponse.getResult() );
+
+            return result;
+        } catch (final Exception e) {
+            throw new RpcClientException("An error occurred while making the remote procedure call.", e);
+        }
+    }
+
+    /**
+     * @param args
+     * @return
+     * @throws RpcClientException if there is an error occurred while making the remote procedure call
+     * @throws NullPointerException if the {@code args} argument is {@code null}
+     */
+    @Override
+    public GetBuySellInfoEx.Result getBuySellInfoEx(final GetBuySellInfoEx.Request args) {
+
+        requireNonNull(args, "The 'args' parameter must not be null.");
+
+        try {
+
+            final RPC.Response rpcResponse = rpcGateway.callWithArguments(RPC.ProcedureType.GET_BUY_SELL_INFO_EX, args);
+            final GetBuySellInfoEx.Result result = GetBuySellInfoEx.Result.parseFrom( rpcResponse.getResult() );
+
+            return result;
+        } catch (final Exception e) {
+            throw new RpcClientException("An error occurred while making the remote procedure call.", e);
+        }
+    }
+
+    /**
+     * @param args
+     * @return
+     * @throws RpcClientException if there is an error occurred while making the remote procedure call
+     * @throws NullPointerException if the {@code args} argument is {@code null}
+     */
+    @Override
+    public GetCandlesByIndex.Result getCandlesByIndex(final GetCandlesByIndex.Result args) {
+
+        requireNonNull(args, "The 'args' parameter must not be null.");
+
+        try {
+
+            final RPC.Response rpcResponse = rpcGateway.callWithArguments(RPC.ProcedureType.GET_CANDLES_BY_INDEX, args);
+            final GetCandlesByIndex.Result result = GetCandlesByIndex.Result.parseFrom( rpcResponse.getResult() );
+
+            return result;
+        } catch (final Exception e) {
+            throw new RpcClientException("An error occurred while making the remote procedure call.", e);
+        }
+    }
+
+    /**
+     * @param args
+     * @return
+     * @throws RpcClientException if there is an error occurred while making the remote procedure call
+     * @throws NullPointerException if the {@code args} argument is {@code null}
+     */
+    @Override
+    public GetCell.Result GetCell(final GetCell.Result args) {
+
+        requireNonNull(args, "The 'args' parameter must not be null.");
+
+        try {
+
+            final RPC.Response rpcResponse = rpcGateway.callWithArguments(RPC.ProcedureType.GET_CELL, args);
+            final GetCell.Result result = GetCell.Result.parseFrom( rpcResponse.getResult() );
+
+            return result;
+        } catch (final Exception e) {
+            throw new RpcClientException("An error occurred while making the remote procedure call.", e);
+        }
+    }
+
+    /**
+     * @return
+     * @throws RpcClientException if there is an error occurred while making the remote procedure call
+     */
+    @Override
+    public GetClassesList.Result getClassesList() {
+
+        try {
+
+            final RPC.Response rpcResponse = rpcGateway.call(RPC.ProcedureType.GET_CLASSES_LIST);
+            final GetClassesList.Result result = GetClassesList.Result.parseFrom( rpcResponse.getResult() );
+
+            return result;
+        } catch (final Exception e) {
+            throw new RpcClientException("An error occurred while making the remote procedure call.", e);
+        }
+    }
+
+    /**
+     * @param args
+     * @return
+     * @throws RpcClientException if there is an error occurred while making the remote procedure call
+     * @throws NullPointerException if the {@code args} argument is {@code null}
+     */
+    @Override
+    public GetClassInfo.Result getClassInfo(final GetClassInfo.Request args) {
+
+        requireNonNull(args, "The 'args' parameter must not be null.");
+
+        try {
+
+            final RPC.Response rpcResponse = rpcGateway.callWithArguments(RPC.ProcedureType.GET_CLASS_INFO, args);
+            final GetClassInfo.Result result = GetClassInfo.Result.parseFrom( rpcResponse.getResult() );
+
+            return result;
+        } catch (final Exception e) {
+            throw new RpcClientException("An error occurred while making the remote procedure call.", e);
         }
     }
 
@@ -262,11 +390,11 @@ public class RpcClientImpl implements RpcClient {
      *
      * @param args
      * @return
-     * @throws RpcClientException if there is an error occured while making the remote procedure call
+     * @throws RpcClientException if there is an error occurred while making the remote procedure call
      * @throws NullPointerException if the {@code args} argument is {@code null}
      */
     @Override
-    public Message.Result message(Message.Request args) {
+    public Message.Result message(final Message.Request args) {
 
         requireNonNull(args, "The 'args' parameter must not be null.");
 
@@ -277,7 +405,7 @@ public class RpcClientImpl implements RpcClient {
 
             return result;
         } catch (final Exception e) {
-            throw new RpcClientException("An error occured while making the remote procedure call.", e);
+            throw new RpcClientException("An error occurred while making the remote procedure call.", e);
         }
     }
 }
