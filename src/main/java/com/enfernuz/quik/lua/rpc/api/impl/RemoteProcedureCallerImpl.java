@@ -1,6 +1,6 @@
-package com.enfernuz.quik.lua.rpc.client.impl;
+package com.enfernuz.quik.lua.rpc.api.impl;
 
-import com.enfernuz.quik.lua.rpc.client.api.RpcGateway;
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedureCaller;
 import com.google.protobuf.MessageLite;
 import org.zeromq.ZFrame;
 import org.zeromq.ZMQ;
@@ -12,63 +12,60 @@ import java.io.IOException;
 
 import static java.util.Objects.requireNonNull;
 
-public final class RpcGatewayImpl implements RpcGateway {
+public final class RemoteProcedureCallerImpl implements RemoteProcedureCaller {
 
-    private final ZMQ.Context context;
     private final String uri;
-    private final ZMQ.Socket socket;
+    private final ZMQ.Socket reqSocket;
     private boolean isConnected;
 
-    public static RpcGatewayImpl create(final String host, final int port) {
+    public static RemoteProcedureCallerImpl create(final ZMQ.Context zmqContext, final String host, final int port) {
 
-        // TO-DO: add validation for the host and port parameters
-
-        final ZMQ.Context ctx = ZMQ.context(1);
-        final String uri = String.format("tcp://%s:%d", host, port);
-        final ZMQ.Socket socket = ctx.socket(ZMQ.REQ);
-
-        return new RpcGatewayImpl(ctx, uri, socket);
-    }
-
-    private RpcGatewayImpl(final ZMQ.Context ctx, final String uri, final ZMQ.Socket socket) {
-        this.context = ctx;
-        this.uri = uri;
-        this.socket = socket;
-    }
-
-    @Override
-    public void connect() throws IOException {
-
-        this.isConnected = socket.connect(uri);
-        if( !this.isConnected ) {
-            throw new IOException( String.format("Couldn't connect to %s. Error number: %d.", uri, socket.errno()) );
+        requireNonNull(zmqContext, "The argument 'zmqContext' must not be null.");
+        if ( zmqContext.isTerminated() ) {
+            throw new IllegalArgumentException("The argument 'zmqContext' must not be in the terminated state.");
         }
+
+        // TO-DO: add URI validation
+        final String uri = String.format("tcp://%s:%d", host, port);
+
+        return new RemoteProcedureCallerImpl(zmqContext.socket(ZMQ.REQ), uri);
+    }
+
+    private RemoteProcedureCallerImpl(final ZMQ.Socket reqSocket, final String uri) {
+
+        this.reqSocket = reqSocket;
+        this.uri = uri;
     }
 
     @Override
-    public void disconnect() throws IOException {
+    public void open() throws IOException {
 
-        try {
-            socket.close();
-            this.isConnected = false;
-        } catch (final Exception ex) {
-            throw new IOException("Unable to close the ZMQ socket.", ex);
+        if (!this.isConnected) {
+
+            final boolean _isConnected  = this.reqSocket.connect(uri);
+            if (_isConnected) {
+                this.isConnected = true;
+            } else {
+                throw new IOException( String.format("Couldn't connect to '%s'.", uri) );
+            }
         }
     }
 
     @Override
     public void close() throws Exception {
 
-        if ( !context.isTerminated() ) {
-            try {
-                context.term();
-            } catch (final Exception ex) {
-                throw new IOException("Unable to terminate the ZMQ Context.", ex);
+        if (this.isConnected) {
+
+            final boolean isDisconnected = this.reqSocket.disconnect(uri);
+            if (isDisconnected) {
+                this.isConnected = false;
+            } else {
+                throw new IOException( String.format("Couldn't connect to '%s'.", uri) );
             }
         }
     }
 
-    public RPC.Response call(final RPC.ProcedureType procedureType) throws RpcGatewayException {
+    public RPC.Response call(final RPC.ProcedureType procedureType) throws RpcException {
 
         requireNonNull(procedureType, "The argument 'procedureType' must not be null.");
 
@@ -80,11 +77,11 @@ public final class RpcGatewayImpl implements RpcGateway {
         try {
             return makeRequest(request);
         } catch (final IOException ioe) {
-            throw new RpcGatewayException("An error occured while making the remote procedure call.", ioe);
+            throw new RpcException("An error occured while making the remote procedure call.", ioe);
         }
     }
 
-    public RPC.Response callWithArguments(final RPC.ProcedureType procedureType, final MessageLite args) throws RpcGatewayException {
+    public RPC.Response callWithArguments(final RPC.ProcedureType procedureType, final MessageLite args) throws RpcException {
 
         requireNonNull(procedureType, "The argument 'procedureType' must not be null.");
         requireNonNull(args, "The argument 'args' must not be null.");
@@ -97,7 +94,7 @@ public final class RpcGatewayImpl implements RpcGateway {
         try {
             return makeRequest(request);
         } catch (final IOException ioe) {
-            throw new RpcGatewayException("An error occured while making the remote procedure call.", ioe);
+            throw new RpcException("An error occured while making the remote procedure call.", ioe);
         }
     }
 

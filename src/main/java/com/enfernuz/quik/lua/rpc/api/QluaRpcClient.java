@@ -1,8 +1,8 @@
-package com.enfernuz.quik.lua.rpc.client.api;
+package com.enfernuz.quik.lua.rpc.api;
 
 import qlua.rpc.*;
 
-public interface RpcClient  {
+public interface QluaRpcClient {
 
     /**
      *

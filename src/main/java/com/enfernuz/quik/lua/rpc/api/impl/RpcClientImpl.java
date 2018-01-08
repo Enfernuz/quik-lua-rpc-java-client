@@ -1,15 +1,15 @@
-package com.enfernuz.quik.lua.rpc.client.impl;
+package com.enfernuz.quik.lua.rpc.api.impl;
 
-import com.enfernuz.quik.lua.rpc.client.api.RpcClient;
+import com.enfernuz.quik.lua.rpc.api.QluaRpcClient;
 import qlua.rpc.*;
 
 import static java.util.Objects.requireNonNull;
 
-public final class RpcClientImpl implements RpcClient {
+public final class RpcClientImpl implements QluaRpcClient {
 
-    private final RpcGatewayImpl rpcGateway;
+    private final RemoteProcedureCallerImpl rpcGateway;
 
-    public RpcClientImpl(final RpcGatewayImpl rpcGateway) {
+    public RpcClientImpl(final RemoteProcedureCallerImpl rpcGateway) {
         this.rpcGateway = rpcGateway;
     }
 
@@ -37,7 +37,7 @@ public final class RpcClientImpl implements RpcClient {
     }
 
     /**
-     *
+     *sfa
      * @param args
      * @return
      * @throws RpcClientException if there is an error occurred while making the remote procedure call
@@ -45,7 +45,7 @@ public final class RpcClientImpl implements RpcClient {
      */
     @Override
     public AddLabel.Result AddLabel(final AddLabel.Request args) {
-
+        this.AddLabel(null);
         requireNonNull(args, "The 'args' parameter must not be null.");
 
         try {
