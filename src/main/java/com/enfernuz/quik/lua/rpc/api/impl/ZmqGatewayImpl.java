@@ -1,6 +1,6 @@
 package com.enfernuz.quik.lua.rpc.api.impl;
 
-import com.enfernuz.quik.lua.rpc.api.io.Gateway;
+import com.enfernuz.quik.lua.rpc.io.Gateway;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMsg;
 

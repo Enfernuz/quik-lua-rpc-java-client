@@ -1,15 +1,28 @@
-package com.enfernuz.quik.lua.rpc.api.events;
+package com.enfernuz.quik.lua.rpc.events.api;
 
 import com.google.common.base.MoreObjects;
 import com.google.protobuf.ByteString;
 import qlua.events.QluaEvents;
 
 import java.util.Objects;
+import java.util.Optional;
+
+import static java.util.Objects.requireNonNull;
 
 public final class QluaEvent {
 
     private final QluaEvents.EventType type;
     private final ByteString data;
+
+    public static QluaEvent create(final QluaEvents.EventType type, final ByteString data) {
+
+        requireNonNull(type, "The argument 'type' must not be null.");
+        return new QluaEvent(type, data);
+    }
+
+    public static QluaEvent create(final QluaEvents.EventType type) {
+        return create(type, null);
+    }
 
     private QluaEvent(final QluaEvents.EventType type, final ByteString data) {
 
@@ -21,8 +34,8 @@ public final class QluaEvent {
         return type;
     }
 
-    public ByteString getData() {
-        return data;
+    public Optional<ByteString> getData() {
+        return Optional.ofNullable(data);
     }
 
     @Override

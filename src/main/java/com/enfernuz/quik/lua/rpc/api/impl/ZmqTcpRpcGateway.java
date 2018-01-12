@@ -1,6 +1,6 @@
 package com.enfernuz.quik.lua.rpc.api.impl;
 
-import com.enfernuz.quik.lua.rpc.api.RemoteProcedureCaller;
+import com.enfernuz.quik.lua.rpc.api.TcpRpcGateway;
 import com.google.protobuf.MessageLite;
 import org.zeromq.ZFrame;
 import org.zeromq.ZMQ;
@@ -12,13 +12,14 @@ import java.io.IOException;
 
 import static java.util.Objects.requireNonNull;
 
-public final class RemoteProcedureCallerImpl implements RemoteProcedureCaller {
+public final class ZmqTcpRpcGateway implements TcpRpcGateway {
 
-    private final String uri;
+    private final String host;
+    private final int port;
     private final ZMQ.Socket reqSocket;
-    private boolean isConnected;
+    private boolean isOpened;
 
-    public static RemoteProcedureCallerImpl create(final ZMQ.Context zmqContext, final String host, final int port) {
+    public static ZmqTcpRpcGateway create(final ZMQ.Context zmqContext, final String host, final int port) {
 
         requireNonNull(zmqContext, "The argument 'zmqContext' must not be null.");
         if ( zmqContext.isTerminated() ) {
@@ -26,25 +27,26 @@ public final class RemoteProcedureCallerImpl implements RemoteProcedureCaller {
         }
 
         // TO-DO: add URI validation
-        final String uri = String.format("tcp://%s:%d", host, port);
+        //final String uri = String.format("tcp://%s:%d", host, port);
 
-        return new RemoteProcedureCallerImpl(zmqContext.socket(ZMQ.REQ), uri);
+        return new ZmqTcpRpcGateway(zmqContext.socket(ZMQ.REQ), host, port);
     }
 
-    private RemoteProcedureCallerImpl(final ZMQ.Socket reqSocket, final String uri) {
+    private ZmqTcpRpcGateway(final ZMQ.Socket reqSocket, final String host, final int port) {
 
         this.reqSocket = reqSocket;
-        this.uri = uri;
+        this.host = host;
+        this.port = port;
     }
 
     @Override
     public void open() throws IOException {
 
-        if (!this.isConnected) {
+        if (!this.isOpened) {
 
             final boolean _isConnected  = this.reqSocket.connect(uri);
             if (_isConnected) {
-                this.isConnected = true;
+                this.isOpened = true;
             } else {
                 throw new IOException( String.format("Couldn't connect to '%s'.", uri) );
             }
@@ -54,17 +56,33 @@ public final class RemoteProcedureCallerImpl implements RemoteProcedureCaller {
     @Override
     public void close() throws Exception {
 
-        if (this.isConnected) {
+        if (this.isOpened) {
 
             final boolean isDisconnected = this.reqSocket.disconnect(uri);
             if (isDisconnected) {
-                this.isConnected = false;
+                this.isOpened = false;
             } else {
                 throw new IOException( String.format("Couldn't connect to '%s'.", uri) );
             }
         }
     }
 
+    @Override
+    public boolean isOpened() {
+        return isOpened;
+    }
+
+    @Override
+    public String getHost() {
+        return host;
+    }
+
+    @Override
+    public int getPort() {
+        return port;
+    }
+
+    @Override
     public RPC.Response call(final RPC.ProcedureType procedureType) throws RpcException {
 
         requireNonNull(procedureType, "The argument 'procedureType' must not be null.");
@@ -81,6 +99,7 @@ public final class RemoteProcedureCallerImpl implements RemoteProcedureCaller {
         }
     }
 
+    @Override
     public RPC.Response callWithArguments(final RPC.ProcedureType procedureType, final MessageLite args) throws RpcException {
 
         requireNonNull(procedureType, "The argument 'procedureType' must not be null.");

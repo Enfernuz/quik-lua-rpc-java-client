@@ -1,4 +1,4 @@
-package com.enfernuz.quik.lua.rpc.api.events;
+package com.enfernuz.quik.lua.rpc.events.api;
 
 import qlua.structs.QluaStructures;
 

@@ -1,8 +1,7 @@
 package com.enfernuz.quik.lua.rpc.api.impl;
 
 import com.enfernuz.quik.lua.rpc.api.QluaGateway;
-import com.enfernuz.quik.lua.rpc.api.RemoteProcedureCaller;
-import com.enfernuz.quik.lua.rpc.api.events.QluaEvent;
+import com.enfernuz.quik.lua.rpc.events.api.QluaEvent;
 import com.google.common.collect.ImmutableSet;
 import com.google.protobuf.MessageLite;
 import qlua.events.QluaEvents;

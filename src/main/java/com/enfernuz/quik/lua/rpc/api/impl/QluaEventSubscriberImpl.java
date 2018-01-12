@@ -1,6 +1,6 @@
 package com.enfernuz.quik.lua.rpc.api.impl;
 
-import com.enfernuz.quik.lua.rpc.api.events.QluaEventSubscription;
+import com.enfernuz.quik.lua.rpc.events.api.QluaEventSubscription;
 import org.zeromq.ZMQ;
 import qlua.events.QluaEvents;
 

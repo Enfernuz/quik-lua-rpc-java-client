@@ -7,9 +7,9 @@ import static java.util.Objects.requireNonNull;
 
 public final class RpcClientImpl implements QluaRpcClient {
 
-    private final RemoteProcedureCallerImpl rpcGateway;
+    private final ZmqTcpRpcGateway rpcGateway;
 
-    public RpcClientImpl(final RemoteProcedureCallerImpl rpcGateway) {
+    public RpcClientImpl(final ZmqTcpRpcGateway rpcGateway) {
         this.rpcGateway = rpcGateway;
     }
 

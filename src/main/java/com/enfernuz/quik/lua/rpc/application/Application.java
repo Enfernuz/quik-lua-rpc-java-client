@@ -1,13 +1,13 @@
 package com.enfernuz.quik.lua.rpc.application;
 
 import com.enfernuz.quik.lua.rpc.api.RemoteProcedureCaller;
-import com.enfernuz.quik.lua.rpc.api.impl.RemoteProcedureCallerImpl;
+import com.enfernuz.quik.lua.rpc.api.impl.ZmqTcpRpcGateway;
 
 public class Application {
 
     public static void main(String[] args) {
 
-        try (final RemoteProcedureCaller remoteProcedureCaller = RemoteProcedureCallerImpl.create("127.0.0.1", 5560)) {
+        try (final RemoteProcedureCaller remoteProcedureCaller = ZmqTcpRpcGateway.create("127.0.0.1", 5560)) {
 
             remoteProcedureCaller.connect();
 
