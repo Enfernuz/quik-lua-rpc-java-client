@@ -59,12 +59,22 @@ public final class ZmqQluaEventListener implements QluaEventListener, TcpGateway
     public void subscribe(final QluaEvents.EventType eventType) {
 
         checkEventType(eventType);
+        subscribeToEventType(eventType);
+    }
 
-        if ( !subscription.contains(eventType) ) {
+    @Override
+    public void subscribe(final ImmutableSet<QluaEvents.EventType> eventTypes) {
 
-            final String topic = eventTypeToTopic(eventType);
-            subSocket.subscribe(topic);
-            subscription.add(eventType);
+        requireNonNull(eventTypes, "The argument 'eventTypes' must not be null");
+
+        // need the two-pass iteration so to not to left the subscription is an inconsistent state if some of
+        // event types in the argument's set are illegal
+        for (final QluaEvents.EventType eventType : eventTypes) {
+            checkEventType(eventType);
+        }
+
+        for (final QluaEvents.EventType eventType : eventTypes) {
+            subscribeToEventType(eventType);
         }
     }
 
@@ -72,12 +82,22 @@ public final class ZmqQluaEventListener implements QluaEventListener, TcpGateway
     public void unsubscribe(final QluaEvents.EventType eventType) {
 
         checkEventType(eventType);
+        unsubscribeFromEventType(eventType);
+    }
 
-        if (subscription.contains(eventType)) {
+    @Override
+    public void unsubscribe(final ImmutableSet<QluaEvents.EventType> eventTypes) {
 
-            final String topic = eventTypeToTopic(eventType);
-            subSocket.unsubscribe(topic);
-            subscription.remove(eventType);
+        requireNonNull(eventTypes, "The argument 'eventTypes' must not be null");
+
+        // need the two-pass iteration so to not to left the subscription is an inconsistent state if some of
+        // event types in the argument's set are illegal
+        for (final QluaEvents.EventType eventType : eventTypes) {
+            checkEventType(eventType);
+        }
+
+        for (final QluaEvents.EventType eventType : eventTypes) {
+            unsubscribeFromEventType(eventType);
         }
     }
 
@@ -171,6 +191,26 @@ public final class ZmqQluaEventListener implements QluaEventListener, TcpGateway
     @Override
     public int getPort() {
         return port;
+    }
+
+    private void subscribeToEventType(final QluaEvents.EventType eventType) {
+
+        if ( !subscription.contains(eventType) ) {
+
+            final String topic = eventTypeToTopic(eventType);
+            subSocket.subscribe(topic);
+            subscription.add(eventType);
+        }
+    }
+
+    private void unsubscribeFromEventType(final QluaEvents.EventType eventType) {
+
+        if (subscription.contains(eventType)) {
+
+            final String topic = eventTypeToTopic(eventType);
+            subSocket.unsubscribe(topic);
+            subscription.remove(eventType);
+        }
     }
 
     private static void checkEventType(final QluaEvents.EventType eventType) {
