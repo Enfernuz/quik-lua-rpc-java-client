@@ -1,8 +1,9 @@
 package com.enfernuz.quik.lua.rpc.api;
 
+import com.enfernuz.quik.lua.rpc.io.Gateway;
 import qlua.rpc.*;
 
-public interface QluaRpcClient {
+public interface QluaRpcClient extends Gateway {
 
     /**
      *
@@ -164,13 +165,15 @@ public interface QluaRpcClient {
 
     final class RpcClientException extends RuntimeException {
 
-        public RpcClientException(String message) {
+        public RpcClientException(final String message) {
             super(message);
         }
 
-        public RpcClientException(String message, Throwable cause) {
+        public RpcClientException(final String message, final Throwable cause) {
             super(message, cause);
         }
+
+        public RpcClientException(final Throwable cause) { super(cause); }
 
     }
 

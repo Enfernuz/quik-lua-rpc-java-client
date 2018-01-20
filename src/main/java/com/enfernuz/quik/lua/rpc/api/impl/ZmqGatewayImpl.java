@@ -68,44 +68,10 @@ public final class ZmqGatewayImpl implements Gateway {
         }
     }
 
-    @Override
-    public String getURI() {
-        return uri;
-    }
-
-    @Override
-    public int getSocketType() {
-        return socket.getType();
-    }
 
     @Override
     public boolean isOpened() {
         return isOpened;
-    }
-
-    @Override
-    public boolean sendMessage(final ZMsg msg) {
-
-        requireNonNull(msg, "The argument 'msg' must not be null.");
-
-        checkIfOpened();
-
-        return msg.send(socket);
-    }
-
-    @Override
-    public ZMsg receiveMessage() {
-
-        checkIfOpened();
-        socket.recv()
-        return ZMsg.recvMsg(socket);
-    }
-
-    private void checkIfOpened() {
-
-        if (!this.isOpened) {
-            throw new IllegalStateException("The gate is closed.");
-        }
     }
 
     private static void checkSocketType(final int socketType) {

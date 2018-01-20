@@ -16,27 +16,24 @@ public final class ZmqTcpRpcGateway implements TcpRpcGateway {
 
     private final String host;
     private final int port;
-    private final ZMQ.Socket reqSocket;
+    private final String uri;
+    private ZMQ.Context zmqContext;
+    private ZMQ.Socket reqSocket;
     private boolean isOpened;
 
-    public static ZmqTcpRpcGateway create(final ZMQ.Context zmqContext, final String host, final int port) {
-
-        requireNonNull(zmqContext, "The argument 'zmqContext' must not be null.");
-        if ( zmqContext.isTerminated() ) {
-            throw new IllegalArgumentException("The argument 'zmqContext' must not be in the terminated state.");
-        }
+    public static ZmqTcpRpcGateway create(final String host, final int port) {
 
         // TO-DO: add URI validation
         //final String uri = String.format("tcp://%s:%d", host, port);
 
-        return new ZmqTcpRpcGateway(zmqContext.socket(ZMQ.REQ), host, port);
+        return new ZmqTcpRpcGateway(host, port);
     }
 
-    private ZmqTcpRpcGateway(final ZMQ.Socket reqSocket, final String host, final int port) {
+    private ZmqTcpRpcGateway(final String host, final int port) {
 
-        this.reqSocket = reqSocket;
         this.host = host;
         this.port = port;
+        this.uri = String.format("tcp://%s:%d", host, port);
     }
 
     @Override
@@ -44,11 +41,22 @@ public final class ZmqTcpRpcGateway implements TcpRpcGateway {
 
         if (!this.isOpened) {
 
+            zmqContext = ZMQ.context(1);
+            reqSocket = zmqContext.socket(ZMQ.REQ);
+
             final boolean _isConnected  = this.reqSocket.connect(uri);
             if (_isConnected) {
                 this.isOpened = true;
             } else {
-                throw new IOException( String.format("Couldn't connect to '%s'.", uri) );
+
+                final String errorMessage =
+                        String.format("Couldn't connect to '%s'. ZMQ socket errno:", uri, reqSocket.errno());
+
+                zmqContext.term();
+                zmqContext = null;
+                reqSocket = null;
+
+                throw new IOException(errorMessage);
             }
         }
     }
@@ -59,10 +67,20 @@ public final class ZmqTcpRpcGateway implements TcpRpcGateway {
         if (this.isOpened) {
 
             final boolean isDisconnected = this.reqSocket.disconnect(uri);
+
             if (isDisconnected) {
+                zmqContext.term();
+                zmqContext = null;
+                reqSocket = null;
                 this.isOpened = false;
             } else {
-                throw new IOException( String.format("Couldn't connect to '%s'.", uri) );
+                throw new IOException(
+                        String.format(
+                                "Couldn't disconnect from '%s'. ZMQ socket errno: %d",
+                                uri,
+                                reqSocket.errno()
+                        )
+                );
             }
         }
     }
@@ -121,9 +139,9 @@ public final class ZmqTcpRpcGateway implements TcpRpcGateway {
 
         final ZMsg zRequest =  ZMsg.newStringMsg( request.toByteString().toStringUtf8() );
 
-        zRequest.send(socket);
+        zRequest.send(reqSocket);
 
-        final ZMsg zResponse = ZMsg.recvMsg(socket);
+        final ZMsg zResponse = ZMsg.recvMsg(reqSocket);
 
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream( (int) zResponse.contentSize() );
         for (final ZFrame frame : zResponse) {
