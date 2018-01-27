@@ -53,7 +53,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public AddColumn.Result AddColumn(final AddColumn.Request args) {
+    public AddColumn.Result qlua_AddColumn(final AddColumn.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.ADD_COLUMN, args);
@@ -66,7 +66,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public AddLabel.Result AddLabel(final AddLabel.Request args) {
+    public AddLabel.Result qlua_AddLabel(final AddLabel.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.ADD_LABEL, args);
@@ -79,7 +79,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public AllocTable.Result AllocTable() {
+    public AllocTable.Result qlua_AllocTable() {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.ALLOC_TABLE);
@@ -92,7 +92,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public CalcBuySell.Result CalcBuySell(final CalcBuySell.Request args) {
+    public CalcBuySell.Result qlua_CalcBuySell(final CalcBuySell.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.CALC_BUY_SELL, args);
@@ -105,7 +105,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public CancelParamRequest.Result CancelParamRequest(final CancelParamRequest.Request args) {
+    public CancelParamRequest.Result qlua_CancelParamRequest(final CancelParamRequest.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.CANCEL_PARAM_REQUEST, args);
@@ -118,7 +118,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public Clear.Result Clear(final Clear.Request args) {
+    public Clear.Result qlua_Clear(final Clear.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.CLEAR, args);
@@ -131,7 +131,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public CreateWindow.Result CreateWindow(final CreateWindow.Request args) {
+    public CreateWindow.Result qlua_CreateWindow(final CreateWindow.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.CREATE_WINDOW, args);
@@ -144,7 +144,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public DelAllLabels.Result DelAllLabels(final DelAllLabels.Request args) {
+    public DelAllLabels.Result qlua_DelAllLabels(final DelAllLabels.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.DEL_ALL_LABELS, args);
@@ -157,7 +157,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public DeleteRow.Result DeleteRow(final DeleteRow.Request args) {
+    public DeleteRow.Result qlua_DeleteRow(final DeleteRow.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.DELETE_ROW, args);
@@ -170,7 +170,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public DelLabel.Result DelLabel(final DelLabel.Request args) {
+    public DelLabel.Result qlua_DelLabel(final DelLabel.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.DEL_LABEL, args);
@@ -183,7 +183,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public DestroyTable.Result DestroyTable(final DestroyTable.Request args) {
+    public DestroyTable.Result qlua_DestroyTable(final DestroyTable.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.DESTROY_TABLE, args);
@@ -196,7 +196,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetBuySellInfo.Result getBuySellInfo(final GetBuySellInfo.Request args) {
+    public GetBuySellInfo.Result qlua_getBuySellInfo(final GetBuySellInfo.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_BUY_SELL_INFO, args);
@@ -209,7 +209,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetBuySellInfoEx.Result getBuySellInfoEx(final GetBuySellInfoEx.Request args) {
+    public GetBuySellInfoEx.Result qlua_getBuySellInfoEx(final GetBuySellInfoEx.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_BUY_SELL_INFO_EX, args);
@@ -222,7 +222,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetCandlesByIndex.Result getCandlesByIndex(final GetCandlesByIndex.Result args) {
+    public GetCandlesByIndex.Result qlua_getCandlesByIndex(final GetCandlesByIndex.Result args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_CANDLES_BY_INDEX, args);
@@ -235,7 +235,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetCell.Result GetCell(final GetCell.Result args) {
+    public GetCell.Result qlua_GetCell(final GetCell.Result args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_CELL, args);
@@ -248,7 +248,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetClassesList.Result getClassesList() {
+    public GetClassesList.Result qlua_getClassesList() {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_CLASSES_LIST);
@@ -261,7 +261,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetClassInfo.Result getClassInfo(final GetClassInfo.Request args) {
+    public GetClassInfo.Result qlua_getClassInfo(final GetClassInfo.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_CLASS_INFO, args);
@@ -274,7 +274,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetClassSecurities.Result getClassSecurities(final GetClassSecurities.Request args) {
+    public GetClassSecurities.Result qlua_getClassSecurities(final GetClassSecurities.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_CLASS_SECURITIES, args);
@@ -287,7 +287,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetDepo.Result getDepo(final GetDepo.Request args) {
+    public GetDepo.Result qlua_getDepo(final GetDepo.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_DEPO, args);
@@ -300,7 +300,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetDepoEx.Result getDepoEx(final GetDepoEx.Request args) {
+    public GetDepoEx.Result qlua_getDepoEx(final GetDepoEx.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_DEPO_EX, args);
@@ -313,7 +313,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetFuturesHolding.Result getFuturesHolding(final GetFuturesHolding.Request args) {
+    public GetFuturesHolding.Result qlua_getFuturesHolding(final GetFuturesHolding.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_FUTURES_HOLDING, args);
@@ -326,7 +326,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetFuturesLimit.Result getFuturesLimit(final GetFuturesLimit.Request args) {
+    public GetFuturesLimit.Result qlua_getFuturesLimit(final GetFuturesLimit.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_FUTURES_LIMIT, args);
@@ -339,7 +339,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetInfoParam.Result getInfoParam(final GetInfoParam.Request args) {
+    public GetInfoParam.Result qlua_getInfoParam(final GetInfoParam.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_INFO_PARAM, args);
@@ -352,7 +352,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetItem.Result getItem(final GetItem.Request args) {
+    public GetItem.Result qlua_getItem(final GetItem.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_ITEM, args);
@@ -365,7 +365,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetLabelParams.Result GetLabelParams(final GetLabelParams.Request args) {
+    public GetLabelParams.Result qlua_GetLabelParams(final GetLabelParams.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_LABEL_PARAMS, args);
@@ -378,7 +378,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetLinesCount.Result getLinesCount(final GetLinesCount.Request args) {
+    public GetLinesCount.Result qlua_getLinesCount(final GetLinesCount.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_LINES_COUNT, args);
@@ -391,7 +391,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetMoney.Result getMoney(final GetMoney.Request args) {
+    public GetMoney.Result qlua_getMoney(final GetMoney.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_MONEY, args);
@@ -404,7 +404,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetMoneyEx.Result getMoneyEx(final GetMoneyEx.Request args) {
+    public GetMoneyEx.Result qlua_getMoneyEx(final GetMoneyEx.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_MONEY_EX, args);
@@ -417,7 +417,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetNumberOf.Result getNumberOf(final GetNumberOf.Request args) {
+    public GetNumberOf.Result qlua_getNumberOf(final GetNumberOf.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_NUMBER_OF, args);
@@ -430,7 +430,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetNumCandles.Result getNumCandles(final GetNumCandles.Request args) {
+    public GetNumCandles.Result qlua_getNumCandles(final GetNumCandles.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_NUM_CANDLES, args);
@@ -443,7 +443,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetOrderByNumber.Result getOrderByNumber(final GetOrderByNumber.Request args) {
+    public GetOrderByNumber.Result qlua_getOrderByNumber(final GetOrderByNumber.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_ORDER_BY_NUMBER, args);
@@ -456,7 +456,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetParamEx.Result getParamEx(final GetParamEx.Request args) {
+    public GetParamEx.Result qlua_getParamEx(final GetParamEx.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_PARAM_EX, args);
@@ -469,7 +469,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetParamEx2.Result getParamEx2(final GetParamEx2.Request args) {
+    public GetParamEx2.Result qlua_getParamEx2(final GetParamEx2.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_PARAM_EX_2, args);
@@ -482,7 +482,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetPortfolioInfo.Result getPortfolioInfo(final GetPortfolioInfo.Request args) {
+    public GetPortfolioInfo.Result qlua_getPortfolioInfo(final GetPortfolioInfo.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_PORTFOLIO_INFO, args);
@@ -495,7 +495,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetPortfolioInfoEx.Result getPortfolioInfoEx(final GetPortfolioInfoEx.Request args) {
+    public GetPortfolioInfoEx.Result qlua_getPortfolioInfoEx(final GetPortfolioInfoEx.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_PORTFOLIO_INFO_EX, args);
@@ -508,7 +508,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetQuoteLevel2.Result getQuoteLevel2(final GetQuoteLevel2.Request args) {
+    public GetQuoteLevel2.Result qlua_getQuoteLevel2(final GetQuoteLevel2.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_QUOTE_LEVEL2, args);
@@ -521,7 +521,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetScriptPath.Result getScriptPath() {
+    public GetScriptPath.Result qlua_getScriptPath() {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_SCRIPT_PATH);
@@ -534,7 +534,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetSecurityInfo.Result getSecurityInfo(final GetSecurityInfo.Request args) {
+    public GetSecurityInfo.Result qlua_getSecurityInfo(final GetSecurityInfo.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_SECURITY_INFO, args);
@@ -547,7 +547,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetTableSize.Result GetTableSize(final GetTableSize.Request args) {
+    public GetTableSize.Result qlua_GetTableSize(final GetTableSize.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_TABLE_SIZE, args);
@@ -560,7 +560,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetTradeDate.Result getTradeDate() {
+    public GetTradeDate.Result qlua_getTradeDate() {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_TRADE_DATE);
@@ -573,7 +573,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetWindowCaption.Result GetWindowCaption(final GetWindowCaption.Request args) {
+    public GetWindowCaption.Result qlua_GetWindowCaption(final GetWindowCaption.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_WINDOW_CAPTION, args);
@@ -586,7 +586,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetWindowRect.Result GetWindowRect(final GetWindowRect.Request args) {
+    public GetWindowRect.Result qlua_GetWindowRect(final GetWindowRect.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_WINDOW_RECT, args);
@@ -599,7 +599,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public GetWorkingFolder.Result getWorkingFolder() {
+    public GetWorkingFolder.Result qlua_getWorkingFolder() {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_WORKING_FOLDER);
@@ -612,7 +612,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public Highlight.Result Highlight(final Highlight.Request args) {
+    public Highlight.Result qlua_Highlight(final Highlight.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.HIGHLIGHT, args);
@@ -625,7 +625,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public InsertRow.Result InsertRow(final InsertRow.Request args) {
+    public InsertRow.Result qlua_InsertRow(final InsertRow.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.INSERT_ROW, args);
@@ -638,7 +638,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public IsConnected.Result isConnected() {
+    public IsConnected.Result qlua_isConnected() {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.IS_CONNECTED);
@@ -651,7 +651,8 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public IsSubscribedLevelIIQuotes.Result IsSubscribedLevelIIQuotes(final IsSubscribedLevelIIQuotes.Request args) {
+    public IsSubscribedLevelIIQuotes.Result qlua_IsSubscribedLevelIIQuotes(
+            final IsSubscribedLevelIIQuotes.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.IS_SUBSCRIBED_LEVEL_II_QUOTES, args);
@@ -664,7 +665,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public IsWindowClosed.Result IsWindowClosed(final IsWindowClosed.Request args) {
+    public IsWindowClosed.Result qlua_IsWindowClosed(final IsWindowClosed.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.IS_WINDOW_CLOSED, args);
@@ -677,7 +678,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public Message.Result message(final Message.Request args) {
+    public Message.Result qlua_message(final Message.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.MESSAGE, args);
@@ -690,7 +691,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public ParamRequest.Result ParamRequest(final ParamRequest.Request args) {
+    public ParamRequest.Result qlua_ParamRequest(final ParamRequest.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.PARAM_REQUEST, args);
@@ -703,7 +704,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public void PrintDbgStr(final PrintDbgStr.Request args) {
+    public void qlua_PrintDbgStr(final PrintDbgStr.Request args) {
 
         try {
             makeRPC(RPC.ProcedureType.PRINT_DBG_STR, args);
@@ -715,7 +716,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public RGB.Result RGB(final RGB.Request args) {
+    public RGB.Result qlua_RGB(final RGB.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.RGB, args);
@@ -728,7 +729,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public SearchItems.Result SearchItems(final SearchItems.Request args) {
+    public SearchItems.Result qlua_SearchItems(final SearchItems.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.SEARCH_ITEMS, args);
@@ -741,7 +742,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public SendTransaction.Result sendTransaction(final SendTransaction.Request args) {
+    public SendTransaction.Result qlua_sendTransaction(final SendTransaction.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.SEND_TRANSACTION, args);
@@ -754,7 +755,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public SetCell.Result SetCell(final SetCell.Request args) {
+    public SetCell.Result qlua_SetCell(final SetCell.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.SET_CELL, args);
@@ -767,7 +768,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public SetColor.Result SetColor(final SetColor.Request args) {
+    public SetColor.Result qlua_SetColor(final SetColor.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.SET_COLOR, args);
@@ -780,7 +781,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public SetLabelParams.Result SetLabelParams(final SetLabelParams.Request args) {
+    public SetLabelParams.Result qlua_SetLabelParams(final SetLabelParams.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.SET_LABEL_PARAMS, args);
@@ -793,7 +794,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public SetSelectedRow.Result SetSelectedRow(final SetSelectedRow.Request args) {
+    public SetSelectedRow.Result qlua_SetSelectedRow(final SetSelectedRow.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.SET_SELECTED_ROW, args);
@@ -806,7 +807,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public SetTableNotificationCallback.Result SetTableNotificationCallback(
+    public SetTableNotificationCallback.Result qlua_SetTableNotificationCallback(
             final SetTableNotificationCallback.Request args) {
 
         try {
@@ -820,7 +821,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public SetWindowCaption.Result SetWindowCaption(final SetWindowCaption.Request args) {
+    public SetWindowCaption.Result qlua_SetWindowCaption(final SetWindowCaption.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.SET_WINDOW_CAPTION, args);
@@ -833,7 +834,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public SetWindowPos.Result SetWindowPos(final SetWindowPos.Request args) {
+    public SetWindowPos.Result qlua_SetWindowPos(final SetWindowPos.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.SET_WINDOW_POS, args);
@@ -846,7 +847,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public Sleep.Result sleep(final Sleep.Request args) {
+    public Sleep.Result qlua_sleep(final Sleep.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.SLEEP, args);
@@ -859,7 +860,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public SubscribeLevelIIQuotes.Result SubscribeLevelIIQuotes(final SubscribeLevelIIQuotes.Request args) {
+    public SubscribeLevelIIQuotes.Result qlua_SubscribeLevelIIQuotes(final SubscribeLevelIIQuotes.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.SUBSCRIBE_LEVEL_II_QUOTES, args);
@@ -872,7 +873,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public UnsubscribeLevelIIQuotes.Result UnsubscribeLevelIIQuotes(final UnsubscribeLevelIIQuotes.Request args) {
+    public UnsubscribeLevelIIQuotes.Result qlua_UnsubscribeLevelIIQuotes(final UnsubscribeLevelIIQuotes.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.UNSUBSCRIBE_LEVEL_II_QUOTES, args);

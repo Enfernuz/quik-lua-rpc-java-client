@@ -18,152 +18,152 @@ public interface QluaRpcClient extends Gateway {
      * @param args
      * @return
      */
-    AddColumn.Result AddColumn(AddColumn.Request args);
+    AddColumn.Result qlua_AddColumn(AddColumn.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    AddLabel.Result AddLabel(AddLabel.Request args);
+    AddLabel.Result qlua_AddLabel(AddLabel.Request args);
 
     /**
      *
      * @return
      */
-    AllocTable.Result AllocTable();
-
-    /**
-     *
-     * @param args
-     * @return
-     */
-    CalcBuySell.Result CalcBuySell(CalcBuySell.Request args);
+    AllocTable.Result qlua_AllocTable();
 
     /**
      *
      * @param args
      * @return
      */
-    CancelParamRequest.Result CancelParamRequest(CancelParamRequest.Request args);
+    CalcBuySell.Result qlua_CalcBuySell(CalcBuySell.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    Clear.Result Clear(Clear.Request args);
+    CancelParamRequest.Result qlua_CancelParamRequest(CancelParamRequest.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    CreateWindow.Result CreateWindow(CreateWindow.Request args);
+    Clear.Result qlua_Clear(Clear.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    DelAllLabels.Result DelAllLabels(DelAllLabels.Request args);
+    CreateWindow.Result qlua_CreateWindow(CreateWindow.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    DeleteRow.Result DeleteRow(DeleteRow.Request args);
+    DelAllLabels.Result qlua_DelAllLabels(DelAllLabels.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    DelLabel.Result DelLabel(DelLabel.Request args);
+    DeleteRow.Result qlua_DeleteRow(DeleteRow.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    DestroyTable.Result DestroyTable(DestroyTable.Request args);
+    DelLabel.Result qlua_DelLabel(DelLabel.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetBuySellInfo.Result getBuySellInfo(GetBuySellInfo.Request args);
+    DestroyTable.Result qlua_DestroyTable(DestroyTable.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetBuySellInfoEx.Result getBuySellInfoEx(GetBuySellInfoEx.Request args);
+    GetBuySellInfo.Result qlua_getBuySellInfo(GetBuySellInfo.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetCandlesByIndex.Result getCandlesByIndex(GetCandlesByIndex.Result args);
+    GetBuySellInfoEx.Result qlua_getBuySellInfoEx(GetBuySellInfoEx.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetCell.Result GetCell(GetCell.Result args);
-
-    /**
-     *
-     * @return
-     */
-    GetClassesList.Result getClassesList();
+    GetCandlesByIndex.Result qlua_getCandlesByIndex(GetCandlesByIndex.Result args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetClassInfo.Result getClassInfo(GetClassInfo.Request args);
+    GetCell.Result qlua_GetCell(GetCell.Result args);
+
+    /**
+     *
+     * @return
+     */
+    GetClassesList.Result qlua_getClassesList();
 
     /**
      *
      * @param args
      * @return
      */
-    GetClassSecurities.Result getClassSecurities(GetClassSecurities.Request args);
+    GetClassInfo.Result qlua_getClassInfo(GetClassInfo.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetDepo.Result getDepo(GetDepo.Request args);
+    GetClassSecurities.Result qlua_getClassSecurities(GetClassSecurities.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetDepoEx.Result getDepoEx(GetDepoEx.Request args);
+    GetDepo.Result qlua_getDepo(GetDepo.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetFuturesHolding.Result getFuturesHolding(GetFuturesHolding.Request args);
+    GetDepoEx.Result qlua_getDepoEx(GetDepoEx.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetFuturesLimit.Result getFuturesLimit(GetFuturesLimit.Request args);
+    GetFuturesHolding.Result qlua_getFuturesHolding(GetFuturesHolding.Request args);
+
+    /**
+     *
+     * @param args
+     * @return
+     */
+    GetFuturesLimit.Result qlua_getFuturesLimit(GetFuturesLimit.Request args);
 
     /**
      *
@@ -171,290 +171,290 @@ public interface QluaRpcClient extends Gateway {
      * @return
 
      */
-    GetInfoParam.Result getInfoParam(GetInfoParam.Request args);
+    GetInfoParam.Result qlua_getInfoParam(GetInfoParam.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetItem.Result getItem(GetItem.Request args);
+    GetItem.Result qlua_getItem(GetItem.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetLabelParams.Result GetLabelParams(GetLabelParams.Request args);
+    GetLabelParams.Result qlua_GetLabelParams(GetLabelParams.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetLinesCount.Result getLinesCount(GetLinesCount.Request args);
+    GetLinesCount.Result qlua_getLinesCount(GetLinesCount.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetMoney.Result getMoney(GetMoney.Request args);
+    GetMoney.Result qlua_getMoney(GetMoney.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetMoneyEx.Result getMoneyEx(GetMoneyEx.Request args);
+    GetMoneyEx.Result qlua_getMoneyEx(GetMoneyEx.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetNumberOf.Result getNumberOf(GetNumberOf.Request args);
+    GetNumberOf.Result qlua_getNumberOf(GetNumberOf.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetNumCandles.Result getNumCandles(GetNumCandles.Request args);
+    GetNumCandles.Result qlua_getNumCandles(GetNumCandles.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetOrderByNumber.Result getOrderByNumber(GetOrderByNumber.Request args);
+    GetOrderByNumber.Result qlua_getOrderByNumber(GetOrderByNumber.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetParamEx.Result getParamEx(GetParamEx.Request args);
+    GetParamEx.Result qlua_getParamEx(GetParamEx.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetParamEx2.Result getParamEx2(GetParamEx2.Request args);
+    GetParamEx2.Result qlua_getParamEx2(GetParamEx2.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetPortfolioInfo.Result getPortfolioInfo(GetPortfolioInfo.Request args);
+    GetPortfolioInfo.Result qlua_getPortfolioInfo(GetPortfolioInfo.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetPortfolioInfoEx.Result getPortfolioInfoEx(GetPortfolioInfoEx.Request args);
+    GetPortfolioInfoEx.Result qlua_getPortfolioInfoEx(GetPortfolioInfoEx.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetQuoteLevel2.Result getQuoteLevel2(GetQuoteLevel2.Request args);
+    GetQuoteLevel2.Result qlua_getQuoteLevel2(GetQuoteLevel2.Request args);
 
     /**
      *
      * @return
      */
-    GetScriptPath.Result getScriptPath();
-
-    /**
-     *
-     * @param args
-     * @return
-     */
-    GetSecurityInfo.Result getSecurityInfo(GetSecurityInfo.Request args);
+    GetScriptPath.Result qlua_getScriptPath();
 
     /**
      *
      * @param args
      * @return
      */
-    GetTableSize.Result GetTableSize(GetTableSize.Request args);
-
-    /**
-     *
-     * @return
-     */
-    GetTradeDate.Result getTradeDate();
+    GetSecurityInfo.Result qlua_getSecurityInfo(GetSecurityInfo.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetWindowCaption.Result GetWindowCaption(GetWindowCaption.Request args);
+    GetTableSize.Result qlua_GetTableSize(GetTableSize.Request args);
+
+    /**
+     *
+     * @return
+     */
+    GetTradeDate.Result qlua_getTradeDate();
 
     /**
      *
      * @param args
      * @return
      */
-    GetWindowRect.Result GetWindowRect(GetWindowRect.Request args);
-
-    /**
-     *
-     * @return
-     */
-    GetWorkingFolder.Result getWorkingFolder();
+    GetWindowCaption.Result qlua_GetWindowCaption(GetWindowCaption.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    Highlight.Result Highlight(Highlight.Request args);
+    GetWindowRect.Result qlua_GetWindowRect(GetWindowRect.Request args);
+
+    /**
+     *
+     * @return
+     */
+    GetWorkingFolder.Result qlua_getWorkingFolder();
 
     /**
      *
      * @param args
      * @return
      */
-    InsertRow.Result InsertRow(InsertRow.Request args);
-
-    /**
-     *
-     * @return
-     */
-    IsConnected.Result isConnected();
+    Highlight.Result qlua_Highlight(Highlight.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    IsSubscribedLevelIIQuotes.Result IsSubscribedLevelIIQuotes(IsSubscribedLevelIIQuotes.Request args);
+    InsertRow.Result qlua_InsertRow(InsertRow.Request args);
+
+    /**
+     *
+     * @return
+     */
+    IsConnected.Result qlua_isConnected();
 
     /**
      *
      * @param args
      * @return
      */
-    IsWindowClosed.Result IsWindowClosed(IsWindowClosed.Request args);
+    IsSubscribedLevelIIQuotes.Result qlua_IsSubscribedLevelIIQuotes(IsSubscribedLevelIIQuotes.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    Message.Result message(Message.Request args);
+    IsWindowClosed.Result qlua_IsWindowClosed(IsWindowClosed.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    ParamRequest.Result ParamRequest(ParamRequest.Request args);
+    Message.Result qlua_message(Message.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    void PrintDbgStr(PrintDbgStr.Request args);
+    ParamRequest.Result qlua_ParamRequest(ParamRequest.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    RGB.Result RGB(RGB.Request args);
+    void qlua_PrintDbgStr(PrintDbgStr.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    SearchItems.Result SearchItems(SearchItems.Request args);
+    RGB.Result qlua_RGB(RGB.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    SendTransaction.Result sendTransaction(SendTransaction.Request args);
+    SearchItems.Result qlua_SearchItems(SearchItems.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    SetCell.Result SetCell(SetCell.Request args);
+    SendTransaction.Result qlua_sendTransaction(SendTransaction.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    SetColor.Result SetColor(SetColor.Request args);
+    SetCell.Result qlua_SetCell(SetCell.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    SetLabelParams.Result SetLabelParams(SetLabelParams.Request args);
+    SetColor.Result qlua_SetColor(SetColor.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    SetSelectedRow.Result SetSelectedRow(SetSelectedRow.Request args);
+    SetLabelParams.Result qlua_SetLabelParams(SetLabelParams.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    SetTableNotificationCallback.Result SetTableNotificationCallback(SetTableNotificationCallback.Request args);
+    SetSelectedRow.Result qlua_SetSelectedRow(SetSelectedRow.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    SetWindowCaption.Result SetWindowCaption(SetWindowCaption.Request args);
+    SetTableNotificationCallback.Result qlua_SetTableNotificationCallback(SetTableNotificationCallback.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    SetWindowPos.Result SetWindowPos(SetWindowPos.Request args);
+    SetWindowCaption.Result qlua_SetWindowCaption(SetWindowCaption.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    Sleep.Result sleep(Sleep.Request args);
+    SetWindowPos.Result qlua_SetWindowPos(SetWindowPos.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    SubscribeLevelIIQuotes.Result SubscribeLevelIIQuotes(SubscribeLevelIIQuotes.Request args);
+    Sleep.Result qlua_sleep(Sleep.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    UnsubscribeLevelIIQuotes.Result UnsubscribeLevelIIQuotes(UnsubscribeLevelIIQuotes.Request args);
+    SubscribeLevelIIQuotes.Result qlua_SubscribeLevelIIQuotes(SubscribeLevelIIQuotes.Request args);
+
+    /**
+     *
+     * @param args
+     * @return
+     */
+    UnsubscribeLevelIIQuotes.Result qlua_UnsubscribeLevelIIQuotes(UnsubscribeLevelIIQuotes.Request args);
 
     /**
      *
