@@ -118,7 +118,7 @@ public final class ZmqTcpRpcGateway implements TcpRpcGateway {
     }
 
     @Override
-    public RPC.Response callWithArguments(final RPC.ProcedureType procedureType, final MessageLite args) throws RpcException {
+    public RPC.Response call(final RPC.ProcedureType procedureType, final MessageLite args) throws RpcException {
 
         requireNonNull(procedureType, "The argument 'procedureType' must not be null.");
         requireNonNull(args, "The argument 'args' must not be null.");

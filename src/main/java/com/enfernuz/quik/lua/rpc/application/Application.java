@@ -12,6 +12,8 @@ public class Application {
         // this is just for the testing purposes for now
         try (final ZmqTcpQluaRpcClient rpcClient = ZmqTcpQluaRpcClient.create("127.0.0.1", 5560)) {
 
+            rpcClient.open();
+
             final Message.Request request =
                     qlua.rpc.Message.Request.newBuilder()
                             .setMessage("Hello world!")

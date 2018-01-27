@@ -9,7 +9,7 @@ public interface RemoteProcedureCaller {
 
     RPC.Response call(RPC.ProcedureType procedureType) throws RpcException;
 
-    RPC.Response callWithArguments(RPC.ProcedureType procedureType, MessageLite args) throws RpcException;
+    RPC.Response call(RPC.ProcedureType procedureType, MessageLite args) throws RpcException;
 
     final class RpcException extends IOException {
 
