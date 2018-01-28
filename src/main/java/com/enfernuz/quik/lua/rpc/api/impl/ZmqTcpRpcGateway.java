@@ -12,7 +12,7 @@ import java.io.IOException;
 
 import static java.util.Objects.requireNonNull;
 
-public final class ZmqTcpRpcGateway implements TcpRpcGateway {
+final class ZmqTcpRpcGateway implements TcpRpcGateway {
 
     private final String host;
     private final int port;
