@@ -1094,7 +1094,7 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     private void checkIfOpen() {
-        checkState(isOpened(), "The connection must be open.");
+        checkState(rpcGateway.isOpened(), "The connection must be open.");
     }
 
     private ByteString makeRPC(final RPC.ProcedureType procedureType, final MessageLite args)
