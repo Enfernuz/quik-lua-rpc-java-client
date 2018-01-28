@@ -7,11 +7,11 @@ public interface QluaEventSubscription {
 
     void subscribe(QluaEvents.EventType eventType);
 
-    void subscribe(ImmutableSet<QluaEvents.EventType> eventTypes);
+    void subscribe(Iterable<? extends QluaEvents.EventType> eventTypes);
 
     void unsubscribe(QluaEvents.EventType eventType);
 
-    void unsubscribe(ImmutableSet<QluaEvents.EventType> eventTypes);
+    void unsubscribe(Iterable<? extends QluaEvents.EventType> eventTypes);
 
     ImmutableSet<QluaEvents.EventType> getCurrentSubscription();
 

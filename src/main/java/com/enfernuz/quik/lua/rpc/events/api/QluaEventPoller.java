@@ -4,9 +4,9 @@ import com.enfernuz.quik.lua.rpc.io.Gateway;
 
 import java.util.Optional;
 
-public interface QluaEventListener extends QluaEventSubscription, Gateway {
+public interface QluaEventPoller extends QluaEventSubscription, Gateway {
 
-    Optional<QluaEvent> poll() throws PollingException;
+    QluaEvent poll() throws PollingException;
 
     final class PollingException extends RuntimeException {
 

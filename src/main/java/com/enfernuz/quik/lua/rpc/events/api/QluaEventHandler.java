@@ -50,5 +50,4 @@ public interface QluaEventHandler {
 
     default void onCleanUp() {}
 
-
 }
