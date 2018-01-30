@@ -7,11 +7,11 @@ public interface QluaEventHandlerRegistry {
 
     void register(QluaEventHandler eventHandler);
 
-    void register(Iterable<? extends QluaEvents.EventType> eventHandlers);
+    void register(Iterable<? extends QluaEventHandler> eventHandlers);
 
-    void deregister(QluaEventHandler eventHandler);
+    void unregister(QluaEventHandler eventHandler);
 
-    void deregister(Iterable<? extends QluaEvents.EventType> eventHandlers);
+    void unregister(Iterable<? extends QluaEventHandler> eventHandlers);
 
     ImmutableList<QluaEventHandler> getRegisteredEventHandlers();
 }
