@@ -29,7 +29,7 @@ public final class CurveKey {
 
     public static CurveKey fromBinary(final byte[] binaryForm) {
 
-        final byte[] copyBinaryForm = Arrays.copyOf(binaryForm, binaryForm.length);
+        final byte[] copyBinaryForm = binaryForm.clone();
 
         return new CurveKey(Z85.encode(copyBinaryForm, copyBinaryForm.length), copyBinaryForm);
     }
@@ -45,7 +45,7 @@ public final class CurveKey {
     }
 
     public byte[] asBinary() {
-        return Arrays.copyOf(binaryForm, binaryForm.length);
+        return binaryForm.clone();
     }
 
     @Override
