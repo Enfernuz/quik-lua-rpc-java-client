@@ -1,7 +1,8 @@
 package com.enfernuz.quik.lua.rpc.application;
 
-import com.enfernuz.quik.lua.rpc.api.impl.ZmqTcpQluaRpcClient;
-import com.enfernuz.quik.lua.rpc.api.security.*;
+import com.enfernuz.quik.lua.rpc.api.zmq.ZmqTcpQluaRpcClient;
+import com.enfernuz.quik.lua.rpc.api.zmq.impl.ZmqTcpQluaRpcClientImpl;
+import com.enfernuz.quik.lua.rpc.api.security.zmq.*;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.enfernuz.quik.lua.rpc.io.transport.SimpleNetworkAddress;
 import qlua.rpc.Message;
@@ -22,7 +23,7 @@ public class Application {
 
         final AuthContext authContext = new SimpleAuthContext(curveCredentials);
 
-        try (final ZmqTcpQluaRpcClient rpcClient = ZmqTcpQluaRpcClient.create(networkAddress, authContext)) {
+        try (final ZmqTcpQluaRpcClient rpcClient = ZmqTcpQluaRpcClientImpl.create(networkAddress, authContext)) {
 
             rpcClient.open();
 

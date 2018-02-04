@@ -1,4 +1,4 @@
-package com.enfernuz.quik.lua.rpc.api.impl;
+package com.enfernuz.quik.lua.rpc.api.zmq.impl;
 
 import static java.util.Objects.requireNonNull;
 

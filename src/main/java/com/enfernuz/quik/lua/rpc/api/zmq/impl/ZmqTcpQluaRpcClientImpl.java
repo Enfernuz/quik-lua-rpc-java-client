@@ -1,8 +1,8 @@
-package com.enfernuz.quik.lua.rpc.api.impl;
+package com.enfernuz.quik.lua.rpc.api.zmq.impl;
 
 import com.enfernuz.quik.lua.rpc.api.RemoteProcedureCaller;
-import com.enfernuz.quik.lua.rpc.api.TcpQluaRpcClient;
-import com.enfernuz.quik.lua.rpc.api.security.AuthContext;
+import com.enfernuz.quik.lua.rpc.api.security.zmq.AuthContext;
+import com.enfernuz.quik.lua.rpc.api.zmq.ZmqTcpQluaRpcClient;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.MessageLite;
@@ -15,17 +15,17 @@ import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
+public final class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
 
-    private final ZmqTcpRpcGateway rpcGateway;
+    private final ZmqTcpRpcGatewayImpl rpcGateway;
 
-    public static ZmqTcpQluaRpcClient create(final NetworkAddress networkAddress, final AuthContext authContext) {
+    public static ZmqTcpQluaRpcClientImpl create(final NetworkAddress networkAddress, final AuthContext authContext) {
 
-        final ZmqTcpRpcGateway rpcGateway = ZmqTcpRpcGateway.newInstance(networkAddress, authContext);
-        return new ZmqTcpQluaRpcClient(rpcGateway);
+        final ZmqTcpRpcGatewayImpl rpcGateway = ZmqTcpRpcGatewayImpl.newInstance(networkAddress, authContext);
+        return new ZmqTcpQluaRpcClientImpl(rpcGateway);
     }
 
-    private ZmqTcpQluaRpcClient(final ZmqTcpRpcGateway rpcGateway) {
+    private ZmqTcpQluaRpcClientImpl(final ZmqTcpRpcGatewayImpl rpcGateway) {
         this.rpcGateway = rpcGateway;
     }
 

@@ -1,4 +1,4 @@
-package com.enfernuz.quik.lua.rpc.api.security;
+package com.enfernuz.quik.lua.rpc.api.security.zmq;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Strings;

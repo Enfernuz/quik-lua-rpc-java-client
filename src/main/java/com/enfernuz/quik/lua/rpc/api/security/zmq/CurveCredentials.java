@@ -1,6 +1,4 @@
-package com.enfernuz.quik.lua.rpc.api.security;
-
-import org.zeromq.ZMQ;
+package com.enfernuz.quik.lua.rpc.api.security.zmq;
 
 public interface CurveCredentials {
 

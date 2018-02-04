@@ -1,21 +1,20 @@
-package com.enfernuz.quik.lua.rpc.api.impl;
+package com.enfernuz.quik.lua.rpc.api.zmq.impl;
 
-import com.enfernuz.quik.lua.rpc.api.TcpRpcGateway;
-import com.enfernuz.quik.lua.rpc.api.security.*;
+import com.enfernuz.quik.lua.rpc.api.security.zmq.*;
+import com.enfernuz.quik.lua.rpc.api.zmq.ZmqTcpRpcGateway;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.google.protobuf.MessageLite;
 import org.zeromq.ZFrame;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMsg;
 import qlua.rpc.RPC;
-import zmq.io.mechanism.Mechanisms;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import static java.util.Objects.requireNonNull;
 
-final class ZmqTcpRpcGateway implements TcpRpcGateway {
+final class ZmqTcpRpcGatewayImpl implements ZmqTcpRpcGateway {
 
     private final NetworkAddress networkAddress;
     private final String uri;
@@ -24,17 +23,17 @@ final class ZmqTcpRpcGateway implements TcpRpcGateway {
     private final AuthContext authContext;
     private boolean isOpened;
 
-    public static ZmqTcpRpcGateway newInstance(
+    public static ZmqTcpRpcGatewayImpl newInstance(
             final NetworkAddress networkAddress,
             final AuthContext authContext) {
 
-        return new ZmqTcpRpcGateway(
+        return new ZmqTcpRpcGatewayImpl(
                 requireNonNull(networkAddress, "The argument \"networkAddress\" must not be null."),
                 requireNonNull(authContext, "The argument \"authContext\" must not be null.")
         );
     }
 
-    private ZmqTcpRpcGateway(final NetworkAddress networkAddress, final AuthContext authContext) {
+    private ZmqTcpRpcGatewayImpl(final NetworkAddress networkAddress, final AuthContext authContext) {
 
         this.networkAddress = networkAddress;
         this.authContext = authContext;

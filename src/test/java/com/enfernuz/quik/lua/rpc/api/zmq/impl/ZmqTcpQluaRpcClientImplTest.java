@@ -1,15 +1,12 @@
-package com.enfernuz.quik.lua.rpc.api.impl;
+package com.enfernuz.quik.lua.rpc.api.zmq.impl;
 
-import com.enfernuz.quik.lua.rpc.api.security.AuthContext;
+import com.enfernuz.quik.lua.rpc.api.security.zmq.AuthContext;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.enfernuz.quik.lua.rpc.io.transport.SimpleNetworkAddress;
-import com.google.protobuf.ByteString;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Captor;
-import org.mockito.Mockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
@@ -22,17 +19,17 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(ZmqTcpRpcGateway.class)
-public class ZmqTcpQluaRpcClientTest {
+@PrepareForTest(ZmqTcpRpcGatewayImpl.class)
+public class ZmqTcpQluaRpcClientImplTest {
 
-    private ZmqTcpQluaRpcClient sut;
+    private ZmqTcpQluaRpcClientImpl sut;
 
     @Before
     public void setup() throws IOException {
 
         final NetworkAddress networkAddress = new SimpleNetworkAddress("127.0.0.1", 5560);
 
-        this.sut = ZmqTcpQluaRpcClient.create(networkAddress, AuthContext.none());
+        this.sut = ZmqTcpQluaRpcClientImpl.create(networkAddress, AuthContext.none());
     }
 
     @After
@@ -43,7 +40,7 @@ public class ZmqTcpQluaRpcClientTest {
     @Test
     public void test() throws Exception {
 
-        final ZmqTcpRpcGateway rpcGateway = mock(ZmqTcpRpcGateway.class);
+        final ZmqTcpRpcGatewayImpl rpcGateway = mock(ZmqTcpRpcGatewayImpl.class);
 
         doReturn(true).when(rpcGateway).isOpened();
 
