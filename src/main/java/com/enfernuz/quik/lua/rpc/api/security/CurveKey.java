@@ -24,7 +24,7 @@ public final class CurveKey {
                 "The argument \"z85String\" must be a 40-character Z85-encoded string."
         );
 
-        return new CurveKey(z85String, z85String.getBytes());
+        return new CurveKey(z85String, Z85.decode(z85String));
     }
 
     public static CurveKey fromBinary(final byte[] binaryForm) {

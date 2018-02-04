@@ -60,9 +60,9 @@ final class ZmqTcpRpcGateway implements TcpRpcGateway {
                 case CURVE:
                     final CurveCredentials curveCredentials = authContext.getCurveCredentials();
                     final CurveKeyPair clientKeyPair = curveCredentials.getClientKeyPair();
-                    reqSocket.setCurveServerKey( curveCredentials.getServerPublicKey().asZ85String().getBytes() );
-                    reqSocket.setCurvePublicKey( clientKeyPair.getPublicKey().asZ85String().getBytes() );
-                    reqSocket.setCurveSecretKey( clientKeyPair.getSecretKey().asZ85String().getBytes() );
+                    reqSocket.setCurveServerKey( curveCredentials.getServerPublicKey().asBinary() );
+                    reqSocket.setCurvePublicKey( clientKeyPair.getPublicKey().asBinary() );
+                    reqSocket.setCurveSecretKey( clientKeyPair.getSecretKey().asBinary() );
                     break;
                 case NULL:
                     break;
