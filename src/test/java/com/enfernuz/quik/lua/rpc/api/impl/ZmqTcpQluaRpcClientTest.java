@@ -1,5 +1,8 @@
 package com.enfernuz.quik.lua.rpc.api.impl;
 
+import com.enfernuz.quik.lua.rpc.api.security.AuthContext;
+import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
+import com.enfernuz.quik.lua.rpc.io.transport.SimpleNetworkAddress;
 import com.google.protobuf.ByteString;
 import org.junit.After;
 import org.junit.Before;
@@ -27,9 +30,9 @@ public class ZmqTcpQluaRpcClientTest {
     @Before
     public void setup() throws IOException {
 
-        this.sut = ZmqTcpQluaRpcClient.create("127.0.0.1", 5560);
+        final NetworkAddress networkAddress = new SimpleNetworkAddress("127.0.0.1", 5560);
 
-
+        this.sut = ZmqTcpQluaRpcClient.create(networkAddress, AuthContext.none());
     }
 
     @After

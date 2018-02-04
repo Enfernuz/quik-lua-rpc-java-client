@@ -1,6 +1,7 @@
 package com.enfernuz.quik.lua.rpc.api;
 
+import com.enfernuz.quik.lua.rpc.api.security.Securable;
 import com.enfernuz.quik.lua.rpc.io.Gateway;
 
-public interface RpcGateway extends RemoteProcedureCaller, Gateway {
+public interface RpcGateway extends RemoteProcedureCaller, Gateway, Securable {
 }

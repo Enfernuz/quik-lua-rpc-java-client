@@ -1,5 +1,6 @@
 package com.enfernuz.quik.lua.rpc.api;
 
+import com.enfernuz.quik.lua.rpc.api.security.Securable;
 import com.enfernuz.quik.lua.rpc.io.Gateway;
 import qlua.rpc.*;
 import qlua.rpc.bit.*;
@@ -11,7 +12,7 @@ import java.util.Set;
  * @throws RpcClientException if there is an error occurred while making the remote procedure call
  * @throws NullPointerException if the {@code args} argument is {@code null}
  */
-public interface QluaRpcClient extends Gateway {
+public interface QluaRpcClient extends Gateway, Securable {
 
     /**
      *

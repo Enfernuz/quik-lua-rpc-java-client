@@ -2,6 +2,7 @@ package com.enfernuz.quik.lua.rpc.events.impl;
 
 import com.enfernuz.quik.lua.rpc.events.api.QluaEvent;
 import com.enfernuz.quik.lua.rpc.events.api.TcpQluaEventPoller;
+import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.google.common.collect.ImmutableSet;
 import com.google.protobuf.ByteString;
 import org.zeromq.ZFrame;
@@ -16,19 +17,17 @@ import java.util.EnumSet;
 
 final class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
 
-    private final String host;
-    private final int port;
+    private final NetworkAddress networkAddress;
     private final String uri;
     private ZMQ.Context zmqContext;
     private ZMQ.Socket subSocket;
     private boolean isOpened;
     private final EnumSet<QluaEvents.EventType> subscription;
 
-    private ZmqTcpQluaEventPoller(final String host, final int port) {
+    private ZmqTcpQluaEventPoller(final NetworkAddress networkAddress) {
 
-        this.host = host;
-        this.port = port;
-        this.uri = String.format("tcp://%s:%d", host, port);
+        this.networkAddress = networkAddress;
+        this.uri = String.format("tcp://%s:%d", networkAddress.getHost(), networkAddress.getPort());
         this.subscription = EnumSet.noneOf(QluaEvents.EventType.class);
     }
 
@@ -114,13 +113,8 @@ final class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
     }
 
     @Override
-    public String getHost() {
-        return host;
-    }
-
-    @Override
-    public int getPort() {
-        return port;
+    public NetworkAddress getNetworkAddress() {
+        return networkAddress;
     }
 
     @Override
@@ -129,6 +123,7 @@ final class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
         if (!this.isOpened) {
 
             zmqContext = ZMQ.context(1);
+            zmqContext.setMaxSockets(1);
             subSocket = zmqContext.socket(ZMQ.SUB);
 
             for (final QluaEvents.EventType eventType : subscription) {
@@ -143,6 +138,7 @@ final class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
                 final String errorMessage =
                         String.format("Couldn't connect to '%s'. ZMQ socket errno:", uri, subSocket.errno());
 
+                subSocket.close();
                 zmqContext.term();
                 zmqContext = null;
                 subSocket = null;
@@ -165,6 +161,7 @@ final class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
             final boolean isDisconnected = this.subSocket.disconnect(uri);
 
             if (isDisconnected) {
+                subSocket.close();
                 zmqContext.term();
                 zmqContext = null;
                 subSocket = null;

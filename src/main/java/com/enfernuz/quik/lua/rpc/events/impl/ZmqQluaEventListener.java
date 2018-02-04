@@ -34,7 +34,7 @@ public final class ZmqQluaEventListener {//implements QluaEventPoller, TcpGatewa
 //    private boolean isOpened;
 //    private final Set<QluaEvents.EventType> subscription;
 //
-//    public static ZmqQluaEventListener create(final ZMQ.Context context, final String host, final int port) {
+//    public static ZmqQluaEventListener newInstance(final ZMQ.Context context, final String host, final int port) {
 //
 //        requireNonNull(context, "The argument 'context' must not be null.");
 //        checkArgument(!context.isTerminated(), "The argument 'context' must not be in the terminated state.");
@@ -133,9 +133,9 @@ public final class ZmqQluaEventListener {//implements QluaEventPoller, TcpGatewa
 //                    }
 //
 //                    final ByteString eventData = convertZMsgToByteString(eventDataAsMsg);
-//                    result = QluaEvent.create(eventType, eventData);
+//                    result = QluaEvent.newInstance(eventType, eventData);
 //                } else {
-//                    result = QluaEvent.create(eventType);
+//                    result = QluaEvent.newInstance(eventType);
 //                }
 //            }
 //

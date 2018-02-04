@@ -2,6 +2,7 @@ package com.enfernuz.quik.lua.rpc.events.impl;
 
 import com.enfernuz.quik.lua.rpc.events.api.QluaEventHandler;
 import com.enfernuz.quik.lua.rpc.events.api.TcpQluaEventProcessor;
+import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import qlua.events.QluaEvents;
@@ -14,7 +15,7 @@ import static java.util.Objects.requireNonNull;
 
 public final class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
 
-    private final ZmqTcpQluaEventPoller eventPoller;
+    private ZmqTcpQluaEventPoller eventPoller;
     private final List<QluaEventHandler> eventHandlers;
 
     private ZmqTcpQluaEventProcessor() {
@@ -88,13 +89,8 @@ public final class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
     }
 
     @Override
-    public String getHost() {
-        return eventPoller.getHost();
-    }
-
-    @Override
-    public int getPort() {
-        return eventPoller.getPort();
+    public NetworkAddress getNetworkAddress() {
+        return eventPoller.getNetworkAddress();
     }
 
     @Override

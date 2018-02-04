@@ -2,6 +2,8 @@ package com.enfernuz.quik.lua.rpc.api.impl;
 
 import com.enfernuz.quik.lua.rpc.api.RemoteProcedureCaller;
 import com.enfernuz.quik.lua.rpc.api.TcpQluaRpcClient;
+import com.enfernuz.quik.lua.rpc.api.security.AuthContext;
+import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.MessageLite;
 import qlua.rpc.*;
@@ -17,9 +19,9 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
 
     private final ZmqTcpRpcGateway rpcGateway;
 
-    public static ZmqTcpQluaRpcClient create(final String host, final int port) {
+    public static ZmqTcpQluaRpcClient create(final NetworkAddress networkAddress, final AuthContext authContext) {
 
-        final ZmqTcpRpcGateway rpcGateway = ZmqTcpRpcGateway.create(host, port);
+        final ZmqTcpRpcGateway rpcGateway = ZmqTcpRpcGateway.newInstance(networkAddress, authContext);
         return new ZmqTcpQluaRpcClient(rpcGateway);
     }
 
@@ -28,13 +30,13 @@ public final class ZmqTcpQluaRpcClient implements TcpQluaRpcClient {
     }
 
     @Override
-    public String getHost() {
-        return rpcGateway.getHost();
+    public NetworkAddress getNetworkAddress() {
+        return rpcGateway.getNetworkAddress();
     }
 
     @Override
-    public int getPort() {
-        return rpcGateway.getPort();
+    public AuthContext getAuthContext() {
+        return rpcGateway.getAuthContext();
     }
 
     @Override

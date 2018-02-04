@@ -13,7 +13,7 @@ final class QluaEventSubscriberImpl {//} implements QluaEventSubscription {
 //     * @throws NullPointerException if any of the arguments are {@code null}
 //     * @throws IllegalArgumentException if the argument {@code 'zmqContext'} is in the terminated state
 //     */
-//    static QluaEventSubscriberImpl create(final ZMQ.Context zmqContext, final String host, final int port) {
+//    static QluaEventSubscriberImpl newInstance(final ZMQ.Context zmqContext, final String host, final int port) {
 //
 //        requireNonNull(zmqContext, "The argument 'zmqContext' must not be null.");
 //        if ( zmqContext.isTerminated() ) {
@@ -23,7 +23,7 @@ final class QluaEventSubscriberImpl {//} implements QluaEventSubscription {
 //        // TO-DO: add URI validation
 //        final String uri = String.format("tcp://%s:%d", host, port);
 //
-//        final MessageGateway zmgSubGateway = ZmqGatewayImpl.create(zmqContext, ZMQ.SUB, host, port);
+//        final MessageGateway zmgSubGateway = ZmqGatewayImpl.newInstance(zmqContext, ZMQ.SUB, host, port);
 //
 //        return new QluaEventSubscriberImpl(zmgSubGateway);
 //    }
