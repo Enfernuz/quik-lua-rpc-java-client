@@ -5,7 +5,7 @@ import zmq.util.Z85;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public final class CurveKey {
+public class CurveKey {
 
     private final String z85Form;
     private final byte[] binaryForm;

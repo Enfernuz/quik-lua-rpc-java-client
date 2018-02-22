@@ -4,7 +4,7 @@ import org.zeromq.ZMQ;
 
 import static java.util.Objects.requireNonNull;
 
-public class SimpleAuthContext implements AuthContext {
+public final class SimpleAuthContext implements AuthContext {
 
     private final ZMQ.Socket.Mechanism authMechanism;
     private PlainCredentials plainCredentials;
