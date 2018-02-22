@@ -29,7 +29,7 @@ public class ZmqTcpQluaRpcClientImplTest {
 
         final NetworkAddress networkAddress = new SimpleNetworkAddress("127.0.0.1", 5560);
 
-        this.sut = ZmqTcpQluaRpcClientImpl.create(networkAddress, AuthContext.none());
+        this.sut = ZmqTcpQluaRpcClientImpl.newInstance(networkAddress, AuthContext.none());
     }
 
     @After

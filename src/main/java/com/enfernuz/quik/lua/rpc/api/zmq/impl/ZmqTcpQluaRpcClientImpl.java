@@ -19,7 +19,7 @@ public final class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
 
     private final ZmqTcpRpcGatewayImpl rpcGateway;
 
-    public static ZmqTcpQluaRpcClientImpl create(final NetworkAddress networkAddress, final AuthContext authContext) {
+    public static ZmqTcpQluaRpcClientImpl newInstance(final NetworkAddress networkAddress, final AuthContext authContext) {
 
         final ZmqTcpRpcGatewayImpl rpcGateway = ZmqTcpRpcGatewayImpl.newInstance(networkAddress, authContext);
         return new ZmqTcpQluaRpcClientImpl(rpcGateway);
@@ -50,7 +50,7 @@ public final class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() throws IOException {
         rpcGateway.close();
     }
 

@@ -8,4 +8,6 @@ public interface Gateway extends AutoCloseable {
 
     boolean isOpened();
 
+    @Override
+    void close() throws IOException;
 }

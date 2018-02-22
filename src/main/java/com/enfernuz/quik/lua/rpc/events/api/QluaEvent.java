@@ -5,7 +5,6 @@ import com.google.protobuf.ByteString;
 import qlua.events.QluaEvents;
 
 import java.util.Objects;
-import java.util.Optional;
 
 import static java.util.Objects.requireNonNull;
 
@@ -34,8 +33,8 @@ public final class QluaEvent {
         return type;
     }
 
-    public Optional<ByteString> getData() {
-        return Optional.ofNullable(data);
+    public ByteString getData() {
+        return data;
     }
 
     @Override

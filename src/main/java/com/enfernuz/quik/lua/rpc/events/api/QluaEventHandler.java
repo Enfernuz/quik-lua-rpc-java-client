@@ -8,6 +8,10 @@ public interface QluaEventHandler {
 
     default void onStop() {}
 
+    default void onConnected() {}
+
+    default void onDisconnected() {}
+
     default void onInit() {}
 
     default void onFirm(final QluaStructures.Firm firm) {}

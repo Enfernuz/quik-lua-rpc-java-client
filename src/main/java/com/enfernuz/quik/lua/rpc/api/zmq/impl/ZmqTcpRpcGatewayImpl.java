@@ -14,7 +14,7 @@ import java.io.IOException;
 
 import static java.util.Objects.requireNonNull;
 
-final class ZmqTcpRpcGatewayImpl implements ZmqTcpRpcGateway {
+class ZmqTcpRpcGatewayImpl implements ZmqTcpRpcGateway {
 
     private final NetworkAddress networkAddress;
     private final String uri;
@@ -23,7 +23,7 @@ final class ZmqTcpRpcGatewayImpl implements ZmqTcpRpcGateway {
     private final AuthContext authContext;
     private boolean isOpened;
 
-    public static ZmqTcpRpcGatewayImpl newInstance(
+    static ZmqTcpRpcGatewayImpl newInstance(
             final NetworkAddress networkAddress,
             final AuthContext authContext) {
 
@@ -93,7 +93,7 @@ final class ZmqTcpRpcGatewayImpl implements ZmqTcpRpcGateway {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() throws IOException {
 
         if (this.isOpened) {
 

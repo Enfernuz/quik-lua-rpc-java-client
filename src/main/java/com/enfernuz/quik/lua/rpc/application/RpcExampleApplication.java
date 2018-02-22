@@ -7,9 +7,9 @@ import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.enfernuz.quik.lua.rpc.io.transport.SimpleNetworkAddress;
 import qlua.rpc.Message;
 
-public class Application {
+public class RpcExampleApplication {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) throws Exception {
 
         // this is just for the testing purposes for now
 
@@ -21,9 +21,9 @@ public class Application {
         final CurveKeyPair clientKeyPair = new CurveKeyPair(clientPublicKey, clientSecretKey);
         final CurveCredentials curveCredentials = new SimpleCurveCredentials(serverPublicKey, clientKeyPair);
 
-        final AuthContext authContext = new SimpleAuthContext(curveCredentials);
+        final AuthContext authContext = AuthContext.none();//new SimpleAuthContext(curveCredentials);
 
-        try (final ZmqTcpQluaRpcClient rpcClient = ZmqTcpQluaRpcClientImpl.create(networkAddress, authContext)) {
+        try (final ZmqTcpQluaRpcClient rpcClient = ZmqTcpQluaRpcClientImpl.newInstance(networkAddress, authContext)) {
 
             rpcClient.open();
 
@@ -36,10 +36,6 @@ public class Application {
             final Message.Result result = rpcClient.qlua_message(request);
 
             System.out.println("Result of the MESSAGE remote procedure call: " + result.getResult());
-
-
-        } catch (final Exception ex) {
-            ex.printStackTrace();
         }
     }
 }

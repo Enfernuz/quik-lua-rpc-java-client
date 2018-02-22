@@ -1,5 +1,9 @@
 package com.enfernuz.quik.lua.rpc.events.impl;
 
+import com.enfernuz.quik.lua.rpc.api.security.zmq.AuthContext;
+import com.enfernuz.quik.lua.rpc.api.security.zmq.CurveCredentials;
+import com.enfernuz.quik.lua.rpc.api.security.zmq.CurveKeyPair;
+import com.enfernuz.quik.lua.rpc.api.security.zmq.PlainCredentials;
 import com.enfernuz.quik.lua.rpc.events.api.QluaEvent;
 import com.enfernuz.quik.lua.rpc.events.api.TcpQluaEventPoller;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
@@ -9,24 +13,33 @@ import org.zeromq.ZFrame;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMsg;
 import qlua.events.QluaEvents;
+import sun.reflect.CallerSensitive;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.EnumSet;
 
-final class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
+import static java.util.Objects.requireNonNull;
+
+class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
 
     private final NetworkAddress networkAddress;
     private final String uri;
     private ZMQ.Context zmqContext;
     private ZMQ.Socket subSocket;
+    private final AuthContext authContext;
     private boolean isOpened;
     private final EnumSet<QluaEvents.EventType> subscription;
 
-    private ZmqTcpQluaEventPoller(final NetworkAddress networkAddress) {
+    static ZmqTcpQluaEventPoller newInstance(final NetworkAddress networkAddress, final AuthContext authContext) {
+        return new ZmqTcpQluaEventPoller(requireNonNull(networkAddress), requireNonNull(authContext));
+    }
+
+    private ZmqTcpQluaEventPoller(final NetworkAddress networkAddress, final AuthContext authContext) {
 
         this.networkAddress = networkAddress;
+        this.authContext = authContext;
         this.uri = String.format("tcp://%s:%d", networkAddress.getHost(), networkAddress.getPort());
         this.subscription = EnumSet.noneOf(QluaEvents.EventType.class);
     }
@@ -80,7 +93,16 @@ final class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
     @Override
     public void subscribe(final QluaEvents.EventType eventType) {
 
-        subSocket.subscribe( eventTypeToTopic(eventType) );
+        switch (eventType) {
+            case UNRECOGNIZED:
+            case EVENT_TYPE_UNKNOWN:
+                return;
+        }
+
+        if (isOpened) {
+            subSocket.subscribe( eventTypeToTopic(eventType) );
+        }
+
         subscription.add(eventType);
     }
 
@@ -93,9 +115,31 @@ final class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
     }
 
     @Override
+    public void subscribe(final QluaEvents.EventType... eventTypes) {
+
+        for (final QluaEvents.EventType eventType : eventTypes) {
+            subscribe(eventType);
+        }
+    }
+
+    @Override
+    public void subscribeToEverything() {
+        subscribe( QluaEvents.EventType.values() );
+    }
+
+    @Override
     public void unsubscribe(final QluaEvents.EventType eventType) {
 
-        subSocket.unsubscribe( eventTypeToTopic(eventType) );
+        switch (eventType) {
+            case UNRECOGNIZED:
+            case EVENT_TYPE_UNKNOWN:
+                return;
+        }
+
+        if (isOpened) {
+            subSocket.unsubscribe( eventTypeToTopic(eventType) );
+        }
+
         subscription.remove(eventType);
     }
 
@@ -105,6 +149,19 @@ final class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
         for (final QluaEvents.EventType eventType : eventTypes) {
             unsubscribe(eventType);
         }
+    }
+
+    @Override
+    public void unsubscribe(final QluaEvents.EventType... eventTypes) {
+
+        for (final QluaEvents.EventType eventType : eventTypes) {
+            unsubscribe(eventType);
+        }
+    }
+
+    @Override
+    public void unsubscribeFromEverything() {
+        unsubscribe( QluaEvents.EventType.values() );
     }
 
     @Override
@@ -128,6 +185,30 @@ final class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
 
             for (final QluaEvents.EventType eventType : subscription) {
                 subSocket.subscribe( String.valueOf(eventType.getNumber()) );
+            }
+
+            switch (authContext.getAuthMechanism()) {
+                case PLAIN:
+                    final PlainCredentials plainCredentials = authContext.getPlainCredentials();
+                    subSocket.setPlainUsername( plainCredentials.getUsername() );
+                    subSocket.setPlainPassword( plainCredentials.getPassword() );
+                    break;
+                case CURVE:
+                    final CurveCredentials curveCredentials = authContext.getCurveCredentials();
+                    final CurveKeyPair clientKeyPair = curveCredentials.getClientKeyPair();
+                    subSocket.setCurveServerKey( curveCredentials.getServerPublicKey().asBinary() );
+                    subSocket.setCurvePublicKey( clientKeyPair.getPublicKey().asBinary() );
+                    subSocket.setCurveSecretKey( clientKeyPair.getSecretKey().asBinary() );
+                    break;
+                case NULL:
+                    break;
+                default:
+                    throw new IllegalStateException(
+                            String.format(
+                                    "Unsupported authentication mechanism: \"s\".",
+                                    authContext.getAuthMechanism()
+                            )
+                    );
             }
 
             final boolean _isConnected  = this.subSocket.connect(uri);
@@ -154,7 +235,7 @@ final class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() throws IOException {
 
         if (this.isOpened) {
 

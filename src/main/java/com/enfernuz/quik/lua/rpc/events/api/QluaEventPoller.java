@@ -2,8 +2,6 @@ package com.enfernuz.quik.lua.rpc.events.api;
 
 import com.enfernuz.quik.lua.rpc.io.Gateway;
 
-import java.util.Optional;
-
 public interface QluaEventPoller extends QluaEventSubscription, Gateway {
 
     QluaEvent poll() throws PollingException;
