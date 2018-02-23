@@ -1,0 +1,22 @@
+{
+  "address": {
+    "host": "127.0.0.1",
+    "port": 5561
+  },
+  "auth": {
+    "mechanism": "NULL",
+    "plain": {
+      "username": "test_user",
+      "password": "test_password"
+    },
+    "curve": {
+      "client": {
+        "public": "Yne@$w-vo<fVvi]a<NY6T1ed:M$fCG*[IaLV{hID",
+        "secret": "D:)Q[IlAW!ahhC2ac:9*A}h:p?([4%wOTJ%JR%cs"
+      },
+      "server": {
+        "public": "rq:rM>}U?@Lns47E1%kR.o@n%FcmmsL/@{H8]yf7"
+      }
+    }
+  }
+}

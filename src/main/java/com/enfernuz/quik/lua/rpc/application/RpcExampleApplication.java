@@ -2,29 +2,28 @@ package com.enfernuz.quik.lua.rpc.application;
 
 import com.enfernuz.quik.lua.rpc.api.zmq.ZmqTcpQluaRpcClient;
 import com.enfernuz.quik.lua.rpc.api.zmq.impl.ZmqTcpQluaRpcClientImpl;
-import com.enfernuz.quik.lua.rpc.api.security.zmq.*;
-import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
-import com.enfernuz.quik.lua.rpc.io.transport.SimpleNetworkAddress;
+import com.enfernuz.quik.lua.rpc.config.ClientConfiguration;
+import com.enfernuz.quik.lua.rpc.config.JsonClientConfigurationReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import qlua.rpc.Message;
+
+import java.io.File;
 
 public class RpcExampleApplication {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(RpcExampleApplication.class);
+
     public static void main(final String[] args) throws Exception {
 
-        // this is just for the testing purposes for now
+        LOGGER.info("Reading the config file...");
+        final ClientConfiguration config = JsonClientConfigurationReader.INSTANCE.read(new File(args[0]));
 
-        final NetworkAddress networkAddress = new SimpleNetworkAddress("127.0.0.1", 5560);
+        LOGGER.info("Initializing the module...");
+        try (final ZmqTcpQluaRpcClient rpcClient =
+                     ZmqTcpQluaRpcClientImpl.newInstance(config.getNetworkAddress(), config.getAuthContext())) {
 
-        final CurveKey serverPublicKey = CurveKey.fromString("rq:rM>}U?@Lns47E1%kR.o@n%FcmmsL/@{H8]yf7");
-        final CurveKey clientPublicKey = CurveKey.fromString("Yne@$w-vo<fVvi]a<NY6T1ed:M$fCG*[IaLV{hID");
-        final CurveKey clientSecretKey = CurveKey.fromString("D:)Q[IlAW!ahhC2ac:9*A}h:p?([4%wOTJ%JR%cs");
-        final CurveKeyPair clientKeyPair = new CurveKeyPair(clientPublicKey, clientSecretKey);
-        final CurveCredentials curveCredentials = new SimpleCurveCredentials(serverPublicKey, clientKeyPair);
-
-        final AuthContext authContext = AuthContext.none();//new SimpleAuthContext(curveCredentials);
-
-        try (final ZmqTcpQluaRpcClient rpcClient = ZmqTcpQluaRpcClientImpl.newInstance(networkAddress, authContext)) {
-
+            LOGGER.info("Opening a connection...");
             rpcClient.open();
 
             final Message.Request request =
@@ -33,9 +32,11 @@ public class RpcExampleApplication {
                             .setIconType(qlua.rpc.Message.IconType.INFO)
                             .build();
 
+            LOGGER.info("Making a 'message' remote procedure call to QUIK...");
             final Message.Result result = rpcClient.qlua_message(request);
 
-            System.out.println("Result of the MESSAGE remote procedure call: " + result.getResult());
+            LOGGER.info("Result of the 'message' remote procedure call: {}.", result.getResult());
+            LOGGER.info("Exiting...");
         }
     }
 }
