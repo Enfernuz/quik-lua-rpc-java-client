@@ -3,6 +3,9 @@ package com.enfernuz.quik.lua.rpc.api.security.zmq;
 import com.google.common.base.Strings;
 import zmq.util.Z85;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 import static com.google.common.base.Preconditions.checkArgument;
 
 public class CurveKey {
@@ -44,6 +47,24 @@ public class CurveKey {
 
     public byte[] asBinary() {
         return binaryForm.clone();
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+
+        if (o == this) {
+            return true;
+        } else if ( !(o instanceof CurveKey) ) {
+            return false;
+        } else {
+            final CurveKey other = (CurveKey) o;
+            return Arrays.equals(binaryForm, other.binaryForm) && Objects.equals(z85Form, other.z85Form);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(z85Form, binaryForm);
     }
 
     @Override

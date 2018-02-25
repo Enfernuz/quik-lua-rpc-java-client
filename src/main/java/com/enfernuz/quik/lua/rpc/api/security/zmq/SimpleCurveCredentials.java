@@ -1,5 +1,9 @@
 package com.enfernuz.quik.lua.rpc.api.security.zmq;
 
+import com.google.common.base.MoreObjects;
+
+import java.util.Objects;
+
 import static java.util.Objects.requireNonNull;
 
 public final class SimpleCurveCredentials implements CurveCredentials {
@@ -21,5 +25,32 @@ public final class SimpleCurveCredentials implements CurveCredentials {
     @Override
     public CurveKeyPair getClientKeyPair() {
         return clientKeyPair;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+
+        if (o == this) {
+            return true;
+        } else if ( !(o instanceof SimpleCurveCredentials) ) {
+            return false;
+        } else {
+            final SimpleCurveCredentials other = (SimpleCurveCredentials) o;
+            return Objects.equals(serverPublicKey, other.serverPublicKey)
+                    && Objects.equals(clientKeyPair, other.clientKeyPair);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(serverPublicKey, clientKeyPair);
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("serverPublicKey", serverPublicKey)
+                .add("clientKeyPair", clientKeyPair)
+                .toString();
     }
 }

@@ -38,17 +38,15 @@ public final class QluaEvent {
     }
 
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(final Object o) {
 
-        if (obj == this) {
+        if (o == this) {
             return true;
-        } else if (obj == null) {
-            return true;
-        } else if (obj instanceof QluaEvent) {
-            final QluaEvent other = (QluaEvent) obj;
-            return Objects.equals(type, other.type) && Objects.equals(data, other.data);
-        } else {
+        } else if ( !(o instanceof QluaEvent) ) {
             return false;
+        } else {
+            final QluaEvent other = (QluaEvent) o;
+            return Objects.equals(type, other.type) && Objects.equals(data, other.data);
         }
     }
 
