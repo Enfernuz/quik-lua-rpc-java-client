@@ -4,10 +4,10 @@
     "port": 5561
   },
   "auth": {
-    "mechanism": "NULL",
+    "mechanism": "PLAIN",
     "plain": {
-      "username": "test_user",
-      "password": "test_password"
+      "username": "admin",
+      "password": "letmein"
     },
     "curve": {
       "client": {
