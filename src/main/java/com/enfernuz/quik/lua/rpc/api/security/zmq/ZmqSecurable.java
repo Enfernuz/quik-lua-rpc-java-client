@@ -2,7 +2,14 @@ package com.enfernuz.quik.lua.rpc.api.security.zmq;
 
 import com.enfernuz.quik.lua.rpc.api.security.Securable;
 
-public interface ZmqSecurable extends Securable{
+/**
+ * Интерфейс для сущностей, находящихся в контексте защитных механизмов ZeroMQ.
+ */
+public interface ZmqSecurable extends Securable {
 
+    /**
+     * Получить контекст защитного механизма ZeroMQ для данного экземпляра.
+     * @return контекст защитного механизма ZeroMQ для данного экземпляра
+     */
     AuthContext getAuthContext();
 }

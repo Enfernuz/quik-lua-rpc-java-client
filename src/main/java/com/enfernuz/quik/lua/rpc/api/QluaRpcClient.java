@@ -9,8 +9,8 @@ import qlua.rpc.datasource.*;
 import java.util.Set;
 
 /**
- * @throws RpcClientException if there is an error occurred while making the remote procedure call
- * @throws NullPointerException if the {@code args} argument is {@code null}
+ * @throws RpcClientException в случае возникновения ошибки при удалённом вызове процедуры
+ * @throws NullPointerException если аргумент {@code args} является {@code null}
  */
 public interface QluaRpcClient extends Gateway, Securable {
 
