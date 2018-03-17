@@ -8,11 +8,22 @@ import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+/**
+ * Ключ защитного механизма CURVE.
+ * @see <a href="http://curvezmq.org/page:read-the-docs">Документация механизма CURVE</a>
+ * @see <br/><a href="https://rfc.zeromq.org/spec:26/CURVEZMQ">Спецификация механизма CURVE</a>
+ */
 public class CurveKey {
 
     private final String z85Form;
     private final byte[] binaryForm;
 
+    /**
+     * Создать экземпляр CURVE-ключа на основе Z85-представления
+     * @param z85String Z85-представление CURVE-ключа
+     * @return экземпляр CURVE-ключа, соответствующий переданному Z85-представлению
+     * @throws NullPointerException если аргумент {@code z85String} является {@code null}
+     */
     public static CurveKey fromString(final String z85String) {
 
         checkArgument(
@@ -28,6 +39,12 @@ public class CurveKey {
         return new CurveKey(z85String, Z85.decode(z85String));
     }
 
+    /**
+     * Создать экземпляр CURVE-ключа на основе бинарного представления
+     * @param binaryForm бинарное представление CURVE-ключа
+     * @return экземпляр CURVE-ключа, соответствующий переданному бинарному представлению
+     * @throws NullPointerException если аргумент {@code binaryForm} является {@code null}
+     */
     public static CurveKey fromBinary(final byte[] binaryForm) {
 
         final byte[] copyBinaryForm = binaryForm.clone();
@@ -41,10 +58,19 @@ public class CurveKey {
         this.binaryForm = binaryForm;
     }
 
+    /**
+     * Получить Z85-представление данного CURVE-ключа.
+     * @return Z85-представление данного CURVE-ключа
+     * @see <a href="https://rfc.zeromq.org/spec:32/Z85">Спецификация формата Z85</a>
+     */
     public String asZ85String() {
         return z85Form;
     }
 
+    /**
+     * Получить бинарное представление данного CURVE-ключа.
+     * @return бинарное представление данного CURVE-ключа
+     */
     public byte[] asBinary() {
         return binaryForm.clone();
     }
@@ -67,6 +93,9 @@ public class CurveKey {
         return Objects.hash(z85Form, binaryForm);
     }
 
+    /**
+     * @return Z85-представление данного CURVE-ключа
+     */
     @Override
     public String toString() {
         return z85Form;

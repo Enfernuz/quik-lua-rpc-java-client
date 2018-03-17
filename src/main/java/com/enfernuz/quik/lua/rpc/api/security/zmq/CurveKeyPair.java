@@ -10,6 +10,8 @@ import static java.util.Objects.requireNonNull;
  * Ключевая пара CURVE для защитного механизма ZeroMQ CURVE.
  * Консистентность ключевой пары (соответствие публичной и секретной частей) не является целью данного класса, поэтому
  * наличие экземпляров с ключами из разных пар вполне возможно (хоть и не имеет особого смысла).
+ * @see <a href="http://curvezmq.org/page:read-the-docs">Документация механизма CURVE</a>
+ * @see <br/><a href="https://rfc.zeromq.org/spec:26/CURVEZMQ">Спецификация механизма CURVE</a>
  */
 public final class CurveKeyPair {
 
