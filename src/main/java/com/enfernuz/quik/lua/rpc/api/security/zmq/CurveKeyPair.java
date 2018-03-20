@@ -8,10 +8,12 @@ import static java.util.Objects.requireNonNull;
 
 /**
  * Ключевая пара CURVE для защитного механизма ZeroMQ CURVE.
+ * <p/>
  * Консистентность ключевой пары (соответствие публичной и секретной частей) не является целью данного класса, поэтому
  * наличие экземпляров с ключами из разных пар вполне возможно (хоть и не имеет особого смысла).
+ *
  * @see <a href="http://curvezmq.org/page:read-the-docs">Документация механизма CURVE</a>
- * @see <br/><a href="https://rfc.zeromq.org/spec:26/CURVEZMQ">Спецификация механизма CURVE</a>
+ * @see <a href="https://rfc.zeromq.org/spec:26/CURVEZMQ">Спецификация механизма CURVE</a>
  */
 public final class CurveKeyPair {
 
@@ -19,10 +21,11 @@ public final class CurveKeyPair {
     private final CurveKey secretKey;
 
     /**
-     * Создать экземпляр ключевой пары CURVE.
-     * @param publicKey публичный CURVE-ключ
-     * @param secretKey секретный CURVE-ключ
-     * @throws NullPointerException если какой либо из аргументов является {@code null}
+     * Создаёт экземпляр ключевой пары CURVE.
+     *
+     * @param publicKey  публичный CURVE-ключ
+     * @param secretKey  секретный CURVE-ключ
+     * @throws NullPointerException если какой либо из аргументов является null
      */
     public CurveKeyPair(final CurveKey publicKey, final CurveKey secretKey) {
 
@@ -31,16 +34,18 @@ public final class CurveKeyPair {
     }
 
     /**
-     * Получить публичный CURVE-ключ данной ключевой пары.
-     * @return публичный CURVE-ключ данной ключевой пары.
+     * Получает публичный CURVE-ключ данной ключевой пары.
+     *
+     * @return публичный CURVE-ключ данной ключевой пары
      */
     public CurveKey getPublicKey() {
         return publicKey;
     }
 
     /**
-     * Получить секретный CURVE-ключ данной ключевой пары.
-     * @return секретный CURVE-ключ данной ключевой пары.
+     * Получает секретный CURVE-ключ данной ключевой пары.
+     *
+     * @return секретный CURVE-ключ данной ключевой пары
      */
     public CurveKey getSecretKey() {
         return secretKey;

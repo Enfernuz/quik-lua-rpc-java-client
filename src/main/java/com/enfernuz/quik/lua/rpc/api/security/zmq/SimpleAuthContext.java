@@ -17,9 +17,10 @@ public final class SimpleAuthContext implements AuthContext {
     private final CurveCredentials curveCredentials;
 
     /**
-     * Создать контекст защитного механизма {@link ZMQ.Socket.Mechanism#PLAIN}.
-     * @param plainCredentials учётные данные клиента для защитного механизма ZeroMQ PLAIN
-     * @throws NullPointerException если указанные учётные данные являются {@code null}
+     * Создаёт контекст защитного механизма ZeroMQ PLAIN.
+     *
+     * @param plainCredentials  учётные данные клиента для защитного механизма {@link ZMQ.Socket.Mechanism#PLAIN}
+     * @throws NullPointerException если указанные учётные данные являются null
      */
     public SimpleAuthContext(final PlainCredentials plainCredentials) {
 
@@ -30,9 +31,10 @@ public final class SimpleAuthContext implements AuthContext {
     }
 
     /**
-     * Создать контекст защитного механизма {@link ZMQ.Socket.Mechanism#CURVE}.
-     * @param curveCredentials учётные данные клиента для защитного механизма ZeroMQ CURVE
-     * @throws NullPointerException если указанные учётные данные являются {@code null}
+     * Создаёт контекст защитного механизма ZeroMQ CURVE.
+     *
+     * @param curveCredentials  учётные данные клиента для защитного механизма {@link ZMQ.Socket.Mechanism#CURVE}
+     * @throws NullPointerException если указанные учётные данные являются null
      */
     public SimpleAuthContext(final CurveCredentials curveCredentials) {
 
@@ -43,7 +45,9 @@ public final class SimpleAuthContext implements AuthContext {
     }
 
     /**
-     * Создать контекст защитного механизма {@link ZMQ.Socket.Mechanism#NULL}.
+     * Создаёт контекст защитного механизма, не предполагающий какой-либо защиты.
+     * <p/>
+     * Защитным механизмом данного контекста выступает механизм {@link ZMQ.Socket.Mechanism#NULL}.
      */
     public SimpleAuthContext() {
         this.authMechanism = ZMQ.Socket.Mechanism.NULL;

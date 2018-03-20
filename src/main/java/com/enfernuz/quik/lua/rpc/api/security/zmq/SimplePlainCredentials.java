@@ -18,10 +18,11 @@ public final class SimplePlainCredentials implements PlainCredentials {
 
     /**
      * Создать учётные данные клиента для защитного механизма ZeroMQ PLAIN.
-     * @param username имя клиента
-     * @param password пароль клиента
-     * @throws IllegalArgumentException если указанное имя клиента является {@code null} или пустой строкой
-     * @throws NullPointerException если указанный пароль клиента является {@code null}
+     *
+     * @param username  имя клиента
+     * @param password  пароль клиента
+     * @throws IllegalArgumentException если указанное имя клиента является null или пустой строкой
+     * @throws NullPointerException если указанный пароль клиента является null
      */
     public SimplePlainCredentials(final String username, final String password) {
 

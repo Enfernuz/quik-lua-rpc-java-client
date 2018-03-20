@@ -8,7 +8,8 @@ import com.enfernuz.quik.lua.rpc.api.security.Securable;
 public interface ZmqSecurable extends Securable {
 
     /**
-     * Получить контекст защитного механизма ZeroMQ для данного экземпляра.
+     * Получает контекст защитного механизма ZeroMQ для данного экземпляра.
+     *
      * @return контекст защитного механизма ZeroMQ для данного экземпляра
      */
     AuthContext getAuthContext();

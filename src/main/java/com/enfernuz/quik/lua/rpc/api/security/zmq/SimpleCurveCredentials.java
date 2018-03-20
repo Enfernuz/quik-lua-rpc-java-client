@@ -15,10 +15,11 @@ public final class SimpleCurveCredentials implements CurveCredentials {
     private final CurveKeyPair clientKeyPair;
 
     /**
-     * Создать учётные данные клиента для защитного механизма ZeroMQ CURVE.
-     * @param serverPublicKey публичный CURVE-ключ сервера
-     * @param clientKeyPair клиентская ключевая пара CURVE
-     * @throws NullPointerException если какой-либо из параметров является {@code null}
+     * Создаёт учётные данные клиента для защитного механизма ZeroMQ CURVE.
+     *
+     * @param serverPublicKey  публичный CURVE-ключ сервера
+     * @param clientKeyPair  клиентская ключевая пара CURVE
+     * @throws NullPointerException если какой-либо из параметров является null
      */
     public SimpleCurveCredentials(final CurveKey serverPublicKey, final CurveKeyPair clientKeyPair) {
 

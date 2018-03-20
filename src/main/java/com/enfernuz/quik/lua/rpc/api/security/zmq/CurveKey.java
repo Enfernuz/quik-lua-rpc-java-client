@@ -10,8 +10,9 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Ключ защитного механизма CURVE.
+ *
  * @see <a href="http://curvezmq.org/page:read-the-docs">Документация механизма CURVE</a>
- * @see <br/><a href="https://rfc.zeromq.org/spec:26/CURVEZMQ">Спецификация механизма CURVE</a>
+ * @see <a href="https://rfc.zeromq.org/spec:26/CURVEZMQ">Спецификация механизма CURVE</a>
  */
 public class CurveKey {
 
@@ -19,10 +20,12 @@ public class CurveKey {
     private final byte[] binaryForm;
 
     /**
-     * Создать экземпляр CURVE-ключа на основе Z85-представления
-     * @param z85String Z85-представление CURVE-ключа
+     * Создаёт экземпляр CURVE-ключа на основе Z85-представления.
+     *
+     * @param z85String  Z85-представление CURVE-ключа
      * @return экземпляр CURVE-ключа, соответствующий переданному Z85-представлению
-     * @throws NullPointerException если аргумент {@code z85String} является {@code null}
+     * @throws IllegalArgumentException если указанное Z85-представление является null, пустой строкой или строкой
+     * длины, отличной от 40 символов
      */
     public static CurveKey fromString(final String z85String) {
 
@@ -40,10 +43,11 @@ public class CurveKey {
     }
 
     /**
-     * Создать экземпляр CURVE-ключа на основе бинарного представления
-     * @param binaryForm бинарное представление CURVE-ключа
+     * Создаёт экземпляр CURVE-ключа на основе бинарного представления.
+     *
+     * @param binaryForm  бинарное представление CURVE-ключа
      * @return экземпляр CURVE-ключа, соответствующий переданному бинарному представлению
-     * @throws NullPointerException если аргумент {@code binaryForm} является {@code null}
+     * @throws NullPointerException если указанное бинарное представление является null
      */
     public static CurveKey fromBinary(final byte[] binaryForm) {
 
@@ -59,7 +63,8 @@ public class CurveKey {
     }
 
     /**
-     * Получить Z85-представление данного CURVE-ключа.
+     * Получает Z85-представление данного CURVE-ключа.
+     *
      * @return Z85-представление данного CURVE-ключа
      * @see <a href="https://rfc.zeromq.org/spec:32/Z85">Спецификация формата Z85</a>
      */
@@ -68,7 +73,8 @@ public class CurveKey {
     }
 
     /**
-     * Получить бинарное представление данного CURVE-ключа.
+     * Получает бинарное представление данного CURVE-ключа.
+     *
      * @return бинарное представление данного CURVE-ключа
      */
     public byte[] asBinary() {
