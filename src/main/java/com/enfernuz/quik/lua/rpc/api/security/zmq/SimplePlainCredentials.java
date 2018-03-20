@@ -8,11 +8,21 @@ import java.util.Objects;
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
 
+/**
+ * Базовая реализация учётных данных клиента для защитного механизма ZeroMQ PLAIN.
+ */
 public final class SimplePlainCredentials implements PlainCredentials {
 
     private final String username;
     private final String password;
 
+    /**
+     * Создать учётные данные клиента для защитного механизма ZeroMQ PLAIN.
+     * @param username имя клиента
+     * @param password пароль клиента
+     * @throws IllegalArgumentException если указанное имя клиента является {@code null} или пустой строкой
+     * @throws NullPointerException если указанный пароль клиента является {@code null}
+     */
     public SimplePlainCredentials(final String username, final String password) {
 
         checkArgument(

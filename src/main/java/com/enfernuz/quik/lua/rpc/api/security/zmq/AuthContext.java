@@ -31,8 +31,10 @@ public interface AuthContext {
     CurveCredentials getCurveCredentials();
 
     /**
-     * Создать контекст защитного механизма, не предполагающий реализации какой-либо защиты.
-     * @return экземпляр контекста защитного механизма, не предполагающего реализации какой-либо защиты
+     * Создать контекст защитного механизма {@link ZMQ.Socket.Mechanism#NULL}, не предполагающий реализации какой-либо
+     * защиты.
+     * @return экземпляр контекста защитного механизма {@link ZMQ.Socket.Mechanism#NULL}, не предполагающего реализации
+     * какой-либо защиты
      */
     static AuthContext none() {
         return new SimpleAuthContext();

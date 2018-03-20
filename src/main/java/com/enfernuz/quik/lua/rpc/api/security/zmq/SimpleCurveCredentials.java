@@ -6,11 +6,20 @@ import java.util.Objects;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * Базовая реализация учётных данных клиента для защитного механизма ZeroMQ CURVE.
+ */
 public final class SimpleCurveCredentials implements CurveCredentials {
 
     private final CurveKey serverPublicKey;
     private final CurveKeyPair clientKeyPair;
 
+    /**
+     * Создать учётные данные клиента для защитного механизма ZeroMQ CURVE.
+     * @param serverPublicKey публичный CURVE-ключ сервера
+     * @param clientKeyPair клиентская ключевая пара CURVE
+     * @throws NullPointerException если какой-либо из параметров является {@code null}
+     */
     public SimpleCurveCredentials(final CurveKey serverPublicKey, final CurveKeyPair clientKeyPair) {
 
         this.serverPublicKey = requireNonNull(serverPublicKey, "The argument \"serverPublicKey\" must not be null.");

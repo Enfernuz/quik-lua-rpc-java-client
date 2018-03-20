@@ -7,28 +7,48 @@ import java.util.Objects;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * Базовая реализация контекста защитного механизма ZeroMQ.
+ */
 public final class SimpleAuthContext implements AuthContext {
 
     private final ZMQ.Socket.Mechanism authMechanism;
-    private PlainCredentials plainCredentials;
-    private CurveCredentials curveCredentials;
+    private final PlainCredentials plainCredentials;
+    private final CurveCredentials curveCredentials;
 
+    /**
+     * Создать контекст защитного механизма {@link ZMQ.Socket.Mechanism#PLAIN}.
+     * @param plainCredentials учётные данные клиента для защитного механизма ZeroMQ PLAIN
+     * @throws NullPointerException если указанные учётные данные являются {@code null}
+     */
     public SimpleAuthContext(final PlainCredentials plainCredentials) {
 
         this.plainCredentials =
                 requireNonNull(plainCredentials, "The argument \"plainCredentials\" must not be null.");
         this.authMechanism = ZMQ.Socket.Mechanism.PLAIN;
+        this.curveCredentials = null;
     }
 
+    /**
+     * Создать контекст защитного механизма {@link ZMQ.Socket.Mechanism#CURVE}.
+     * @param curveCredentials учётные данные клиента для защитного механизма ZeroMQ CURVE
+     * @throws NullPointerException если указанные учётные данные являются {@code null}
+     */
     public SimpleAuthContext(final CurveCredentials curveCredentials) {
 
         this.curveCredentials =
                 requireNonNull(curveCredentials, "The argument \"curveCredentials\" must not be null.");
         this.authMechanism = ZMQ.Socket.Mechanism.CURVE;
+        this.plainCredentials = null;
     }
 
+    /**
+     * Создать контекст защитного механизма {@link ZMQ.Socket.Mechanism#NULL}.
+     */
     public SimpleAuthContext() {
         this.authMechanism = ZMQ.Socket.Mechanism.NULL;
+        this.curveCredentials = null;
+        this.plainCredentials = null;
     }
 
     @Override

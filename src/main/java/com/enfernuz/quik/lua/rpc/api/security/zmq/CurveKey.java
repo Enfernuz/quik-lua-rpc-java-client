@@ -33,7 +33,7 @@ public class CurveKey {
 
         checkArgument(
                 z85String.length() == 40,
-                "The argument \"z85String\" must be a 40-character Z85-encoded string."
+                "The argument \"z85String\" must be a 40-characters length Z85-encoded string."
         );
 
         return new CurveKey(z85String, Z85.decode(z85String));
