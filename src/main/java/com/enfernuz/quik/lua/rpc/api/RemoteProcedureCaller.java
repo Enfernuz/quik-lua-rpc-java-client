@@ -6,7 +6,8 @@ import qlua.rpc.RPC;
 import java.io.IOException;
 
 /**
- * Интерфейс компонента, выполняющего удалённый вызов процедур к API QLua терминала QUIK.
+ * Интерфейс компонента, выполняющего удалённый вызов процедур к API QLua терминала QUIK в формате удалённого вызова
+ * процедур.
  */
 public interface RemoteProcedureCaller {
 

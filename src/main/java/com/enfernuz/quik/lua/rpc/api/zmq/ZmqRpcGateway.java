@@ -9,6 +9,8 @@ import com.enfernuz.quik.lua.rpc.api.security.zmq.ZmqSecurable;
  *     <li>1. является {@link RpcGateway шлюзом удалённого вызова процедур}</li>
  *     <li>2. поддерживает механизмы защиты передачи данных, реализованные в ZeroMQ</li>
  * </ul>
+ *
+ * @see <a href="http://zeromq.org/">ZeroMQ - Distributed Messaging</a>
  */
 public interface ZmqRpcGateway extends RpcGateway, ZmqSecurable {
 }

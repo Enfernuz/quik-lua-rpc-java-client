@@ -8,6 +8,8 @@ import com.enfernuz.quik.lua.rpc.io.transport.TcpGateway;
  *     <li>1. является {@link ZmqRpcGateway шлюзом удалённого вызова процедур на базе ZeroMQ}</li>
  *     <li>2. является {@link TcpGateway TCP-шлюзом}</li>
  * </ul>
+ *
+ * @see <a href="http://zeromq.org/">ZeroMQ - Distributed Messaging</a>
  */
 public interface ZmqTcpRpcGateway extends ZmqRpcGateway, TcpGateway {
 }

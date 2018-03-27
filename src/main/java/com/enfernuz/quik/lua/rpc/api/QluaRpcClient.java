@@ -9,6 +9,8 @@ import qlua.rpc.datasource.*;
 import java.util.Set;
 
 /**
+ * Компонент, представляющий собой Java-обёртку над API QLua терминала QUIK.
+ *
  * @throws RpcClientException в случае возникновения ошибки при удалённом вызове процедуры
  * @throws NullPointerException если аргумент {@code args} является {@code null}
  */
