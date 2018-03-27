@@ -15,11 +15,24 @@ import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public final class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
+/**
+ * Реализация компонента <b>Java-обёртка над API QLua терминала QUIK на базе ZeroMQ</b>.
+ */
+public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
 
     private final ZmqTcpRpcGatewayImpl rpcGateway;
 
-    public static ZmqTcpQluaRpcClientImpl newInstance(final NetworkAddress networkAddress, final AuthContext authContext) {
+    /**
+     * Создаёт новый экземпляр компонента {@link ZmqTcpQluaRpcClientImpl}, с точкой подключения RPC-сервиса на стороне
+     * терминала QUIK по заданному сетевому адресу с заданным контекстом защиты передачи данных.
+     *
+     * @param networkAddress  сетевой адрес точки подключения RPC-сервиса на стороне терминала QUIK
+     * @param authContext  контекст защиты передачи данных
+     * @return новый экземпляр компонента {@link ZmqTcpQluaRpcClientImpl}
+     */
+    public static ZmqTcpQluaRpcClientImpl newInstance(
+            final NetworkAddress networkAddress,
+            final AuthContext authContext) {
 
         final ZmqTcpRpcGatewayImpl rpcGateway = ZmqTcpRpcGatewayImpl.newInstance(networkAddress, authContext);
         return new ZmqTcpQluaRpcClientImpl(rpcGateway);

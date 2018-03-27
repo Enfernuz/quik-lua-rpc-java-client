@@ -14,6 +14,9 @@ import java.io.IOException;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * Реализация компонента <b>TCP-шлюз удалённого вызова процедур на базе ZeroMQ</b>.
+ */
 class ZmqTcpRpcGatewayImpl implements ZmqTcpRpcGateway {
 
     private final NetworkAddress networkAddress;
@@ -23,6 +26,14 @@ class ZmqTcpRpcGatewayImpl implements ZmqTcpRpcGateway {
     private final AuthContext authContext;
     private boolean isOpened;
 
+    /**
+     * Возвращает новый экземпляр компонента {@link ZmqTcpRpcGatewayImpl} с точкой подключения RPC-сервиса на стороне
+     * терминала QUIK по заданному сетевому адресу с заданным контекстом защиты передачи данных.
+     *
+     * @param networkAddress  сетевой адрес точки подключения RPC-сервиса на стороне терминала QUIK
+     * @param authContext  контекст защиты передачи данных
+     * @return новый экземпляр компонента {@link ZmqTcpRpcGatewayImpl}
+     */
     static ZmqTcpRpcGatewayImpl newInstance(
             final NetworkAddress networkAddress,
             final AuthContext authContext) {
