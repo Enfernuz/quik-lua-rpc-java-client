@@ -3,8 +3,14 @@ package com.enfernuz.quik.lua.rpc.events.api;
 import org.slf4j.*;
 import qlua.structs.QluaStructures;
 
+/**
+ * Обработчик событий API QLua терминала QUIK, журналирующий (логгирующий) события и их данные.
+ */
 public enum LoggingEventHandler implements QluaEventHandler {
 
+    /**
+     * Экземпляр журналирующего обработчика событий.
+     */
     INSTANCE;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingEventHandler.class);
