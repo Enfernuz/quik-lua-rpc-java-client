@@ -12,6 +12,9 @@ import org.zeromq.ZMQ;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+/**
+ * Компонент для десериализации объектов типа {@link SimpleClientConfiguration} из текста в формате JSON.
+ */
 final class SimpleClientConfigurationJsonDeserializer extends JsonDeserializer<SimpleClientConfiguration> {
 
     @Override

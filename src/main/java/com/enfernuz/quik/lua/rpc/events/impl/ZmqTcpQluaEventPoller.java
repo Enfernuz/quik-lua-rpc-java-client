@@ -22,6 +22,14 @@ import java.util.EnumSet;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * Компонент, опрашивающий удалённый RPC-сервис <b>quik-lua-rpc</b> на предмет появления новых событий API QLua
+ * терминала QUIK.
+ * <br/>
+ * Связь с <b>quik-lua-rpc</b> происходит по протоколу TCP с помощью ZeroMQ.
+ * @see <a href="https://github.com/Enfernuz/quik-lua-rpc">quik-lua-rpc</a>
+ * @see <a href="http://zeromq.org/">ZeroMQ - Distributed Messaging</a>
+ */
 class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
 
     private final NetworkAddress networkAddress;
@@ -32,6 +40,14 @@ class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
     private boolean isOpened;
     private final EnumSet<QluaEvents.EventType> subscription;
 
+    /**
+     * Создаёт новый экземпляр компонента {@link ZmqTcpQluaEventPoller}, с точкой подключения RPC-сервиса на стороне
+     * терминала QUIK по заданному сетевому адресу с заданным контекстом защиты передачи данных.
+     *
+     * @param networkAddress  сетевой адрес точки подключения RPC-сервиса на стороне терминала QUIK
+     * @param authContext  контекст защиты передачи данных
+     * @return новый экземпляр компонента {@link ZmqTcpQluaEventPoller}
+     */
     static ZmqTcpQluaEventPoller newInstance(final NetworkAddress networkAddress, final AuthContext authContext) {
         return new ZmqTcpQluaEventPoller(requireNonNull(networkAddress), requireNonNull(authContext));
     }

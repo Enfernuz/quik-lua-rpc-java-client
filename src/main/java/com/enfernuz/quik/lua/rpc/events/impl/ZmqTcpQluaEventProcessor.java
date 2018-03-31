@@ -13,11 +13,26 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 import static qlua.structs.QluaStructures.*;
 
+/**
+ * Обработчик очереди событий API QLua терминала QUIK, полученных из удалённого RPC-сервиса <b>quik-lua-rpc</b>.
+ * <br/>
+ * Связь с <b>quik-lua-rpc</b> происходит по протоколу TCP с помощью ZeroMQ.
+ * @see <a href="https://github.com/Enfernuz/quik-lua-rpc">quik-lua-rpc</a>
+ * @see <a href="http://zeromq.org/">ZeroMQ - Distributed Messaging</a>
+ */
 public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
 
     private ZmqTcpQluaEventPoller eventPoller;
     private final List<QluaEventHandler> eventHandlers;
 
+    /**
+     * Создаёт новый экземпляр компонента {@link ZmqTcpQluaEventProcessor}, с точкой подключения RPC-сервиса на стороне
+     * терминала QUIK по заданному сетевому адресу с заданным контекстом защиты передачи данных.
+     *
+     * @param networkAddress  сетевой адрес точки подключения RPC-сервиса на стороне терминала QUIK
+     * @param authContext  контекст защиты передачи данных
+     * @return  новый экземпляр компонента {@link ZmqTcpQluaEventProcessor}
+     */
     public static ZmqTcpQluaEventProcessor newInstance(
             final NetworkAddress networkAddress,
             final AuthContext authContext) {
