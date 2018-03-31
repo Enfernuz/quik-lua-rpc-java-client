@@ -59,7 +59,7 @@ class ZmqTcpRpcGatewayImpl implements ZmqTcpRpcGateway {
             zmqContext = ZMQ.context(1);
 
             reqSocket = zmqContext.socket(ZMQ.REQ);
-            reqSocket.setLinger(1000);
+            reqSocket.setLinger(0); // no waiting before closing the socket
 
             switch (authContext.getAuthMechanism()) {
                 case PLAIN:
