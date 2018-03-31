@@ -44,6 +44,7 @@ public class SubscriptionExampleApplication {
         }
 
         LOGGER.info("Инициализация клиента...");
+        final ExecutorService stdinScannerExecutorService = Executors.newSingleThreadExecutor();
         try (final ZmqTcpQluaEventProcessor eventProcessor =
                      ZmqTcpQluaEventProcessor.newInstance(config.getNetworkAddress(), config.getAuthContext())) {
 
@@ -56,16 +57,27 @@ public class SubscriptionExampleApplication {
             LOGGER.info("Соединение с RPC-сервисом...");
             eventProcessor.open();
 
-            final Scanner scanner = new Scanner(System.in);
+            // monitor the Enter key pressing
+            final AtomicBoolean enough = new AtomicBoolean(false);
+            stdinScannerExecutorService.execute(() -> {
 
-            LOGGER.info("Начало обработки событий. Нажмите любую клавишу для остановки...");
-            while ( !scanner.hasNext() ) {
+                try {
+                    enough.set(System.in.read() > 0);
+                } catch (final Exception ex) {
+                    LOGGER.error("Ошибка при чтении стандартного потока ввода.", ex);
+                }
+            });
+
+            LOGGER.info("Начало обработки событий. Нажмите Enter для остановки...");
+            while ( !enough.get() ) {
                 eventProcessor.process(1);
             }
 
             LOGGER.info("Выход из программы...");
         } catch (final Exception ex) {
             LOGGER.error("Не удалось начать обработку событий.", ex);
+        } finally {
+            stdinScannerExecutorService.shutdownNow();
         }
     }
 }
