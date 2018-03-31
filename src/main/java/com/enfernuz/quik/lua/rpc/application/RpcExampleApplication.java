@@ -14,16 +14,36 @@ public class RpcExampleApplication {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RpcExampleApplication.class);
 
-    public static void main(final String[] args) throws Exception {
+    public static void main(final String[] args) {
 
-        LOGGER.info("Reading the config file...");
-        final ClientConfiguration config = JsonClientConfigurationReader.INSTANCE.read(new File(args[0]));
+        final String filePath = args[0];
+        if (filePath == null) {
+            LOGGER.error("Не задан путь до файла конфигурации.");
+            return;
+        }
 
-        LOGGER.info("Initializing the module...");
+        File configFile;
+        try {
+            configFile = new File(filePath);
+        } catch (final Exception ex) {
+            LOGGER.error(String.format("Не удалось прочитать файл '%s'.", filePath), ex);
+            return;
+        }
+
+        LOGGER.info("Чтение файла конфигурации...");
+        ClientConfiguration config;
+        try {
+            config = JsonClientConfigurationReader.INSTANCE.read(configFile);
+        } catch (final Exception ex) {
+            LOGGER.error(String.format("Не удалось получить объект конфигурации из файла '%s'.", filePath), ex);
+            return;
+        }
+
+        LOGGER.info("Инициализация клиента...");
         try (final ZmqTcpQluaRpcClient rpcClient =
                      ZmqTcpQluaRpcClientImpl.newInstance(config.getNetworkAddress(), config.getAuthContext())) {
 
-            LOGGER.info("Opening a connection...");
+            LOGGER.info("Соединение с RPC-сервисом...");
             rpcClient.open();
 
             final Message.Request request =
@@ -32,11 +52,13 @@ public class RpcExampleApplication {
                             .setIconType(qlua.rpc.Message.IconType.INFO)
                             .build();
 
-            LOGGER.info("Making a 'message' remote procedure call to QUIK...");
+            LOGGER.info("Выполнение удалённой процедуры 'message' на терминале QUIK...");
             final Message.Result result = rpcClient.qlua_message(request);
 
-            LOGGER.info("Result of the 'message' remote procedure call: {}.", result.getResult());
-            LOGGER.info("Exiting...");
+            LOGGER.info("Результат выполнения удалённой процедуры 'message': {}.", result.getResult());
+            LOGGER.info("Выход из программы...");
+        } catch (final Exception ex) {
+            LOGGER.error("Не удалось выполнить удалённый вызов процедуры.", ex);
         }
     }
 }
