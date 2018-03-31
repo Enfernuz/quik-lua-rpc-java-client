@@ -60,6 +60,15 @@ class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
         this.subscription = EnumSet.noneOf(QluaEvents.EventType.class);
     }
 
+    /**
+     * Получает следующее событие в очереди событий терминала API QLua терминала QUIK.
+     * <br/>
+     * Получение следующего события в очереди происходит в неблокирующем режиме.
+     *
+     * @return  следующее событие в очереди событий терминала API QLua терминала QUIK или null, если очередь пуста
+     * @throws PollingException в случае ошибки при попытке получить следующее событие в очереди событий терминала API
+     * QLua терминала QUIK
+     */
     @Override
     public QluaEvent poll() throws PollingException {
 
@@ -67,7 +76,7 @@ class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
 
             final QluaEvent result;
 
-            final byte[] subscriptionKeyAsBytes = subSocket.recv();
+            final byte[] subscriptionKeyAsBytes = subSocket.recv(ZMQ.NOBLOCK);
             if (subscriptionKeyAsBytes == null) {
                 result = null;
             } else {
@@ -198,6 +207,7 @@ class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
             zmqContext = ZMQ.context(1);
             zmqContext.setMaxSockets(1);
             subSocket = zmqContext.socket(ZMQ.SUB);
+            subSocket.setLinger(0); // no waiting before closing the socket
 
             for (final QluaEvents.EventType eventType : subscription) {
                 subSocket.subscribe( String.valueOf(eventType.getNumber()) );
