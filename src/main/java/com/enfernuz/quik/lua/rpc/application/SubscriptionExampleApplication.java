@@ -2,14 +2,13 @@ package com.enfernuz.quik.lua.rpc.application;
 
 import com.enfernuz.quik.lua.rpc.config.ClientConfiguration;
 import com.enfernuz.quik.lua.rpc.config.JsonClientConfigurationReader;
-import com.enfernuz.quik.lua.rpc.config.ObjectReader;
 import com.enfernuz.quik.lua.rpc.events.api.LoggingEventHandler;
+import com.enfernuz.quik.lua.rpc.events.api.QluaEventProcessor;
 import com.enfernuz.quik.lua.rpc.events.impl.ZmqTcpQluaEventProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -74,6 +73,8 @@ public class SubscriptionExampleApplication {
             }
 
             LOGGER.info("Выход из программы...");
+        } catch (final QluaEventProcessor.QluaEventProcessingException ex) {
+            LOGGER.error("Ошибка при обработке события.", ex);
         } catch (final Exception ex) {
             LOGGER.error("Не удалось начать обработку событий.", ex);
         } finally {
