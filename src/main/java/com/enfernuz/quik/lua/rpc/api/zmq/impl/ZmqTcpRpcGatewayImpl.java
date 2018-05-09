@@ -181,8 +181,8 @@ class ZmqTcpRpcGatewayImpl implements ZmqTcpRpcGateway {
 
     private RPC.Response makeRequest(final RPC.Request request) throws IOException {
 
-        final ZMsg zRequest =  ZMsg.newStringMsg( request.toByteString().toStringUtf8() );
-
+        final ZMsg zRequest = new ZMsg();
+        zRequest.add( request.toByteArray() );
         zRequest.send(reqSocket);
 
         final ZMsg zResponse = ZMsg.recvMsg(reqSocket);
