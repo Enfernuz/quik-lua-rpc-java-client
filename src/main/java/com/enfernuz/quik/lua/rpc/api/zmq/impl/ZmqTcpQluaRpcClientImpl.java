@@ -1119,7 +1119,7 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
 
         final RPC.Response response = rpcGateway.call(procedureType, args);
 
-        checkResponseType(procedureType, response.getType());
+        checkResponse(response, procedureType);
 
         return response.getResult();
     }
@@ -1130,16 +1130,30 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
 
         final RPC.Response response = rpcGateway.call(procedureType);
 
-        checkResponseType(procedureType, response.getType());
+        checkResponse(response, procedureType);
 
         return response.getResult();
     }
 
-    private static void checkResponseType(final RPC.ProcedureType expected, final RPC.ProcedureType actual) {
+    private static void checkResponse(final RPC.Response response, final RPC.ProcedureType expectedResponseType) {
 
-        if ( !Objects.equals(expected, actual) ) {
+        if ( response.getIsError() ) {
             throw new RpcClientException(
-                    String.format("Unexpected type of an incoming RPC response: '%s' (expected '%s').", actual, expected)
+                    String.format(
+                            "The RPC service has responded with the following error: '%s'.",
+                            response.getResult().toStringUtf8()
+                    )
+            );
+        }
+
+        final RPC.ProcedureType responseType = response.getType();
+        if ( !Objects.equals(expectedResponseType, responseType) ) {
+            throw new RpcClientException(
+                    String.format(
+                            "Unexpected type of the incoming RPC response: '%s' (expected '%s').",
+                            responseType,
+                            expectedResponseType
+                    )
             );
         }
     }
