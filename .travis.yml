@@ -19,6 +19,5 @@ addons:
     - g++
     - unzip
 
-before_script:
+before_install:
   - ./install-protobuf.sh
-  
