@@ -1,3 +1,4 @@
+dist: trusty
 sudo: false
 language: java
 
@@ -17,5 +18,4 @@ before_install:
   - chmod +x ./install-protobuf.sh
   - ./install-protobuf.sh
   - chmod +x $HOME/protobuf/bin/protoc
-  - export PATH=$HOME/protobuf/bin:$PATH
-  - $HOME/protobuf/bin/protoc --version
+  - export PATH=$PATH:$HOME/protobuf/bin
