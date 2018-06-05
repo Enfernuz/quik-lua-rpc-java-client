@@ -18,4 +18,4 @@ before_install:
   - ./install-protobuf.sh
   - chmod +x $HOME/protobuf/bin/protoc
   - export PATH=$HOME/protobuf/bin:$PATH
-  - protoc --version
+  - $HOME/protobuf/bin/protoc --version
