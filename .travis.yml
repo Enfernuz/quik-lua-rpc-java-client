@@ -17,6 +17,7 @@ before_install:
   - chmod +x ./install-protobuf.sh
   - ./install-protobuf.sh
   - chmod +x ./protobuf/bin/protoc
+  - ls -la ./protobuf/bin
   - ./protobuf/bin/protoc --version
 
 install:
