@@ -16,5 +16,6 @@ addons:
 before_install:
   - chmod +x ./install-protobuf.sh
   - ./install-protobuf.sh
-  - chmod +x ./protobuf/bin/protoc
+  - chmod +x $HOME/protobuf/bin/protoc
   - export PATH=$HOME/protobuf/bin:$PATH
+  - protoc --version
