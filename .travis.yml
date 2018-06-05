@@ -8,5 +8,17 @@ cache:
   directories:
     - $HOME/.m2
 
+addons:
+  apt:
+    packages:
+    - autoconf
+    - automake
+    - libtool
+    - curl
+    - make
+    - g++
+    - unzip
+
 before_script:
   - ./install-protobuf.sh
+  
