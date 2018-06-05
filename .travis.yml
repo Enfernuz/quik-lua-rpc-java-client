@@ -18,9 +18,9 @@ before_install:
   - ./install-protobuf.sh
   - chmod +x ./protobuf/bin/protoc
   - ls -la ./protobuf/bin
-  - protobuf/bin/protoc --version
 
 install:
+  - ls -la ./protobuf/bin
   - mvn install -DprotocExecutable=./protobuf/bin/protoc -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 script:
