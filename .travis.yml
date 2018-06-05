@@ -11,12 +11,6 @@ cache:
 addons:
   apt:
     packages:
-    - autoconf
-    - automake
-    - libtool
-    - curl
-    - make
-    - g++
     - unzip
 
 before_install:

@@ -1,5 +1,7 @@
 #!/bin/sh
 set -ex
-wget https://github.com/google/protobuf/archive/v3.5.1.tar.gz
-tar -xzvf v3.5.1.tar.gz
-cd protobuf-3.5.1 && ./autogen.sh && ./configure --prefix=/usr && make && sudo make install && sudo ldconfig
+wget https://github.com/google/protobuf/releases/download/v3.5.1/protoc-3.5.1-linux-x86_32.zip
+unzip protoc-3.5.1-linux-x86_32.zip -d protobuf-3.5.1
+cd protobuf-3.5.1
+mv bin/* /usr/local/bin/
+mv include/* /usr/local/include/
