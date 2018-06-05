@@ -17,4 +17,4 @@ before_install:
   - chmod +x ./install-protobuf.sh
   - ./install-protobuf.sh
   - chmod +x ./protobuf/bin/protoc
-  - export PATH=./protobuf/bin:$PATH
+  - export PATH=$HOME/protobuf/bin:$PATH
