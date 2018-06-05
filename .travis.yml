@@ -1,0 +1,12 @@
+sudo: false
+language: java
+
+jdk:
+- openjdk8
+
+cache:
+  directories:
+    - $HOME/.m2
+
+before_script:
+  - ./install-protobuf.sh
