@@ -17,9 +17,11 @@ before_install:
   - chmod +x ./install-protobuf.sh
   - ./install-protobuf.sh
   - chmod +x ./protobuf/bin/protoc
+  - pwd
 
 install:
-  - mvn install -DprotocExecutable="./protobuf/bin/protoc" -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+  - pwd
+  - mvn install -DprotocExecutable="protobuf/bin/protoc" -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 script:
-  - mvn test -DprotocExecutable="./protobuf/bin/protoc" -B
+  - mvn test -DprotocExecutable="protobuf/bin/protoc" -B
