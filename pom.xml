@@ -134,6 +134,10 @@
 	    	<version>4.3.0</version>
 	    	<configuration>
 		    <repoToken>${env.repoToken}</repoToken>
+		    <sourceEncoding>UTF-8</sourceEncoding>
+		    <sourceDirectories>
+			<sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+		    </sourceDirectories>
 	    	</configuration>
 	    </plugin>
 
