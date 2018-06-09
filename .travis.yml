@@ -22,4 +22,3 @@ before_install:
 
 after_success:
   - mvn clean test jacoco:report coveralls:report
-  - cat /home/travis/build/Enfernuz/quik-lua-rpc-java-client/target/site/jacoco/jacoco.xml
