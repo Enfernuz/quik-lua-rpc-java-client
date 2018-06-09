@@ -21,4 +21,5 @@ before_install:
   - export PATH=$PATH:$HOME/protobuf/bin
 
 after_success:
-  - mvn -Dprotoc.skip=true clean test jacoco:report coveralls:report
+  - mvn clean test jacoco:report coveralls:report
+  - ls -la
