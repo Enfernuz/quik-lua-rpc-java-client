@@ -15,7 +15,7 @@ addons:
     - unzip
 
 before_install:
-  - chmod +x ./install-protobuf.sh
-  - ./install-protobuf.sh
+  - chmod +x ./.travis/install-protobuf.sh
+  - ./.travis/install-protobuf.sh
   - chmod +x $HOME/protobuf/bin/protoc
   - export PATH=$PATH:$HOME/protobuf/bin
