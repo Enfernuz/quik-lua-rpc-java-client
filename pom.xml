@@ -115,7 +115,7 @@
 	    	<version>0.7.6.201602180812</version>
 		<configuration>
 		    <excludes>
-		    	<exclude>**/target/generated-sources/**</exclude>
+		    	<exclude>target/generated-sources/**/*.java</exclude>
 		    </excludes>
 		</configuration>
 	    	<executions>
