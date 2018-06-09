@@ -114,7 +114,9 @@
 	    	<artifactId>jacoco-maven-plugin</artifactId>
 	    	<version>0.7.6.201602180812</version>
 		<configuration>
-		    <exclude>**/target/generated-sources/**/*.java</exclude>
+		    <excludes>
+		    	<exclude>**/target/generated-sources/**</exclude>
+		    </excludes>
 		</configuration>
 	    	<executions>
 		    <execution>
