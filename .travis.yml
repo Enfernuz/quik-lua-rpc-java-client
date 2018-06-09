@@ -19,3 +19,6 @@ before_install:
   - ./.travis/install-protobuf.sh
   - chmod +x $HOME/protobuf/bin/protoc
   - export PATH=$PATH:$HOME/protobuf/bin
+
+after_success:
+  - mvn clean test jacoco:report coveralls:report
