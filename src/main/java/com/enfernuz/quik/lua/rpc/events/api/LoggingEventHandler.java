@@ -42,97 +42,97 @@ public enum LoggingEventHandler implements QluaEventHandler {
 
     @Override
     public void onFirm(QluaStructures.Firm firm) {
-        LOGGER.info("onFirm: {}", firm);
+        LOGGER.info("onFirm:\n{}", firm);
     }
 
     @Override
     public void onAllTrade(QluaStructures.AllTrade allTrade) {
-        LOGGER.info("onAllTrade: {}", allTrade);
+        LOGGER.info("onAllTrade:\n{}", allTrade);
     }
 
     @Override
     public void onTrade(QluaStructures.Trade trade) {
-        LOGGER.info("onTrade: {}", trade);
+        LOGGER.info("onTrade:\n{}", trade);
     }
 
     @Override
     public void onOrder(QluaStructures.Order order) {
-        LOGGER.info("onOrder: {}", order);
+        LOGGER.info("onOrder:\n{}", order);
     }
 
     @Override
     public void onAccountBalance(QluaStructures.AccountBalance accountBalance) {
-        LOGGER.info("onAccountBalance: {}", accountBalance);
+        LOGGER.info("onAccountBalance:\n{}", accountBalance);
     }
 
     @Override
     public void onFuturesLimitChange(QluaStructures.FuturesLimit futuresLimit) {
-        LOGGER.info("onFuturesLimitChange: {}", futuresLimit);
+        LOGGER.info("onFuturesLimitChange:\n{}", futuresLimit);
     }
 
     @Override
     public void onFuturesLimitDelete(QluaStructures.FuturesLimitDelete futuresLimitDelete) {
-        LOGGER.info("onFuturesLimitDelete: {}", futuresLimitDelete);
+        LOGGER.info("onFuturesLimitDelete:\n{}", futuresLimitDelete);
     }
 
     @Override
     public void onFuturesClientHolding(QluaStructures.FuturesClientHolding futuresClientHolding) {
-        LOGGER.info("onFuturesClientHolding: {}", futuresClientHolding);
+        LOGGER.info("onFuturesClientHolding:\n{}", futuresClientHolding);
     }
 
     @Override
     public void onMoneyLimit(QluaStructures.MoneyLimit moneyLimit) {
-        LOGGER.info("onMoneyLimit: {}", moneyLimit);
+        LOGGER.info("onMoneyLimit:\n{}", moneyLimit);
     }
 
     @Override
     public void onMoneyLimitDelete(QluaStructures.MoneyLimitDelete moneyLimitDelete) {
-        LOGGER.info("onMoneyLimitDelete: {}", moneyLimitDelete);
+        LOGGER.info("onMoneyLimitDelete:\n{}", moneyLimitDelete);
     }
 
     @Override
     public void onDepoLimit(QluaStructures.DepoLimit depoLimit) {
-        LOGGER.info("onDepoLimit: {}", depoLimit);
+        LOGGER.info("onDepoLimit:\n{}", depoLimit);
     }
 
     @Override
     public void onDepoLimitDelete(QluaStructures.DepoLimitDelete depoLimitDelete) {
-        LOGGER.info("onDepoLimitDelete: {}", depoLimitDelete);
+        LOGGER.info("onDepoLimitDelete:\n{}", depoLimitDelete);
     }
 
     @Override
     public void onAccountPosition(QluaStructures.AccountPosition accountPosition) {
-        LOGGER.info("onAccountPosition: {}", accountPosition);
+        LOGGER.info("onAccountPosition:\n{}", accountPosition);
     }
 
     @Override
     public void onNegDeal(QluaStructures.NegDeal negDeal) {
-        LOGGER.info("onNegDeal: {}", negDeal);
+        LOGGER.info("onNegDeal:\n{}", negDeal);
     }
 
     @Override
     public void onNegTrade(QluaStructures.NegTrade negTrade) {
-        LOGGER.info("onNegTrade: {}", negTrade);
+        LOGGER.info("onNegTrade:\n{}", negTrade);
     }
 
     @Override
     public void onStopOrder(QluaStructures.StopOrder stopOrder) {
-        LOGGER.info("onStopOrder: {}", stopOrder);
+        LOGGER.info("onStopOrder:\n{}", stopOrder);
     }
 
     @Override
     public void onTransReply(QluaStructures.Transaction transaction) {
-        LOGGER.info("onTransReply: {}", transaction);
+        LOGGER.info("onTransReply:\n{}", transaction);
     }
 
     @Override
     public void onParam(QluaStructures.ParamEventInfo param) {
-        LOGGER.info("onParam: {}", param);
+        LOGGER.info("onParam:\n{}", param);
     }
 
     @Override
     public void onQuote(QluaStructures.QuoteEventInfo quote) {
-        LOGGER.info("onQuote: {}", quote);
+        LOGGER.info("onQuote:\n{}", quote);
     }
 
     @Override
