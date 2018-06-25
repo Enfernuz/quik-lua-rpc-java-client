@@ -2,6 +2,7 @@ package com.enfernuz.quik.lua.rpc.events.impl;
 
 import com.enfernuz.quik.lua.rpc.api.security.zmq.AuthContext;
 import com.enfernuz.quik.lua.rpc.events.api.*;
+import com.enfernuz.quik.lua.rpc.events.api.protobuf.ProtobufQluaEvent;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.google.common.collect.*;
 import qlua.events.QluaEvents;
@@ -50,14 +51,14 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
     public void process() throws QluaEventProcessingException {
 
         try {
-            final QluaEvent event = eventPoller.poll();
+            final ProtobufQluaEvent event = eventPoller.poll();
             if (event != null) {
                 for (final QluaEventHandler eventHandler : eventHandlers) {
                     switch (event.getType()) {
                         case PUBLISHER_ONLINE:
                             eventHandler.onInit();
                             break;
-                        case PUBLISHER_OFFLINE:
+                        case ON_STOP:
                             eventHandler.onStop();
                             break;
                         case ON_CLOSE:

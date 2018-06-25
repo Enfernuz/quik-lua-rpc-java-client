@@ -1,7 +1,6 @@
 package com.enfernuz.quik.lua.rpc.events.api;
 
 import com.google.common.collect.ImmutableSet;
-import qlua.events.QluaEvents;
 
 /**
  * Менеджер подписок на события API QLua терминала QUIK.
@@ -13,21 +12,21 @@ public interface QluaEventSubscription {
      *
      * @param eventType  тип события
      */
-    void subscribe(QluaEvents.EventType eventType);
+    void subscribe(QluaEvent.EventType eventType);
 
     /**
      * Добавляет подписки на события заданных типов.
      *
      * @param eventTypes  типы событий
      */
-    void subscribe(Iterable<? extends QluaEvents.EventType> eventTypes);
+    void subscribe(Iterable<? extends QluaEvent.EventType> eventTypes);
 
     /**
      * Добавляет подписки на события заданных типов.
      *
      * @param eventTypes  типы событий
      */
-    void subscribe(QluaEvents.EventType... eventTypes);
+    void subscribe(QluaEvent.EventType... eventTypes);
 
     /**
      * Добавляет подписки на события всех типов.
@@ -39,21 +38,21 @@ public interface QluaEventSubscription {
      *
      * @param eventType  тип события
      */
-    void unsubscribe(QluaEvents.EventType eventType);
+    void unsubscribe(QluaEvent.EventType eventType);
 
     /**
      * Удаляет подписки на события заданных типов.
      *
      * @param eventTypes  типы событий
      */
-    void unsubscribe(Iterable<? extends QluaEvents.EventType> eventTypes);
+    void unsubscribe(Iterable<? extends QluaEvent.EventType> eventTypes);
 
     /**
      * Удаляет подписки на события заданных типов.
      *
      * @param eventTypes  типы событий
      */
-    void unsubscribe(QluaEvents.EventType... eventTypes);
+    void unsubscribe(QluaEvent.EventType... eventTypes);
 
     /**
      * Удаляет подписки на событиях всех типов.
@@ -65,6 +64,6 @@ public interface QluaEventSubscription {
      *
      * @return {@link ImmutableSet неизменяемый набор} типов событий, подписки на которые активны в данный момент
      */
-    ImmutableSet<QluaEvents.EventType> getCurrentSubscription();
+    ImmutableSet<QluaEvent.EventType> getCurrentSubscription();
 
 }
