@@ -2,10 +2,9 @@ package com.enfernuz.quik.lua.rpc.events.impl;
 
 import com.enfernuz.quik.lua.rpc.api.security.zmq.AuthContext;
 import com.enfernuz.quik.lua.rpc.events.api.*;
-import com.enfernuz.quik.lua.rpc.events.api.protobuf.ProtobufQluaEvent;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
+import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import com.google.common.collect.*;
-import qlua.events.QluaEvents;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,6 +24,7 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
 
     private ZmqTcpQluaEventPoller eventPoller;
     private final List<QluaEventHandler> eventHandlers;
+    private final SerdeModule serdeModule;
 
     /**
      * Создаёт новый экземпляр компонента {@link ZmqTcpQluaEventProcessor}, с точкой подключения RPC-сервиса на стороне
@@ -32,18 +32,24 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
      *
      * @param networkAddress  сетевой адрес точки подключения RPC-сервиса на стороне терминала QUIK
      * @param authContext  контекст защиты передачи данных
+     * @param serdeModule  TODO
      * @return  новый экземпляр компонента {@link ZmqTcpQluaEventProcessor}
      */
     public static ZmqTcpQluaEventProcessor newInstance(
             final NetworkAddress networkAddress,
-            final AuthContext authContext) {
+            final AuthContext authContext,
+            final SerdeModule serdeModule) {
 
-        return new ZmqTcpQluaEventProcessor( ZmqTcpQluaEventPoller.newInstance(networkAddress, authContext) );
+        return new ZmqTcpQluaEventProcessor(
+                ZmqTcpQluaEventPoller.newInstance(networkAddress, authContext, serdeModule.getQluaEventTypeSerde()),
+                serdeModule
+        );
     }
 
-    private ZmqTcpQluaEventProcessor(final ZmqTcpQluaEventPoller eventPoller) {
+    private ZmqTcpQluaEventProcessor(final ZmqTcpQluaEventPoller eventPoller, final SerdeModule serdeModule) {
 
-        this.eventPoller = eventPoller;
+        this.eventPoller = requireNonNull(eventPoller, "Аргумент 'eventPoller' не должен быть null.");
+        this.serdeModule = requireNonNull(serdeModule, "Аргумент 'serdeModule' не должен быть null.");
         this.eventHandlers = new ArrayList<>(1);
     }
 
@@ -51,13 +57,10 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
     public void process() throws QluaEventProcessingException {
 
         try {
-            final ProtobufQluaEvent event = eventPoller.poll();
+            final QluaEvent event = eventPoller.poll();
             if (event != null) {
                 for (final QluaEventHandler eventHandler : eventHandlers) {
                     switch (event.getType()) {
-                        case PUBLISHER_ONLINE:
-                            eventHandler.onInit();
-                            break;
                         case ON_STOP:
                             eventHandler.onStop();
                             break;
@@ -71,7 +74,7 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
                             eventHandler.onDisconnected();
                             break;
                         case ON_FIRM:
-                            eventHandler.onFirm( Firm.parseFrom(event.getData()) );
+                            eventHandler.onFirm( serdeModule.getFirmSerde().deserialize(event.getData()) );
                             break;
                         case ON_ALL_TRADE:
                             eventHandler.onAllTrade( AllTrade.parseFrom(event.getData()) );
@@ -184,17 +187,17 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
     }
 
     @Override
-    public void subscribe(final QluaEvents.EventType eventType) {
+    public void subscribe(final QluaEvent.EventType eventType) {
         eventPoller.subscribe(eventType);
     }
 
     @Override
-    public void subscribe(final Iterable<? extends QluaEvents.EventType> eventTypes) {
+    public void subscribe(final Iterable<? extends QluaEvent.EventType> eventTypes) {
         eventPoller.subscribe(eventTypes);
     }
 
     @Override
-    public void subscribe(final QluaEvents.EventType... eventTypes) {
+    public void subscribe(final QluaEvent.EventType... eventTypes) {
         eventPoller.subscribe(eventTypes);
     }
 
@@ -204,17 +207,17 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
     }
 
     @Override
-    public void unsubscribe(final QluaEvents.EventType eventType) {
+    public void unsubscribe(final QluaEvent.EventType eventType) {
         eventPoller.unsubscribe(eventType);
     }
 
     @Override
-    public void unsubscribe(final Iterable<? extends QluaEvents.EventType> eventTypes) {
+    public void unsubscribe(final Iterable<? extends QluaEvent.EventType> eventTypes) {
         eventPoller.unsubscribe(eventTypes);
     }
 
     @Override
-    public void unsubscribe(final QluaEvents.EventType... eventTypes) {
+    public void unsubscribe(final QluaEvent.EventType... eventTypes) {
         eventPoller.unsubscribe(eventTypes);
     }
 
@@ -224,7 +227,7 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
     }
 
     @Override
-    public ImmutableSet<QluaEvents.EventType> getCurrentSubscription() {
+    public ImmutableSet<QluaEvent.EventType> getCurrentSubscription() {
         return eventPoller.getCurrentSubscription();
     }
 

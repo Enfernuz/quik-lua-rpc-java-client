@@ -1,5 +1,6 @@
 package com.enfernuz.quik.lua.rpc.events.api;
 
+import com.enfernuz.quik.lua.rpc.events.api.structures.Firm;
 import qlua.structs.QluaStructures;
 
 /**
@@ -53,7 +54,7 @@ public interface QluaEventHandler {
      *
      * @param firm  новая фирма
      */
-    default void onFirm(final QluaStructures.Firm firm) {}
+    default void onFirm(final Firm firm) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnAllTrade</b>.
