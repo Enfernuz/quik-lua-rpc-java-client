@@ -4,11 +4,12 @@ import com.enfernuz.quik.lua.rpc.events.api.QluaEvent;
 import com.enfernuz.quik.lua.rpc.serde.Serde;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.google.common.primitives.Ints;
 import qlua.events.QluaEvents;
 
 /**
- * Сериализатор в формат Protocol Buffers / десериализатор из формата Protocol Buffers событий API QLua терминала QUIK
- * в рамках удалённого RPC-сервиса <b>quik-lua-rpc</b>.
+ * Сериализатор / десериализатор типов событий API QLua терминала QUIK в рамках удалённого RPC-сервиса
+ * <b>quik-lua-rpc</b>, использующего формат Protocol Buffers.
  * <br/>
  * @see <a href="https://github.com/Enfernuz/quik-lua-rpc">quik-lua-rpc</a>
  * @see <a href="https://developers.google.com/protocol-buffers">Protocol Buffers</a>
@@ -21,11 +22,11 @@ enum ProtobufQluaEventTypeSerde implements Serde<QluaEvent.EventType> {
             createPbEventTypeToEventTypeBiMap();
 
     /**
-     * Сериализует тип события API QLua терминала QUIK в рамках удалённого RPC-сервиса
-     * <b>quik-lua-rpc</b> в бинарное представление в формате Protocol Buffers.
+     * Сериализует в бинарное представление тип события API QLua терминала QUIK в рамках удалённого RPC-сервиса
+     * <b>quik-lua-rpc</b>, использующего формат Protocol Buffers.
      *
      * @param eventType  тип события API QLua терминала QUIK
-     * @return  бинарное представление в формате Protocol Buffers, отвечающее данному типу события;
+     * @return  бинарное представление, отвечающее данному типу события;
      * null в случае отсутствия соответствия, а также в случае, когда аргумент {@code eventType} является null
      */
     @Override
@@ -39,10 +40,10 @@ enum ProtobufQluaEventTypeSerde implements Serde<QluaEvent.EventType> {
     }
 
     /**
-     * Десериализует бинарное представление в формате Protocol Buffers типа события API QLua терминала QUIK в рамках
-     * удалённого RPC-сервиса <b>quik-lua-rpc</b>.
+     * Десериализует бинарное представление типа события API QLua терминала QUIK в рамках удалённого RPC-сервиса
+     * <b>quik-lua-rpc</b>, использующего формат Protocol Buffers.
      *
-     * @param data  бинарное представление типа события в формате Protocol Buffers
+     * @param data  бинарное представление типа события
      * @return  экземпляр {@link QluaEvent.EventType}, отвечающий данному бинарному представлению;
      * null в случае отсутствия соответствия, а также в случае когда аргумент {@code data} является null
      */
@@ -89,6 +90,6 @@ enum ProtobufQluaEventTypeSerde implements Serde<QluaEvent.EventType> {
     }
 
     private static byte[] asByteArray(final int number) {
-        return String.valueOf(number).getBytes(ProtobufSerdeUtils.DEFAULT_PROTOBUF_CHARSET);
+        return Ints.toByteArray(number);
     }
 }
