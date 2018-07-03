@@ -8,11 +8,11 @@ import com.google.common.collect.HashBiMap;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Сериализатор в бинарное представление человекочитаемой строки в кодировке UTF-8 / десериализатор из бинарного
- * представления человекочитаемой строки в кодировке UTF-8 типов событий API QLua терминала QUIK в рамках удалённого
- * RPC-сервиса <b>quik-lua-rpc</b>.
+ * Сериализатор / десериализатор типов событий API QLua терминала QUIK в рамках удалённого
+ * RPC-сервиса <b>quik-lua-rpc</b>, использующего представление данных в виде символьных строк в кодировке UTF-8.
  * <br/>
  * @see <a href="https://github.com/Enfernuz/quik-lua-rpc">quik-lua-rpc</a>
+ * @see <a href="https://ru.wikipedia.org/wiki/UTF-8">UTF-8</a>
  */
 public enum Utf8ReadableStringQluaEventTypeSerde implements Serde<QluaEvent.EventType> {
 
@@ -22,10 +22,10 @@ public enum Utf8ReadableStringQluaEventTypeSerde implements Serde<QluaEvent.Even
             createReadableStringBytesToEventTypeMap();
 
     /**
-     * Десериализует бинарное представление человекочитаемой строки в кодировке UTF-8 в тип события API QLua терминала
-     * QUIK в рамках удалённого RPC-сервиса <b>quik-lua-rpc</b>.
+     * Десериализует бинарное представление типа события API QLua терминала QUIK в рамках удалённого RPC-сервиса
+     * <b>quik-lua-rpc</b>, использующего представление данных в виде символьных строк в кодировке UTF-8.
      *
-     * @param data  бинарное представление человекочитаемой строки в кодировке UTF-8, представляющей тип события
+     * @param data  бинарное представление типа события
      * @return  тип события, отвечающий данному бинарному представлению;
      * null в случае отсутствия соответствия, а также в случае когда аргумент {@code data} является null
      */
@@ -40,11 +40,11 @@ public enum Utf8ReadableStringQluaEventTypeSerde implements Serde<QluaEvent.Even
     }
 
     /**
-     * Сериализует тип события API QLua терминала QUIK в рамках удалённого RPC-сервиса <b>quik-lua-rpc</b> в бинарное
-     * представление человекочитаемой строки в кодировке UTF-8.
+     * Сериализует в бинарное представление тип события API QLua терминала QUIK в рамках удалённого RPC-сервиса
+     * <b>quik-lua-rpc</b>, использующего представление данных в виде символьных строк в кодировке UTF-8.
      *
      * @param eventType  тип события API QLua терминала QUIK
-     * @return  бинарное представление человекочитаемой строки в кодировке UTF-8, отвечающей данному типу события;
+     * @return  бинарное представление, отвечающей данному типу события;
      * null в случае отсутствия соответствия, а также в случае, когда аргумент {@code eventType} является null
      */
     @Override
