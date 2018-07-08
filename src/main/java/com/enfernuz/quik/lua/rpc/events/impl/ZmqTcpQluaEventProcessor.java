@@ -57,7 +57,7 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
     public void process() throws QluaEventProcessingException {
 
         try {
-            final QluaEvent event = eventPoller.poll();
+            final QluaEvent event = eventPoller.poll(QluaEventPoller.PollingMode.BLOCKING);
             if (event != null) {
                 for (final QluaEventHandler eventHandler : eventHandlers) {
                     switch (event.getType()) {
@@ -74,7 +74,7 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
                             eventHandler.onDisconnected();
                             break;
                         case ON_FIRM:
-                            eventHandler.onFirm( serdeModule.getFirmSerde().deserialize(event.getData()) );
+                            eventHandler.onFirm( serdeModule.getFirmDeserializer().deserialize(event.getData()) );
                             break;
                         case ON_ALL_TRADE:
                             eventHandler.onAllTrade( AllTrade.parseFrom(event.getData()) );
@@ -98,7 +98,7 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
                             eventHandler.onFuturesClientHolding( FuturesClientHolding.parseFrom(event.getData()) );
                             break;
                         case ON_MONEY_LIMIT:
-                            eventHandler.onMoneyLimit( MoneyLimit.parseFrom(event.getData()) );
+                            eventHandler.onMoneyLimit( serdeModule.getMoneyLimitDeserializer().deserialize(event.getData()) );
                             break;
                         case ON_MONEY_LIMIT_DELETE:
                             eventHandler.onMoneyLimitDelete( MoneyLimitDelete.parseFrom(event.getData()) );

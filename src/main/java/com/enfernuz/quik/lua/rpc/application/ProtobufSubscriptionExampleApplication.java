@@ -3,8 +3,10 @@ package com.enfernuz.quik.lua.rpc.application;
 import com.enfernuz.quik.lua.rpc.config.ClientConfiguration;
 import com.enfernuz.quik.lua.rpc.config.JsonClientConfigurationReader;
 import com.enfernuz.quik.lua.rpc.events.api.LoggingEventHandler;
+import com.enfernuz.quik.lua.rpc.events.api.QluaEvent;
 import com.enfernuz.quik.lua.rpc.events.api.QluaEventProcessor;
 import com.enfernuz.quik.lua.rpc.events.impl.ZmqTcpQluaEventProcessor;
+import com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +15,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class SubscriptionExampleApplication {
+public class ProtobufSubscriptionExampleApplication {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SubscriptionExampleApplication.class);
 
@@ -45,10 +47,12 @@ public class SubscriptionExampleApplication {
         LOGGER.info("Инициализация клиента...");
         final ExecutorService stdinScannerExecutorService = Executors.newSingleThreadExecutor();
         try (final ZmqTcpQluaEventProcessor eventProcessor =
-                     ZmqTcpQluaEventProcessor.newInstance(config.getNetworkAddress(), config.getAuthContext(), null)) {
+                     ZmqTcpQluaEventProcessor.newInstance(config.getNetworkAddress(), config.getAuthContext(), ProtobufSerdeModule.INSTANCE)) {
 
             LOGGER.info("Подписка на все события...");
-            eventProcessor.subscribeToEverything();
+            //eventProcessor.subscribeToEverything();
+            eventProcessor.subscribe(QluaEvent.EventType.ON_FIRM);
+            eventProcessor.subscribe(QluaEvent.EventType.ON_MONEY_LIMIT);
 
             LOGGER.info("Регистрация обработчиков событий...");
             eventProcessor.register(LoggingEventHandler.INSTANCE);

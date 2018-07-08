@@ -1,6 +1,7 @@
 package com.enfernuz.quik.lua.rpc.events.api;
 
 import com.enfernuz.quik.lua.rpc.events.api.structures.Firm;
+import com.enfernuz.quik.lua.rpc.events.api.structures.MoneyLimit;
 import qlua.structs.QluaStructures;
 
 /**
@@ -126,7 +127,7 @@ public interface QluaEventHandler {
      *
      * @param moneyLimit  текущие значения денежного лимита
      */
-    default void onMoneyLimit(final QluaStructures.MoneyLimit moneyLimit) {}
+    default void onMoneyLimit(final MoneyLimit moneyLimit) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnMoneyLimitDelete</b>.

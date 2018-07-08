@@ -1,5 +1,7 @@
 package com.enfernuz.quik.lua.rpc.events.api;
 
+import com.enfernuz.quik.lua.rpc.events.api.structures.Firm;
+import com.enfernuz.quik.lua.rpc.events.api.structures.MoneyLimit;
 import org.slf4j.*;
 import qlua.structs.QluaStructures;
 
@@ -41,7 +43,7 @@ public enum LoggingEventHandler implements QluaEventHandler {
     }
 
     @Override
-    public void onFirm(QluaStructures.Firm firm) {
+    public void onFirm(Firm firm) {
         LOGGER.info("onFirm:\n{}", firm);
     }
 
@@ -81,7 +83,7 @@ public enum LoggingEventHandler implements QluaEventHandler {
     }
 
     @Override
-    public void onMoneyLimit(QluaStructures.MoneyLimit moneyLimit) {
+    public void onMoneyLimit(MoneyLimit moneyLimit) {
         LOGGER.info("onMoneyLimit:\n{}", moneyLimit);
     }
 

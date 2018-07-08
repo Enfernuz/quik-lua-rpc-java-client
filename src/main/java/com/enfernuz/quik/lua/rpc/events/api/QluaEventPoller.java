@@ -12,11 +12,30 @@ public interface QluaEventPoller extends QluaEventSubscription, Gateway {
     /**
      * Опрашивает удалённый RPC-сервис <b>quik-lua-rpc</b> на предмет появления нового события API QLua терминала QUIK.
      *
+     * @param mode  режим опроса удалённого RPC-сервиса <b>quik-lua-rpc</b> на предмет появления нового события API QLua терминала
+     * QUIK
      * @return {@link QluaEvent событие} API QLua терминала QUIK или null в случае отсутствия новых событий
      * @throws PollingException в случае ошибки при опросе удалённого RPC-сервиса <b>quik-lua-rpc</b> на предмет
      * появления нового события API QLua терминала QUIK
      */
-    QluaEvent poll() throws PollingException;
+    QluaEvent poll(final PollingMode mode) throws PollingException;
+
+    /**
+     * Режим опроса удалённого RPC-сервиса <b>quik-lua-rpc</b> на предмет появления нового события API QLua терминала
+     * QUIK.
+     */
+    enum PollingMode {
+
+        /**
+         * Блокирующее чтение очереди событий. Читающий поток заблокируется до получения нового события.
+         */
+        BLOCKING,
+
+        /**
+         * Неблокирующее чтение очереди событий. Читающий поток не блокируется при отсутствии новых событий.
+         */
+        NO_BLOCKING;
+    }
 
     /**
      * Исключение, возникающее в случае ошибки при опросе удалённого RPC-сервиса <b>quik-lua-rpc</b> на предмет

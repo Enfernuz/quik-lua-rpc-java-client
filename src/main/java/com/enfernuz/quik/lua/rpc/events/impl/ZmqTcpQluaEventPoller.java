@@ -74,20 +74,33 @@ class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
     /**
      * Получает следующее событие в очереди событий терминала API QLua терминала QUIK.
      * <br/>
-     * Получение следующего события в очереди происходит в неблокирующем режиме.
      *
+     * @param mode  режим опроса удалённого RPC-сервиса <b>quik-lua-rpc</b> на предмет появления нового события API QLua терминала
+     * QUIK
      * @return  следующее событие в очереди событий терминала API QLua терминала QUIK или null, если очередь пуста
      * @throws PollingException в случае ошибки при попытке получить следующее событие в очереди событий терминала API
      * QLua терминала QUIK
      */
     @Override
-    public QluaEvent poll() throws PollingException {
+    public QluaEvent poll(final PollingMode mode) throws PollingException {
 
         try {
 
             final QluaEvent result;
+            final byte[] subscriptionKeyAsBytes;
+            switch (mode) {
+                case BLOCKING:
+                    subscriptionKeyAsBytes = subSocket.recv();
+                    break;
+                case NO_BLOCKING:
+                    subscriptionKeyAsBytes = subSocket.recv(ZMQ.NOBLOCK);
+                    break;
+                default:
+                    throw new IllegalArgumentException(
+                            String.format("Неподдерживаемый режим опроса очереди событий: '%s'.", mode)
+                    );
+            }
 
-            final byte[] subscriptionKeyAsBytes = subSocket.recv(ZMQ.NOBLOCK);
             if (subscriptionKeyAsBytes == null) {
                 result = null;
             } else {
