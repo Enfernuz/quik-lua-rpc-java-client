@@ -27,7 +27,7 @@ enum ProtobufQluaEventTypeSerde implements Serde<QluaEvent.EventType> {
             createPbEventTypeHashToEventTypeMap();
 
     private static final EnumMap<QluaEvent.EventType, byte[]> EVENT_TYPE_TO_PB_EVENT_TYPE_BYTES_MAP =
-            createEventTypeToPbTypeBytesMap();
+            createEventTypeToPbEventTypeBytesMap();
 
     /**
      * Сериализует в бинарное представление тип события API QLua терминала QUIK в рамках удалённого RPC-сервиса
@@ -94,7 +94,7 @@ enum ProtobufQluaEventTypeSerde implements Serde<QluaEvent.EventType> {
         return result;
     }
 
-    private static EnumMap<QluaEvent.EventType, byte[]> createEventTypeToPbTypeBytesMap() {
+    private static EnumMap<QluaEvent.EventType, byte[]> createEventTypeToPbEventTypeBytesMap() {
 
         final EnumMap<QluaEvent.EventType, byte[]> result = new EnumMap<>(QluaEvent.EventType.class);
 

@@ -11,9 +11,9 @@ public enum ProtobufMoneyLimitDeserializer implements Deserializer<MoneyLimit> {
 
     @Override
     public MoneyLimit deserialize(final byte[] data) {
+
         try {
             final QluaStructures.MoneyLimit moneyLimit = QluaStructures.MoneyLimit.parseFrom(data);
-
             return MoneyLimit
                     .builder()
                     .currCode( moneyLimit.getCurrcode() )

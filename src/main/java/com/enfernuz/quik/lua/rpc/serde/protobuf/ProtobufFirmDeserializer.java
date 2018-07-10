@@ -14,7 +14,13 @@ enum ProtobufFirmDeserializer implements Deserializer<Firm> {
 
         try {
             final QluaStructures.Firm firm = QluaStructures.Firm.parseFrom(data);
-            return new Firm(firm.getFirmid(), firm.getFirmName(), firm.getStatus(), firm.getExchange());
+            return Firm
+                    .builder()
+                    .firmId(firm.getFirmid())
+                    .firmName(firm.getFirmName())
+                    .status(firm.getStatus())
+                    .exchange(firm.getExchange())
+                    .build();
         } catch (final Exception ex) {
             throw new SerdeException(); // TODO
         }

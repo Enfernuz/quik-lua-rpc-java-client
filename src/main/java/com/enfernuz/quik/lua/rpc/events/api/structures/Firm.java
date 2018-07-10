@@ -1,42 +1,30 @@
 package com.enfernuz.quik.lua.rpc.events.api.structures;
 
 import com.google.common.base.MoreObjects;
+import lombok.Builder;
+import lombok.NonNull;
+import lombok.Value;
+import lombok.experimental.NonFinal;
 
 import java.util.Objects;
 
-import static java.util.Objects.requireNonNull;
+@Value
+@Builder
+public class Firm {
 
-public final class Firm {
+    String firmId;
+    String firmName;
+    int status;
+    String exchange;
 
-    private final String firmId;
-    private final String firmName;
-    private final int status;
-    private final String exchange;
+    private @NonFinal transient int hashCode;
+    private @NonFinal transient String asString;
 
-    private transient int hashCode;
-    private transient String asString;
-
-    public Firm(final String firmId, final String firmName, int status, final String exchange) {
-        this.firmId = requireNonNull(firmId, "Аргумент 'firmId' не должен быть null.");
+    private Firm(@NonNull final String firmId, final String firmName, int status, final String exchange) {
+        this.firmId = firmId;
         this.firmName = firmName;
         this.status = status;
         this.exchange = exchange;
-    }
-
-    public String getFirmId() {
-        return firmId;
-    }
-
-    public String getFirmName() {
-        return firmName;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public String getExchange() {
-        return exchange;
     }
 
     @Override
