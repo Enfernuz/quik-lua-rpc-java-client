@@ -6,9 +6,7 @@ import com.enfernuz.quik.lua.rpc.events.api.structures.MoneyLimit;
 
 public interface SerdeModule {
 
-    Serde<QluaEvent.EventType> getQluaEventTypeSerde();
+    <T> byte[] serialize(T t);
 
-    Deserializer<Firm> getFirmDeserializer();
-
-    Deserializer<MoneyLimit> getMoneyLimitDeserializer();
+    <T> T deserialize(Class<T> clazz, byte[] data);
 }

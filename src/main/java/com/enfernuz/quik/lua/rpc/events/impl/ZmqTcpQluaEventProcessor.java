@@ -2,16 +2,18 @@ package com.enfernuz.quik.lua.rpc.events.impl;
 
 import com.enfernuz.quik.lua.rpc.api.security.zmq.AuthContext;
 import com.enfernuz.quik.lua.rpc.events.api.*;
+import com.enfernuz.quik.lua.rpc.events.api.structures.Firm;
+import com.enfernuz.quik.lua.rpc.events.api.structures.MoneyLimit;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import com.google.common.collect.*;
+import qlua.structs.QluaStructures;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Objects.requireNonNull;
-import static qlua.structs.QluaStructures.*;
 
 /**
  * Обработчик очереди событий API QLua терминала QUIK, полученных из удалённого RPC-сервиса <b>quik-lua-rpc</b>.
@@ -32,7 +34,7 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
      *
      * @param networkAddress  сетевой адрес точки подключения RPC-сервиса на стороне терминала QUIK
      * @param authContext  контекст защиты передачи данных
-     * @param serdeModule  TODO
+     * @param serdeModule  модуль сериализации/десериализации доменных объектов QLua
      * @return  новый экземпляр компонента {@link ZmqTcpQluaEventProcessor}
      */
     public static ZmqTcpQluaEventProcessor newInstance(
@@ -41,7 +43,7 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
             final SerdeModule serdeModule) {
 
         return new ZmqTcpQluaEventProcessor(
-                ZmqTcpQluaEventPoller.newInstance(networkAddress, authContext, serdeModule.getQluaEventTypeSerde()),
+                ZmqTcpQluaEventPoller.newInstance(networkAddress, authContext, serdeModule),
                 serdeModule
         );
     }
@@ -58,6 +60,7 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
 
         try {
             final QluaEvent event = eventPoller.poll(QluaEventPoller.PollingMode.BLOCKING);
+            final byte[] eventData = event.getData();
             if (event != null) {
                 for (final QluaEventHandler eventHandler : eventHandlers) {
                     switch (event.getType()) {
@@ -74,61 +77,61 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
                             eventHandler.onDisconnected();
                             break;
                         case ON_FIRM:
-                            eventHandler.onFirm( serdeModule.getFirmDeserializer().deserialize(event.getData()) );
+                            eventHandler.onFirm( serdeModule.deserialize(Firm.class, eventData) );
                             break;
                         case ON_ALL_TRADE:
-                            eventHandler.onAllTrade( AllTrade.parseFrom(event.getData()) );
+                            eventHandler.onAllTrade( QluaStructures.AllTrade.parseFrom(event.getData()) );
                             break;
                         case ON_TRADE:
-                            eventHandler.onTrade( Trade.parseFrom(event.getData()) );
+                            eventHandler.onTrade( QluaStructures.Trade.parseFrom(event.getData()) );
                             break;
                         case ON_ORDER:
-                            eventHandler.onOrder( Order.parseFrom(event.getData()) );
+                            eventHandler.onOrder( QluaStructures.Order.parseFrom(event.getData()) );
                             break;
                         case ON_ACCOUNT_BALANCE:
-                            eventHandler.onAccountBalance( AccountBalance.parseFrom(event.getData()) );
+                            eventHandler.onAccountBalance( QluaStructures.AccountBalance.parseFrom(event.getData()) );
                             break;
                         case ON_FUTURES_LIMIT_CHANGE:
-                            eventHandler.onFuturesLimitChange( FuturesLimit.parseFrom(event.getData()) );
+                            eventHandler.onFuturesLimitChange( QluaStructures.FuturesLimit.parseFrom(event.getData()) );
                             break;
                         case ON_FUTURES_LIMIT_DELETE:
-                            eventHandler.onFuturesLimitDelete( FuturesLimitDelete.parseFrom(event.getData()) );
+                            eventHandler.onFuturesLimitDelete( QluaStructures.FuturesLimitDelete.parseFrom(event.getData()) );
                             break;
                         case ON_FUTURES_CLIENT_HOLDING:
-                            eventHandler.onFuturesClientHolding( FuturesClientHolding.parseFrom(event.getData()) );
+                            eventHandler.onFuturesClientHolding( QluaStructures.FuturesClientHolding.parseFrom(event.getData()) );
                             break;
                         case ON_MONEY_LIMIT:
-                            eventHandler.onMoneyLimit( serdeModule.getMoneyLimitDeserializer().deserialize(event.getData()) );
+                            eventHandler.onMoneyLimit( serdeModule.deserialize(MoneyLimit.class, eventData) );
                             break;
                         case ON_MONEY_LIMIT_DELETE:
-                            eventHandler.onMoneyLimitDelete( MoneyLimitDelete.parseFrom(event.getData()) );
+                            eventHandler.onMoneyLimitDelete( QluaStructures.MoneyLimitDelete.parseFrom(event.getData()) );
                             break;
                         case ON_DEPO_LIMIT:
-                            eventHandler.onDepoLimit( DepoLimit.parseFrom(event.getData()) );
+                            eventHandler.onDepoLimit( QluaStructures.DepoLimit.parseFrom(event.getData()) );
                             break;
                         case ON_DEPO_LIMIT_DELETE:
-                            eventHandler.onDepoLimitDelete( DepoLimitDelete.parseFrom(event.getData()) );
+                            eventHandler.onDepoLimitDelete( QluaStructures.DepoLimitDelete.parseFrom(event.getData()) );
                             break;
                         case ON_ACCOUNT_POSITION:
-                            eventHandler.onAccountPosition( AccountPosition.parseFrom(event.getData()) );
+                            eventHandler.onAccountPosition( QluaStructures.AccountPosition.parseFrom(event.getData()) );
                             break;
                         case ON_NEG_DEAL:
-                            eventHandler.onNegDeal( NegDeal.parseFrom(event.getData()) );
+                            eventHandler.onNegDeal( QluaStructures.NegDeal.parseFrom(event.getData()) );
                             break;
                         case ON_NEG_TRADE:
-                            eventHandler.onNegTrade( NegTrade.parseFrom(event.getData()) );
+                            eventHandler.onNegTrade( QluaStructures.NegTrade.parseFrom(event.getData()) );
                             break;
                         case ON_STOP_ORDER:
-                            eventHandler.onStopOrder( StopOrder.parseFrom(event.getData()) );
+                            eventHandler.onStopOrder( QluaStructures.StopOrder.parseFrom(event.getData()) );
                             break;
                         case ON_TRANS_REPLY:
-                            eventHandler.onTransReply( Transaction.parseFrom(event.getData()) );
+                            eventHandler.onTransReply( QluaStructures.Transaction.parseFrom(event.getData()) );
                             break;
                         case ON_PARAM:
-                            eventHandler.onParam( ParamEventInfo.parseFrom(event.getData()) );
+                            eventHandler.onParam( QluaStructures.ParamEventInfo.parseFrom(event.getData()) );
                             break;
                         case ON_QUOTE:
-                            eventHandler.onQuote( QuoteEventInfo.parseFrom(event.getData()) );
+                            eventHandler.onQuote( QluaStructures.QuoteEventInfo.parseFrom(event.getData()) );
                             break;
                         case ON_CLEAN_UP:
                             eventHandler.onCleanUp();

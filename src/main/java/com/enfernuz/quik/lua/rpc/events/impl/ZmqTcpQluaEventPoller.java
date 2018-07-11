@@ -8,6 +8,7 @@ import com.enfernuz.quik.lua.rpc.events.api.QluaEvent;
 import com.enfernuz.quik.lua.rpc.events.api.TcpQluaEventPoller;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.enfernuz.quik.lua.rpc.serde.Serde;
+import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import com.google.common.collect.ImmutableSet;
 import org.zeromq.ZFrame;
 import org.zeromq.ZMQ;
@@ -37,7 +38,7 @@ class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
     private final AuthContext authContext;
     private boolean isOpened;
     private final EnumSet<QluaEvent.EventType> subscription;
-    private final Serde<QluaEvent.EventType> qluaEventTypeSerde;
+    private final SerdeModule serdeModule;
 
     /**
      * Создаёт новый экземпляр компонента {@link ZmqTcpQluaEventPoller}, с точкой подключения RPC-сервиса на стороне
@@ -45,28 +46,29 @@ class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
      *
      * @param networkAddress  сетевой адрес точки подключения RPC-сервиса на стороне терминала QUIK
      * @param authContext  контекст защиты передачи данных
+     * @param serdeModule  модуль сериализации/десериализации доменных объектов QLua
      * @return новый экземпляр компонента {@link ZmqTcpQluaEventPoller}
      */
     static ZmqTcpQluaEventPoller newInstance(
             final NetworkAddress networkAddress,
             final AuthContext authContext,
-            final Serde<QluaEvent.EventType> qluaEventTypeSerde) {
+            final SerdeModule serdeModule) {
 
         return new ZmqTcpQluaEventPoller(
                 requireNonNull(networkAddress),
                 requireNonNull(authContext),
-                requireNonNull(qluaEventTypeSerde)
+                requireNonNull(serdeModule)
         );
     }
 
     private ZmqTcpQluaEventPoller(
             final NetworkAddress networkAddress,
             final AuthContext authContext,
-            final Serde<QluaEvent.EventType> qluaEventTypeSerde) {
+            final SerdeModule serdeModule) {
 
         this.networkAddress = networkAddress;
         this.authContext = authContext;
-        this.qluaEventTypeSerde = qluaEventTypeSerde;
+        this.serdeModule = serdeModule;
         this.uri = String.format("tcp://%s:%d", networkAddress.getHost(), networkAddress.getPort());
         this.subscription = EnumSet.noneOf(QluaEvent.EventType.class);
     }
@@ -105,9 +107,7 @@ class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
                 result = null;
             } else {
 
-                //final String subscriptionKeyAsString = new String(subscriptionKeyAsBytes, StandardCharsets.UTF_8);
-
-                final QluaEvent.EventType eventType = qluaEventTypeSerde.deserialize(subscriptionKeyAsBytes);
+                final QluaEvent.EventType eventType = serdeModule.deserialize(QluaEvent.EventType.class, subscriptionKeyAsBytes);
                 if (eventType == null) {
                     throw new PollingException( String.format("Unknown subscription key: %s.", new String(subscriptionKeyAsBytes, StandardCharsets.UTF_8)) );
                 }
@@ -141,7 +141,7 @@ class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
     public void subscribe(final QluaEvent.EventType eventType) {
 
         if (isOpened) {
-            subSocket.subscribe( qluaEventTypeSerde.serialize(eventType) );
+            subSocket.subscribe( serdeModule.serialize(eventType) );
         }
 
         subscription.add(eventType);
@@ -172,7 +172,7 @@ class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
     public void unsubscribe(final QluaEvent.EventType eventType) {
 
         if (isOpened) {
-            subSocket.unsubscribe( qluaEventTypeSerde.serialize(eventType) );
+            subSocket.unsubscribe( serdeModule.serialize(eventType) );
         }
 
         subscription.remove(eventType);
@@ -220,7 +220,7 @@ class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
             subSocket.setLinger(0); // no waiting before closing the socket
 
             for (final QluaEvent.EventType eventType : subscription) {
-                subSocket.subscribe( qluaEventTypeSerde.serialize(eventType) );
+                subSocket.subscribe( serdeModule.serialize(eventType) );
             }
 
             switch (authContext.getAuthMechanism()) {

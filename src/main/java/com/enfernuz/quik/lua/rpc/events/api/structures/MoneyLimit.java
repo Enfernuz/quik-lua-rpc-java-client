@@ -8,7 +8,6 @@ import lombok.experimental.NonFinal;
 import java.util.Objects;
 
 @Value
-@Builder
 public class MoneyLimit {
 
     String currCode;
@@ -28,6 +27,7 @@ public class MoneyLimit {
     private @NonFinal transient int hashCode;
     private @NonFinal transient String asString;
 
+    @Builder
     private MoneyLimit(
             final String currCode,
             final String tag,

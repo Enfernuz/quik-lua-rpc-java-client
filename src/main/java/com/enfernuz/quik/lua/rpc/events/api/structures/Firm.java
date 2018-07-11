@@ -9,7 +9,6 @@ import lombok.experimental.NonFinal;
 import java.util.Objects;
 
 @Value
-@Builder
 public class Firm {
 
     String firmId;
@@ -20,6 +19,7 @@ public class Firm {
     private @NonFinal transient int hashCode;
     private @NonFinal transient String asString;
 
+    @Builder
     private Firm(@NonNull final String firmId, final String firmName, int status, final String exchange) {
         this.firmId = firmId;
         this.firmName = firmName;
