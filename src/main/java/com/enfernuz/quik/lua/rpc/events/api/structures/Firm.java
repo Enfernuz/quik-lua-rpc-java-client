@@ -58,7 +58,7 @@ public class Firm {
 
         if (asString == null) {
             asString = MoreObjects.toStringHelper(this)
-                    .add("firmId", firmId)
+                    .add("firmid", firmId)
                     .add("firm_name", firmName)
                     .add("status", status)
                     .add("exchange", exchange)

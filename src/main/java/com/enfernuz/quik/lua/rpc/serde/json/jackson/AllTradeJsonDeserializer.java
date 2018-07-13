@@ -37,7 +37,7 @@ public final class AllTradeJsonDeserializer extends JsonDeserializer<AllTrade> {
                 .repoTerm( asText(node, "repoterm") )
                 .secCode( asText(node, "sec_code") )
                 .classCode( asText(node, "class_code") )
-                .dateTime( node.get("datetime").traverse(objectCodec).readValueAs(DateTimeEntry.class) )
+                .datetime( node.get("datetime").traverse(objectCodec).readValueAs(DateTimeEntry.class) )
                 .period( node.get("period").asInt() )
                 .openInterest( asText(node, "open_interest") )
                 .exchangeCode( asText(node, "exchange_code") )

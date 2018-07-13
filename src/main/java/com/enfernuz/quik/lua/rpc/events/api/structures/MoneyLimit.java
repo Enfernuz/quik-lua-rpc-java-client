@@ -112,19 +112,19 @@ public class MoneyLimit {
 
         if (asString == null) {
             asString = MoreObjects.toStringHelper(this)
-                    .add("currCode", currCode)
+                    .add("currcode", currCode)
                     .add("tag", tag)
-                    .add("firmId", firmId)
-                    .add("clientCode", clientCode)
-                    .add("openBal", openBal)
-                    .add("openLimit", openLimit)
-                    .add("currentBal", currentBal)
-                    .add("currentLimit", currentLimit)
+                    .add("firmid", firmId)
+                    .add("client_code", clientCode)
+                    .add("openbal", openBal)
+                    .add("openlimit", openLimit)
+                    .add("currentbal", currentBal)
+                    .add("currentlimit", currentLimit)
                     .add("locked", locked)
-                    .add("lockedValueCoef", lockedValueCoef)
-                    .add("lockedMarginValue", lockedMarginValue)
+                    .add("locked_value_coef", lockedValueCoef)
+                    .add("locked_margin_value", lockedMarginValue)
                     .add("leverage", leverage)
-                    .add("limitKind", limitKind)
+                    .add("limit_kind", limitKind)
                     .toString();
         }
 

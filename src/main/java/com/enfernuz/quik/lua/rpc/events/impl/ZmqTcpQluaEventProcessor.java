@@ -2,9 +2,7 @@ package com.enfernuz.quik.lua.rpc.events.impl;
 
 import com.enfernuz.quik.lua.rpc.api.security.zmq.AuthContext;
 import com.enfernuz.quik.lua.rpc.events.api.*;
-import com.enfernuz.quik.lua.rpc.events.api.structures.AllTrade;
-import com.enfernuz.quik.lua.rpc.events.api.structures.Firm;
-import com.enfernuz.quik.lua.rpc.events.api.structures.MoneyLimit;
+import com.enfernuz.quik.lua.rpc.events.api.structures.*;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import com.google.common.collect.*;
@@ -69,13 +67,13 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
                 for (final QluaEventHandler eventHandler : eventHandlers) {
                     switch (event.getType()) {
                         case ON_STOP:
-                            eventHandler.onStop();
+                            eventHandler.onStop( serdeModule.deserialize(StopEventInfo.class, eventData) );
                             break;
                         case ON_CLOSE:
                             eventHandler.onClose();
                             break;
                         case ON_CONNECTED:
-                            eventHandler.onConnected();
+                            eventHandler.onConnected( serdeModule.deserialize(ConnectedEventInfo.class, eventData) );
                             break;
                         case ON_DISCONNECTED:
                             eventHandler.onDisconnected();
@@ -87,7 +85,7 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
                             eventHandler.onAllTrade( serdeModule.deserialize(AllTrade.class, eventData) );
                             break;
                         case ON_TRADE:
-                            eventHandler.onTrade( QluaStructures.Trade.parseFrom(event.getData()) );
+                            eventHandler.onTrade( serdeModule.deserialize(Trade.class, eventData) );
                             break;
                         case ON_ORDER:
                             eventHandler.onOrder( QluaStructures.Order.parseFrom(event.getData()) );

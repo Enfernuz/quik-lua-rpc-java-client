@@ -1,8 +1,6 @@
 package com.enfernuz.quik.lua.rpc.events.api;
 
-import com.enfernuz.quik.lua.rpc.events.api.structures.AllTrade;
-import com.enfernuz.quik.lua.rpc.events.api.structures.Firm;
-import com.enfernuz.quik.lua.rpc.events.api.structures.MoneyLimit;
+import com.enfernuz.quik.lua.rpc.events.api.structures.*;
 import qlua.structs.QluaStructures;
 
 /**
@@ -21,8 +19,10 @@ public interface QluaEventHandler {
      * Функция обратного вызова для события терминала <b>OnStop</b>.
      * <br/>
      * Событие происходит при остановке скрипта из диалога управления и при закрытии терминала QUIK.
+     *
+     * @param stopEventInfo  аргументы функции обратного вызова OnStop
      */
-    default void onStop() {}
+    default void onStop(StopEventInfo stopEventInfo) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnConnected</b>.
@@ -31,9 +31,8 @@ public interface QluaEventHandler {
      * <br/>
      * Если в течение торгового дня терминал получает новый класс, то функция вызывается еще раз, при этом параметр
      * вызова flag принимает значение «false».
-     * //TODO: add the 'flag' parameter
      */
-    default void onConnected() {}
+    default void onConnected(ConnectedEventInfo connectedEventInfo) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnDisconnected</b>.
@@ -74,7 +73,7 @@ public interface QluaEventHandler {
      *
      * @param trade  сделка
      */
-    default void onTrade(final QluaStructures.Trade trade) {}
+    default void onTrade(final Trade trade) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnOrder</b>.

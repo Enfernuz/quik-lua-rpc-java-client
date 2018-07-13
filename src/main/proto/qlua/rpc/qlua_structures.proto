@@ -552,7 +552,7 @@ message ConnectedEventInfo {
     bool flag = 1;
 }
 
-// Информация из функций обратного вызова OnClose и OnStop
+// Информация из функции обратного вызова OnStop
 message StopEventInfo {
-    int32 flag = 1;
+    int32 signal = 1;
 }

@@ -24,7 +24,7 @@ public class AllTrade {
     String repoTerm;
     String secCode;
     String classCode;
-    DateTimeEntry dateTime;
+    DateTimeEntry datetime;
     int period;
     String openInterest;
     String exchangeCode;
@@ -47,7 +47,7 @@ public class AllTrade {
                     final String repoTerm,
                     final String secCode,
                     final String classCode,
-                    final DateTimeEntry dateTime,
+                    final DateTimeEntry datetime,
                     final int period,
                     final String openInterest,
                     final String exchangeCode) {
@@ -66,7 +66,7 @@ public class AllTrade {
         this.repoTerm = repoTerm;
         this.secCode = secCode;
         this.classCode = classCode;
-        this.dateTime = dateTime;
+        this.datetime = datetime;
         this.period = period;
         this.openInterest = openInterest;
         this.exchangeCode = exchangeCode;
@@ -96,7 +96,7 @@ public class AllTrade {
                     Objects.equals(repoTerm, allTrade.repoTerm) &&
                     Objects.equals(secCode, allTrade.secCode) &&
                     Objects.equals(classCode, allTrade.classCode) &&
-                    Objects.equals(dateTime, allTrade.dateTime) &&
+                    Objects.equals(datetime, allTrade.datetime) &&
                     Objects.equals(openInterest, allTrade.openInterest) &&
                     Objects.equals(exchangeCode, allTrade.exchangeCode);
         }
@@ -122,7 +122,7 @@ public class AllTrade {
                             repoTerm,
                             secCode,
                             classCode,
-                            dateTime,
+                            datetime,
                             period,
                             openInterest,
                             exchangeCode
@@ -137,24 +137,24 @@ public class AllTrade {
 
         if (asString == null) {
             asString = MoreObjects.toStringHelper(this)
-                    .add("tradeNum", tradeNum)
+                    .add("trade_num", tradeNum)
                     .add("flags", flags)
                     .add("price", price)
                     .add("qty", qty)
                     .add("value", value)
-                    .add("accruedInt", accruedInt)
+                    .add("accruedint", accruedInt)
                     .add("yield", yield)
-                    .add("settleCode", settleCode)
-                    .add("repoRate", repoRate)
-                    .add("repoValue", repoValue)
-                    .add("repo2Value", repo2Value)
-                    .add("repoTerm", repoTerm)
-                    .add("secCode", secCode)
-                    .add("classCode", classCode)
-                    .add("dateTime", dateTime)
+                    .add("settlecode", settleCode)
+                    .add("reporate", repoRate)
+                    .add("repovalue", repoValue)
+                    .add("repo2value", repo2Value)
+                    .add("repoterm", repoTerm)
+                    .add("sec_code", secCode)
+                    .add("class_code", classCode)
+                    .add("datetime", datetime)
                     .add("period", period)
-                    .add("openInterest", openInterest)
-                    .add("exchangeCode", exchangeCode)
+                    .add("open_interest", openInterest)
+                    .add("exchange_code", exchangeCode)
                     .toString();
         }
 
