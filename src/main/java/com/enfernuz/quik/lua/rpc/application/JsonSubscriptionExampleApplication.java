@@ -51,8 +51,9 @@ public class JsonSubscriptionExampleApplication {
 
             LOGGER.info("Подписка на все события...");
             //eventProcessor.subscribeToEverything();
-            eventProcessor.subscribe(QluaEvent.EventType.ON_FIRM);
-            eventProcessor.subscribe(QluaEvent.EventType.ON_MONEY_LIMIT);
+//            eventProcessor.subscribe(QluaEvent.EventType.ON_FIRM);
+//            eventProcessor.subscribe(QluaEvent.EventType.ON_MONEY_LIMIT);
+            eventProcessor.subscribe(QluaEvent.EventType.ON_ALL_TRADE);
 
             LOGGER.info("Регистрация обработчиков событий...");
             eventProcessor.register(LoggingEventHandler.INSTANCE);

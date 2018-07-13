@@ -5,7 +5,7 @@ import com.enfernuz.quik.lua.rpc.serde.Deserializer;
 import com.enfernuz.quik.lua.rpc.serde.SerdeException;
 import qlua.structs.QluaStructures;
 
-public enum ProtobufMoneyLimitDeserializer implements Deserializer<MoneyLimit> {
+enum ProtobufMoneyLimitDeserializer implements Deserializer<MoneyLimit> {
 
     INSTANCE;
 
@@ -31,7 +31,10 @@ public enum ProtobufMoneyLimitDeserializer implements Deserializer<MoneyLimit> {
                     .limitKind( moneyLimit.getLimitKind() )
                     .build();
         } catch (final Exception ex) {
-            throw new SerdeException(); // TODO
+            throw new SerdeException(
+                    String.format("Ошибка при десериализации экземпляра %s из protobuf-представления.", MoneyLimit.class.getName()),
+                    ex
+            );
         }
     }
 }

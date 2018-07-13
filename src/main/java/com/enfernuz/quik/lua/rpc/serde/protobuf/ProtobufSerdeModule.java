@@ -33,12 +33,12 @@ public enum ProtobufSerdeModule implements SerdeModule {
     @Override
     public <T> byte[] serialize(final T t) {
 
-        requireNonNull(t, "The argument must not be null.");
+        requireNonNull(t, "Аргумент не должен быть null.");
 
         if (t instanceof QluaEvent.EventType) {
             return ProtobufQluaEventTypeSerde.INSTANCE.serialize((QluaEvent.EventType) t);
         } else {
-            throw new SerdeException(); // TODO
+            throw new SerdeException( new IllegalArgumentException("Неподдерживаемый класс аргумента.") );
         }
     }
 
@@ -50,7 +50,7 @@ public enum ProtobufSerdeModule implements SerdeModule {
         final Deserializer<T> deserializer = (Deserializer<T>) CLASS_TO_DESERIALIZER_MAP.get(clazz);
 
         if (deserializer == null) {
-            throw new SerdeException(); // TODO
+            throw new SerdeException( new IllegalArgumentException("Неподдерживаемый класс для десериализации.") );
         } else {
             try {
                 if (QluaEvent.EventType.class == clazz) {
@@ -63,8 +63,13 @@ public enum ProtobufSerdeModule implements SerdeModule {
                 } else {
                     return deserializer.deserialize(data);
                 }
+            } catch (final SerdeException ex) {
+                throw ex;
             } catch (final RuntimeException ex) {
-                throw new SerdeException(); // TODO
+                throw new SerdeException(
+                        String.format("Ошибка при десериализации экземпляра класса %s.", clazz.getName()),
+                        ex
+                );
             }
         }
     }

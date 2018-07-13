@@ -26,6 +26,9 @@ import static java.util.Objects.requireNonNull;
  * терминала QUIK.
  * <br/>
  * Связь с <b>quik-lua-rpc</b> происходит по протоколу TCP с помощью ZeroMQ.
+ * <br/>
+ * Экземпляры класса не потокобезопасны.
+ *
  * @see <a href="https://github.com/Enfernuz/quik-lua-rpc">quik-lua-rpc</a>
  * @see <a href="http://zeromq.org/">ZeroMQ - Distributed Messaging</a>
  */

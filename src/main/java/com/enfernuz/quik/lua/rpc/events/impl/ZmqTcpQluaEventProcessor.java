@@ -2,6 +2,7 @@ package com.enfernuz.quik.lua.rpc.events.impl;
 
 import com.enfernuz.quik.lua.rpc.api.security.zmq.AuthContext;
 import com.enfernuz.quik.lua.rpc.events.api.*;
+import com.enfernuz.quik.lua.rpc.events.api.structures.AllTrade;
 import com.enfernuz.quik.lua.rpc.events.api.structures.Firm;
 import com.enfernuz.quik.lua.rpc.events.api.structures.MoneyLimit;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
@@ -19,6 +20,9 @@ import static java.util.Objects.requireNonNull;
  * Обработчик очереди событий API QLua терминала QUIK, полученных из удалённого RPC-сервиса <b>quik-lua-rpc</b>.
  * <br/>
  * Связь с <b>quik-lua-rpc</b> происходит по протоколу TCP с помощью ZeroMQ.
+ * <br/>
+ * Экземпляры класса не потокобезопасны.
+ *
  * @see <a href="https://github.com/Enfernuz/quik-lua-rpc">quik-lua-rpc</a>
  * @see <a href="http://zeromq.org/">ZeroMQ - Distributed Messaging</a>
  */
@@ -80,7 +84,7 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
                             eventHandler.onFirm( serdeModule.deserialize(Firm.class, eventData) );
                             break;
                         case ON_ALL_TRADE:
-                            eventHandler.onAllTrade( QluaStructures.AllTrade.parseFrom(event.getData()) );
+                            eventHandler.onAllTrade( serdeModule.deserialize(AllTrade.class, eventData) );
                             break;
                         case ON_TRADE:
                             eventHandler.onTrade( QluaStructures.Trade.parseFrom(event.getData()) );

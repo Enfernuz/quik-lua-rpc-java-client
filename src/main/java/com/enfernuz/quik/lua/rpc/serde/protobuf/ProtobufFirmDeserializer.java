@@ -22,7 +22,10 @@ enum ProtobufFirmDeserializer implements Deserializer<Firm> {
                     .exchange(firm.getExchange())
                     .build();
         } catch (final Exception ex) {
-            throw new SerdeException(); // TODO
+            throw new SerdeException(
+                    String.format("Ошибка при десериализации экземпляра %s из protobuf-представления.", Firm.class.getName()),
+                    ex
+            );
         }
     }
 }

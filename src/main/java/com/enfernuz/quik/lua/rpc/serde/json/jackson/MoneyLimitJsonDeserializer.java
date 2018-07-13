@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 
-public class MoneyLimitJsonDeserializer extends JsonDeserializer<MoneyLimit> {
+public final class MoneyLimitJsonDeserializer extends JsonDeserializer<MoneyLimit> {
 
     @Override
     public MoneyLimit deserialize(

@@ -1,5 +1,6 @@
 package com.enfernuz.quik.lua.rpc.events.api;
 
+import com.enfernuz.quik.lua.rpc.events.api.structures.AllTrade;
 import com.enfernuz.quik.lua.rpc.events.api.structures.Firm;
 import com.enfernuz.quik.lua.rpc.events.api.structures.MoneyLimit;
 import qlua.structs.QluaStructures;
@@ -64,7 +65,7 @@ public interface QluaEventHandler {
      *
      * @param allTrade  обезличенная сделка
      */
-    default void onAllTrade(final QluaStructures.AllTrade allTrade) {}
+    default void onAllTrade(final AllTrade allTrade) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnTrade</b>.

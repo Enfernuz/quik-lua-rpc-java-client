@@ -16,7 +16,7 @@ import java.util.Map;
  * @see <a href="https://github.com/Enfernuz/quik-lua-rpc">quik-lua-rpc</a>
  * @see <a href="https://json.org">JSON</a>
  */
-public enum JsonQluaEventTypeSerde implements Serde<QluaEvent.EventType> {
+enum JsonQluaEventTypeSerde implements Serde<QluaEvent.EventType> {
 
     INSTANCE;
 

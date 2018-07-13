@@ -28,7 +28,9 @@ public enum JsonSerdeModule implements SerdeModule {
         if (t instanceof QluaEvent.EventType) {
             return JsonQluaEventTypeSerde.INSTANCE.serialize((QluaEvent.EventType) t);
         } else {
-            throw new SerdeException(); // TODO
+            throw new SerdeException(
+                    String.format("Неподдерживаемый класс для сериализации: %s.", t.getClass().getName())
+            );
         }
     }
 
@@ -47,8 +49,10 @@ public enum JsonSerdeModule implements SerdeModule {
                 return objectMapper.readValue(data, clazz);
             }
         } catch (final Exception ex) {
-            ex.printStackTrace();
-            throw new SerdeException(); // TODO
+            throw new SerdeException(
+                    String.format("Ошибка десериализации экземпляра %s из JSON-представления.", clazz.getName()),
+                    ex
+            );
         }
     }
 }

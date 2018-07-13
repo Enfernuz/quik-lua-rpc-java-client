@@ -8,7 +8,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 
-public class FirmJsonDeserializer extends JsonDeserializer<Firm> {
+import static com.enfernuz.quik.lua.rpc.serde.json.jackson.QluaJsonJacksonUtils.asText;
+
+public final class FirmJsonDeserializer extends JsonDeserializer<Firm> {
 
     @Override
     public Firm deserialize(final JsonParser jsonParser, final DeserializationContext deserializationContext)
@@ -18,9 +20,9 @@ public class FirmJsonDeserializer extends JsonDeserializer<Firm> {
         return Firm
                 .builder()
                 .firmId( node.get("firmid").asText() )
-                .firmName( node.get("firm_name").asText() )
+                .firmName( asText(node, "firm_name") )
                 .status( node.get("status").asInt() )
-                .exchange( node.get("exchange").asText() )
+                .exchange( asText(node, "exchange") )
                 .build();
     }
 }

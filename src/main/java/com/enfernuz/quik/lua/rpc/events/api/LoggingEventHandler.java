@@ -1,5 +1,6 @@
 package com.enfernuz.quik.lua.rpc.events.api;
 
+import com.enfernuz.quik.lua.rpc.events.api.structures.AllTrade;
 import com.enfernuz.quik.lua.rpc.events.api.structures.Firm;
 import com.enfernuz.quik.lua.rpc.events.api.structures.MoneyLimit;
 import org.slf4j.*;
@@ -48,7 +49,7 @@ public enum LoggingEventHandler implements QluaEventHandler {
     }
 
     @Override
-    public void onAllTrade(QluaStructures.AllTrade allTrade) {
+    public void onAllTrade(AllTrade allTrade) {
         LOGGER.info("onAllTrade:\n{}", allTrade);
     }
 
