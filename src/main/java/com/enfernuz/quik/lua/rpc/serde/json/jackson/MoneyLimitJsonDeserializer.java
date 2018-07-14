@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 
+import static com.enfernuz.quik.lua.rpc.serde.json.jackson.QluaJsonJacksonUtils.asText;
+
 public final class MoneyLimitJsonDeserializer extends JsonDeserializer<MoneyLimit> {
 
     @Override
@@ -18,18 +20,18 @@ public final class MoneyLimitJsonDeserializer extends JsonDeserializer<MoneyLimi
         final JsonNode node = jsonParser.getCodec().readTree(jsonParser);
 
         return MoneyLimit.builder()
-                .currCode( node.get("currcode").asText() )
-                .tag( node.get("tag").asText() )
-                .firmId( node.get("firmid").asText() )
-                .clientCode( node.get("client_code").asText() )
-                .openBal( node.get("openbal").asText() )
-                .openLimit( node.get("openlimit").asText() )
-                .currentBal( node.get("currentbal").asText() )
-                .currentLimit( node.get("currentlimit").asText() )
-                .locked( node.get("locked").asText() )
-                .lockedValueCoef( node.get("locked_value_coef").asText() )
-                .lockedMarginValue( node.get("locked_margin_value").asText() )
-                .leverage( node.get("leverage").asText() )
+                .currCode( asText(node, "currcode") )
+                .tag( asText(node, "tag") )
+                .firmId( asText(node, "firmid") )
+                .clientCode( asText(node, "client_code") )
+                .openBal( asText(node, "openbal") )
+                .openLimit( asText(node, "openlimit") )
+                .currentBal( asText(node, "currentbal") )
+                .currentLimit( asText(node, "currentlimit") )
+                .locked( asText(node, "locked") )
+                .lockedValueCoef( asText(node, "locked_value_coef") )
+                .lockedMarginValue( asText(node, "locked_margin_value") )
+                .leverage( asText(node, "leverage") )
                 .limitKind( node.get("limit_kind").asInt() )
                 .build();
     }
