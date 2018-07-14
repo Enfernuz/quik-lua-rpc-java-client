@@ -140,7 +140,7 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
                             break;
                         default:
                             throw new QluaEventProcessingException(
-                                    String.format("Unexpected event type \"%s\".", event.getType())
+                                    String.format("Неподдерживаемый тип события: \"%s\".", event.getType())
                             );
                     }
                 }
@@ -148,7 +148,7 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
         } catch (final QluaEventProcessingException ex) {
             throw ex;
         } catch (final Exception ex) {
-            throw new QluaEventProcessingException("An error has occurred while processing a QLua event.", ex);
+            throw new QluaEventProcessingException("Ошибка при обработке события QLua.", ex);
         }
     }
 
