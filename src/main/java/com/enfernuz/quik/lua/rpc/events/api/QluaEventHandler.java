@@ -91,7 +91,7 @@ public interface QluaEventHandler {
      *
      * @param accountBalance  текущие позиции по счетам
      */
-    default void onAccountBalance(final QluaStructures.AccountBalance accountBalance) {}
+    default void onAccountBalance(final AccountBalance accountBalance) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnFuturesLimitChange</b>.
