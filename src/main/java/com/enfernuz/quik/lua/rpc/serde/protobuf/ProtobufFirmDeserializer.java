@@ -5,6 +5,8 @@ import com.enfernuz.quik.lua.rpc.serde.Deserializer;
 import com.enfernuz.quik.lua.rpc.serde.SerdeException;
 import qlua.structs.QluaStructures;
 
+import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.nullIfNullOrEmpty;
+
 enum ProtobufFirmDeserializer implements Deserializer<Firm> {
 
     INSTANCE;
@@ -17,9 +19,9 @@ enum ProtobufFirmDeserializer implements Deserializer<Firm> {
             return Firm
                     .builder()
                     .firmId(firm.getFirmid())
-                    .firmName(firm.getFirmName())
+                    .firmName( nullIfNullOrEmpty(firm.getFirmName()) )
                     .status(firm.getStatus())
-                    .exchange(firm.getExchange())
+                    .exchange( nullIfNullOrEmpty(firm.getExchange()) )
                     .build();
         } catch (final Exception ex) {
             throw new SerdeException(

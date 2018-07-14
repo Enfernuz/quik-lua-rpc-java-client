@@ -11,6 +11,6 @@ final class QluaJsonJacksonUtils {
     static String asText(final JsonNode node, final String fieldName) {
 
         final JsonNode value = node.get(fieldName);
-        return value == null ? "" : value.asText();
+        return value == null ? null : value.asText();
     }
 }
