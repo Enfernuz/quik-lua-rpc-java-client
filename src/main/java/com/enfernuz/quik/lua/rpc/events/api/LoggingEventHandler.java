@@ -72,7 +72,7 @@ public enum LoggingEventHandler implements QluaEventHandler {
     }
 
     @Override
-    public void onFuturesLimitDelete(final QluaStructures.FuturesLimitDelete futuresLimitDelete) {
+    public void onFuturesLimitDelete(final FuturesLimitDelete futuresLimitDelete) {
         LOGGER.info("onFuturesLimitDelete:\n{}", futuresLimitDelete);
     }
 

@@ -109,7 +109,7 @@ public interface QluaEventHandler {
      *
      * @param futuresLimitDelete  удаляемый лимит по срочному рынку
      */
-    default void onFuturesLimitDelete(final QluaStructures.FuturesLimitDelete futuresLimitDelete) {}
+    default void onFuturesLimitDelete(final FuturesLimitDelete futuresLimitDelete) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnFuturesClientHolding</b>.
