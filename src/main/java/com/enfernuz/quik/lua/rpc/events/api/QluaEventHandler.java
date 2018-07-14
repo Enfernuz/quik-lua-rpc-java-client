@@ -82,7 +82,7 @@ public interface QluaEventHandler {
      *
      * @param order  заявка
      */
-    default void onOrder(final QluaStructures.Order order) {}
+    default void onOrder(final Order order) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnAccountBalance</b>.

@@ -57,7 +57,7 @@ public enum LoggingEventHandler implements QluaEventHandler {
     }
 
     @Override
-    public void onOrder(QluaStructures.Order order) {
+    public void onOrder(Order order) {
         LOGGER.info("onOrder:\n{}", order);
     }
 
