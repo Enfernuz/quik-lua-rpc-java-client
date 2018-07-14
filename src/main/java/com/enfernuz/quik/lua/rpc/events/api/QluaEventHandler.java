@@ -145,7 +145,7 @@ public interface QluaEventHandler {
      *
      * @param depoLimit  текущие значения лимитов по бумагам
      */
-    default void onDepoLimit(final QluaStructures.DepoLimit depoLimit) {}
+    default void onDepoLimit(final DepoLimit depoLimit) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnDepoLimitDelete</b>.

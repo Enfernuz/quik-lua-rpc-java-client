@@ -92,7 +92,7 @@ public enum LoggingEventHandler implements QluaEventHandler {
     }
 
     @Override
-    public void onDepoLimit(final QluaStructures.DepoLimit depoLimit) {
+    public void onDepoLimit(final DepoLimit depoLimit) {
         LOGGER.info("onDepoLimit:\n{}", depoLimit);
     }
 
