@@ -18,6 +18,7 @@ final class QluaJsonJacksonDeserializers extends SimpleDeserializers {
         super.addDeserializer(AccountBalance.class, new AccountBalanceJsonDeserializer());
         super.addDeserializer(FuturesLimit.class, new FuturesLimitJsonDeserializer());
         super.addDeserializer(FuturesLimitDelete.class, new FuturesLimitDeleteJsonDeserializer());
+        super.addDeserializer(FuturesClientHolding.class, new FuturesClientHoldingJsonDeserializer());
         super.addDeserializer(MoneyLimit.class, new MoneyLimitJsonDeserializer());
         super.addDeserializer(DateTimeEntry.class, new DateTimeEntryJsonDeserializer());
     }

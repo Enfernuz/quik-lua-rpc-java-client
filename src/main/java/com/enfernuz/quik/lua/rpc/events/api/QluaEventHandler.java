@@ -118,7 +118,7 @@ public interface QluaEventHandler {
      *
      * @param futuresClientHolding  описание позиции по срочному рынку
      */
-    default void onFuturesClientHolding(final QluaStructures.FuturesClientHolding futuresClientHolding) {}
+    default void onFuturesClientHolding(final FuturesClientHolding futuresClientHolding) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnMoneyLimit</b>.

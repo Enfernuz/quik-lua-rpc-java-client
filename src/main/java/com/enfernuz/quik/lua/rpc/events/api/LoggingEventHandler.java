@@ -77,7 +77,7 @@ public enum LoggingEventHandler implements QluaEventHandler {
     }
 
     @Override
-    public void onFuturesClientHolding(final QluaStructures.FuturesClientHolding futuresClientHolding) {
+    public void onFuturesClientHolding(final FuturesClientHolding futuresClientHolding) {
         LOGGER.info("onFuturesClientHolding:\n{}", futuresClientHolding);
     }
 
