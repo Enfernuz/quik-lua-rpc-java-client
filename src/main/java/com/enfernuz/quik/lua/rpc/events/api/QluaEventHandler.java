@@ -136,7 +136,7 @@ public interface QluaEventHandler {
      *
      * @param moneyLimitDelete  удаляемый денежный лимит
      */
-    default void onMoneyLimitDelete(final QluaStructures.MoneyLimitDelete moneyLimitDelete) {}
+    default void onMoneyLimitDelete(final MoneyLimitDelete moneyLimitDelete) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnDepoLimit</b>.

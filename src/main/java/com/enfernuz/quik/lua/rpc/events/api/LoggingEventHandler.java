@@ -87,7 +87,7 @@ public enum LoggingEventHandler implements QluaEventHandler {
     }
 
     @Override
-    public void onMoneyLimitDelete(final QluaStructures.MoneyLimitDelete moneyLimitDelete) {
+    public void onMoneyLimitDelete(final MoneyLimitDelete moneyLimitDelete) {
         LOGGER.info("onMoneyLimitDelete:\n{}", moneyLimitDelete);
     }
 

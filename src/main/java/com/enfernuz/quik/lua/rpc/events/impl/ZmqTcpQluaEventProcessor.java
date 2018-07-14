@@ -106,7 +106,7 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
                             eventHandler.onMoneyLimit( serdeModule.deserialize(MoneyLimit.class, eventData) );
                             break;
                         case ON_MONEY_LIMIT_DELETE:
-                            eventHandler.onMoneyLimitDelete( QluaStructures.MoneyLimitDelete.parseFrom(event.getData()) );
+                            eventHandler.onMoneyLimitDelete( serdeModule.deserialize(MoneyLimitDelete.class, eventData) );
                             break;
                         case ON_DEPO_LIMIT:
                             eventHandler.onDepoLimit( QluaStructures.DepoLimit.parseFrom(event.getData()) );
