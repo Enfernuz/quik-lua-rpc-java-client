@@ -97,7 +97,7 @@ public enum LoggingEventHandler implements QluaEventHandler {
     }
 
     @Override
-    public void onDepoLimitDelete(final QluaStructures.DepoLimitDelete depoLimitDelete) {
+    public void onDepoLimitDelete(final DepoLimitDelete depoLimitDelete) {
         LOGGER.info("onDepoLimitDelete:\n{}", depoLimitDelete);
     }
 

@@ -16,7 +16,8 @@ final class DepoLimitJsonDeserializer extends JsonDeserializer<DepoLimit> {
     public DepoLimit deserialize(final JsonParser p, final DeserializationContext ctxt) throws IOException {
 
         final JsonNode node = p.getCodec().readTree(p);
-        return DepoLimit.builder()
+        return DepoLimit
+                .builder()
                 .secCode( asText(node, "sec_code") )
                 .trdAccId( asText(node, "trdaccid") )
                 .firmId( asText(node, "firmid") )
