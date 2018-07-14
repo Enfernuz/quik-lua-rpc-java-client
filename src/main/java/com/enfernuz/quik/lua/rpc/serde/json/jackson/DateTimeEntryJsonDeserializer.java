@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 
-public final class DateTimeEntryJsonDeserializer extends JsonDeserializer<DateTimeEntry> {
+final class DateTimeEntryJsonDeserializer extends JsonDeserializer<DateTimeEntry> {
 
     @Override
     public DateTimeEntry deserialize(final JsonParser jsonParser, final DeserializationContext deserializationContext)

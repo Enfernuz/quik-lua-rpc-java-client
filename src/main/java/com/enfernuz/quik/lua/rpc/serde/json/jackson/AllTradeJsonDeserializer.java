@@ -12,7 +12,7 @@ import java.io.IOException;
 
 import static com.enfernuz.quik.lua.rpc.serde.json.jackson.QluaJsonJacksonUtils.asText;
 
-public final class AllTradeJsonDeserializer extends JsonDeserializer<AllTrade> {
+class AllTradeJsonDeserializer extends JsonDeserializer<AllTrade> {
 
     @Override
     public AllTrade deserialize(final JsonParser jsonParser, final DeserializationContext deserializationContext)

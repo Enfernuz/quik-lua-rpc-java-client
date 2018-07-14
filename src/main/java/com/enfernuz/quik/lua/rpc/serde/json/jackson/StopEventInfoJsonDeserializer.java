@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 
-public final class StopEventInfoJsonDeserializer extends JsonDeserializer<StopEventInfo> {
+final class StopEventInfoJsonDeserializer extends JsonDeserializer<StopEventInfo> {
 
     @Override
     public StopEventInfo deserialize(final JsonParser p, final DeserializationContext ctxt) throws IOException {

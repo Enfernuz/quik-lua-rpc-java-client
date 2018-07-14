@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import static com.enfernuz.quik.lua.rpc.serde.json.jackson.QluaJsonJacksonUtils.asText;
 
-public final class FirmJsonDeserializer extends JsonDeserializer<Firm> {
+final class FirmJsonDeserializer extends JsonDeserializer<Firm> {
 
     @Override
     public Firm deserialize(final JsonParser jsonParser, final DeserializationContext deserializationContext)

@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import static com.enfernuz.quik.lua.rpc.serde.json.jackson.QluaJsonJacksonUtils.asText;
 
-public final class MoneyLimitJsonDeserializer extends JsonDeserializer<MoneyLimit> {
+final class MoneyLimitJsonDeserializer extends JsonDeserializer<MoneyLimit> {
 
     @Override
     public MoneyLimit deserialize(

@@ -12,7 +12,7 @@ import java.io.IOException;
 
 import static com.enfernuz.quik.lua.rpc.serde.json.jackson.QluaJsonJacksonUtils.asText;
 
-public final class OrderJsonDeserializer extends JsonDeserializer<Order> {
+final class OrderJsonDeserializer extends JsonDeserializer<Order> {
 
     @Override
     public Order deserialize(final JsonParser p, final DeserializationContext ctxt) throws IOException {

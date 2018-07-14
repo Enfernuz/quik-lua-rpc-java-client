@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 
-public final class ConnectedEventInfoJsonDeserializer extends JsonDeserializer<ConnectedEventInfo> {
+final class ConnectedEventInfoJsonDeserializer extends JsonDeserializer<ConnectedEventInfo> {
 
     @Override
     public ConnectedEventInfo deserialize(final JsonParser p, final DeserializationContext ctxt) throws IOException {
