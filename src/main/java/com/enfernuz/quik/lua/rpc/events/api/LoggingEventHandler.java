@@ -67,7 +67,7 @@ public enum LoggingEventHandler implements QluaEventHandler {
     }
 
     @Override
-    public void onFuturesLimitChange(final QluaStructures.FuturesLimit futuresLimit) {
+    public void onFuturesLimitChange(final FuturesLimit futuresLimit) {
         LOGGER.info("onFuturesLimitChange:\n{}", futuresLimit);
     }
 

@@ -100,7 +100,7 @@ public interface QluaEventHandler {
      *
      * @param futuresLimit  текущие значения лимита по срочному рынку
      */
-    default void onFuturesLimitChange(final QluaStructures.FuturesLimit futuresLimit) {}
+    default void onFuturesLimitChange(final FuturesLimit futuresLimit) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnFuturesLimitDelete</b>.

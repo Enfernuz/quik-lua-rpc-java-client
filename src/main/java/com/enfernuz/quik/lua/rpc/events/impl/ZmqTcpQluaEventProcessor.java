@@ -94,7 +94,7 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
                             eventHandler.onAccountBalance( serdeModule.deserialize(AccountBalance.class, eventData) );
                             break;
                         case ON_FUTURES_LIMIT_CHANGE:
-                            eventHandler.onFuturesLimitChange( QluaStructures.FuturesLimit.parseFrom(event.getData()) );
+                            eventHandler.onFuturesLimitChange( serdeModule.deserialize(FuturesLimit.class, eventData) );
                             break;
                         case ON_FUTURES_LIMIT_DELETE:
                             eventHandler.onFuturesLimitDelete( QluaStructures.FuturesLimitDelete.parseFrom(event.getData()) );
