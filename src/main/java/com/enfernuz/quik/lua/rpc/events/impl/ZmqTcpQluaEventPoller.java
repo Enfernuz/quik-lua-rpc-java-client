@@ -112,7 +112,7 @@ class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
 
                 final QluaEvent.EventType eventType = serdeModule.deserialize(QluaEvent.EventType.class, subscriptionKeyAsBytes);
                 if (eventType == null) {
-                    throw new PollingException( String.format("Unknown subscription key: %s.", new String(subscriptionKeyAsBytes, StandardCharsets.UTF_8)) );
+                    throw new PollingException( String.format("Неизвестный ключ подписки на QLua-события: \"%s\".", new String(subscriptionKeyAsBytes, StandardCharsets.UTF_8)) );
                 }
 
                 final boolean hasReceiveMore = subSocket.hasReceiveMore();
@@ -122,7 +122,7 @@ class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
                     final ZMsg eventDataAsMsg = ZMsg.recvMsg(subSocket);
                     if (eventDataAsMsg == null) {
                         throw new PollingException(
-                                String.format("No event data has been received for the event \"%s\".", eventType)
+                                String.format("Для QLua-события \"%s\" не получено данных.", eventType)
                         );
                     }
 
@@ -136,7 +136,7 @@ class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
         } catch (final PollingException ex) {
             throw ex;
         } catch (final Exception ex) {
-            throw new PollingException("Error while polling for events.", ex);
+            throw new PollingException("Ошибка при чтении очереди QLua-событий.", ex);
         }
     }
 
@@ -244,7 +244,7 @@ class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
                 default:
                     throw new IllegalStateException(
                             String.format(
-                                    "Unsupported authentication mechanism: \"s\".",
+                                    "Неподдерживаемый механизм аутентификации: \"s\".",
                                     authContext.getAuthMechanism()
                             )
                     );
@@ -256,7 +256,7 @@ class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
             } else {
 
                 final String errorMessage =
-                        String.format("Couldn't connect to '%s'. ZMQ socket errno:", uri, subSocket.errno());
+                        String.format("Не удалось соединиться с %s. Номер ошибки сокета ZMQ (errno): %d.", uri, subSocket.errno());
 
                 subSocket.close();
                 zmqContext.term();
@@ -289,7 +289,7 @@ class ZmqTcpQluaEventPoller implements TcpQluaEventPoller {
             } else {
                 throw new IOException(
                         String.format(
-                                "Couldn't disconnect from '%s'. ZMQ socket errno: %d",
+                                "Не удалось разъединиться с %s. Номер ошибки сокета ZMQ (errno): %d.",
                                 uri,
                                 subSocket.errno()
                         )
