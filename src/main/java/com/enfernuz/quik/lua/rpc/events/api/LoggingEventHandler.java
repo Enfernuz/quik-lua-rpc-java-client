@@ -107,7 +107,7 @@ public enum LoggingEventHandler implements QluaEventHandler {
     }
 
     @Override
-    public void onNegDeal(final QluaStructures.NegDeal negDeal) {
+    public void onNegDeal(final NegDeal negDeal) {
         LOGGER.info("onNegDeal:\n{}", negDeal);
     }
 

@@ -172,7 +172,7 @@ public interface QluaEventHandler {
      *
      * @param negDeal  заявка на внебиржевые сделки
      */
-    default void onNegDeal(final QluaStructures.NegDeal negDeal) {}
+    default void onNegDeal(final NegDeal negDeal) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnNegTrade</b>.
