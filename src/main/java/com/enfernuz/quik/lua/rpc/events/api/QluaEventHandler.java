@@ -163,7 +163,7 @@ public interface QluaEventHandler {
      *
      * @param accountPosition  текущие значения денежной позиции по счету
      */
-    default void onAccountPosition(final QluaStructures.AccountPosition accountPosition) {}
+    default void onAccountPosition(final AccountPosition accountPosition) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnNegDeal</b>.

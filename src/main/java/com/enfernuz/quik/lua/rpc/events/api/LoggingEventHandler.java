@@ -102,7 +102,7 @@ public enum LoggingEventHandler implements QluaEventHandler {
     }
 
     @Override
-    public void onAccountPosition(final QluaStructures.AccountPosition accountPosition) {
+    public void onAccountPosition(final AccountPosition accountPosition) {
         LOGGER.info("onAccountPosition:\n{}", accountPosition);
     }
 

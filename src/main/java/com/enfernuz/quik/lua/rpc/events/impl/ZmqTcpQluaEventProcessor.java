@@ -115,7 +115,7 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
                             eventHandler.onDepoLimitDelete( serdeModule.deserialize(DepoLimitDelete.class, eventData) );
                             break;
                         case ON_ACCOUNT_POSITION:
-                            eventHandler.onAccountPosition( QluaStructures.AccountPosition.parseFrom(event.getData()) );
+                            eventHandler.onAccountPosition( serdeModule.deserialize(AccountPosition.class, eventData) );
                             break;
                         case ON_NEG_DEAL:
                             eventHandler.onNegDeal( QluaStructures.NegDeal.parseFrom(event.getData()) );
