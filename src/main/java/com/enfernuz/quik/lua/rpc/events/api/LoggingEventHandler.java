@@ -117,7 +117,7 @@ public enum LoggingEventHandler implements QluaEventHandler {
     }
 
     @Override
-    public void onStopOrder(final QluaStructures.StopOrder stopOrder) {
+    public void onStopOrder(final StopOrder stopOrder) {
         LOGGER.info("onStopOrder:\n{}", stopOrder);
     }
 

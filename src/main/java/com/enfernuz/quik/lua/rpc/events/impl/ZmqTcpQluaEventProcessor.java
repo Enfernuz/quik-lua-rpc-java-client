@@ -124,7 +124,7 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
                             eventHandler.onNegTrade( QluaStructures.NegTrade.parseFrom(event.getData()) );
                             break;
                         case ON_STOP_ORDER:
-                            eventHandler.onStopOrder( QluaStructures.StopOrder.parseFrom(event.getData()) );
+                            eventHandler.onStopOrder( serdeModule.deserialize(StopOrder.class, eventData) );
                             break;
                         case ON_TRANS_REPLY:
                             eventHandler.onTransReply( serdeModule.deserialize(TransReply.class, eventData) );

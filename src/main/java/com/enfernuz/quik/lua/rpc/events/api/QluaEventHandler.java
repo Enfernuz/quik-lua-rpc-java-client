@@ -191,7 +191,7 @@ public interface QluaEventHandler {
      *
      * @param stopOrder  стоп-заявка
      */
-    default void onStopOrder(final QluaStructures.StopOrder stopOrder) {}
+    default void onStopOrder(final StopOrder stopOrder) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnTransReply</b>.
