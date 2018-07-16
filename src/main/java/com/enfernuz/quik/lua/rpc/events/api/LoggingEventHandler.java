@@ -122,8 +122,8 @@ public enum LoggingEventHandler implements QluaEventHandler {
     }
 
     @Override
-    public void onTransReply(final QluaStructures.Transaction transaction) {
-        LOGGER.info("onTransReply:\n{}", transaction);
+    public void onTransReply(final TransReply transReply) {
+        LOGGER.info("onTransReply:\n{}", transReply);
     }
 
     @Override

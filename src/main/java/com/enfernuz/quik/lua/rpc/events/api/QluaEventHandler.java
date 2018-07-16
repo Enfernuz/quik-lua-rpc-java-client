@@ -201,9 +201,9 @@ public interface QluaEventHandler {
      * Событие не происходит для транзакций, отправленных с помощью Trans2quik.dll, QPILE, или динамической загрузки
      * транзакций из файла.
      *
-     * @param transaction  описание транзакции
+     * @param transReply  описание транзакции
      */
-    default void onTransReply(final QluaStructures.Transaction transaction) {}
+    default void onTransReply(final TransReply transReply) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnParam</b>.
