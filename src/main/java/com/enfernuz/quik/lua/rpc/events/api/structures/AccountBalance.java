@@ -122,7 +122,7 @@ public class AccountBalance {
 
         if (asString == null) {
             asString = MoreObjects.toStringHelper(this)
-                    .add("firmId", firmId)
+                    .add("firmid", firmId)
                     .add("sec_code", secCode)
                     .add("trdaccid", trdAccId)
                     .add("depaccid", depAccId)
