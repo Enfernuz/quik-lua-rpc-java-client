@@ -1,6 +1,7 @@
 package com.enfernuz.quik.lua.rpc.events.api.structures;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.collect.ComparisonChain;
 import lombok.Builder;
 import lombok.Value;
 import lombok.experimental.NonFinal;
@@ -8,7 +9,7 @@ import lombok.experimental.NonFinal;
 import java.util.Objects;
 
 @Value
-public class DateTimeEntry {
+public class DateTimeEntry implements Comparable<DateTimeEntry> {
 
     int mcs;
     int ms;
@@ -71,10 +72,26 @@ public class DateTimeEntry {
     public int hashCode() {
 
         if (hashCode == 0) {
-            hashCode = Objects.hash(super.hashCode(), mcs, ms, sec, min, hour, day, weekDay, month, year);
+            hashCode = Objects.hash(mcs, ms, sec, min, hour, day, weekDay, month, year);
         }
 
         return hashCode;
+    }
+
+    @Override
+    public int compareTo(final DateTimeEntry other) {
+        return ComparisonChain
+                .start()
+                .compare(year, other.year)
+                .compare(month, other.month)
+                .compare(weekDay, other.weekDay)
+                .compare(day, other.day)
+                .compare(hour, other.hour)
+                .compare(min, other.min)
+                .compare(sec, other.sec)
+                .compare(ms, other.ms)
+                .compare(mcs, other.mcs)
+                .result();
     }
 
     @Override
@@ -88,7 +105,7 @@ public class DateTimeEntry {
                     .add("min", min)
                     .add("hour", hour)
                     .add("day", day)
-                    .add("weekDay", weekDay)
+                    .add("week_day", weekDay)
                     .add("month", month)
                     .add("year", year)
                     .toString();
