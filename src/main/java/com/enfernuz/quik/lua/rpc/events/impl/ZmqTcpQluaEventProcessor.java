@@ -9,8 +9,8 @@ import com.google.common.collect.*;
 import qlua.structs.QluaStructures;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static java.util.Objects.requireNonNull;
 
@@ -19,7 +19,9 @@ import static java.util.Objects.requireNonNull;
  * <br/>
  * Связь с <b>quik-lua-rpc</b> происходит по протоколу TCP с помощью ZeroMQ.
  * <br/>
- * Экземпляры класса не потокобезопасны.
+ * Экземпляры класса не потокобезопасны, за исключением методов {@link #register(QluaEventHandler eventHandler)},
+ * {@link #unregister(QluaEventHandler eventHandler)}, {@link #register(Iterable eventHandlers)} и
+ * {@link #unregister(Iterable eventHandlers)}.
  *
  * @see <a href="https://github.com/Enfernuz/quik-lua-rpc">quik-lua-rpc</a>
  * @see <a href="http://zeromq.org/">ZeroMQ - Distributed Messaging</a>
@@ -54,7 +56,7 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
 
         this.eventPoller = requireNonNull(eventPoller, "Аргумент 'eventPoller' не должен быть null.");
         this.serdeModule = requireNonNull(serdeModule, "Аргумент 'serdeModule' не должен быть null.");
-        this.eventHandlers = new ArrayList<>(1);
+        this.eventHandlers = new CopyOnWriteArrayList<>();
     }
 
     @Override
