@@ -221,7 +221,7 @@ public interface QluaEventHandler {
      *
      * @param quote  объект, содержащий код бумаги и код класса инструмента, по которому изменился стакан котировок
      */
-    default void onQuote(final QluaStructures.QuoteEventInfo quote) {}
+    default void onQuote(final QuoteEventInfo quote) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnCleanUp</b>.

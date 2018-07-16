@@ -133,7 +133,7 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
                             eventHandler.onParam( serdeModule.deserialize(ParamEventInfo.class, eventData) );
                             break;
                         case ON_QUOTE:
-                            eventHandler.onQuote( QluaStructures.QuoteEventInfo.parseFrom(event.getData()) );
+                            eventHandler.onQuote( serdeModule.deserialize(QuoteEventInfo.class, eventData) );
                             break;
                         case ON_CLEAN_UP:
                             eventHandler.onCleanUp();

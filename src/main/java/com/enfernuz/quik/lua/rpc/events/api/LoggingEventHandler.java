@@ -132,7 +132,7 @@ public enum LoggingEventHandler implements QluaEventHandler {
     }
 
     @Override
-    public void onQuote(final QluaStructures.QuoteEventInfo quote) {
+    public void onQuote(final QuoteEventInfo quote) {
         LOGGER.info("onQuote:\n{}", quote);
     }
 
