@@ -212,7 +212,7 @@ public interface QluaEventHandler {
      *
      * @param param  объект, содержащий код бумаги и код класса инструмента, по которому изменились текущие параметры
      */
-    default void onParam(final QluaStructures.ParamEventInfo param) {}
+    default void onParam(final ParamEventInfo param) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnQuote</b>.

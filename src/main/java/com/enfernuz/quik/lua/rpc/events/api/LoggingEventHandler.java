@@ -127,7 +127,7 @@ public enum LoggingEventHandler implements QluaEventHandler {
     }
 
     @Override
-    public void onParam(final QluaStructures.ParamEventInfo param) {
+    public void onParam(final ParamEventInfo param) {
         LOGGER.info("onParam:\n{}", param);
     }
 
