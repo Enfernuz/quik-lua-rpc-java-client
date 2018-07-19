@@ -182,7 +182,7 @@ public interface QluaEventHandler {
      *
      * @param negTrade  сделка для исполнения
      */
-    default void onNegTrade(final QluaStructures.NegTrade negTrade) {}
+    default void onNegTrade(final NegTrade negTrade) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnStopOrder</b>.

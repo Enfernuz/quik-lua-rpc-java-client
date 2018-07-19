@@ -112,7 +112,7 @@ public enum LoggingEventHandler implements QluaEventHandler {
     }
 
     @Override
-    public void onNegTrade(final QluaStructures.NegTrade negTrade) {
+    public void onNegTrade(final NegTrade negTrade) {
         LOGGER.info("onNegTrade:\n{}", negTrade);
     }
 
