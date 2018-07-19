@@ -50,10 +50,7 @@ public class JsonSubscriptionExampleApplication {
                      ZmqTcpQluaEventProcessor.newInstance(config.getNetworkAddress(), config.getAuthContext(), JsonSerdeModule.INSTANCE)) {
 
             LOGGER.info("Подписка на все события...");
-            //eventProcessor.subscribeToEverything();
-//            eventProcessor.subscribe(QluaEvent.EventType.ON_FIRM);
-//            eventProcessor.subscribe(QluaEvent.EventType.ON_MONEY_LIMIT);
-            eventProcessor.subscribe(QluaEvent.EventType.ON_ALL_TRADE);
+            eventProcessor.subscribeToEverything();
 
             LOGGER.info("Регистрация обработчиков событий...");
             eventProcessor.register(LoggingEventHandler.INSTANCE);

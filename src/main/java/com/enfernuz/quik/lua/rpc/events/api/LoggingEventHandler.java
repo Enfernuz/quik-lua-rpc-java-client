@@ -14,7 +14,7 @@ public enum LoggingEventHandler implements QluaEventHandler {
      */
     INSTANCE;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoggingEventHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger("qlua-events");
 
     @Override
     public void onClose() {
