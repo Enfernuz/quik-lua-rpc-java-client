@@ -15,8 +15,14 @@
         </encoder>
     </appender>
 
-    <appender name="APP_LOG" class="ch.qos.logback.core.FileAppender">
+    <appender name="APP_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>./logs/app.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>app-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>25MB</maxFileSize>
+        </rollingPolicy>
+
 
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <Pattern>%date %-5level [%thread] %20logger - %msg%n</Pattern>
