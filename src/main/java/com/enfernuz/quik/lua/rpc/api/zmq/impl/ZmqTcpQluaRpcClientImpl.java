@@ -1,26 +1,42 @@
 package com.enfernuz.quik.lua.rpc.api.zmq.impl;
 
-import com.enfernuz.quik.lua.rpc.api.RemoteProcedureCaller;
 import com.enfernuz.quik.lua.rpc.api.security.zmq.AuthContext;
+import com.enfernuz.quik.lua.rpc.api.security.zmq.CurveCredentials;
+import com.enfernuz.quik.lua.rpc.api.security.zmq.CurveKeyPair;
+import com.enfernuz.quik.lua.rpc.api.security.zmq.PlainCredentials;
+import com.enfernuz.quik.lua.rpc.api.structures.AddColumn;
+import com.enfernuz.quik.lua.rpc.api.structures.AddLabel;
+import com.enfernuz.quik.lua.rpc.api.structures.AllocTable;
 import com.enfernuz.quik.lua.rpc.api.zmq.ZmqTcpQluaRpcClient;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
+import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import com.google.protobuf.ByteString;
-import com.google.protobuf.MessageLite;
-import qlua.rpc.*;
+import org.zeromq.ZFrame;
+import org.zeromq.ZMQ;
+import org.zeromq.ZMsg;
+import qlua.rpc.RPC;
 import qlua.rpc.bit.*;
 import qlua.rpc.datasource.*;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkState;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Реализация компонента <b>Java-обёртка над API QLua терминала QUIK на базе ZeroMQ</b>.
  */
 public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
 
-    private final ZmqTcpRpcGatewayImpl rpcGateway;
+    private final NetworkAddress networkAddress;
+    private final String uri;
+    private ZMQ.Context zmqContext;
+    private ZMQ.Socket reqSocket;
+    private final AuthContext authContext;
+    private boolean isOpened;
+
+    private final SerdeModule serdeModule;
 
     /**
      * Создаёт новый экземпляр компонента {@link ZmqTcpQluaRpcClientImpl}, с точкой подключения RPC-сервиса на стороне
@@ -32,78 +48,133 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
      */
     public static ZmqTcpQluaRpcClientImpl newInstance(
             final NetworkAddress networkAddress,
-            final AuthContext authContext) {
+            final AuthContext authContext,
+            final SerdeModule serdeModule) {
 
-        final ZmqTcpRpcGatewayImpl rpcGateway = ZmqTcpRpcGatewayImpl.newInstance(networkAddress, authContext);
-        return new ZmqTcpQluaRpcClientImpl(rpcGateway);
+        return new ZmqTcpQluaRpcClientImpl(
+                requireNonNull(networkAddress, "Аргумент 'networkAddress' не должен быть null."),
+                requireNonNull(authContext, "Аргумент 'authContext' не должен быть null."),
+                requireNonNull(serdeModule, "Аргумент 'serdeModule' не должен быть null.")
+        );
     }
 
-    private ZmqTcpQluaRpcClientImpl(final ZmqTcpRpcGatewayImpl rpcGateway) {
-        this.rpcGateway = rpcGateway;
+    private ZmqTcpQluaRpcClientImpl(
+            final NetworkAddress networkAddress,
+            final AuthContext authContext,
+            final SerdeModule serdeModule) {
+
+        this.networkAddress = networkAddress;
+        this.authContext = authContext;
+        this.serdeModule = serdeModule;
+        this.uri = String.format("tcp://%s:%d", networkAddress.getHost(), networkAddress.getPort());
     }
 
     @Override
     public NetworkAddress getNetworkAddress() {
-        return rpcGateway.getNetworkAddress();
+        return networkAddress
     }
 
     @Override
     public AuthContext getAuthContext() {
-        return rpcGateway.getAuthContext();
+        return authContext
     }
 
     @Override
     public void open() throws IOException {
-        rpcGateway.open();
+
+        if (!isOpened) {
+
+            zmqContext = ZMQ.context(1);
+
+            reqSocket = zmqContext.socket(ZMQ.REQ);
+            reqSocket.setLinger(0); // no waiting before closing the socket
+
+            switch (authContext.getAuthMechanism()) {
+                case PLAIN:
+                    final PlainCredentials plainCredentials = authContext.getPlainCredentials();
+                    reqSocket.setPlainUsername( plainCredentials.getUsername() );
+                    reqSocket.setPlainPassword( plainCredentials.getPassword() );
+                    break;
+                case CURVE:
+                    final CurveCredentials curveCredentials = authContext.getCurveCredentials();
+                    final CurveKeyPair clientKeyPair = curveCredentials.getClientKeyPair();
+                    reqSocket.setCurveServerKey( curveCredentials.getServerPublicKey().asBinary() );
+                    reqSocket.setCurvePublicKey( clientKeyPair.getPublicKey().asBinary() );
+                    reqSocket.setCurveSecretKey( clientKeyPair.getSecretKey().asBinary() );
+                    break;
+                case NULL:
+                    break;
+                default:
+                    throw new IllegalStateException(
+                            String.format(
+                                    "Unsupported authentication mechanism: \"s\".",
+                                    authContext.getAuthMechanism()
+                            )
+                    );
+            }
+
+            final boolean _isConnected  = this.reqSocket.connect(uri);
+            if (_isConnected) {
+                isOpened = true;
+            } else {
+
+                final String errorMessage =
+                        String.format("Couldn't connect to '%s'. ZMQ socket errno:", uri, reqSocket.errno());
+
+                reqSocket.close();
+                zmqContext.term();
+                zmqContext = null;
+                reqSocket = null;
+
+                throw new IOException(errorMessage);
+            }
+        }
     }
 
     @Override
     public boolean isOpened() {
-        return rpcGateway.isOpened();
+        return isOpened;
     }
 
     @Override
     public void close() throws IOException {
-        rpcGateway.close();
-    }
 
-    @Override
-    public AddColumn.Result qlua_AddColumn(final AddColumn.Request args) {
+        if (isOpened) {
 
-        try {
-            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.ADD_COLUMN, args);
-            return AddColumn.Result.parseFrom(resultAsByteString);
-        } catch (final RpcClientException ex) {
-            throw ex;
-        } catch (final Exception ex) {
-            throw new RpcClientException(ex);
+            final boolean isDisconnected = reqSocket.disconnect(uri);
+
+            if (isDisconnected) {
+                reqSocket.close();
+                zmqContext.term();
+                zmqContext = null;
+                reqSocket = null;
+
+                isOpened = false;
+            } else {
+                throw new IOException(
+                        String.format(
+                                "Couldn't disconnect from '%s'. ZMQ socket errno: %d",
+                                uri,
+                                reqSocket.errno()
+                        )
+                );
+            }
         }
     }
 
     @Override
-    public AddLabel.Result qlua_AddLabel(final AddLabel.Request args) {
+    public AddColumn.Result qlua_AddColumn(final AddColumn.Request request) {
+        return makeRPC(request, AddColumn.Result.class);
+    }
 
-        try {
-            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.ADD_LABEL, args);
-            return AddLabel.Result.parseFrom(resultAsByteString);
-        } catch (final RpcClientException ex) {
-            throw ex;
-        } catch (final Exception ex) {
-            throw new RpcClientException(ex);
-        }
+    @Override
+    public AddLabel.Result qlua_AddLabel(final AddLabel.Request request) {
+        return makeRPC(request, AddLabel.Result.class);
     }
 
     @Override
     public AllocTable.Result qlua_AllocTable() {
-
-        try {
-            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.ALLOC_TABLE);
-            return AllocTable.Result.parseFrom(resultAsByteString);
-        } catch (final RpcClientException ex) {
-            throw ex;
-        } catch (final Exception ex) {
-            throw new RpcClientException(ex);
-        }
+        return makeRPC(AllocTable.Request.INSTANCE, AllocTable.Result.class);
     }
 
     @Override
@@ -1109,52 +1180,29 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
     }
 
     private void checkIfOpen() {
-        checkState(rpcGateway.isOpened(), "The connection must be open.");
+        checkState(isOpened, "The connection must be open.");
     }
 
-    private ByteString makeRPC(final RPC.ProcedureType procedureType, final MessageLite args)
-            throws RemoteProcedureCaller.RpcException {
+    private <T, U> U makeRPC(final T request, final Class<U> resultClass) {
 
-        checkIfOpen();
+        try {
 
-        final RPC.Response response = rpcGateway.call(procedureType, args);
+            checkIfOpen();
 
-        checkResponse(response, procedureType);
+            final ZMsg zRequest = new ZMsg();
+            zRequest.add( serdeModule.serialize(request) );
+            zRequest.send(reqSocket);
 
-        return response.getResult();
-    }
+            final ZMsg zResponse = ZMsg.recvMsg(reqSocket);
 
-    private ByteString makeRPC(final RPC.ProcedureType procedureType) throws RemoteProcedureCaller.RpcException {
+            final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream( (int) zResponse.contentSize() );
+            for (final ZFrame frame : zResponse) {
+                byteArrayOutputStream.write( frame.getData() );
+            }
 
-        checkIfOpen();
-
-        final RPC.Response response = rpcGateway.call(procedureType);
-
-        checkResponse(response, procedureType);
-
-        return response.getResult();
-    }
-
-    private static void checkResponse(final RPC.Response response, final RPC.ProcedureType expectedResponseType) {
-
-        if ( response.getIsError() ) {
-            throw new RpcClientException(
-                    String.format(
-                            "The RPC service has responded with the following error: '%s'.",
-                            response.getResult().toStringUtf8()
-                    )
-            );
-        }
-
-        final RPC.ProcedureType responseType = response.getType();
-        if ( !Objects.equals(expectedResponseType, responseType) ) {
-            throw new RpcClientException(
-                    String.format(
-                            "Unexpected type of the incoming RPC response: '%s' (expected '%s').",
-                            responseType,
-                            expectedResponseType
-                    )
-            );
+            return serdeModule.deserialize(resultClass, byteArrayOutputStream.toByteArray());
+        } catch (final Exception ex) {
+            throw new RpcClientException(ex);
         }
     }
 }

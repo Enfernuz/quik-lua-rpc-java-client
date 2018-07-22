@@ -1,34 +1,34 @@
 package com.enfernuz.quik.lua.rpc.api;
 
 import com.enfernuz.quik.lua.rpc.api.security.Securable;
+import com.enfernuz.quik.lua.rpc.api.structures.AddColumn;
+import com.enfernuz.quik.lua.rpc.api.structures.AddLabel;
+import com.enfernuz.quik.lua.rpc.api.structures.AllocTable;
 import com.enfernuz.quik.lua.rpc.io.Gateway;
-import qlua.rpc.*;
 import qlua.rpc.bit.*;
 import qlua.rpc.datasource.*;
-
-import java.util.Set;
 
 /**
  * Компонент, представляющий собой Java-обёртку над API QLua терминала QUIK.
  *
  * @throws RpcClientException в случае возникновения ошибки при удалённом вызове процедуры
- * @throws NullPointerException если аргумент {@code args} является {@code null}
+ * @throws NullPointerException если аргумент {@code request} является null
  */
 public interface QluaRpcClient extends Gateway, Securable {
 
     /**
      *
-     * @param args
+     * @param request
      * @return
      */
-    AddColumn.Result qlua_AddColumn(AddColumn.Request args);
+    AddColumn.Result qlua_AddColumn(AddColumn.Request request);
 
     /**
      *
-     * @param args
+     * @param request
      * @return
      */
-    AddLabel.Result qlua_AddLabel(AddLabel.Request args);
+    AddLabel.Result qlua_AddLabel(AddLabel.Request request);
 
     /**
      *
