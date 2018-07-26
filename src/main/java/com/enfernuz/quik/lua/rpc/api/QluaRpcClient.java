@@ -4,6 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.security.Securable;
 import com.enfernuz.quik.lua.rpc.api.structures.AddColumn;
 import com.enfernuz.quik.lua.rpc.api.structures.AddLabel;
 import com.enfernuz.quik.lua.rpc.api.structures.AllocTable;
+import com.enfernuz.quik.lua.rpc.api.structures.CalcBuySell;
 import com.enfernuz.quik.lua.rpc.io.Gateway;
 import qlua.rpc.bit.*;
 import qlua.rpc.datasource.*;
@@ -38,10 +39,10 @@ public interface QluaRpcClient extends Gateway, Securable {
 
     /**
      *
-     * @param args
+     * @param request
      * @return
      */
-    CalcBuySell.Result qlua_CalcBuySell(CalcBuySell.Request args);
+    CalcBuySell.Result qlua_CalcBuySell(CalcBuySell.Request request);
 
     /**
      *

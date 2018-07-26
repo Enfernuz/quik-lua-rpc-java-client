@@ -23,7 +23,7 @@ public final class AddColumn {
         private Request(
                 final int tId,
                 final int iCode,
-                final String name,
+                final @NonNull String name,
                 final boolean isDefault,
                 final @NonNull ColumnParameterType parType,
                 final int width) {

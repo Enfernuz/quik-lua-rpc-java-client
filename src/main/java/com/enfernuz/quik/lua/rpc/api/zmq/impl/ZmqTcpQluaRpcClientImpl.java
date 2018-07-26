@@ -7,6 +7,7 @@ import com.enfernuz.quik.lua.rpc.api.security.zmq.PlainCredentials;
 import com.enfernuz.quik.lua.rpc.api.structures.AddColumn;
 import com.enfernuz.quik.lua.rpc.api.structures.AddLabel;
 import com.enfernuz.quik.lua.rpc.api.structures.AllocTable;
+import com.enfernuz.quik.lua.rpc.api.structures.CalcBuySell;
 import com.enfernuz.quik.lua.rpc.api.zmq.ZmqTcpQluaRpcClient;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
@@ -178,16 +179,8 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
     }
 
     @Override
-    public CalcBuySell.Result qlua_CalcBuySell(final CalcBuySell.Request args) {
-
-        try {
-            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.CALC_BUY_SELL, args);
-            return CalcBuySell.Result.parseFrom(resultAsByteString);
-        } catch (final RpcClientException ex) {
-            throw ex;
-        } catch (final Exception ex) {
-            throw new RpcClientException(ex);
-        }
+    public CalcBuySell.Result qlua_CalcBuySell(final CalcBuySell.Request request) {
+        return makeRPC(request, CalcBuySell.Result.class);
     }
 
     @Override
