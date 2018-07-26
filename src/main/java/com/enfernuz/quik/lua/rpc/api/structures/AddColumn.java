@@ -53,6 +53,13 @@ public final class AddColumn {
     public static class Result {
 
         int result;
+
+        @Override
+        public String toString() {
+            return MoreObjects.toStringHelper(this)
+                    .add("result", result)
+                    .toString();
+        }
     }
 
     public static enum ColumnParameterType {

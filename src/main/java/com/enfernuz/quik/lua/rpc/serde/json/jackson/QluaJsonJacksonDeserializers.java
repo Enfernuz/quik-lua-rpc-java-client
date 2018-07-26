@@ -1,5 +1,6 @@
 package com.enfernuz.quik.lua.rpc.serde.json.jackson;
 
+import com.enfernuz.quik.lua.rpc.api.structures.*;
 import com.enfernuz.quik.lua.rpc.events.api.structures.*;
 import com.fasterxml.jackson.databind.module.SimpleDeserializers;
 
@@ -31,5 +32,12 @@ final class QluaJsonJacksonDeserializers extends SimpleDeserializers {
         super.addDeserializer(ParamEventInfo.class, new ParamEventInfoJsonDeserializer());
         super.addDeserializer(QuoteEventInfo.class, new QuoteEventInfoJsonDeserializer());
         super.addDeserializer(DateTimeEntry.class, new DateTimeEntryJsonDeserializer());
+
+        super.addDeserializer(AddColumn.Result.class, new AddColumnResultJsonDeserializer());
+        super.addDeserializer(AddLabel.Result.class, new AddLabelResultJsonDeserializer());
+        super.addDeserializer(AllocTable.Result.class, new AllocTableResultJsonDeserializer());
+        super.addDeserializer(CalcBuySell.Result.class, new CalcBuySellResultJsonDeserializer());
+        super.addDeserializer(CancelParamRequest.Result.class, new CancelParamRequestResultJsonDeserializer());
+        super.addDeserializer(Message.Result.class, new MessageResultJsonDeserializer());
     }
 }

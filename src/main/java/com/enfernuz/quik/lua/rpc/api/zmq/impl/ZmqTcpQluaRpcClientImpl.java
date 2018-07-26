@@ -4,10 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.security.zmq.AuthContext;
 import com.enfernuz.quik.lua.rpc.api.security.zmq.CurveCredentials;
 import com.enfernuz.quik.lua.rpc.api.security.zmq.CurveKeyPair;
 import com.enfernuz.quik.lua.rpc.api.security.zmq.PlainCredentials;
-import com.enfernuz.quik.lua.rpc.api.structures.AddColumn;
-import com.enfernuz.quik.lua.rpc.api.structures.AddLabel;
-import com.enfernuz.quik.lua.rpc.api.structures.AllocTable;
-import com.enfernuz.quik.lua.rpc.api.structures.CalcBuySell;
+import com.enfernuz.quik.lua.rpc.api.structures.*;
 import com.enfernuz.quik.lua.rpc.api.zmq.ZmqTcpQluaRpcClient;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
@@ -184,16 +181,8 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
     }
 
     @Override
-    public CancelParamRequest.Result qlua_CancelParamRequest(final CancelParamRequest.Request args) {
-
-        try {
-            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.CANCEL_PARAM_REQUEST, args);
-            return CancelParamRequest.Result.parseFrom(resultAsByteString);
-        } catch (final RpcClientException ex) {
-            throw ex;
-        } catch (final Exception ex) {
-            throw new RpcClientException(ex);
-        }
+    public CancelParamRequest.Result qlua_CancelParamRequest(final CancelParamRequest.Request request) {
+        return makeRPC(request, CancelParamRequest.Result.class);
     }
 
     @Override
@@ -757,16 +746,8 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
     }
 
     @Override
-    public Message.Result qlua_message(final Message.Request args) {
-
-        try {
-            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.MESSAGE, args);
-            return Message.Result.parseFrom(resultAsByteString);
-        } catch (final RpcClientException ex) {
-            throw ex;
-        } catch (final Exception ex) {
-            throw new RpcClientException(ex);
-        }
+    public Message.Result qlua_message(final Message.Request request) {
+        return makeRPC(request, Message.Result.class);
     }
 
     @Override

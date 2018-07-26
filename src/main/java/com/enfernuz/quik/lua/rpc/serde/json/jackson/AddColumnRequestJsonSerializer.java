@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
 
-public final class AddColumnRequestJsonSerializer extends JsonSerializer<AddColumn.Request> {
+final class AddColumnRequestJsonSerializer extends JsonSerializer<AddColumn.Request> {
 
     @Override
     public void serialize(

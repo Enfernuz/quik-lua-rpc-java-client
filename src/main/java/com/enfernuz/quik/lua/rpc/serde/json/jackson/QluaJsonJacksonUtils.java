@@ -21,7 +21,7 @@ final class QluaJsonJacksonUtils {
             throws IOException {
 
         jsonGenerator.writeStartObject();
-        jsonGenerator.writeStringField("method", "AddColumn");
+        jsonGenerator.writeStringField("method", methodName);
         jsonGenerator.writeObjectFieldStart("args");
     }
 
