@@ -50,31 +50,31 @@ public interface QluaRpcClient extends Gateway, Securable {
 
     /**
      *
-     * @param args
+     * @param request
      * @return
      */
-    Clear.Result qlua_Clear(Clear.Request args);
+    Clear.Result qlua_Clear(Clear.Request request);
 
     /**
      *
-     * @param args
+     * @param request
      * @return
      */
-    CreateWindow.Result qlua_CreateWindow(CreateWindow.Request args);
+    CreateWindow.Result qlua_CreateWindow(CreateWindow.Request request);
 
     /**
      *
-     * @param args
+     * @param request
      * @return
      */
-    DelAllLabels.Result qlua_DelAllLabels(DelAllLabels.Request args);
+    DelAllLabels.Result qlua_DelAllLabels(DelAllLabels.Request request);
 
     /**
      *
-     * @param args
+     * @param request
      * @return
      */
-    DeleteRow.Result qlua_DeleteRow(DeleteRow.Request args);
+    DeleteRow.Result qlua_DeleteRow(DeleteRow.Request request);
 
     /**
      *

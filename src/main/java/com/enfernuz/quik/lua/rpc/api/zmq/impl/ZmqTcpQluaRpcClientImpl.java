@@ -186,55 +186,23 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
     }
 
     @Override
-    public Clear.Result qlua_Clear(final Clear.Request args) {
-
-        try {
-            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.CLEAR, args);
-            return Clear.Result.parseFrom(resultAsByteString);
-        } catch (final RpcClientException ex) {
-            throw ex;
-        } catch (final Exception ex) {
-            throw new RpcClientException(ex);
-        }
+    public Clear.Result qlua_Clear(final Clear.Request request) {
+        return makeRPC(request, Clear.Result.class);
     }
 
     @Override
-    public CreateWindow.Result qlua_CreateWindow(final CreateWindow.Request args) {
-
-        try {
-            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.CREATE_WINDOW, args);
-            return CreateWindow.Result.parseFrom(resultAsByteString);
-        } catch (final RpcClientException ex) {
-            throw ex;
-        } catch (final Exception ex) {
-            throw new RpcClientException(ex);
-        }
+    public CreateWindow.Result qlua_CreateWindow(final CreateWindow.Request request) {
+        return makeRPC(request, CreateWindow.Result.class);
     }
 
     @Override
-    public DelAllLabels.Result qlua_DelAllLabels(final DelAllLabels.Request args) {
-
-        try {
-            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.DEL_ALL_LABELS, args);
-            return DelAllLabels.Result.parseFrom(resultAsByteString);
-        } catch (final RpcClientException ex) {
-            throw ex;
-        } catch (final Exception ex) {
-            throw new RpcClientException(ex);
-        }
+    public DelAllLabels.Result qlua_DelAllLabels(final DelAllLabels.Request request) {
+        return makeRPC(request, DelAllLabels.Result.class);
     }
 
     @Override
-    public DeleteRow.Result qlua_DeleteRow(final DeleteRow.Request args) {
-
-        try {
-            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.DELETE_ROW, args);
-            return DeleteRow.Result.parseFrom(resultAsByteString);
-        } catch (final RpcClientException ex) {
-            throw ex;
-        } catch (final Exception ex) {
-            throw new RpcClientException(ex);
-        }
+    public DeleteRow.Result qlua_DeleteRow(final DeleteRow.Request request) {
+        return makeRPC(request, DeleteRow.Result.class);
     }
 
     @Override

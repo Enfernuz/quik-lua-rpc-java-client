@@ -14,6 +14,10 @@ final class QluaJsonJacksonSerializers extends SimpleSerializers {
         super.addSerializer(AllocTable.Request.class, new AllocTableRequestJsonSerializer());
         super.addSerializer(CalcBuySell.Request.class, new CalcBuySellRequestJsonSerializer());
         super.addSerializer(CancelParamRequest.Request.class, new CancelParamRequestRequestJsonSerializer());
+        super.addSerializer(Clear.Request.class, new ClearRequestJsonSerializer());
+        super.addSerializer(CreateWindow.Request.class, new CreateWindowRequestJsonSerializer());
+        super.addSerializer(DelAllLabels.Request.class, new DelAllLabelsRequestJsonSerializer());
+        super.addSerializer(DeleteRow.Request.class, new DeleteRowRequestJsonSerializer());
         super.addSerializer(Message.Request.class, new MessageRequestJsonSerializer());
     }
 }
