@@ -2,6 +2,7 @@ package com.enfernuz.quik.lua.rpc.events.api;
 
 import com.google.common.base.MoreObjects;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import static java.util.Objects.requireNonNull;
@@ -56,7 +57,7 @@ public final class QluaEvent {
      * @return данные события
      */
     public byte[] getData() {
-        return data.clone();
+        return data == null ? null : data.clone();
     }
 
     @Override
@@ -68,7 +69,7 @@ public final class QluaEvent {
             return false;
         } else {
             final QluaEvent other = (QluaEvent) o;
-            return Objects.equals(type, other.type) && Objects.equals(data, other.data);
+            return Objects.equals(type, other.type) && Arrays.equals(data, other.data);
         }
     }
 
