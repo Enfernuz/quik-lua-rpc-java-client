@@ -206,55 +206,23 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
     }
 
     @Override
-    public DelLabel.Result qlua_DelLabel(final DelLabel.Request args) {
-
-        try {
-            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.DEL_LABEL, args);
-            return DelLabel.Result.parseFrom(resultAsByteString);
-        } catch (final RpcClientException ex) {
-            throw ex;
-        } catch (final Exception ex) {
-            throw new RpcClientException(ex);
-        }
+    public DelLabel.Result qlua_DelLabel(final DelLabel.Request request) {
+        return makeRPC(request, DelLabel.Result.class);
     }
 
     @Override
-    public DestroyTable.Result qlua_DestroyTable(final DestroyTable.Request args) {
-
-        try {
-            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.DESTROY_TABLE, args);
-            return DestroyTable.Result.parseFrom(resultAsByteString);
-        } catch (final RpcClientException ex) {
-            throw ex;
-        } catch (final Exception ex) {
-            throw new RpcClientException(ex);
-        }
+    public DestroyTable.Result qlua_DestroyTable(final DestroyTable.Request request) {
+        return makeRPC(request, DestroyTable.Result.class);
     }
 
     @Override
-    public GetBuySellInfo.Result qlua_getBuySellInfo(final GetBuySellInfo.Request args) {
-
-        try {
-            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_BUY_SELL_INFO, args);
-            return GetBuySellInfo.Result.parseFrom(resultAsByteString);
-        } catch (final RpcClientException ex) {
-            throw ex;
-        } catch (final Exception ex) {
-            throw new RpcClientException(ex);
-        }
+    public GetBuySellInfo.Result qlua_getBuySellInfo(final GetBuySellInfo.Request request) {
+        return makeRPC(request, GetBuySellInfo.Result.class);
     }
 
     @Override
-    public GetBuySellInfoEx.Result qlua_getBuySellInfoEx(final GetBuySellInfoEx.Request args) {
-
-        try {
-            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_BUY_SELL_INFO_EX, args);
-            return GetBuySellInfoEx.Result.parseFrom(resultAsByteString);
-        } catch (final RpcClientException ex) {
-            throw ex;
-        } catch (final Exception ex) {
-            throw new RpcClientException(ex);
-        }
+    public GetBuySellInfoEx.Result qlua_getBuySellInfoEx(final GetBuySellInfoEx.Request request) {
+        return makeRPC(request, GetBuySellInfoEx.Result.class);
     }
 
     @Override

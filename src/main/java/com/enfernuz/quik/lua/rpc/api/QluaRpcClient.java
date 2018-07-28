@@ -78,31 +78,31 @@ public interface QluaRpcClient extends Gateway, Securable {
 
     /**
      *
-     * @param args
+     * @param request
      * @return
      */
-    DelLabel.Result qlua_DelLabel(DelLabel.Request args);
+    DelLabel.Result qlua_DelLabel(DelLabel.Request request);
 
     /**
      *
-     * @param args
+     * @param request
      * @return
      */
-    DestroyTable.Result qlua_DestroyTable(DestroyTable.Request args);
+    DestroyTable.Result qlua_DestroyTable(DestroyTable.Request request);
 
     /**
      *
-     * @param args
+     * @param request
      * @return
      */
-    GetBuySellInfo.Result qlua_getBuySellInfo(GetBuySellInfo.Request args);
+    GetBuySellInfo.Result qlua_getBuySellInfo(GetBuySellInfo.Request request);
 
     /**
      *
-     * @param args
+     * @param request
      * @return
      */
-    GetBuySellInfoEx.Result qlua_getBuySellInfoEx(GetBuySellInfoEx.Request args);
+    GetBuySellInfoEx.Result qlua_getBuySellInfoEx(GetBuySellInfoEx.Request request);
 
     /**
      *

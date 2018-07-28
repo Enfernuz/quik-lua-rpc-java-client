@@ -23,7 +23,7 @@ public enum JsonSerdeModule implements SerdeModule {
     @Override
     public <T> byte[] serialize(final T t) {
 
-        requireNonNull(t, "The argument must not be null.");
+        requireNonNull(t);
 
         if (t instanceof QluaEvent.EventType) {
             return JsonQluaEventTypeSerde.INSTANCE.serialize((QluaEvent.EventType) t);
@@ -40,7 +40,7 @@ public enum JsonSerdeModule implements SerdeModule {
         try {
 
             if (QluaEvent.EventType.class == clazz) {
-                // This cast is safe because the JsonQluaEventTypeSerde returns an instance of QluaEvent.EventType
+                // This cast is safe because JsonQluaEventTypeSerde returns an instance of QluaEvent.EventType
                 // and we obliged to return an instance of Class<QluaEvent.EventType>.
                 @SuppressWarnings("unchecked")
                 final T result = (T) JsonQluaEventTypeSerde.INSTANCE.deserialize(data);
