@@ -1,4 +1,4 @@
-package com.enfernuz.quik.lua.rpc.events.api.structures;
+package com.enfernuz.quik.lua.rpc.api.structures;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ComparisonChain;
