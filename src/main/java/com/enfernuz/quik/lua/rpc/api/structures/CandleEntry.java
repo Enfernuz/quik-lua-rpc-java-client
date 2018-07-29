@@ -1,9 +1,7 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
 import com.google.common.base.MoreObjects;
-import lombok.Builder;
-import lombok.NonNull;
-import lombok.Value;
+import lombok.*;
 import lombok.experimental.NonFinal;
 
 import java.util.Objects;
@@ -19,8 +17,8 @@ public class CandleEntry implements Comparable<CandleEntry> {
     DateTimeEntry dateTimeEntry;
     int doesExist;
 
-    @NonFinal transient int hashCode;
-    @NonFinal transient String asString;
+    private @NonFinal @Getter(AccessLevel.NONE) transient int hashCode;
+    private @NonFinal @Getter(AccessLevel.NONE) transient String asString;
 
     @Builder
     private CandleEntry(

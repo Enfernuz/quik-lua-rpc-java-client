@@ -1,7 +1,9 @@
 package com.enfernuz.quik.lua.rpc.events.api.structures;
 
 import com.google.common.base.MoreObjects;
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.Value;
 import lombok.experimental.NonFinal;
 
@@ -24,8 +26,8 @@ public class MoneyLimit {
     String leverage;
     int limitKind;
 
-    private @NonFinal transient int hashCode;
-    private @NonFinal transient String asString;
+    private @NonFinal @Getter(AccessLevel.NONE) transient int hashCode;
+    private @NonFinal @Getter(AccessLevel.NONE) transient String asString;
 
     @Builder
     private MoneyLimit(

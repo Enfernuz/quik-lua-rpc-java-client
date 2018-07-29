@@ -1,9 +1,7 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
 import com.google.common.base.MoreObjects;
-import lombok.Builder;
-import lombok.NonNull;
-import lombok.Value;
+import lombok.*;
 import lombok.experimental.NonFinal;
 
 import java.util.Objects;
@@ -74,8 +72,8 @@ public final class GetBuySellInfoEx {
         String isLongAllowed;
         String isShortAllowed;
 
-        @NonFinal transient int hashCode;
-        @NonFinal transient String asString;
+        private @NonFinal @Getter(AccessLevel.NONE) transient int hashCode;
+        private @NonFinal @Getter(AccessLevel.NONE) transient String asString;
 
         @Builder
         private BuySellInfoEx(

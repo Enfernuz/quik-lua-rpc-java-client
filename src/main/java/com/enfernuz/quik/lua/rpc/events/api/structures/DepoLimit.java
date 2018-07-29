@@ -1,7 +1,9 @@
 package com.enfernuz.quik.lua.rpc.events.api.structures;
 
 import com.google.common.base.MoreObjects;
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.Value;
 import lombok.experimental.NonFinal;
 
@@ -25,8 +27,8 @@ public class DepoLimit {
     String awgPositionPrice;
     int limitKind;
 
-    private transient @NonFinal int hashCode;
-    private transient @NonFinal String asString;
+    private transient @NonFinal @Getter(AccessLevel.NONE) int hashCode;
+    private transient @NonFinal @Getter(AccessLevel.NONE) String asString;
 
     @Builder
     private DepoLimit(

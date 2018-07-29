@@ -2,7 +2,9 @@ package com.enfernuz.quik.lua.rpc.api.structures;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ComparisonChain;
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.Value;
 import lombok.experimental.NonFinal;
 
@@ -21,8 +23,8 @@ public class DateTimeEntry implements Comparable<DateTimeEntry> {
     int month;
     int year;
 
-    private @NonFinal transient int hashCode;
-    private @NonFinal transient String asString;
+    private @NonFinal @Getter(AccessLevel.NONE) transient int hashCode;
+    private @NonFinal @Getter(AccessLevel.NONE) transient String asString;
 
     @Builder
     private DateTimeEntry(

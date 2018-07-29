@@ -1,9 +1,7 @@
 package com.enfernuz.quik.lua.rpc.events.api.structures;
 
 import com.google.common.base.MoreObjects;
-import lombok.Builder;
-import lombok.NonNull;
-import lombok.Value;
+import lombok.*;
 import lombok.experimental.NonFinal;
 
 import java.util.Objects;
@@ -16,8 +14,8 @@ public class Firm {
     int status;
     String exchange;
 
-    private @NonFinal transient int hashCode;
-    private @NonFinal transient String asString;
+    private @NonFinal @Getter(AccessLevel.NONE) transient int hashCode;
+    private @NonFinal @Getter(AccessLevel.NONE) transient String asString;
 
     @Builder
     private Firm(@NonNull final String firmId, final String firmName, int status, final String exchange) {

@@ -2,7 +2,9 @@ package com.enfernuz.quik.lua.rpc.events.api.structures;
 
 import com.enfernuz.quik.lua.rpc.api.structures.DateTimeEntry;
 import com.google.common.base.MoreObjects;
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.Value;
 import lombok.experimental.NonFinal;
 
@@ -30,8 +32,8 @@ public class TransReply {
     String secCode;
     String exchangeCode;
 
-    private transient @NonFinal int hashCode;
-    private transient @NonFinal String asString;
+    private transient @NonFinal @Getter(AccessLevel.NONE) int hashCode;
+    private transient @NonFinal @Getter(AccessLevel.NONE) String asString;
 
     @Builder
     private TransReply(

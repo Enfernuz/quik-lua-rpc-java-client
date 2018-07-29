@@ -2,7 +2,9 @@ package com.enfernuz.quik.lua.rpc.events.api.structures;
 
 import com.enfernuz.quik.lua.rpc.api.structures.DateTimeEntry;
 import com.google.common.base.MoreObjects;
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.Value;
 import lombok.experimental.NonFinal;
 
@@ -30,8 +32,8 @@ public class AllTrade {
     String openInterest;
     String exchangeCode;
 
-    private @NonFinal transient int hashCode;
-    private @NonFinal transient String asString;
+    private @NonFinal @Getter(AccessLevel.NONE) transient int hashCode;
+    private @NonFinal @Getter(AccessLevel.NONE) transient String asString;
 
     @Builder
     private AllTrade(final long tradeNum,
