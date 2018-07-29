@@ -48,6 +48,8 @@ final class QluaJsonJacksonDeserializers extends SimpleDeserializers {
         super.addDeserializer(GetBuySellInfo.Result.class, new GetBuySellInfoResultJsonDeserializer());
         super.addDeserializer(GetBuySellInfoEx.BuySellInfoEx.class, new BuySellInfoExJsonDeserializer());
         super.addDeserializer(GetBuySellInfoEx.Result.class, new GetBuySellInfoExResultJsonDeserializer());
+        super.addDeserializer(CandleEntry.class, new CandleEntryJsonDeserializer());
+        super.addDeserializer(GetCandlesByIndex.Result.class, new GetCandlesByIndexResultJsonDeserializer());
         super.addDeserializer(Message.Result.class, new MessageResultJsonDeserializer());
     }
 }

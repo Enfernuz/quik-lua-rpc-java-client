@@ -1,6 +1,7 @@
 package com.enfernuz.quik.lua.rpc.serde.json.jackson;
 
 import com.enfernuz.quik.lua.rpc.api.structures.*;
+import com.enfernuz.quik.lua.rpc.api.structures.GetCandlesByIndex;
 import com.fasterxml.jackson.databind.module.SimpleSerializers;
 
 final class QluaJsonJacksonSerializers extends SimpleSerializers {
@@ -22,6 +23,7 @@ final class QluaJsonJacksonSerializers extends SimpleSerializers {
         super.addSerializer(DestroyTable.Request.class, new DestroyTableRequestJsonSerializer());
         super.addSerializer(GetBuySellInfo.Request.class, new GetBuySellInfoRequestJsonSerializer());
         super.addSerializer(GetBuySellInfoEx.Request.class, new GetBuySellInfoExRequestJsonSerializer());
+        super.addSerializer(GetCandlesByIndex.Request.class, new GetCandlesByIndexRequestJsonSerializer());
         super.addSerializer(Message.Request.class, new MessageRequestJsonSerializer());
     }
 }

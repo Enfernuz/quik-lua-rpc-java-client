@@ -6,6 +6,7 @@ import com.enfernuz.quik.lua.rpc.api.security.zmq.CurveKeyPair;
 import com.enfernuz.quik.lua.rpc.api.security.zmq.PlainCredentials;
 import com.enfernuz.quik.lua.rpc.api.structures.*;
 import com.enfernuz.quik.lua.rpc.api.zmq.ZmqTcpQluaRpcClient;
+import com.enfernuz.quik.lua.rpc.api.structures.GetCandlesByIndex;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import com.google.protobuf.ByteString;
@@ -226,16 +227,8 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
     }
 
     @Override
-    public GetCandlesByIndex.Result qlua_getCandlesByIndex(final GetCandlesByIndex.Result args) {
-
-        try {
-            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_CANDLES_BY_INDEX, args);
-            return GetCandlesByIndex.Result.parseFrom(resultAsByteString);
-        } catch (final RpcClientException ex) {
-            throw ex;
-        } catch (final Exception ex) {
-            throw new RpcClientException(ex);
-        }
+    public GetCandlesByIndex.Result qlua_getCandlesByIndex(final GetCandlesByIndex.Result request) {
+        return makeRPC(request, GetCandlesByIndex.Result.class);
     }
 
     @Override

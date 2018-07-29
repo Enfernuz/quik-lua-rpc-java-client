@@ -2,6 +2,7 @@ package com.enfernuz.quik.lua.rpc.api;
 
 import com.enfernuz.quik.lua.rpc.api.security.Securable;
 import com.enfernuz.quik.lua.rpc.api.structures.*;
+import com.enfernuz.quik.lua.rpc.api.structures.GetCandlesByIndex;
 import com.enfernuz.quik.lua.rpc.io.Gateway;
 import qlua.rpc.bit.*;
 import qlua.rpc.datasource.*;
@@ -106,10 +107,10 @@ public interface QluaRpcClient extends Gateway, Securable {
 
     /**
      *
-     * @param args
+     * @param request
      * @return
      */
-    GetCandlesByIndex.Result qlua_getCandlesByIndex(GetCandlesByIndex.Result args);
+    GetCandlesByIndex.Result qlua_getCandlesByIndex(GetCandlesByIndex.Result request);
 
     /**
      *
