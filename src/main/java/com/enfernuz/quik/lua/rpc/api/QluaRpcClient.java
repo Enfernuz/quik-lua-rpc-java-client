@@ -114,10 +114,10 @@ public interface QluaRpcClient extends Gateway, Securable {
 
     /**
      *
-     * @param args
+     * @param request
      * @return
      */
-    GetCell.Result qlua_GetCell(GetCell.Result args);
+    GetCell.Result qlua_GetCell(GetCell.Result request);
 
     /**
      *
@@ -127,17 +127,17 @@ public interface QluaRpcClient extends Gateway, Securable {
 
     /**
      *
-     * @param args
+     * @param request
      * @return
      */
-    GetClassInfo.Result qlua_getClassInfo(GetClassInfo.Request args);
+    GetClassInfo.Result qlua_getClassInfo(GetClassInfo.Request request);
 
     /**
      *
-     * @param args
+     * @param request
      * @return
      */
-    GetClassSecurities.Result qlua_getClassSecurities(GetClassSecurities.Request args);
+    GetClassSecurities.Result qlua_getClassSecurities(GetClassSecurities.Request request);
 
     /**
      *

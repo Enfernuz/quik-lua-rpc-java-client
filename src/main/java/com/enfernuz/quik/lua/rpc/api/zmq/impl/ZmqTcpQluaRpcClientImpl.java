@@ -232,55 +232,23 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
     }
 
     @Override
-    public GetCell.Result qlua_GetCell(final GetCell.Result args) {
-
-        try {
-            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_CELL, args);
-            return GetCell.Result.parseFrom(resultAsByteString);
-        } catch (final RpcClientException ex) {
-            throw ex;
-        } catch (final Exception ex) {
-            throw new RpcClientException(ex);
-        }
+    public GetCell.Result qlua_GetCell(final GetCell.Result request) {
+        return makeRPC(request, GetCell.Result.class);
     }
 
     @Override
     public GetClassesList.Result qlua_getClassesList() {
-
-        try {
-            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_CLASSES_LIST);
-            return GetClassesList.Result.parseFrom(resultAsByteString);
-        } catch (final RpcClientException ex) {
-            throw ex;
-        } catch (final Exception ex) {
-            throw new RpcClientException(ex);
-        }
+        return makeRPC(GetClassesList.Request.INSTANCE, GetClassesList.Result.class);
     }
 
     @Override
-    public GetClassInfo.Result qlua_getClassInfo(final GetClassInfo.Request args) {
-
-        try {
-            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_CLASS_INFO, args);
-            return GetClassInfo.Result.parseFrom(resultAsByteString);
-        } catch (final RpcClientException ex) {
-            throw ex;
-        } catch (final Exception ex) {
-            throw new RpcClientException(ex);
-        }
+    public GetClassInfo.Result qlua_getClassInfo(final GetClassInfo.Request request) {
+        return makeRPC(request, GetClassInfo.Result.class);
     }
 
     @Override
-    public GetClassSecurities.Result qlua_getClassSecurities(final GetClassSecurities.Request args) {
-
-        try {
-            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_CLASS_SECURITIES, args);
-            return GetClassSecurities.Result.parseFrom(resultAsByteString);
-        } catch (final RpcClientException ex) {
-            throw ex;
-        } catch (final Exception ex) {
-            throw new RpcClientException(ex);
-        }
+    public GetClassSecurities.Result qlua_getClassSecurities(final GetClassSecurities.Request request) {
+        return makeRPC(request, GetClassSecurities.Result.class);
     }
 
     @Override
