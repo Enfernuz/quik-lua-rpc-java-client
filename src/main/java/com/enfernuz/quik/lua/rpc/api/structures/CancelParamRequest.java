@@ -7,6 +7,8 @@ import lombok.Value;
 
 public final class CancelParamRequest {
 
+    private CancelParamRequest() {}
+
     @Value
     public static class Request {
 

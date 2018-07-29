@@ -11,6 +11,8 @@ import java.util.List;
 
 public final class GetCandlesByIndex {
 
+    private GetCandlesByIndex() {}
+
     @Value
     public static class Request {
 

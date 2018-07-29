@@ -5,6 +5,8 @@ import lombok.Value;
 
 public final class AllocTable {
 
+    private AllocTable() {}
+
     public static enum Request { INSTANCE; }
 
     @Value
