@@ -227,7 +227,7 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
     }
 
     @Override
-    public GetCandlesByIndex.Result qlua_getCandlesByIndex(final GetCandlesByIndex.Result request) {
+    public GetCandlesByIndex.Result qlua_getCandlesByIndex(final GetCandlesByIndex.Request request) {
         return makeRPC(request, GetCandlesByIndex.Result.class);
     }
 
