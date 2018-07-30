@@ -1,7 +1,7 @@
 package com.enfernuz.quik.lua.rpc.events.api;
 
+import com.enfernuz.quik.lua.rpc.api.structures.DepoLimit;
 import com.enfernuz.quik.lua.rpc.events.api.structures.*;
-import qlua.structs.QluaStructures;
 
 /**
  * Обработчик событий API QLua терминала QUIK.

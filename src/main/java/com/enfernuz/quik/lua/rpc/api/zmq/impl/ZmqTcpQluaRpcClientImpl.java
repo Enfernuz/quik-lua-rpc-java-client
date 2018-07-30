@@ -252,29 +252,13 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
     }
 
     @Override
-    public GetDepo.Result qlua_getDepo(final GetDepo.Request args) {
-
-        try {
-            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_DEPO, args);
-            return GetDepo.Result.parseFrom(resultAsByteString);
-        } catch (final RpcClientException ex) {
-            throw ex;
-        } catch (final Exception ex) {
-            throw new RpcClientException(ex);
-        }
+    public GetDepo.Result qlua_getDepo(final GetDepo.Request request) {
+        return makeRPC(request, GetDepo.Result.class);
     }
 
     @Override
-    public GetDepoEx.Result qlua_getDepoEx(final GetDepoEx.Request args) {
-
-        try {
-            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_DEPO_EX, args);
-            return GetDepoEx.Result.parseFrom(resultAsByteString);
-        } catch (final RpcClientException ex) {
-            throw ex;
-        } catch (final Exception ex) {
-            throw new RpcClientException(ex);
-        }
+    public GetDepoEx.Result qlua_getDepoEx(final GetDepoEx.Request request) {
+        return makeRPC(request, GetDepoEx.Result.class);
     }
 
     @Override

@@ -55,6 +55,9 @@ final class QluaJsonJacksonDeserializers extends SimpleDeserializers {
         super.addDeserializer(ClassInfo.class, new ClassInfoJsonDeserializer());
         super.addDeserializer(GetClassInfo.Result.class, new GetClassInfoResultJsonDeserializer());
         super.addDeserializer(GetClassSecurities.Result.class, new GetClassSecuritiesResultJsonDeserializer());
+        super.addDeserializer(Depo.class, new DepoJsonDeserializer());
+        super.addDeserializer(GetDepo.Result.class, new GetDepoResultJsonDeserializer());
+        super.addDeserializer(GetDepoEx.Result.class, new GetDepoExResultJsonDeserializer());
         super.addDeserializer(Message.Result.class, new MessageResultJsonDeserializer());
     }
 }

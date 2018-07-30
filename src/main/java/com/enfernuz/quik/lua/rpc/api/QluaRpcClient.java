@@ -141,17 +141,17 @@ public interface QluaRpcClient extends Gateway, Securable {
 
     /**
      *
-     * @param args
+     * @param request
      * @return
      */
-    GetDepo.Result qlua_getDepo(GetDepo.Request args);
+    GetDepo.Result qlua_getDepo(GetDepo.Request request);
 
     /**
      *
-     * @param args
+     * @param request
      * @return
      */
-    GetDepoEx.Result qlua_getDepoEx(GetDepoEx.Request args);
+    GetDepoEx.Result qlua_getDepoEx(GetDepoEx.Request request);
 
     /**
      *
