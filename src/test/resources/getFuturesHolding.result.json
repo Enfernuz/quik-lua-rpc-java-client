@@ -1,0 +1,23 @@
+{
+  "futures_holding" : {
+    "firmid" : "1",
+    "trdaccid" : "2",
+    "sec_code" : "3",
+    "type" : 4,
+    "startbuy" : "5",
+    "startsell" : "6",
+    "todaybuy" : "7",
+    "todaysell" : "8",
+    "totalnet" : "9",
+    "openbuys" : 10,
+    "opensells" : 11,
+    "cbplused" : "12",
+    "cbplplanned" : "13",
+    "varmargin" : "14",
+    "avrposnprice" : "15",
+    "positionvalue" : "16",
+    "real_varmargin" : "17",
+    "total_varmargin" : "18",
+    "session_status" : 19
+  }
+}
