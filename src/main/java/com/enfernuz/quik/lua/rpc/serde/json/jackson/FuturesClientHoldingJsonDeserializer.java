@@ -1,6 +1,6 @@
 package com.enfernuz.quik.lua.rpc.serde.json.jackson;
 
-import com.enfernuz.quik.lua.rpc.events.api.structures.FuturesClientHolding;
+import com.enfernuz.quik.lua.rpc.api.structures.FuturesClientHolding;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
@@ -28,8 +28,8 @@ final class FuturesClientHoldingJsonDeserializer extends JsonDeserializer<Future
                 .totalNet( asText(node, "totalnet") )
                 .openBuys( node.get("openbuys").asInt() )
                 .openSells( node.get("opensells").asInt() )
-                .cbpLUsed( asText(node, "cbplused") )
-                .cbpLPlanned( asText(node, "cbplplanned") )
+                .cbplUsed( asText(node, "cbplused") )
+                .cbplPlanned( asText(node, "cbplplanned") )
                 .varMargin( asText(node, "varmargin") )
                 .avrPosnPrice( asText(node, "avrposnprice") )
                 .positionValue( asText(node, "positionvalue") )

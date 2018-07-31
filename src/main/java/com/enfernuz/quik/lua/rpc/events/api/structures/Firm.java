@@ -1,6 +1,12 @@
 package com.enfernuz.quik.lua.rpc.events.api.structures;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.common.base.MoreObjects;
+import com.sun.istack.internal.NotNull;
 import lombok.*;
 import lombok.experimental.NonFinal;
 
@@ -9,16 +15,25 @@ import java.util.Objects;
 @Value
 public class Firm {
 
-    String firmId;
-    String firmName;
-    int status;
-    String exchange;
+    @JsonProperty("firm_id") String firmId;
+    @JsonProperty("firm_name") String firmName;
+    @JsonProperty("status") int status;
+    @JsonProperty("exchange") String exchange;
 
-    private @NonFinal @Getter(AccessLevel.NONE) transient int hashCode;
-    private @NonFinal @Getter(AccessLevel.NONE) transient String asString;
+    @Getter(AccessLevel.NONE)
+    private @JsonIgnore @NonFinal transient int hashCode;
+
+    @Getter(AccessLevel.NONE)
+    private @JsonIgnore @NonFinal transient String asString;
 
     @Builder
-    private Firm(@NonNull final String firmId, final String firmName, int status, final String exchange) {
+    @JsonCreator
+    private Firm(
+            @JsonProperty("firm_id") @NonNull final String firmId,
+            @JsonProperty("firm_name") final String firmName,
+            @JsonProperty(value = "status", required = true) int status,
+            @JsonProperty("exchange") final String exchange) {
+
         this.firmId = firmId;
         this.firmName = firmName;
         this.status = status;
