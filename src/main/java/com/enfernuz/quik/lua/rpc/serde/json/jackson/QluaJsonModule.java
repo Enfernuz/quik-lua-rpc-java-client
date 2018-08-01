@@ -9,6 +9,7 @@ public final class QluaJsonModule extends SimpleModule {
 
         super.setupModule(context);
 
+        context.addSerializers( new QluaJsonJacksonSerializers() );
         context.addDeserializers( new QluaJsonJacksonDeserializers() );
     }
 }

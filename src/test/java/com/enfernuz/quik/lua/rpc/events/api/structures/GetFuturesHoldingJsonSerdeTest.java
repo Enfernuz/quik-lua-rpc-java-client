@@ -2,6 +2,7 @@ package com.enfernuz.quik.lua.rpc.events.api.structures;
 
 import com.enfernuz.quik.lua.rpc.api.structures.FuturesClientHolding;
 import com.enfernuz.quik.lua.rpc.api.structures.GetFuturesHolding;
+import com.enfernuz.quik.lua.rpc.serde.json.jackson.QluaJsonModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
@@ -14,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 public class GetFuturesHoldingJsonSerdeTest {
 
-    private final ObjectMapper sut = new ObjectMapper();
+    private static ObjectMapper sut;
 
     private static GetFuturesHolding.Request requestObj;
     private static GetFuturesHolding.Result resultObj;
@@ -23,6 +24,9 @@ public class GetFuturesHoldingJsonSerdeTest {
 
     @BeforeClass
     public static void globalSetup() throws IOException {
+
+        sut = new ObjectMapper();
+        sut.registerModule(new QluaJsonModule());
 
         requestObj = GetFuturesHolding.Request.builder()
                 .firmId("1")

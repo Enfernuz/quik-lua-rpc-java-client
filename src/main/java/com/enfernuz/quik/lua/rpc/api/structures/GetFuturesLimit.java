@@ -5,32 +5,31 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import com.sun.istack.internal.NotNull;
 import lombok.Builder;
-import lombok.NonNull;
 import lombok.Value;
 
-public final class GetFuturesHolding {
+public final class GetFuturesLimit {
 
-    private GetFuturesHolding() {}
+    private GetFuturesLimit() {}
 
     @Value
     public static class Request {
 
         String firmId;
         String trdAccId;
-        String secCode;
-        int type;
+        int limitType;
+        String currCode;
 
         @Builder
         private Request(
-                final @NonNull String firmId,
-                final @NonNull String trdAccId,
-                final @NonNull String secCode,
-                final int type) {
+                final @NotNull String firmId,
+                final @NotNull String trdAccId,
+                final @NotNull int limitType,
+                final @NotNull String currCode) {
 
             this.firmId = firmId;
             this.trdAccId = trdAccId;
-            this.secCode = secCode;
-            this.type = type;
+            this.limitType = limitType;
+            this.currCode = currCode;
         }
 
         @Override
@@ -38,8 +37,8 @@ public final class GetFuturesHolding {
             return MoreObjects.toStringHelper(this)
                     .add("firmid", firmId)
                     .add("trdaccid", trdAccId)
-                    .add("sec_code", secCode)
-                    .add("type", type)
+                    .add("limit_type", limitType)
+                    .add("currcode", currCode)
                     .toString();
         }
     }
@@ -47,11 +46,11 @@ public final class GetFuturesHolding {
     @Value
     public static class Result {
 
-        FuturesClientHolding futuresHolding;
+        FuturesLimit futuresLimit;
 
         @JsonCreator
-        public Result(final @JsonProperty(value = "futures_holding", required = true) @NotNull FuturesClientHolding futuresHolding) {
-            this.futuresHolding = futuresHolding;
+        public Result(final @JsonProperty(value = "futures_limit", required = true) @NotNull FuturesLimit futuresLimit) {
+            this.futuresLimit = futuresLimit;
         }
     }
 }
