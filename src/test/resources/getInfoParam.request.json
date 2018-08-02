@@ -1,0 +1,6 @@
+{
+  "method" : "getInfoParam",
+  "args" : {
+    "param_name" : "1"
+  }
+}

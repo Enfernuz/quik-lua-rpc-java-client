@@ -1,0 +1,7 @@
+{
+  "method" : "getItem",
+  "args" : {
+    "table_name" : "1",
+    "index" : 2
+  }
+}

@@ -41,7 +41,7 @@ public class RpcExampleApplication {
 
         LOGGER.info("Инициализация клиента...");
         try (final ZmqTcpQluaRpcClient rpcClient =
-                     ZmqTcpQluaRpcClientImpl.newInstance(config.getNetworkAddress(), config.getAuthContext())) {
+                     ZmqTcpQluaRpcClientImpl.newInstance(config.getNetworkAddress(), config.getAuthContext(), null)) {
 
             LOGGER.info("Соединение с RPC-сервисом...");
             rpcClient.open();
@@ -53,9 +53,9 @@ public class RpcExampleApplication {
                             .build();
 
             LOGGER.info("Выполнение удалённой процедуры 'message' на терминале QUIK...");
-            final Message.Result result = rpcClient.qlua_message(request);
+            ///final Message.Result result = rpcClient.qlua_message(request);
 
-            LOGGER.info("Результат выполнения удалённой процедуры 'message': {}.", result.getResult());
+            ///LOGGER.info("Результат выполнения удалённой процедуры 'message': {}.", result.getResult());
             LOGGER.info("Выход из программы...");
         } catch (final Exception ex) {
             LOGGER.error("Не удалось выполнить удалённый вызов процедуры.", ex);
