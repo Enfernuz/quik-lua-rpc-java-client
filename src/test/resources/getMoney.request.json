@@ -1,0 +1,9 @@
+{
+  "method" : "getMoney",
+  "args" : {
+    "client_code" : "1",
+    "firmid" : "2",
+    "tag" : "3",
+    "currcode" : "4"
+  }
+}

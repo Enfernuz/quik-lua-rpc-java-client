@@ -1,6 +1,5 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
-import com.enfernuz.quik.lua.rpc.api.messages.GetFuturesLimit;
 import com.enfernuz.quik.lua.rpc.api.structures.FuturesLimit;
 import com.enfernuz.quik.lua.rpc.serde.json.jackson.QluaJsonModule;
 import com.fasterxml.jackson.databind.ObjectMapper;

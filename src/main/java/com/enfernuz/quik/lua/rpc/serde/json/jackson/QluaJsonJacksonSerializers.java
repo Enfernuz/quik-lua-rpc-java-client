@@ -36,6 +36,7 @@ final class QluaJsonJacksonSerializers extends SimpleSerializers {
         super.addSerializer(GetItem.Request.class, new GetItemRequestJsonSerializer());
         super.addSerializer(GetLabelParams.Request.class, new GetLabelParamsRequestJsonSerializer());
         super.addSerializer(GetLinesCount.Request.class, new GetLinesCountRequestJsonSerializer());
+        super.addSerializer(GetMoney.Request.class, new GetMoneyRequestJsonSerializer());
         super.addSerializer(Message.Request.class, new MessageRequestJsonSerializer());
     }
 }
