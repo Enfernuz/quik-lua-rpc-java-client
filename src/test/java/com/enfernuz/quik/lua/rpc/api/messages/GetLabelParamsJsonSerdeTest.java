@@ -1,7 +1,5 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
-import com.enfernuz.quik.lua.rpc.api.messages.GetItem;
-import com.enfernuz.quik.lua.rpc.api.messages.GetLabelParams;
 import com.enfernuz.quik.lua.rpc.serde.json.jackson.QluaJsonModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
@@ -14,7 +12,7 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
-public class GetLabelParamsSerdeTest {
+public class GetLabelParamsJsonSerdeTest {
 
     private static ObjectMapper sut;
 

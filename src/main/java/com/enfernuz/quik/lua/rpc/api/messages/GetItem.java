@@ -35,11 +35,10 @@ public final class GetItem {
     @Value
     public static class Result {
 
-        @JsonProperty(value = "table_row")
         Map<String, String> tableRow;
 
         @JsonCreator
-        public Result(final @NonNull Map<String, String> tableRow) {
+        public Result(final @JsonProperty(value = "table_row" ,required = true) @NonNull Map<String, String> tableRow) {
             this.tableRow = tableRow;
         }
 
