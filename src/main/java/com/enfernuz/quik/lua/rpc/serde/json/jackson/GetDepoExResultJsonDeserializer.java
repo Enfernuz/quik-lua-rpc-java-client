@@ -1,7 +1,7 @@
 package com.enfernuz.quik.lua.rpc.serde.json.jackson;
 
 import com.enfernuz.quik.lua.rpc.api.structures.DepoLimit;
-import com.enfernuz.quik.lua.rpc.api.structures.GetDepoEx;
+import com.enfernuz.quik.lua.rpc.api.messages.GetDepoEx;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;

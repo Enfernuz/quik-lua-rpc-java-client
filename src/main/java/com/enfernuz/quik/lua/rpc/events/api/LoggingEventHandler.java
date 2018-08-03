@@ -1,9 +1,6 @@
 package com.enfernuz.quik.lua.rpc.events.api;
 
-import com.enfernuz.quik.lua.rpc.api.structures.DepoLimit;
-import com.enfernuz.quik.lua.rpc.api.structures.FuturesClientHolding;
-import com.enfernuz.quik.lua.rpc.api.structures.FuturesLimit;
-import com.enfernuz.quik.lua.rpc.events.api.structures.*;
+import com.enfernuz.quik.lua.rpc.api.structures.*;
 import org.slf4j.*;
 
 /**

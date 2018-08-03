@@ -1,21 +1,17 @@
 package com.enfernuz.quik.lua.rpc.api.zmq.impl;
 
+import com.enfernuz.quik.lua.rpc.api.messages.*;
 import com.enfernuz.quik.lua.rpc.api.security.zmq.AuthContext;
 import com.enfernuz.quik.lua.rpc.api.security.zmq.CurveCredentials;
 import com.enfernuz.quik.lua.rpc.api.security.zmq.CurveKeyPair;
 import com.enfernuz.quik.lua.rpc.api.security.zmq.PlainCredentials;
-import com.enfernuz.quik.lua.rpc.api.structures.*;
 import com.enfernuz.quik.lua.rpc.api.zmq.ZmqTcpQluaRpcClient;
-import com.enfernuz.quik.lua.rpc.api.structures.GetCandlesByIndex;
+import com.enfernuz.quik.lua.rpc.api.messages.GetCandlesByIndex;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
-import com.google.protobuf.ByteString;
 import org.zeromq.ZFrame;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMsg;
-import qlua.rpc.RPC;
-import qlua.rpc.bit.*;
-import qlua.rpc.datasource.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

@@ -1,7 +1,7 @@
 package com.enfernuz.quik.lua.rpc.serde.json.jackson;
 
+import com.enfernuz.quik.lua.rpc.api.messages.*;
 import com.enfernuz.quik.lua.rpc.api.structures.*;
-import com.enfernuz.quik.lua.rpc.events.api.structures.*;
 import com.fasterxml.jackson.databind.module.SimpleDeserializers;
 
 final class QluaJsonJacksonDeserializers extends SimpleDeserializers {

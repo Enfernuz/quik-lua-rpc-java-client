@@ -1,6 +1,6 @@
 package com.enfernuz.quik.lua.rpc.serde.json.jackson;
 
-import com.enfernuz.quik.lua.rpc.api.structures.AllocTable;
+import com.enfernuz.quik.lua.rpc.api.messages.AllocTable;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;

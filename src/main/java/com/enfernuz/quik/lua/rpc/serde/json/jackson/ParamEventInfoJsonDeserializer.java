@@ -1,6 +1,6 @@
 package com.enfernuz.quik.lua.rpc.serde.json.jackson;
 
-import com.enfernuz.quik.lua.rpc.events.api.structures.ParamEventInfo;
+import com.enfernuz.quik.lua.rpc.api.structures.ParamEventInfo;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;

@@ -1,6 +1,6 @@
 package com.enfernuz.quik.lua.rpc.serde.json.jackson;
 
-import com.enfernuz.quik.lua.rpc.api.structures.GetBuySellInfo;
+import com.enfernuz.quik.lua.rpc.api.messages.GetBuySellInfo;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;

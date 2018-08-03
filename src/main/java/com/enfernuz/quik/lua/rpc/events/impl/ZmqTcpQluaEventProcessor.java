@@ -1,11 +1,8 @@
 package com.enfernuz.quik.lua.rpc.events.impl;
 
 import com.enfernuz.quik.lua.rpc.api.security.zmq.AuthContext;
-import com.enfernuz.quik.lua.rpc.api.structures.DepoLimit;
-import com.enfernuz.quik.lua.rpc.api.structures.FuturesClientHolding;
-import com.enfernuz.quik.lua.rpc.api.structures.FuturesLimit;
+import com.enfernuz.quik.lua.rpc.api.structures.*;
 import com.enfernuz.quik.lua.rpc.events.api.*;
-import com.enfernuz.quik.lua.rpc.events.api.structures.*;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import com.google.common.collect.*;

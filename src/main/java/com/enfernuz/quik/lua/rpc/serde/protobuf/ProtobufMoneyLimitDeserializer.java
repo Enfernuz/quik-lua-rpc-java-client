@@ -1,6 +1,6 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
-import com.enfernuz.quik.lua.rpc.events.api.structures.MoneyLimit;
+import com.enfernuz.quik.lua.rpc.api.structures.MoneyLimit;
 import com.enfernuz.quik.lua.rpc.serde.Deserializer;
 import com.enfernuz.quik.lua.rpc.serde.SerdeException;
 import qlua.structs.QluaStructures;
