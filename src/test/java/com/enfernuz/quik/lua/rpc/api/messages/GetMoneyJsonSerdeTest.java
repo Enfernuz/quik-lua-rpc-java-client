@@ -47,9 +47,9 @@ public class GetMoneyJsonSerdeTest {
         resultObj = new GetMoney.Result(money);
 
         requestJson =
-                Resources.toString(Resources.getResource("getMoney.request.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/getMoney.request.json"), Charsets.UTF_8);
         resultJson =
-                Resources.toString(Resources.getResource("getMoney.result.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/getMoney.result.json"), Charsets.UTF_8);
     }
 
     @Test

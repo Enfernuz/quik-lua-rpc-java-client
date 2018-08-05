@@ -41,7 +41,7 @@ public class FuturesLimitJsonSerdeTest {
                 .realVarMargin("17")
                 .build();
 
-        expectedJson = Resources.toString(Resources.getResource("futures_limit.json"), Charsets.UTF_8);
+        expectedJson = Resources.toString(Resources.getResource("json/futures_limit.json"), Charsets.UTF_8);
     }
 
     @Test

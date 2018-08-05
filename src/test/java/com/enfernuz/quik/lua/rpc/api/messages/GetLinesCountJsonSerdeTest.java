@@ -31,9 +31,9 @@ public class GetLinesCountJsonSerdeTest {
         resultObj = new GetLinesCount.Result(1);
 
         requestJson =
-                Resources.toString(Resources.getResource("getLinesCount.request.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/getLinesCount.request.json"), Charsets.UTF_8);
         resultJson =
-                Resources.toString(Resources.getResource("getLinesCount.result.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/getLinesCount.result.json"), Charsets.UTF_8);
     }
 
     @Test

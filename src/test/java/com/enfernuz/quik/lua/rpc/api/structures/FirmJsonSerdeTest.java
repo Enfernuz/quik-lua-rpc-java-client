@@ -27,7 +27,7 @@ public class FirmJsonSerdeTest {
                 .exchange("4")
                 .build();
 
-        firmAsJson = Resources.toString(Resources.getResource("firm.json"), Charsets.UTF_8);
+        firmAsJson = Resources.toString(Resources.getResource("json/firm.json"), Charsets.UTF_8);
     }
 
     @Test

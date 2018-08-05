@@ -32,9 +32,9 @@ public class GetInfoParamJsonSerdeTest {
         resultObj = new GetInfoParam.Result("1");
 
         requestJson =
-                Resources.toString(Resources.getResource("getInfoParam.request.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/getInfoParam.request.json"), Charsets.UTF_8);
         resultJson =
-                Resources.toString(Resources.getResource("getInfoParam.result.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/getInfoParam.result.json"), Charsets.UTF_8);
     }
 
     @Test

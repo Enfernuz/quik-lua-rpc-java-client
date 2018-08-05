@@ -44,7 +44,7 @@ public class FuturesClientHoldingJsonSerdeTest {
                 .build();
 
         futuresClientHoldingAsJson =
-                Resources.toString(Resources.getResource("futures_client_holding.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/futures_client_holding.json"), Charsets.UTF_8);
     }
 
     @Test

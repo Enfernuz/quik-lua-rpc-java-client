@@ -1,6 +1,5 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
-import com.enfernuz.quik.lua.rpc.api.messages.GetItem;
 import com.enfernuz.quik.lua.rpc.serde.json.jackson.QluaJsonModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
@@ -40,9 +39,9 @@ public class GetItemJsonSerdeTest {
         resultObj = new GetItem.Result( tableRow.build() );
 
         requestJson =
-                Resources.toString(Resources.getResource("getItem.request.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/getItem.request.json"), Charsets.UTF_8);
         resultJson =
-                Resources.toString(Resources.getResource("getItem.result.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/getItem.result.json"), Charsets.UTF_8);
     }
 
     @Test

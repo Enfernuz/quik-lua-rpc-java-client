@@ -57,9 +57,9 @@ public class GetFuturesLimitJsonSerdeTest {
         resultObj = new GetFuturesLimit.Result(futuresLimit);
 
         requestJson =
-                Resources.toString(Resources.getResource("getFuturesLimit.request.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/getFuturesLimit.request.json"), Charsets.UTF_8);
         resultJson =
-                Resources.toString(Resources.getResource("getFuturesLimit.result.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/getFuturesLimit.result.json"), Charsets.UTF_8);
     }
 
     @Test

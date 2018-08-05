@@ -60,9 +60,9 @@ public class GetFuturesHoldingJsonSerdeTest {
         resultObj = new GetFuturesHolding.Result(futuresClientHolding);
 
         requestJson =
-                Resources.toString(Resources.getResource("getFuturesHolding.request.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/getFuturesHolding.request.json"), Charsets.UTF_8);
         resultJson =
-                Resources.toString(Resources.getResource("getFuturesHolding.result.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/getFuturesHolding.result.json"), Charsets.UTF_8);
     }
 
     @Test

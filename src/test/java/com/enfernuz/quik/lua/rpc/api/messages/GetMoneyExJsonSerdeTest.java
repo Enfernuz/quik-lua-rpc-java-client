@@ -54,9 +54,9 @@ public class GetMoneyExJsonSerdeTest {
         resultObj = new GetMoneyEx.Result(moneyEx);
 
         requestJson =
-                Resources.toString(Resources.getResource("getMoneyEx.request.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/getMoneyEx.request.json"), Charsets.UTF_8);
         resultJson =
-                Resources.toString(Resources.getResource("getMoneyEx.result.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/getMoneyEx.result.json"), Charsets.UTF_8);
     }
 
     @Test

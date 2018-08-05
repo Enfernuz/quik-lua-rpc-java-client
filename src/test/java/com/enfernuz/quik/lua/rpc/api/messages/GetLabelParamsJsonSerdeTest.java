@@ -39,9 +39,9 @@ public class GetLabelParamsJsonSerdeTest {
         resultObj = new GetLabelParams.Result( labelParams.build() );
 
         requestJson =
-                Resources.toString(Resources.getResource("GetLabelParams.request.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/GetLabelParams.request.json"), Charsets.UTF_8);
         resultJson =
-                Resources.toString(Resources.getResource("GetLabelParams.result.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/GetLabelParams.result.json"), Charsets.UTF_8);
     }
 
     @Test
