@@ -1,0 +1,6 @@
+{
+  "method" : "getNumCandles",
+  "args" : {
+    "tag" : "1"
+  }
+}
