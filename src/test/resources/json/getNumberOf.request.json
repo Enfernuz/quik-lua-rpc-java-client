@@ -1,0 +1,6 @@
+{
+  "method" : "getNumberOf",
+  "args" : {
+    "table_name" : "1"
+  }
+}
