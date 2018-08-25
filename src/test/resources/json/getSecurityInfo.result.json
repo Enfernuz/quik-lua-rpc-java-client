@@ -1,0 +1,16 @@
+{
+  "security_info" : {
+    "code" : "1",
+    "name" : "2",
+    "short_name" : "3",
+    "class_code" : "4",
+    "class_name" : "5",
+    "face_value" : "6",
+    "face_unit" : "7",
+    "scale" : "8",
+    "mat_date" : "9",
+    "lot_size" : "10",
+    "isin_code" : "11",
+    "min_price_step" : "12"
+  }
+}
