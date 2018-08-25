@@ -56,6 +56,7 @@ final class QluaJsonJacksonSerializers extends SimpleSerializers {
         super.addSerializer(IsConnected.Request.class, new IsConnectedRequestJsonSerializer());
         super.addSerializer(IsSubscribedLevel2Quotes.Request.class, new IsSubscribedLevel2QuotesRequestJsonSerializer());
         super.addSerializer(IsWindowClosed.Request.class, new IsWindowClosedRequestJsonSerializer());
+        super.addSerializer(ParamRequest.Request.class, new ParamRequestRequestJsonSerializer());
         super.addSerializer(Message.Request.class, new MessageRequestJsonSerializer());
     }
 }
