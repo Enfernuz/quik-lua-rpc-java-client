@@ -10,6 +10,8 @@ import lombok.Value;
 
 public final class GetSecurityInfo {
 
+    private GetSecurityInfo() {}
+
     @Value
     public static class Request {
 
