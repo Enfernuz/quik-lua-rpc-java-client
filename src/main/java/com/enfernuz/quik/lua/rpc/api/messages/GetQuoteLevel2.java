@@ -12,6 +12,8 @@ import java.util.Objects;
 
 public final class GetQuoteLevel2 {
 
+    private GetQuoteLevel2() {}
+
     @Value
     public static class QuoteEntry {
 
