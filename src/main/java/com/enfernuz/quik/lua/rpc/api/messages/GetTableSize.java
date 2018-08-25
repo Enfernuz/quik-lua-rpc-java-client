@@ -8,6 +8,8 @@ import lombok.Value;
 
 public final class GetTableSize {
 
+    private GetTableSize() {}
+
     @Value
     public static class Request {
 
