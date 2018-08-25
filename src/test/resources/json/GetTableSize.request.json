@@ -1,0 +1,6 @@
+{
+  "method" : "GetTableSize",
+  "args" : {
+    "t_id" : 1
+  }
+}
