@@ -53,6 +53,7 @@ final class QluaJsonJacksonSerializers extends SimpleSerializers {
         super.addSerializer(GetWorkingFolder.Request.class, new GetWorkingFolderRequestJsonSerializer());
         super.addSerializer(Highlight.Request.class, new HighlightRequestJsonSerializer());
         super.addSerializer(InsertRow.Request.class, new InsertRowRequestJsonSerializer());
+        super.addSerializer(IsConnected.Request.class, new IsConnectedRequestJsonSerializer());
         super.addSerializer(Message.Request.class, new MessageRequestJsonSerializer());
     }
 }
