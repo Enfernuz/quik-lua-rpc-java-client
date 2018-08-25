@@ -50,7 +50,6 @@ public final class GetMoneyEx {
     @Value
     public static class Result {
 
-
         MoneyLimit moneyEx;
 
         @JsonCreator
