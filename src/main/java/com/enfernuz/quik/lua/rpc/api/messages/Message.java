@@ -1,7 +1,8 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
-import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
 
@@ -12,11 +13,14 @@ public final class Message {
     @Value
     public static class Request {
 
-        String message;
+        @NonNull String message;
         IconType iconType;
 
-        @Builder
-        private Request(final @NonNull String message, final @NonNull IconType iconType) {
+        public Request(final String message) {
+            this(message, null);
+        }
+
+        public Request(final String message, final IconType iconType) {
             this.message = message;
             this.iconType = iconType;
         }
@@ -35,6 +39,11 @@ public final class Message {
 
         int result;
 
+        @JsonCreator
+        public Result(final @JsonProperty(value = "result", required = true) int result) {
+            this.result = result;
+        }
+
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
@@ -44,6 +53,7 @@ public final class Message {
     }
 
     public static enum IconType {
+
         INFO(1),
         WARNING(2),
         ERROR(3);

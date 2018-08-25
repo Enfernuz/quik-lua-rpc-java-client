@@ -13,10 +13,10 @@ final class MessageRequestJsonSerializer extends JsonSerializer<Message.Request>
     public void serialize(final Message.Request value, final JsonGenerator gen, final SerializerProvider serializers) throws IOException {
 
         QluaJsonJacksonUtils.prepareJsonGeneratorForMethod(gen, "message");
-
         gen.writeStringField("message", value.getMessage());
-        gen.writeNumberField("icon_type", value.getIconType().value);
-
+        if (value.getIconType() != null) {
+            gen.writeNumberField("icon_type", value.getIconType().value);
+        }
         QluaJsonJacksonUtils.finishJsonGenerator(gen);
     }
 }
