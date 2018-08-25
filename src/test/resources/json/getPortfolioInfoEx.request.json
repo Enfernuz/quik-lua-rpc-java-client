@@ -1,0 +1,8 @@
+{
+  "method" : "getPortfolioInfoEx",
+  "args" : {
+    "firm_id" : "1",
+    "client_code" : "2",
+    "limit_kind" : 3
+  }
+}
