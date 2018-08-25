@@ -1,0 +1,7 @@
+{
+  "method" : "InsertRow",
+  "args" : {
+    "t_id" : 1,
+    "key" : 2
+  }
+}

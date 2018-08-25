@@ -52,6 +52,7 @@ final class QluaJsonJacksonSerializers extends SimpleSerializers {
         super.addSerializer(GetWindowRect.Request.class, new GetWindowRectRequestJsonSerializer());
         super.addSerializer(GetWorkingFolder.Request.class, new GetWorkingFolderRequestJsonSerializer());
         super.addSerializer(Highlight.Request.class, new HighlightRequestJsonSerializer());
+        super.addSerializer(InsertRow.Request.class, new InsertRowRequestJsonSerializer());
         super.addSerializer(Message.Request.class, new MessageRequestJsonSerializer());
     }
 }
