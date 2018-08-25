@@ -1,0 +1,28 @@
+{
+  "bid_count" : "3",
+  "offer_count" : "2",
+  "bids" : [
+    {
+      "price" : "100",
+      "quantity" : "42"
+    },
+    {
+      "price" : "200",
+      "quantity" : "20"
+    },
+    {
+      "price" : "300",
+      "quantity" : "1"
+    }
+  ],
+  "offers" : [
+    {
+      "price" : "350",
+      "quantity" : "25"
+    },
+    {
+      "price" : "999",
+      "quantity" : "5000"
+    }
+  ]
+}
