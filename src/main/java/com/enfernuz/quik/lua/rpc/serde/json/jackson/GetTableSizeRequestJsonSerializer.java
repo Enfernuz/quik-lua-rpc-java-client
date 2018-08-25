@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
 
-public final class GetTableSizeRequestJsonSerializer extends JsonSerializer<GetTableSize.Request> {
+final class GetTableSizeRequestJsonSerializer extends JsonSerializer<GetTableSize.Request> {
 
     @Override
     public void serialize(final GetTableSize.Request value, final JsonGenerator gen, final SerializerProvider serializers) throws IOException {

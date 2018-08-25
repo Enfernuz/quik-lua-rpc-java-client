@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
 
-public final class HighlightRequestJsonSerializer extends JsonSerializer<Highlight.Request> {
+final class HighlightRequestJsonSerializer extends JsonSerializer<Highlight.Request> {
 
     @Override
     public void serialize(final Highlight.Request value, final JsonGenerator gen, final SerializerProvider serializers) throws IOException {

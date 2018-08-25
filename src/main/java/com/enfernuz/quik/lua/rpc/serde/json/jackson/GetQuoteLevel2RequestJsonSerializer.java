@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
 
-public final class GetQuoteLevel2RequestJsonSerializer extends JsonSerializer<GetQuoteLevel2.Request> {
+final class GetQuoteLevel2RequestJsonSerializer extends JsonSerializer<GetQuoteLevel2.Request> {
 
     @Override
     public void serialize(final GetQuoteLevel2.Request value, final JsonGenerator gen, final SerializerProvider serializers) throws IOException {

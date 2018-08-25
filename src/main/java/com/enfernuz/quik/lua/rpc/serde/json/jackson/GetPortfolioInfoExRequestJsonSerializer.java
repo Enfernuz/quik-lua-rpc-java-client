@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
 
-public final class GetPortfolioInfoExRequestJsonSerializer extends JsonSerializer<GetPortfolioInfoEx.Request> {
+final class GetPortfolioInfoExRequestJsonSerializer extends JsonSerializer<GetPortfolioInfoEx.Request> {
 
     @Override
     public void serialize(final GetPortfolioInfoEx.Request value, final JsonGenerator gen, final SerializerProvider serializers) throws IOException {

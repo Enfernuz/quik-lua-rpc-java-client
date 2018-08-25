@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
 
-public final class GetScriptPathRequestJsonSerializer extends JsonSerializer<GetScriptPath.Request> {
+final class GetScriptPathRequestJsonSerializer extends JsonSerializer<GetScriptPath.Request> {
 
     @Override
     public void serialize(final GetScriptPath.Request value, final JsonGenerator gen, final SerializerProvider serializers) throws IOException {

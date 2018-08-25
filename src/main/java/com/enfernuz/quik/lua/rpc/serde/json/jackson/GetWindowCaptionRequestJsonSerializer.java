@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
 
-public final class GetWindowCaptionRequestJsonSerializer extends JsonSerializer<GetWindowCaption.Request> {
+final class GetWindowCaptionRequestJsonSerializer extends JsonSerializer<GetWindowCaption.Request> {
 
     @Override
     public void serialize(final GetWindowCaption.Request value, final JsonGenerator gen, final SerializerProvider serializers) throws IOException {

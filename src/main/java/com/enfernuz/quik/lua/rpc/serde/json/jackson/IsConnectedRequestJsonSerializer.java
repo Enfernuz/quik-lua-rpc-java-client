@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
 
-public final class IsConnectedRequestJsonSerializer extends JsonSerializer<IsConnected.Request> {
+final class IsConnectedRequestJsonSerializer extends JsonSerializer<IsConnected.Request> {
 
     @Override
     public void serialize(final IsConnected.Request value, final JsonGenerator gen, final SerializerProvider serializers) throws IOException {

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
 
-public final class IsWindowClosedRequestJsonSerializer extends JsonSerializer<IsWindowClosed.Request> {
+final class IsWindowClosedRequestJsonSerializer extends JsonSerializer<IsWindowClosed.Request> {
 
     @Override
     public void serialize(final IsWindowClosed.Request value, final JsonGenerator gen, final SerializerProvider serializers) throws IOException {

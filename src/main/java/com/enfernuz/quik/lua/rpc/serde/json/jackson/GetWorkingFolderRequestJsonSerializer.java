@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
 
-public final class GetWorkingFolderRequestJsonSerializer extends JsonSerializer<GetWorkingFolder.Request> {
+final class GetWorkingFolderRequestJsonSerializer extends JsonSerializer<GetWorkingFolder.Request> {
 
     @Override
     public void serialize(final GetWorkingFolder.Request value, final JsonGenerator gen, final SerializerProvider serializers) throws IOException {
