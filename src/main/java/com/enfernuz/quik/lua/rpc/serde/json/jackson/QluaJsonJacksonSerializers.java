@@ -2,10 +2,7 @@ package com.enfernuz.quik.lua.rpc.serde.json.jackson;
 
 import com.enfernuz.quik.lua.rpc.api.messages.*;
 import com.enfernuz.quik.lua.rpc.api.messages.GetCandlesByIndex;
-import com.enfernuz.quik.lua.rpc.api.messages.bit.BAnd;
-import com.enfernuz.quik.lua.rpc.api.messages.bit.BNot;
-import com.enfernuz.quik.lua.rpc.api.messages.bit.BOr;
-import com.enfernuz.quik.lua.rpc.api.messages.bit.BXor;
+import com.enfernuz.quik.lua.rpc.api.messages.bit.*;
 import com.fasterxml.jackson.databind.module.SimpleSerializers;
 
 final class QluaJsonJacksonSerializers extends SimpleSerializers {
@@ -80,5 +77,6 @@ final class QluaJsonJacksonSerializers extends SimpleSerializers {
         super.addSerializer(BOr.Request.class, new BitBOrRequestJsonSerializer());
         super.addSerializer(BXor.Request.class, new BitBXorRequestJsonSerializer());
         super.addSerializer(BNot.Request.class, new BitBNotRequestJsonSerializer());
+        super.addSerializer(Test.Request.class, new BitTestRequestJsonSerializer());
     }
 }

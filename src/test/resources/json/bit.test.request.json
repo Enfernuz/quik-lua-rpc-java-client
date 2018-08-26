@@ -1,0 +1,7 @@
+{
+  "method" : "bit.test",
+  "args" : {
+    "x" : 1,
+    "n" : 2
+  }
+}
