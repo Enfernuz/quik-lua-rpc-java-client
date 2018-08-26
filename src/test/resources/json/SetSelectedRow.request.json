@@ -1,0 +1,7 @@
+{
+  "method" : "SetSelectedRow",
+  "args" : {
+    "table_id" : 1,
+    "row" : 2
+  }
+}
