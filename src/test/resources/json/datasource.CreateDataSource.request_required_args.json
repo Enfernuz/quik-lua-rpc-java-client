@@ -1,0 +1,8 @@
+{
+  "method" : "datasource.CreateDataSource",
+  "args" : {
+    "class_code" : "1",
+    "sec_code" : "2",
+    "interval" : "INTERVAL_M5"
+  }
+}
