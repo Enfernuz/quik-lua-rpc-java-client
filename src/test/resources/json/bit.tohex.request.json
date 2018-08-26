@@ -1,0 +1,7 @@
+{
+  "method" : "bit.tohex",
+  "args" : {
+    "x" : 1,
+    "n" : 2
+  }
+}

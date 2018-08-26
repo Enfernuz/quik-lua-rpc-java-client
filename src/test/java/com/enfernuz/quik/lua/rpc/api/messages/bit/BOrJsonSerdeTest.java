@@ -1,6 +1,5 @@
-package com.enfernuz.quik.lua.rpc.api.messages;
+package com.enfernuz.quik.lua.rpc.api.messages.bit;
 
-import com.enfernuz.quik.lua.rpc.api.messages.bit.BAnd;
 import com.enfernuz.quik.lua.rpc.serde.json.jackson.QluaJsonModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
@@ -12,13 +11,13 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
-public class BitBAndJsonSerdeTest {
+public class BOrJsonSerdeTest {
 
     private static ObjectMapper sut;
 
-    private static BAnd.Request fullArgsRequestObject;
-    private static BAnd.Request requiredArgsRequestObject;
-    private static BAnd.Result resultObj;
+    private static BOr.Request fullArgsRequestObject;
+    private static BOr.Request requiredArgsRequestObject;
+    private static BOr.Result resultObj;
     private static String fullArgsRequestJson;
     private static String requiredArgsRequestJson;
     private static String resultJson;
@@ -29,25 +28,25 @@ public class BitBAndJsonSerdeTest {
         sut = new ObjectMapper();
         sut.registerModule(new QluaJsonModule());
 
-        fullArgsRequestObject = BAnd.Request.builder()
+        fullArgsRequestObject = BOr.Request.builder()
                 .x1(1)
                 .x2(2)
                 .xi(new int[] {3, 5, 7, 9})
                 .build();
 
-        requiredArgsRequestObject = BAnd.Request.builder()
+        requiredArgsRequestObject = BOr.Request.builder()
                 .x1(1)
                 .x2(2)
                 .build();
 
-        resultObj = new BAnd.Result(1);
+        resultObj = new BOr.Result(1);
 
         fullArgsRequestJson =
-                Resources.toString(Resources.getResource("json/bit.band.request_full_args.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/bit.bor.request_full_args.json"), Charsets.UTF_8);
         requiredArgsRequestJson =
-                Resources.toString(Resources.getResource("json/bit.band.request_required_args.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/bit.bor.request_required_args.json"), Charsets.UTF_8);
         resultJson =
-                Resources.toString(Resources.getResource("json/bit.band.result.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/bit.bor.result.json"), Charsets.UTF_8);
     }
 
     @Test
@@ -69,7 +68,7 @@ public class BitBAndJsonSerdeTest {
     @Test
     public void testResultDeserialize() throws IOException {
 
-        final BAnd.Result actualResultObj = sut.readValue(resultJson, BAnd.Result.class);
+        final BOr.Result actualResultObj = sut.readValue(resultJson, BOr.Result.class);
 
         assertEquals(resultObj, actualResultObj);
     }

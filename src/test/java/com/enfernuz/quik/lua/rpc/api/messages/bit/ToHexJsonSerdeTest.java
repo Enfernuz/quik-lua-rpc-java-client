@@ -1,5 +1,6 @@
-package com.enfernuz.quik.lua.rpc.api.messages;
+package com.enfernuz.quik.lua.rpc.api.messages.bit;
 
+import com.enfernuz.quik.lua.rpc.api.messages.bit.ToHex;
 import com.enfernuz.quik.lua.rpc.serde.json.jackson.QluaJsonModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
@@ -11,12 +12,12 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
-public class BitTestJsonSerdeTest {
+public class ToHexJsonSerdeTest {
 
     private static ObjectMapper sut;
 
-    private static com.enfernuz.quik.lua.rpc.api.messages.bit.Test.Request requestObj;
-    private static com.enfernuz.quik.lua.rpc.api.messages.bit.Test.Result resultObj;
+    private static ToHex.Request requestObj;
+    private static ToHex.Result resultObj;
     private static String requestJson;
     private static String resultJson;
 
@@ -26,17 +27,17 @@ public class BitTestJsonSerdeTest {
         sut = new ObjectMapper();
         sut.registerModule(new QluaJsonModule());
 
-        requestObj = com.enfernuz.quik.lua.rpc.api.messages.bit.Test.Request.builder()
+        requestObj = ToHex.Request.builder()
                 .x(1)
                 .n(2)
                 .build();
 
-        resultObj = new com.enfernuz.quik.lua.rpc.api.messages.bit.Test.Result(true);
+        resultObj = new ToHex.Result("1");
 
         requestJson =
-                Resources.toString(Resources.getResource("json/bit.test.request.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/bit.tohex.request.json"), Charsets.UTF_8);
         resultJson =
-                Resources.toString(Resources.getResource("json/bit.test.result.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/bit.tohex.result.json"), Charsets.UTF_8);
     }
 
     @Test
@@ -50,8 +51,7 @@ public class BitTestJsonSerdeTest {
     @Test
     public void testResultDeserialize() throws IOException {
 
-        final com.enfernuz.quik.lua.rpc.api.messages.bit.Test.Result actualResultObj =
-                sut.readValue(resultJson, com.enfernuz.quik.lua.rpc.api.messages.bit.Test.Result.class);
+        final ToHex.Result actualResultObj = sut.readValue(resultJson, ToHex.Result.class);
 
         assertEquals(resultObj, actualResultObj);
     }

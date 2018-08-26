@@ -78,5 +78,6 @@ final class QluaJsonJacksonSerializers extends SimpleSerializers {
         super.addSerializer(BXor.Request.class, new BitBXorRequestJsonSerializer());
         super.addSerializer(BNot.Request.class, new BitBNotRequestJsonSerializer());
         super.addSerializer(Test.Request.class, new BitTestRequestJsonSerializer());
+        super.addSerializer(ToHex.Request.class, new BitToHexRequestJsonSerializer());
     }
 }

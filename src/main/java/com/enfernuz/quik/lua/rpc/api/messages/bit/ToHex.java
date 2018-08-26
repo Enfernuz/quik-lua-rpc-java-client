@@ -4,11 +4,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.Builder;
+import lombok.NonNull;
 import lombok.Value;
 
-public final class Test {
+public final class ToHex {
 
-    private Test() {}
+    private ToHex() {}
 
     @Value
     public static class Request {
@@ -34,10 +35,10 @@ public final class Test {
     @Value
     public static class Result {
 
-        boolean result;
+        @NonNull String result;
 
         @JsonCreator
-        public Result(final @JsonProperty(value = "result", required = true) boolean result) {
+        public Result(final @JsonProperty(value = "result", required = true) String result) {
             this.result = result;
         }
 

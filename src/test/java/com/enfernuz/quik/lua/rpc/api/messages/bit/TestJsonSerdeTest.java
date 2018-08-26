@@ -1,6 +1,5 @@
-package com.enfernuz.quik.lua.rpc.api.messages;
+package com.enfernuz.quik.lua.rpc.api.messages.bit;
 
-import com.enfernuz.quik.lua.rpc.api.messages.bit.BNot;
 import com.enfernuz.quik.lua.rpc.serde.json.jackson.QluaJsonModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
@@ -12,12 +11,12 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
-public class BitBNotJsonSerdeTest {
+public class TestJsonSerdeTest {
 
     private static ObjectMapper sut;
 
-    private static BNot.Request requestObj;
-    private static BNot.Result resultObj;
+    private static com.enfernuz.quik.lua.rpc.api.messages.bit.Test.Request requestObj;
+    private static com.enfernuz.quik.lua.rpc.api.messages.bit.Test.Result resultObj;
     private static String requestJson;
     private static String resultJson;
 
@@ -27,14 +26,17 @@ public class BitBNotJsonSerdeTest {
         sut = new ObjectMapper();
         sut.registerModule(new QluaJsonModule());
 
-        requestObj = new BNot.Request(1);
+        requestObj = com.enfernuz.quik.lua.rpc.api.messages.bit.Test.Request.builder()
+                .x(1)
+                .n(2)
+                .build();
 
-        resultObj = new BNot.Result(1);
+        resultObj = new com.enfernuz.quik.lua.rpc.api.messages.bit.Test.Result(true);
 
         requestJson =
-                Resources.toString(Resources.getResource("json/bit.bnot.request.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/bit.test.request.json"), Charsets.UTF_8);
         resultJson =
-                Resources.toString(Resources.getResource("json/bit.bnot.result.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/bit.test.result.json"), Charsets.UTF_8);
     }
 
     @Test
@@ -48,7 +50,8 @@ public class BitBNotJsonSerdeTest {
     @Test
     public void testResultDeserialize() throws IOException {
 
-        final BNot.Result actualResultObj = sut.readValue(resultJson, BNot.Result.class);
+        final com.enfernuz.quik.lua.rpc.api.messages.bit.Test.Result actualResultObj =
+                sut.readValue(resultJson, com.enfernuz.quik.lua.rpc.api.messages.bit.Test.Result.class);
 
         assertEquals(resultObj, actualResultObj);
     }
