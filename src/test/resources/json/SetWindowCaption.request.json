@@ -1,0 +1,7 @@
+{
+  "method" : "SetWindowCaption",
+  "args" : {
+    "t_id" : 1,
+    "str" : "2"
+  }
+}
