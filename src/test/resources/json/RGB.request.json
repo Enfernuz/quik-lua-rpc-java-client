@@ -1,0 +1,8 @@
+{
+  "method" : "RGB",
+  "args" : {
+    "red" : 1,
+    "blue" : 2,
+    "green" : 3
+  }
+}
