@@ -1,0 +1,10 @@
+{
+  "method" : "SetWindowPos",
+  "args" : {
+    "t_id" : 1,
+    "x" : 2,
+    "y" : 3,
+    "dx" : 4,
+    "dy" : 5
+  }
+}

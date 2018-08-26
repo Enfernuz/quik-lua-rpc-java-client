@@ -68,5 +68,6 @@ final class QluaJsonJacksonSerializers extends SimpleSerializers {
         super.addSerializer(SetSelectedRow.Request.class, new SetSelectedRowRequestJsonSerializer());
         super.addSerializer(SetTableNotificationCallback.Request.class, new SetTableNotificationCallbackRequestJsonSerializer());
         super.addSerializer(SetWindowCaption.Request.class, new SetWindowCaptionRequestJsonSerializer());
+        super.addSerializer(SetWindowPos.Request.class, new SetWindowPosRequestJsonSerializer());
     }
 }
