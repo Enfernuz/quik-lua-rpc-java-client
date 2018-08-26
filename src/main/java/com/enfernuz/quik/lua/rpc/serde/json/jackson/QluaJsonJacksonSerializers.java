@@ -5,6 +5,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetCandlesByIndex;
 import com.enfernuz.quik.lua.rpc.api.messages.bit.*;
 import com.enfernuz.quik.lua.rpc.api.messages.datasource.C;
 import com.enfernuz.quik.lua.rpc.api.messages.datasource.CreateDataSource;
+import com.enfernuz.quik.lua.rpc.api.messages.datasource.H;
 import com.enfernuz.quik.lua.rpc.api.messages.os.SysDate;
 import com.fasterxml.jackson.databind.module.SimpleSerializers;
 
@@ -85,5 +86,6 @@ final class QluaJsonJacksonSerializers extends SimpleSerializers {
         super.addSerializer(SysDate.Request.class, new SysDateRequestJsonSerializer());
         super.addSerializer(CreateDataSource.Request.class, new DatasourceCreateDatasourceRequestJsonSerializer());
         super.addSerializer(C.Request.class, new DatasourceCRequestJsonSerializer());
+        super.addSerializer(H.Request.class, new DatasourceHRequestJsonSerializer());
     }
 }
