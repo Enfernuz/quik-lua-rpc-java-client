@@ -1,0 +1,6 @@
+{
+  "method" : "sleep",
+  "args" : {
+    "time" : 1
+  }
+}
