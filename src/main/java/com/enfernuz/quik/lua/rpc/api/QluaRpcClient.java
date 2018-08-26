@@ -461,7 +461,7 @@ public interface QluaRpcClient extends Gateway, Securable {
 //     * @param args
 //     * @return
 //     */
-//    Band.Result bit_band(Band.Request args);
+//    BAnd.Result bit_band(BAnd.Request args);
 //
 //    /**
 //     *
@@ -475,7 +475,7 @@ public interface QluaRpcClient extends Gateway, Securable {
 //     * @param args
 //     * @return
 //     */
-//    Bor.Result bit_bor(Bor.Request args);
+//    BOr.Result bit_bor(BOr.Request args);
 //
 //    /**
 //     *

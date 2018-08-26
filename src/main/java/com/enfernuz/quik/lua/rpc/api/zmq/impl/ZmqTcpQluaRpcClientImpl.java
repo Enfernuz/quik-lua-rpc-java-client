@@ -791,11 +791,11 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
 //    }
 //
 //    @Override
-//    public Band.Result bit_band(final Band.Request args) {
+//    public BAnd.Result bit_band(final BAnd.Request args) {
 //
 //        try {
 //            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.BIT_BAND, args);
-//            return Band.Result.parseFrom(resultAsByteString);
+//            return BAnd.Result.parseFrom(resultAsByteString);
 //        } catch (final RpcClientException ex) {
 //            throw ex;
 //        } catch (final Exception ex) {
@@ -817,11 +817,11 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
 //    }
 //
 //    @Override
-//    public Bor.Result bit_bor(final Bor.Request args) {
+//    public BOr.Result bit_bor(final BOr.Request args) {
 //
 //        try {
 //            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.BIT_BOR, args);
-//            return Bor.Result.parseFrom(resultAsByteString);
+//            return BOr.Result.parseFrom(resultAsByteString);
 //        } catch (final RpcClientException ex) {
 //            throw ex;
 //        } catch (final Exception ex) {

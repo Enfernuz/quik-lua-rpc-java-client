@@ -10,9 +10,9 @@ import lombok.Value;
 
 import java.util.Arrays;
 
-public final class Band {
+public final class BOr {
 
-    private Band() {}
+    private BOr() {}
 
     @Value
     public static class Request {
