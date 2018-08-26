@@ -1,0 +1,7 @@
+{
+  "method" : "SetTableNotificationCallback",
+  "args" : {
+    "t_id" : 1,
+    "f_cb_def" : "2"
+  }
+}
