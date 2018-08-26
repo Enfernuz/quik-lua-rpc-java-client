@@ -1,6 +1,7 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
 import com.google.common.base.MoreObjects;
+import lombok.NonNull;
 import lombok.Value;
 
 public final class DelAllLabels {
@@ -10,7 +11,7 @@ public final class DelAllLabels {
     @Value
     public static class Request {
 
-        String chartTag;
+        @NonNull String chartTag;
 
         @Override
         public String toString() {
