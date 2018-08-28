@@ -1,0 +1,6 @@
+{
+  "method" : "datasource.SetEmptyCallback",
+  "args" : {
+    "datasource_uuid" : "1"
+  }
+}
