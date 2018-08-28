@@ -16,18 +16,7 @@ public enum ProtobufSerdeModule implements SerdeModule {
 
     INSTANCE;
 
-    private static final Map<Class<?>, Deserializer<?>> CLASS_TO_DESERIALIZER_MAP = new HashMap<>();
-
-    static {
-        addDeserializer(QluaEvent.EventType.class, ProtobufQluaEventTypeSerde.INSTANCE);
-        addDeserializer(Firm.class, ProtobufFirmDeserializer.INSTANCE);
-        addDeserializer(MoneyLimit.class, ProtobufMoneyLimitDeserializer.INSTANCE);
-    }
-
-    private static <T> void addDeserializer(Class<T> clazz, Deserializer<T> deserializer) {
-        CLASS_TO_DESERIALIZER_MAP.put(clazz, deserializer);
-    }
-
+    private static final Map<Class<?>, Deserializer<?>> CLASS_TO_DESERIALIZER_MAP = createClassToDeserializerMap();
 
     @Override
     public <T> byte[] serialize(final T t) {
@@ -71,5 +60,24 @@ public enum ProtobufSerdeModule implements SerdeModule {
                 );
             }
         }
+    }
+
+    private static <T> void registerDeserializer(
+            final Map<Class<?>, Deserializer<?>> map,
+            final Class<T> clazz,
+            final Deserializer<T> deserializer) {
+
+        map.put(clazz, deserializer);
+    }
+
+    private static Map<Class<?>, Deserializer<?>> createClassToDeserializerMap() {
+
+        final Map<Class<?>, Deserializer<?>> result = new HashMap<>();
+        
+        registerDeserializer(result, QluaEvent.EventType.class, ProtobufQluaEventTypeSerde.INSTANCE);
+        registerDeserializer(result, Firm.class, ProtobufFirmDeserializer.INSTANCE);
+        registerDeserializer(result, MoneyLimit.class, ProtobufMoneyLimitDeserializer.INSTANCE);
+
+        return result;
     }
 }
