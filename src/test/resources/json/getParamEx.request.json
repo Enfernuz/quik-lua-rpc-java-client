@@ -1,0 +1,8 @@
+{
+  "method" : "getParamEx",
+  "args" : {
+    "class_code" : "1",
+    "sec_code" : "2",
+    "param_name" : "3"
+  }
+}

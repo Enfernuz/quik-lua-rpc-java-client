@@ -1,6 +1,8 @@
 package com.enfernuz.quik.lua.rpc.api.zmq.impl;
 
 import com.enfernuz.quik.lua.rpc.api.messages.*;
+import com.enfernuz.quik.lua.rpc.api.messages.bit.*;
+import com.enfernuz.quik.lua.rpc.api.messages.datasource.*;
 import com.enfernuz.quik.lua.rpc.api.security.zmq.AuthContext;
 import com.enfernuz.quik.lua.rpc.api.security.zmq.CurveCredentials;
 import com.enfernuz.quik.lua.rpc.api.security.zmq.CurveKeyPair;
@@ -277,726 +279,285 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
         return makeRPC(request, GetItem.Result.class);
     }
 
+    @Override
+    public GetLabelParams.Result qlua_GetLabelParams(final GetLabelParams.Request request) {
+        return makeRPC(request, GetLabelParams.Result.class);
+    }
+
+    @Override
+    public GetLinesCount.Result qlua_getLinesCount(final GetLinesCount.Request request) {
+        return makeRPC(request, GetLinesCount.Result.class);
+    }
+
+    @Override
+    public GetMoney.Result qlua_getMoney(final GetMoney.Request request) {
+        return makeRPC(request, GetMoney.Result.class);
+    }
+
+    @Override
+    public GetMoneyEx.Result qlua_getMoneyEx(final GetMoneyEx.Request request) {
+        return makeRPC(request, GetMoneyEx.Result.class);
+    }
+
+    @Override
+    public GetNumberOf.Result qlua_getNumberOf(final GetNumberOf.Request request) {
+        return makeRPC(request, GetNumberOf.Result.class);
+    }
+
+    @Override
+    public GetNumCandles.Result qlua_getNumCandles(final GetNumCandles.Request request) {
+        return makeRPC(request, GetNumCandles.Result.class);
+    }
+
+    @Override
+    public GetOrderByNumber.Result qlua_getOrderByNumber(final GetOrderByNumber.Request request) {
+        return makeRPC(request, GetOrderByNumber.Result.class);
+    }
+
 //    @Override
-//    public GetLabelParams.Result qlua_GetLabelParams(final GetLabelParams.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_LABEL_PARAMS, args);
-//            return GetLabelParams.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
+//    public GetParamEx.Result qlua_getParamEx(final GetParamEx.Request request) {
+//        return makeRPC(request, GetParamEx.Result.class);
 //    }
 //
 //    @Override
-//    public GetLinesCount.Result qlua_getLinesCount(final GetLinesCount.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_LINES_COUNT, args);
-//            return GetLinesCount.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
+//    public GetParamEx2.Result qlua_getParamEx2(final GetParamEx2.Request request) {
+//        return makeRPC(request, GetParamEx2.Result.class);
 //    }
-//
-//    @Override
-//    public GetMoney.Result qlua_getMoney(final GetMoney.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_MONEY, args);
-//            return GetMoney.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public GetMoneyEx.Result qlua_getMoneyEx(final GetMoneyEx.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_MONEY_EX, args);
-//            return GetMoneyEx.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public GetNumberOf.Result qlua_getNumberOf(final GetNumberOf.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_NUMBER_OF, args);
-//            return GetNumberOf.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public GetNumCandles.Result qlua_getNumCandles(final GetNumCandles.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_NUM_CANDLES, args);
-//            return GetNumCandles.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public GetOrderByNumber.Result qlua_getOrderByNumber(final GetOrderByNumber.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_ORDER_BY_NUMBER, args);
-//            return GetOrderByNumber.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public GetParamEx.Result qlua_getParamEx(final GetParamEx.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_PARAM_EX, args);
-//            return GetParamEx.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public GetParamEx2.Result qlua_getParamEx2(final GetParamEx2.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_PARAM_EX_2, args);
-//            return GetParamEx2.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public GetPortfolioInfo.Result qlua_getPortfolioInfo(final GetPortfolioInfo.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_PORTFOLIO_INFO, args);
-//            return GetPortfolioInfo.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public GetPortfolioInfoEx.Result qlua_getPortfolioInfoEx(final GetPortfolioInfoEx.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_PORTFOLIO_INFO_EX, args);
-//            return GetPortfolioInfoEx.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public GetQuoteLevel2.Result qlua_getQuoteLevel2(final GetQuoteLevel2.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_QUOTE_LEVEL2, args);
-//            return GetQuoteLevel2.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public GetScriptPath.Result qlua_getScriptPath() {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_SCRIPT_PATH);
-//            return GetScriptPath.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public GetSecurityInfo.Result qlua_getSecurityInfo(final GetSecurityInfo.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_SECURITY_INFO, args);
-//            return GetSecurityInfo.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public GetTableSize.Result qlua_GetTableSize(final GetTableSize.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_TABLE_SIZE, args);
-//            return GetTableSize.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public GetTradeDate.Result qlua_getTradeDate() {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_TRADE_DATE);
-//            return GetTradeDate.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public GetWindowCaption.Result qlua_GetWindowCaption(final GetWindowCaption.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_WINDOW_CAPTION, args);
-//            return GetWindowCaption.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public GetWindowRect.Result qlua_GetWindowRect(final GetWindowRect.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_WINDOW_RECT, args);
-//            return GetWindowRect.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public GetWorkingFolder.Result qlua_getWorkingFolder() {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_WORKING_FOLDER);
-//            return GetWorkingFolder.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public Highlight.Result qlua_Highlight(final Highlight.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.HIGHLIGHT, args);
-//            return Highlight.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public InsertRow.Result qlua_InsertRow(final InsertRow.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.INSERT_ROW, args);
-//            return InsertRow.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public IsConnected.Result qlua_isConnected() {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.IS_CONNECTED);
-//            return IsConnected.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public IsSubscribedLevelIIQuotes.Result qlua_IsSubscribedLevelIIQuotes(
-//            final IsSubscribedLevelIIQuotes.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.IS_SUBSCRIBED_LEVEL_II_QUOTES, args);
-//            return IsSubscribedLevelIIQuotes.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public IsWindowClosed.Result qlua_IsWindowClosed(final IsWindowClosed.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.IS_WINDOW_CLOSED, args);
-//            return IsWindowClosed.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public Message.Result qlua_message(final Message.Request request) {
-//        return makeRPC(request, Message.Result.class);
-//    }
-//
-//    @Override
-//    public ParamRequest.Result qlua_ParamRequest(final ParamRequest.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.PARAM_REQUEST, args);
-//            return ParamRequest.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public void qlua_PrintDbgStr(final PrintDbgStr.Request args) {
-//
-//        try {
-//            makeRPC(RPC.ProcedureType.PRINT_DBG_STR, args);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public RGB.Result qlua_RGB(final RGB.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.RGB, args);
-//            return RGB.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public SearchItems.Result qlua_SearchItems(final SearchItems.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.SEARCH_ITEMS, args);
-//            return SearchItems.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public SendTransaction.Result qlua_sendTransaction(final SendTransaction.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.SEND_TRANSACTION, args);
-//            return SendTransaction.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public SetCell.Result qlua_SetCell(final SetCell.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.SET_CELL, args);
-//            return SetCell.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public SetColor.Result qlua_SetColor(final SetColor.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.SET_COLOR, args);
-//            return SetColor.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public SetLabelParams.Result qlua_SetLabelParams(final SetLabelParams.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.SET_LABEL_PARAMS, args);
-//            return SetLabelParams.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public SetSelectedRow.Result qlua_SetSelectedRow(final SetSelectedRow.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.SET_SELECTED_ROW, args);
-//            return SetSelectedRow.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public SetTableNotificationCallback.Result qlua_SetTableNotificationCallback(
-//            final SetTableNotificationCallback.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.SET_TABLE_NOTIFICATION_CALLBACK, args);
-//            return SetTableNotificationCallback.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public SetWindowCaption.Result qlua_SetWindowCaption(final SetWindowCaption.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.SET_WINDOW_CAPTION, args);
-//            return SetWindowCaption.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public SetWindowPos.Result qlua_SetWindowPos(final SetWindowPos.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.SET_WINDOW_POS, args);
-//            return SetWindowPos.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public Sleep.Result qlua_sleep(final Sleep.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.SLEEP, args);
-//            return Sleep.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public SubscribeLevelIIQuotes.Result qlua_SubscribeLevelIIQuotes(final SubscribeLevelIIQuotes.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.SUBSCRIBE_LEVEL_II_QUOTES, args);
-//            return SubscribeLevelIIQuotes.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public UnsubscribeLevelIIQuotes.Result qlua_UnsubscribeLevelIIQuotes(final UnsubscribeLevelIIQuotes.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.UNSUBSCRIBE_LEVEL_II_QUOTES, args);
-//            return UnsubscribeLevelIIQuotes.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public BAnd.Result bit_band(final BAnd.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.BIT_BAND, args);
-//            return BAnd.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public Bnot.Result bit_bnot(final Bnot.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.BIT_BNOT, args);
-//            return Bnot.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public BOr.Result bit_bor(final BOr.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.BIT_BOR, args);
-//            return BOr.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public Bxor.Result bit_bxor(final Bxor.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.BIT_BXOR, args);
-//            return Bxor.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public Tohex.Result bit_tohex(final Tohex.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.BIT_TOHEX, args);
-//            return Tohex.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public C.Result datasource_C(final C.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.DS_C, args);
-//            return C.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public Close.Result datasource_Close(final Close.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.DS_CLOSE, args);
-//            return Close.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public CreateDataSource.Result datasource_CreateDataSource(final CreateDataSource.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.CREATE_DATA_SOURCE, args);
-//            return CreateDataSource.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public H.Result datasource_H(final H.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.DS_H, args);
-//            return H.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public L.Result datasource_L(final L.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.DS_L, args);
-//            return L.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public O.Result datasource_O(final O.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.DS_O, args);
-//            return O.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public SetEmptyCallback.Result datasource_SetEmptyCallback(final SetEmptyCallback.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.DS_SET_EMPTY_CALLBACK, args);
-//            return SetEmptyCallback.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public SetUpdateCallback.Result datasource_SetUpdateCallback(final SetUpdateCallback.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.DS_SET_UPDATE_CALLBACK, args);
-//            return SetUpdateCallback.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public Size.Result datasource_Size(final Size.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.DS_SIZE, args);
-//            return Size.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public T.Result datasource_T(final T.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.DS_T, args);
-//            return T.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
-//
-//    @Override
-//    public V.Result datasource_V(final V.Request args) {
-//
-//        try {
-//            final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.DS_V, args);
-//            return V.Result.parseFrom(resultAsByteString);
-//        } catch (final RpcClientException ex) {
-//            throw ex;
-//        } catch (final Exception ex) {
-//            throw new RpcClientException(ex);
-//        }
-//    }
+
+    @Override
+    public GetPortfolioInfo.Result qlua_getPortfolioInfo(final GetPortfolioInfo.Request request) {
+        return makeRPC(request, GetPortfolioInfo.Result.class);
+    }
+
+    @Override
+    public GetPortfolioInfoEx.Result qlua_getPortfolioInfoEx(final GetPortfolioInfoEx.Request request) {
+        return makeRPC(request, GetPortfolioInfoEx.Result.class);
+    }
+
+    @Override
+    public GetQuoteLevel2.Result qlua_getQuoteLevel2(final GetQuoteLevel2.Request request) {
+        return makeRPC(request, GetQuoteLevel2.Result.class);
+    }
+
+    @Override
+    public GetScriptPath.Result qlua_getScriptPath() {
+        return makeRPC(GetScriptPath.Request.INSTANCE, GetScriptPath.Result.class);
+    }
+
+    @Override
+    public GetSecurityInfo.Result qlua_getSecurityInfo(final GetSecurityInfo.Request request) {
+        return makeRPC(request, GetSecurityInfo.Result.class);
+    }
+
+    @Override
+    public GetTableSize.Result qlua_GetTableSize(final GetTableSize.Request request) {
+        return makeRPC(request, GetTableSize.Result.class);
+    }
+
+    @Override
+    public GetTradeDate.Result qlua_getTradeDate() {
+        return makeRPC(GetTradeDate.Request.INSTANCE, GetTradeDate.Result.class);
+    }
+
+    @Override
+    public GetWindowCaption.Result qlua_GetWindowCaption(final GetWindowCaption.Request request) {
+        return makeRPC(request, GetWindowCaption.Result.class);
+    }
+
+    @Override
+    public GetWindowRect.Result qlua_GetWindowRect(final GetWindowRect.Request request) {
+        return makeRPC(request, GetWindowRect.Result.class);
+    }
+
+    @Override
+    public GetWorkingFolder.Result qlua_getWorkingFolder() {
+        return makeRPC(GetWorkingFolder.Request.INSTANCE, GetWorkingFolder.Result.class);
+    }
+
+    @Override
+    public Highlight.Result qlua_Highlight(final Highlight.Request request) {
+        return makeRPC(request, Highlight.Result.class);
+    }
+
+    @Override
+    public InsertRow.Result qlua_InsertRow(final InsertRow.Request request) {
+        return makeRPC(request, InsertRow.Result.class);
+    }
+
+    @Override
+    public IsConnected.Result qlua_isConnected() {
+        return makeRPC(IsConnected.Request.INSTANCE, IsConnected.Result.class);
+    }
+
+    @Override
+    public IsSubscribedLevel2Quotes.Result qlua_IsSubscribedLevelIIQuotes(final IsSubscribedLevel2Quotes.Request request) {
+        return makeRPC(request, IsSubscribedLevel2Quotes.Result.class);
+    }
+
+    @Override
+    public IsWindowClosed.Result qlua_IsWindowClosed(final IsWindowClosed.Request request) {
+        return makeRPC(request, IsWindowClosed.Result.class);
+    }
+
+    @Override
+    public Message.Result qlua_message(final Message.Request request) {
+        return makeRPC(request, Message.Result.class);
+    }
+
+    @Override
+    public ParamRequest.Result qlua_ParamRequest(final ParamRequest.Request request) {
+        return makeRPC(request, ParamRequest.Result.class);
+    }
+
+    @Override
+    public PrintDbgStr.Result qlua_PrintDbgStr(final PrintDbgStr.Request request) {
+        return makeRPC(request, PrintDbgStr.Result.class);
+    }
+
+    @Override
+    public RGB.Result qlua_RGB(final RGB.Request request) {
+        return makeRPC(request, RGB.Result.class);
+    }
+
+    @Override
+    public SearchItems.Result qlua_SearchItems(final SearchItems.Request request) {
+        return makeRPC(request, SearchItems.Result.class);
+    }
+
+    @Override
+    public SendTransaction.Result qlua_sendTransaction(final SendTransaction.Request request) {
+        return makeRPC(request, SendTransaction.Result.class);
+    }
+
+    @Override
+    public SetCell.Result qlua_SetCell(final SetCell.Request request) {
+        return makeRPC(request, SetCell.Result.class);
+    }
+
+    @Override
+    public SetColor.Result qlua_SetColor(final SetColor.Request request) {
+        return makeRPC(request, SetColor.Result.class);
+    }
+
+    @Override
+    public SetLabelParams.Result qlua_SetLabelParams(final SetLabelParams.Request request) {
+        return makeRPC(request, SetLabelParams.Result.class);
+    }
+
+    @Override
+    public SetSelectedRow.Result qlua_SetSelectedRow(final SetSelectedRow.Request request) {
+        return makeRPC(request, SetSelectedRow.Result.class);
+    }
+
+    @Override
+    public SetTableNotificationCallback.Result qlua_SetTableNotificationCallback(final SetTableNotificationCallback.Request request) {
+        return makeRPC(request, SetTableNotificationCallback.Result.class);
+    }
+
+    @Override
+    public SetWindowCaption.Result qlua_SetWindowCaption(final SetWindowCaption.Request request) {
+        return makeRPC(request, SetWindowCaption.Result.class);
+    }
+
+    @Override
+    public SetWindowPos.Result qlua_SetWindowPos(final SetWindowPos.Request request) {
+        return makeRPC(request, SetWindowPos.Result.class);
+    }
+
+    @Override
+    public Sleep.Result qlua_sleep(final Sleep.Request request) {
+        return makeRPC(request, Sleep.Result.class);
+    }
+
+    @Override
+    public SubscribeLevel2Quotes.Result qlua_SubscribeLevelIIQuotes(final SubscribeLevel2Quotes.Request request) {
+        return makeRPC(request, SubscribeLevel2Quotes.Result.class);
+    }
+
+    @Override
+    public UnsubscribeLevel2Quotes.Result qlua_UnsubscribeLevelIIQuotes(final UnsubscribeLevel2Quotes.Request request) {
+        return makeRPC(request, UnsubscribeLevel2Quotes.Result.class);
+    }
+
+    @Override
+    public BAnd.Result bit_band(final BAnd.Request request) {
+        return makeRPC(request, BAnd.Result.class);
+    }
+
+    @Override
+    public BNot.Result bit_bnot(final BNot.Request request) {
+        return makeRPC(request, BNot.Result.class);
+    }
+
+    @Override
+    public BOr.Result bit_bor(final BOr.Request request) {
+        return makeRPC(request, BOr.Result.class);
+    }
+
+    @Override
+    public BXor.Result bit_bxor(final BXor.Request request) {
+        return makeRPC(request, BXor.Result.class);
+    }
+
+    @Override
+    public ToHex.Result bit_tohex(final ToHex.Request request) {
+        return makeRPC(request, ToHex.Result.class);
+    }
+
+    @Override
+    public C.Result datasource_C(final C.Request request) {
+        return makeRPC(request, C.Result.class);
+    }
+
+    @Override
+    public Close.Result datasource_Close(final Close.Request request) {
+        return makeRPC(request, Close.Result.class);
+    }
+
+    @Override
+    public CreateDataSource.Result datasource_CreateDataSource(final CreateDataSource.Request request) {
+        return makeRPC(request, CreateDataSource.Result.class);
+    }
+
+    @Override
+    public H.Result datasource_H(final H.Request request) {
+        return makeRPC(request, H.Result.class);
+    }
+
+    @Override
+    public L.Result datasource_L(final L.Request request) {
+        return makeRPC(request, L.Result.class);
+    }
+
+    @Override
+    public O.Result datasource_O(final O.Request request) {
+        return makeRPC(request, O.Result.class);
+    }
+
+    @Override
+    public SetEmptyCallback.Result datasource_SetEmptyCallback(final SetEmptyCallback.Request request) {
+        return makeRPC(request, SetEmptyCallback.Result.class);
+    }
+
+    @Override
+    public SetUpdateCallback.Result datasource_SetUpdateCallback(final SetUpdateCallback.Request request) {
+        return makeRPC(request, SetUpdateCallback.Result.class);
+    }
+
+    @Override
+    public Size.Result datasource_Size(final Size.Request request) {
+        return makeRPC(request, Size.Result.class);
+    }
+
+    @Override
+    public T.Result datasource_T(final T.Request request) {
+        return makeRPC(request, T.Result.class);
+    }
+
+    @Override
+    public V.Result datasource_V(final V.Request request) {
+        return makeRPC(request, V.Result.class);
+    }
 
     private void checkIfOpen() {
         checkState(isOpened, "The connection must be open.");
