@@ -314,15 +314,15 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
         return makeRPC(request, GetOrderByNumber.Result.class);
     }
 
-//    @Override
-//    public GetParamEx.Result qlua_getParamEx(final GetParamEx.Request request) {
-//        return makeRPC(request, GetParamEx.Result.class);
-//    }
-//
-//    @Override
-//    public GetParamEx2.Result qlua_getParamEx2(final GetParamEx2.Request request) {
-//        return makeRPC(request, GetParamEx2.Result.class);
-//    }
+    @Override
+    public GetParamEx.Result qlua_getParamEx(final GetParamEx.Request request) {
+        return makeRPC(request, GetParamEx.Result.class);
+    }
+
+    @Override
+    public GetParamEx2.Result qlua_getParamEx2(final GetParamEx2.Request request) {
+        return makeRPC(request, GetParamEx2.Result.class);
+    }
 
     @Override
     public GetPortfolioInfo.Result qlua_getPortfolioInfo(final GetPortfolioInfo.Request request) {

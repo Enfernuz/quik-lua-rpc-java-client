@@ -231,19 +231,19 @@ public interface QluaRpcClient extends Gateway, Securable {
      */
     GetOrderByNumber.Result qlua_getOrderByNumber(GetOrderByNumber.Request request);
 
-//    /**
-//     *
-//     * @param args
-//     * @return
-//     */
-//    GetParamEx.Result qlua_getParamEx(GetParamEx.Request args);
-//
-//    /**
-//     *
-//     * @param args
-//     * @return
-//     */
-//    GetParamEx2.Result qlua_getParamEx2(GetParamEx2.Request args);
+    /**
+     *
+     * @param request
+     * @return
+     */
+    GetParamEx.Result qlua_getParamEx(GetParamEx.Request request);
+
+    /**
+     *
+     * @param request
+     * @return
+     */
+    GetParamEx2.Result qlua_getParamEx2(GetParamEx2.Request request);
 
     /**
      *
