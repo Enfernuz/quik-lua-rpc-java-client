@@ -580,6 +580,8 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
                 byteArrayOutputStream.write( frame.getData() );
             }
 
+            zResponse.destroy();
+
             return serdeModule.deserialize(resultClass, byteArrayOutputStream.toByteArray());
         } catch (final Exception ex) {
             throw new RpcClientException(ex);
