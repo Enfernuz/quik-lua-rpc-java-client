@@ -51,11 +51,9 @@ public enum ProtobufSerdeModule implements SerdeModule {
                 } else {
                     return deserializer.deserialize(data);
                 }
-            } catch (final SerdeException ex) {
-                throw ex;
-            } catch (final RuntimeException ex) {
+            } catch (final Exception ex) {
                 throw new SerdeException(
-                        String.format("Ошибка при десериализации экземпляра класса %s.", clazz.getName()),
+                        String.format("Ошибка при десериализации экземпляра класса '%s' из protobuf-представления.", clazz.getName()),
                         ex
                 );
             }
@@ -73,7 +71,7 @@ public enum ProtobufSerdeModule implements SerdeModule {
     private static Map<Class<?>, Deserializer<?>> createClassToDeserializerMap() {
 
         final Map<Class<?>, Deserializer<?>> result = new HashMap<>();
-        
+
         registerDeserializer(result, QluaEvent.EventType.class, ProtobufQluaEventTypeSerde.INSTANCE);
         registerDeserializer(result, Firm.class, ProtobufFirmDeserializer.INSTANCE);
         registerDeserializer(result, MoneyLimit.class, ProtobufMoneyLimitDeserializer.INSTANCE);
