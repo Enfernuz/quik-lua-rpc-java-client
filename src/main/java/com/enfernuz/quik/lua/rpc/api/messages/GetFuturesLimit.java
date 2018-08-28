@@ -4,8 +4,8 @@ import com.enfernuz.quik.lua.rpc.api.structures.FuturesLimit;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
-import com.sun.istack.internal.NotNull;
 import lombok.Builder;
+import lombok.NonNull;
 import lombok.Value;
 
 public final class GetFuturesLimit {
@@ -15,17 +15,17 @@ public final class GetFuturesLimit {
     @Value
     public static class Request {
 
-        String firmId;
-        String trdAccId;
+        @NonNull String firmId;
+        @NonNull String trdAccId;
         int limitType;
-        String currCode;
+        @NonNull String currCode;
 
         @Builder
         private Request(
-                final @NotNull String firmId,
-                final @NotNull String trdAccId,
-                final @NotNull int limitType,
-                final @NotNull String currCode) {
+                final String firmId,
+                final String trdAccId,
+                final int limitType,
+                final String currCode) {
 
             this.firmId = firmId;
             this.trdAccId = trdAccId;
@@ -47,11 +47,18 @@ public final class GetFuturesLimit {
     @Value
     public static class Result {
 
-        FuturesLimit futuresLimit;
+        @NonNull FuturesLimit futuresLimit;
 
         @JsonCreator
-        public Result(final @JsonProperty(value = "futures_limit", required = true) @NotNull FuturesLimit futuresLimit) {
+        public Result(final @JsonProperty(value = "futures_limit", required = true) FuturesLimit futuresLimit) {
             this.futuresLimit = futuresLimit;
+        }
+
+        @Override
+        public String toString() {
+            return MoreObjects.toStringHelper(this)
+                    .add("futures_limit", futuresLimit)
+                    .toString();
         }
     }
 }

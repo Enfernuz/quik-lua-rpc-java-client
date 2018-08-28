@@ -4,7 +4,6 @@ import com.enfernuz.quik.lua.rpc.api.structures.FuturesClientHolding;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
-import com.sun.istack.internal.NotNull;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
@@ -48,11 +47,18 @@ public final class GetFuturesHolding {
     @Value
     public static class Result {
 
-        FuturesClientHolding futuresHolding;
+        @NonNull FuturesClientHolding futuresHolding;
 
         @JsonCreator
-        public Result(final @JsonProperty(value = "futures_holding", required = true) @NotNull FuturesClientHolding futuresHolding) {
+        public Result(final @JsonProperty(value = "futures_holding", required = true) FuturesClientHolding futuresHolding) {
             this.futuresHolding = futuresHolding;
+        }
+
+        @Override
+        public String toString() {
+            return MoreObjects.toStringHelper(this)
+                    .add("futures_holding", futuresHolding)
+                    .toString();
         }
     }
 }

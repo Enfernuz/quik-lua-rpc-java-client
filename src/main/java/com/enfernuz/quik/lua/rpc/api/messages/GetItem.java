@@ -1,16 +1,10 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.KeyDeserializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.MoreObjects;
-import com.sun.istack.internal.NotNull;
 import lombok.NonNull;
 import lombok.Value;
 
-import java.io.IOException;
 import java.util.Map;
 
 public final class GetItem {
@@ -35,10 +29,10 @@ public final class GetItem {
     @Value
     public static class Result {
 
-        Map<String, String> tableRow;
+        @NonNull Map<String, String> tableRow;
 
         @JsonCreator
-        public Result(@NonNull Map<String, String> tableRow) {
+        public Result(final Map<String, String> tableRow) {
             this.tableRow = tableRow;
         }
 
