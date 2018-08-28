@@ -1,0 +1,6 @@
+{
+  "method" : "datasource.Close",
+  "args" : {
+    "datasource_uuid" : "1"
+  }
+}
