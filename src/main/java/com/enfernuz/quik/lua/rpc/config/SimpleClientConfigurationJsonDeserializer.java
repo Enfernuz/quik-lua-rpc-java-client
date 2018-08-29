@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.base.Strings;
+import org.jetbrains.annotations.NotNull;
 import org.zeromq.ZMQ;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -27,15 +28,16 @@ final class SimpleClientConfigurationJsonDeserializer extends JsonDeserializer<S
 
             final NetworkAddress networkAddress = parseNetworkAddress( rootNode.get("address") );
             final AuthContext authContext = parseAuthContext( rootNode.get("auth") );
+            final ClientConfiguration.SerdeProtocol serdeProtocol = parseSerdeProtocol( rootNode.get("serde_protocol") );
 
-            return new SimpleClientConfiguration(networkAddress, authContext);
+            return new SimpleClientConfiguration(networkAddress, authContext, serdeProtocol);
         } catch (final Exception ex) {
             throw new JsonException("Could not parse configuration object from JSON.", ex);
         }
-
     }
 
-    private static NetworkAddress parseNetworkAddress(final JsonNode addressNode) {
+    @NotNull
+    private static NetworkAddress parseNetworkAddress(@NotNull final JsonNode addressNode) {
 
         final String host = addressNode.get("host").asText();
         final int port = addressNode.get("port").asInt();
@@ -43,7 +45,8 @@ final class SimpleClientConfigurationJsonDeserializer extends JsonDeserializer<S
         return new SimpleNetworkAddress(host, port);
     }
 
-    private static AuthContext parseAuthContext(final JsonNode authContextNode) {
+    @NotNull
+    private static AuthContext parseAuthContext(@NotNull final JsonNode authContextNode) {
 
         final String mechanismAsString = authContextNode.get("mechanism").asText();
         final ZMQ.Socket.Mechanism mechanism = ZMQ.Socket.Mechanism.valueOf(mechanismAsString);
@@ -68,7 +71,24 @@ final class SimpleClientConfigurationJsonDeserializer extends JsonDeserializer<S
         return result;
     }
 
-    private static PlainCredentials parsePlainCredentials(final JsonNode plainCredentialsNode) {
+    @NotNull
+    private static ClientConfiguration.SerdeProtocol parseSerdeProtocol(@NotNull final JsonNode serdeProtocolNode) {
+
+        final String serdeProtocolAsString = serdeProtocolNode.asText();
+        final ClientConfiguration.SerdeProtocol result;
+        if ("json".equalsIgnoreCase(serdeProtocolAsString)) {
+            result = ClientConfiguration.SerdeProtocol.JSON;
+        } else if ("protobuf".equalsIgnoreCase(serdeProtocolAsString)) {
+            result = ClientConfiguration.SerdeProtocol.PROTOBUF;
+        } else {
+            throw new IllegalArgumentException( String.format("Unsupported serde protocol: %s.", serdeProtocolAsString));
+        }
+
+        return result;
+    }
+
+    @NotNull
+    private static PlainCredentials parsePlainCredentials(@NotNull final JsonNode plainCredentialsNode) {
 
         final String username = plainCredentialsNode.get("username").asText();
         final String password = plainCredentialsNode.get("password").asText();
@@ -83,7 +103,8 @@ final class SimpleClientConfigurationJsonDeserializer extends JsonDeserializer<S
         return new SimplePlainCredentials(username, password);
     }
 
-    private static CurveCredentials parseCurveCredentials(final JsonNode curveCredentialsNode) {
+    @NotNull
+    private static CurveCredentials parseCurveCredentials(@NotNull final JsonNode curveCredentialsNode) {
 
         final CurveKeyPair clientCurveKeyPair = parseClientCurveKeyPair( curveCredentialsNode.get("client") );
         final CurveKey serverPublicKey = parseServerCurvePublicKey( curveCredentialsNode.get("server") );
@@ -91,7 +112,8 @@ final class SimpleClientConfigurationJsonDeserializer extends JsonDeserializer<S
         return new SimpleCurveCredentials(serverPublicKey, clientCurveKeyPair);
     }
 
-    private static CurveKeyPair parseClientCurveKeyPair(final JsonNode clientCurveKeyPairNode) {
+    @NotNull
+    private static CurveKeyPair parseClientCurveKeyPair(@NotNull final JsonNode clientCurveKeyPairNode) {
 
         final String publicKeyAsString = clientCurveKeyPairNode.get("public").asText();
         final CurveKey publicKey = CurveKey.fromString(publicKeyAsString);
@@ -102,7 +124,8 @@ final class SimpleClientConfigurationJsonDeserializer extends JsonDeserializer<S
         return new CurveKeyPair(publicKey, secretKey);
     }
 
-    private static CurveKey parseServerCurvePublicKey(final JsonNode serverCurvePublicKeyNode) {
+    @NotNull
+    private static CurveKey parseServerCurvePublicKey(@NotNull final JsonNode serverCurvePublicKeyNode) {
         return CurveKey.fromString( serverCurvePublicKeyNode.get("public").asText() );
     }
 }

@@ -1,12 +1,12 @@
 package com.enfernuz.quik.lua.rpc.application;
 
+import com.enfernuz.quik.lua.rpc.api.messages.Message;
 import com.enfernuz.quik.lua.rpc.api.zmq.ZmqTcpQluaRpcClient;
 import com.enfernuz.quik.lua.rpc.api.zmq.impl.ZmqTcpQluaRpcClientImpl;
 import com.enfernuz.quik.lua.rpc.config.ClientConfiguration;
 import com.enfernuz.quik.lua.rpc.config.JsonClientConfigurationReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import qlua.rpc.Message;
 
 import java.io.File;
 
@@ -40,22 +40,17 @@ public class RpcExampleApplication {
         }
 
         LOGGER.info("Инициализация клиента...");
-        try (final ZmqTcpQluaRpcClient rpcClient =
-                     ZmqTcpQluaRpcClientImpl.newInstance(config.getNetworkAddress(), config.getAuthContext(), null)) {
+        try (final ZmqTcpQluaRpcClient rpcClient = ZmqTcpQluaRpcClientImpl.newInstance(config)) {
 
             LOGGER.info("Соединение с RPC-сервисом...");
             rpcClient.open();
 
-            final Message.Request request =
-                    qlua.rpc.Message.Request.newBuilder()
-                            .setMessage("Hello world!")
-                            .setIconType(qlua.rpc.Message.IconType.INFO)
-                            .build();
+            final Message.Request request = new Message.Request("Hello, world!", Message.IconType.WARNING);
 
             LOGGER.info("Выполнение удалённой процедуры 'message' на терминале QUIK...");
-            ///final Message.Result result = rpcClient.qlua_message(request);
+            final Message.Result result = rpcClient.qlua_message(request);
 
-            ///LOGGER.info("Результат выполнения удалённой процедуры 'message': {}.", result.getResult());
+            LOGGER.info("Результат выполнения удалённой процедуры 'message': {}.", result.getResult());
             LOGGER.info("Выход из программы...");
         } catch (final Exception ex) {
             LOGGER.error("Не удалось выполнить удалённый вызов процедуры.", ex);
