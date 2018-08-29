@@ -18,24 +18,24 @@ import java.io.IOException;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(ZmqTcpRpcGatewayImpl.class)
+//@RunWith(PowerMockRunner.class)
+//@PrepareForTest(ZmqTcpRpcGatewayImpl.class)
 public class ZmqTcpQluaRpcClientImplTest {
 
-    private ZmqTcpQluaRpcClientImpl sut;
-
-    @Before
-    public void setup() throws IOException {
-
-        final NetworkAddress networkAddress = new SimpleNetworkAddress("127.0.0.1", 5560);
-
-        this.sut = ZmqTcpQluaRpcClientImpl.newInstance(networkAddress, AuthContext.none(), null);
-    }
-
-    @After
-    public void teardown() {
-        this.sut = null;
-    }
+//    private ZmqTcpQluaRpcClientImpl sut;
+//
+//    @Before
+//    public void setup() throws IOException {
+//
+//        final NetworkAddress networkAddress = new SimpleNetworkAddress("127.0.0.1", 5560);
+//
+//        this.sut = ZmqTcpQluaRpcClientImpl.newInstance(null);
+//    }
+//
+//    @After
+//    public void teardown() {
+//        this.sut = null;
+//    }
 
 //    @Test
 //    public void test() throws Exception {
