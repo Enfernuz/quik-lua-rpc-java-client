@@ -3,6 +3,7 @@
     "host": "127.0.0.1",
     "port": 5560
   },
+  "serde_protocol": "json",
   "auth": {
     "mechanism": "CURVE",
     "plain": {
