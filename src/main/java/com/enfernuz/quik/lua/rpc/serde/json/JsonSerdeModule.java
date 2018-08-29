@@ -1,10 +1,13 @@
 package com.enfernuz.quik.lua.rpc.serde.json;
 
+import com.enfernuz.quik.lua.rpc.api.structures.ResponseEnvelope;
 import com.enfernuz.quik.lua.rpc.events.api.QluaEvent;
 import com.enfernuz.quik.lua.rpc.serde.SerdeException;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import com.enfernuz.quik.lua.rpc.serde.json.jackson.QluaJsonModule;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 
 import static java.util.Objects.requireNonNull;
 
@@ -25,11 +28,20 @@ public enum JsonSerdeModule implements SerdeModule {
 
         requireNonNull(t);
 
-        if (t instanceof QluaEvent.EventType) {
-            return JsonQluaEventTypeSerde.INSTANCE.serialize((QluaEvent.EventType) t);
-        } else {
+        try {
+
+            final byte[] result;
+            if (t instanceof QluaEvent.EventType) {
+                result = JsonQluaEventTypeSerde.INSTANCE.serialize((QluaEvent.EventType) t);
+            } else {
+                result = objectMapper.writeValueAsBytes(t);
+            }
+
+            return result;
+        } catch (final Exception ex) {
             throw new SerdeException(
-                    String.format("Неподдерживаемый класс для сериализации: %s.", t.getClass().getName())
+                    String.format("Ошибка сериализации экземпляра %s в JSON-представление.", t.getClass().getName()),
+                    ex
             );
         }
     }

@@ -10,7 +10,8 @@ import com.enfernuz.quik.lua.rpc.io.Gateway;
 /**
  * Компонент, представляющий собой Java-обёртку над API QLua терминала QUIK.
  *
- * @throws RpcClientException в случае возникновения ошибки при удалённом вызове процедуры
+ * @throws ClientRpcException в случае возникновения ошибки при удалённом вызове процедуры на стороне клиента
+ * @throws ServiceRpcException в случае возникновения ошибки при удалённом вызове процедуры на стороне RPC-сервиса
  * @throws NullPointerException если аргумент {@code request} является null
  */
 public interface QluaRpcClient extends Gateway, Securable {
@@ -569,19 +570,4 @@ public interface QluaRpcClient extends Gateway, Securable {
      * @return
      */
     V.Result datasource_V(V.Request request);
-
-    public final class RpcClientException extends RuntimeException {
-
-        public RpcClientException(final String message) {
-            super(message);
-        }
-
-        public RpcClientException(final String message, final Throwable cause) {
-            super(message, cause);
-        }
-
-        public RpcClientException(final Throwable cause) { super(cause); }
-
-    }
-
 }

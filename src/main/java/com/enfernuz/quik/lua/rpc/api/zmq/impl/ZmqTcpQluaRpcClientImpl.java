@@ -1,5 +1,8 @@
 package com.enfernuz.quik.lua.rpc.api.zmq.impl;
 
+import com.enfernuz.quik.lua.rpc.api.ClientRpcException;
+import com.enfernuz.quik.lua.rpc.api.ServiceError;
+import com.enfernuz.quik.lua.rpc.api.ServiceRpcException;
 import com.enfernuz.quik.lua.rpc.api.messages.*;
 import com.enfernuz.quik.lua.rpc.api.messages.bit.*;
 import com.enfernuz.quik.lua.rpc.api.messages.datasource.*;
@@ -7,14 +10,19 @@ import com.enfernuz.quik.lua.rpc.api.security.zmq.AuthContext;
 import com.enfernuz.quik.lua.rpc.api.security.zmq.CurveCredentials;
 import com.enfernuz.quik.lua.rpc.api.security.zmq.CurveKeyPair;
 import com.enfernuz.quik.lua.rpc.api.security.zmq.PlainCredentials;
+import com.enfernuz.quik.lua.rpc.api.structures.ResponseEnvelope;
 import com.enfernuz.quik.lua.rpc.api.zmq.ZmqTcpQluaRpcClient;
 import com.enfernuz.quik.lua.rpc.api.messages.GetCandlesByIndex;
+import com.enfernuz.quik.lua.rpc.config.ClientConfiguration;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
+import com.enfernuz.quik.lua.rpc.serde.json.JsonSerdeModule;
+import com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeModule;
 import org.zeromq.ZFrame;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMsg;
 
+import javax.xml.ws.Service;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
@@ -36,22 +44,35 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
     private final SerdeModule serdeModule;
 
     /**
-     * Создаёт новый экземпляр компонента {@link ZmqTcpQluaRpcClientImpl}, с точкой подключения RPC-сервиса на стороне
-     * терминала QUIK по заданному сетевому адресу с заданным контекстом защиты передачи данных.
+     * Создаёт новый экземпляр компонента {@link ZmqTcpQluaRpcClientImpl}, соответствующий заданной конфигурации клиента
+     * точки подключения к RPC-сервису QUIK.
      *
-     * @param networkAddress  сетевой адрес точки подключения RPC-сервиса на стороне терминала QUIK
-     * @param authContext  контекст защиты передачи данных
+     * @param config  конфигурация клиента точки подключения к RPC-сервису QUIK
      * @return новый экземпляр компонента {@link ZmqTcpQluaRpcClientImpl}
      */
-    public static ZmqTcpQluaRpcClientImpl newInstance(
-            final NetworkAddress networkAddress,
-            final AuthContext authContext,
-            final SerdeModule serdeModule) {
+    public static ZmqTcpQluaRpcClientImpl newInstance(final ClientConfiguration config) {
+
+        final SerdeModule serdeModule;
+        switch (config.getSerdeProtocol()) {
+            case JSON:
+                serdeModule = JsonSerdeModule.INSTANCE;
+                break;
+            case PROTOBUF:
+                serdeModule = ProtobufSerdeModule.INSTANCE;
+                break;
+            default:
+                throw new IllegalArgumentException(
+                        String.format(
+                                "Неподдерживаемый протокол сериализации/десериализации сообщений: %s.",
+                                config.getSerdeProtocol()
+                        )
+                );
+        }
 
         return new ZmqTcpQluaRpcClientImpl(
-                requireNonNull(networkAddress, "Аргумент 'networkAddress' не должен быть null."),
-                requireNonNull(authContext, "Аргумент 'authContext' не должен быть null."),
-                requireNonNull(serdeModule, "Аргумент 'serdeModule' не должен быть null.")
+                requireNonNull(config.getNetworkAddress(), "Аргумент 'networkAddress' не должен быть null."),
+                requireNonNull(config.getAuthContext(), "Аргумент 'authContext' не должен быть null."),
+                serdeModule
         );
     }
 
@@ -582,9 +603,18 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
 
             zResponse.destroy();
 
-            return serdeModule.deserialize(resultClass, byteArrayOutputStream.toByteArray());
+            final ResponseEnvelope responseEnvelope =
+                    serdeModule.deserialize(ResponseEnvelope.class, byteArrayOutputStream.toByteArray());
+            final ServiceError error = responseEnvelope.getError();
+            if (error == null) {
+                return serdeModule.deserialize(resultClass, responseEnvelope.getResult());
+            } else {
+                throw new ServiceRpcException(error);
+            }
+        } catch (final ServiceRpcException ex) {
+            throw ex;
         } catch (final Exception ex) {
-            throw new RpcClientException(ex);
+            throw new ClientRpcException(ex);
         }
     }
 }

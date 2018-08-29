@@ -10,6 +10,8 @@ final class QluaJsonJacksonDeserializers extends SimpleDeserializers {
 
         super();
 
+        super.addDeserializer(ResponseEnvelope.class, new ResponseEnvelopeJsonDeserializer());
+
         super.addDeserializer(StopEventInfo.class, new StopEventInfoJsonDeserializer());
         super.addDeserializer(ConnectedEventInfo.class, new ConnectedEventInfoJsonDeserializer());
         super.addDeserializer(AllTrade.class, new AllTradeJsonDeserializer());
