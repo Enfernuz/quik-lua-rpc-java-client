@@ -1,5 +1,7 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -35,25 +37,26 @@ public class AccountPosition {
     private transient @NonFinal @Getter(AccessLevel.NONE) String asString;
 
     @Builder
+    @JsonCreator
     private AccountPosition(
-            final String firmId,
-            final String currCode,
-            final String tag,
-            final String description,
-            final String openBal,
-            final String currentPos,
-            final String plannedPos,
-            final String limit1,
-            final String limit2,
-            final String orderBuy,
-            final String orderSell,
-            final String netto,
-            final String plannedBal,
-            final String debit,
-            final String credit,
-            final String bankAccId,
-            final String marginCall,
-            final String settleBal) {
+            @JsonProperty("firmid") final String firmId,
+            @JsonProperty("currcode") final String currCode,
+            @JsonProperty("tag") final String tag,
+            @JsonProperty("description") final String description,
+            @JsonProperty("openbal") final String openBal,
+            @JsonProperty("currentpos") final String currentPos,
+            @JsonProperty("plannedpos") final String plannedPos,
+            @JsonProperty("limit1") final String limit1,
+            @JsonProperty("limit2") final String limit2,
+            @JsonProperty("orderbuy") final String orderBuy,
+            @JsonProperty("ordersell") final String orderSell,
+            @JsonProperty("netto") final String netto,
+            @JsonProperty("plannedbal") final String plannedBal,
+            @JsonProperty("debit") final String debit,
+            @JsonProperty("credit") final String credit,
+            @JsonProperty("bank_acc_id") final String bankAccId,
+            @JsonProperty("margincall") final String marginCall,
+            @JsonProperty("settlebal") final String settleBal) {
 
         this.firmId = firmId;
         this.currCode = currCode;

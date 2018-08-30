@@ -1,5 +1,7 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -32,22 +34,23 @@ public class AccountBalance {
     private transient @NonFinal @Getter(AccessLevel.NONE) String asString;
 
     @Builder
+    @JsonCreator
     private AccountBalance(
-            final String firmId,
-            final String secCode,
-            final String trdAccId,
-            final String depAccId,
-            final String openBal,
-            final String currentPos,
-            final String plannedPosSell,
-            final String plannedPosBuy,
-            final String planBal,
-            final String usqtyb,
-            final String usqtys,
-            final String planned,
-            final String settleBal,
-            final String bankAccId,
-            final int firmUse) {
+            @JsonProperty("firmid") final String firmId,
+            @JsonProperty("sec_code") final String secCode,
+            @JsonProperty("trdaccid") final String trdAccId,
+            @JsonProperty("depaccid") final String depAccId,
+            @JsonProperty("openbal") final String openBal,
+            @JsonProperty("currentpos") final String currentPos,
+            @JsonProperty("plannedpossell") final String plannedPosSell,
+            @JsonProperty("plannedposbuy") final String plannedPosBuy,
+            @JsonProperty("planbal") final String planBal,
+            @JsonProperty("usqtyb") final String usqtyb,
+            @JsonProperty("usqtys") final String usqtys,
+            @JsonProperty("planned") final String planned,
+            @JsonProperty("settlebal") final String settleBal,
+            @JsonProperty("bank_acc_id") final String bankAccId,
+            @JsonProperty(value = "firmuse", required = true) final int firmUse) {
 
         this.firmId = firmId;
         this.secCode = secCode;

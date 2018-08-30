@@ -17,13 +17,11 @@ final class QluaJsonJacksonDeserializers extends SimpleDeserializers {
         super.addDeserializer(AllTrade.class, new AllTradeJsonDeserializer());
         super.addDeserializer(Trade.class, new TradeJsonDeserializer());
         super.addDeserializer(Order.class, new OrderJsonDeserializer());
-        super.addDeserializer(AccountBalance.class, new AccountBalanceJsonDeserializer());
         super.addDeserializer(FuturesLimitDelete.class, new FuturesLimitDeleteJsonDeserializer());
         super.addDeserializer(MoneyLimit.class, new MoneyLimitJsonDeserializer());
         super.addDeserializer(MoneyLimitDelete.class, new MoneyLimitDeleteJsonDeserializer());
         super.addDeserializer(DepoLimit.class, new DepoLimitJsonDeserializer());
         super.addDeserializer(DepoLimitDelete.class, new DepoLimitDeleteJsonDeserializer());
-        super.addDeserializer(AccountPosition.class, new AccountPositionJsonDeserializer());
         super.addDeserializer(NegDeal.class, new NegDealJsonDeserializer());
         super.addDeserializer(NegTrade.class, new NegTradeJsonDeserializer());
         super.addDeserializer(StopOrder.class, new StopOrderJsonDeserializer());
