@@ -22,7 +22,6 @@ import org.zeromq.ZFrame;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMsg;
 
-import javax.xml.ws.Service;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
