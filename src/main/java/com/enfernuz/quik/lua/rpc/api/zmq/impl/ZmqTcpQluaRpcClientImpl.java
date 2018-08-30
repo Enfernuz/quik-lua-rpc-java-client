@@ -18,6 +18,7 @@ import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import com.enfernuz.quik.lua.rpc.serde.json.JsonSerdeModule;
 import com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeModule;
+import org.jetbrains.annotations.NotNull;
 import org.zeromq.ZFrame;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMsg;
@@ -51,27 +52,10 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
      */
     public static ZmqTcpQluaRpcClientImpl newInstance(final ClientConfiguration config) {
 
-        final SerdeModule serdeModule;
-        switch (config.getSerdeProtocol()) {
-            case JSON:
-                serdeModule = JsonSerdeModule.INSTANCE;
-                break;
-            case PROTOBUF:
-                serdeModule = ProtobufSerdeModule.INSTANCE;
-                break;
-            default:
-                throw new IllegalArgumentException(
-                        String.format(
-                                "Неподдерживаемый протокол сериализации/десериализации сообщений: %s.",
-                                config.getSerdeProtocol()
-                        )
-                );
-        }
-
         return new ZmqTcpQluaRpcClientImpl(
                 requireNonNull(config.getNetworkAddress(), "Аргумент 'networkAddress' не должен быть null."),
                 requireNonNull(config.getAuthContext(), "Аргумент 'authContext' не должен быть null."),
-                serdeModule
+                getSerdeModule(config)
         );
     }
 
@@ -101,47 +85,19 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
 
         if (!isOpened) {
 
-            zmqContext = ZMQ.context(1);
+            initializeIO();
 
-            reqSocket = zmqContext.socket(ZMQ.REQ);
-            reqSocket.setLinger(0); // no waiting before closing the socket
-
-            switch (authContext.getAuthMechanism()) {
-                case PLAIN:
-                    final PlainCredentials plainCredentials = authContext.getPlainCredentials();
-                    reqSocket.setPlainUsername( plainCredentials.getUsername() );
-                    reqSocket.setPlainPassword( plainCredentials.getPassword() );
-                    break;
-                case CURVE:
-                    final CurveCredentials curveCredentials = authContext.getCurveCredentials();
-                    final CurveKeyPair clientKeyPair = curveCredentials.getClientKeyPair();
-                    reqSocket.setCurveServerKey( curveCredentials.getServerPublicKey().asBinary() );
-                    reqSocket.setCurvePublicKey( clientKeyPair.getPublicKey().asBinary() );
-                    reqSocket.setCurveSecretKey( clientKeyPair.getSecretKey().asBinary() );
-                    break;
-                case NULL:
-                    break;
-                default:
-                    throw new IllegalStateException(
-                            String.format(
-                                    "Unsupported authentication mechanism: \"s\".",
-                                    authContext.getAuthMechanism()
-                            )
-                    );
-            }
-
-            final boolean _isConnected  = this.reqSocket.connect(uri);
-            if (_isConnected) {
+            if ( reqSocket.connect(uri) ) {
                 isOpened = true;
             } else {
 
-                final String errorMessage =
-                        String.format("Couldn't connect to '%s'. ZMQ socket errno:", uri, reqSocket.errno());
+                final String errorMessage = String.format(
+                        "Не удалось соединиться с '%s'. Номер ошибки (errno) сокета ZMQ: %d.",
+                        uri,
+                        reqSocket.errno()
+                );
 
-                reqSocket.close();
-                zmqContext.term();
-                zmqContext = null;
-                reqSocket = null;
+                deinitializeIO();
 
                 throw new IOException(errorMessage);
             }
@@ -158,19 +114,13 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
 
         if (isOpened) {
 
-            final boolean isDisconnected = reqSocket.disconnect(uri);
-
-            if (isDisconnected) {
-                reqSocket.close();
-                zmqContext.term();
-                zmqContext = null;
-                reqSocket = null;
-
+            if (reqSocket.disconnect(uri)) {
                 isOpened = false;
+                deinitializeIO();
             } else {
                 throw new IOException(
                         String.format(
-                                "Couldn't disconnect from '%s'. ZMQ socket errno: %d",
+                                "Не удалось отсоединиться от '%s'. Номер ошибки (errno) сокета ZMQ: %d",
                                 uri,
                                 reqSocket.errno()
                         )
@@ -615,5 +565,66 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
         } catch (final Exception ex) {
             throw new ClientRpcException(ex);
         }
+    }
+
+    private void initializeIO() {
+
+        zmqContext = ZMQ.context(1);
+
+        reqSocket = zmqContext.socket(ZMQ.REQ);
+        reqSocket.setLinger(0); // no waiting before closing the socket
+
+        switch (authContext.getAuthMechanism()) {
+            case PLAIN:
+                final PlainCredentials plainCredentials = authContext.getPlainCredentials();
+                reqSocket.setPlainUsername( plainCredentials.getUsername() );
+                reqSocket.setPlainPassword( plainCredentials.getPassword() );
+                break;
+            case CURVE:
+                final CurveCredentials curveCredentials = authContext.getCurveCredentials();
+                final CurveKeyPair clientKeyPair = curveCredentials.getClientKeyPair();
+                reqSocket.setCurveServerKey( curveCredentials.getServerPublicKey().asBinary() );
+                reqSocket.setCurvePublicKey( clientKeyPair.getPublicKey().asBinary() );
+                reqSocket.setCurveSecretKey( clientKeyPair.getSecretKey().asBinary() );
+                break;
+            case NULL:
+                break;
+            default:
+                throw new IllegalStateException(
+                        String.format(
+                                "Unsupported authentication mechanism: \"s\".",
+                                authContext.getAuthMechanism()
+                        )
+                );
+        }
+    }
+
+    private void deinitializeIO() {
+        reqSocket.close();
+        zmqContext.term();
+        zmqContext = null;
+        reqSocket = null;
+    }
+
+    @NotNull
+    private static SerdeModule getSerdeModule(@NotNull final ClientConfiguration config) {
+
+        final SerdeModule serdeModule;
+        switch (config.getSerdeProtocol()) {
+            case JSON:
+                serdeModule = JsonSerdeModule.INSTANCE;
+                break;
+            case PROTOBUF:
+                serdeModule = ProtobufSerdeModule.INSTANCE;
+                break;
+            default:
+                throw new IllegalArgumentException(
+                        String.format(
+                                "Неподдерживаемый протокол сериализации/десериализации сообщений: %s.",
+                                config.getSerdeProtocol()
+                        )
+                );
+        }
+        return serdeModule;
     }
 }
