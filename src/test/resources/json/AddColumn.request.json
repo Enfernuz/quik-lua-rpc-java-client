@@ -1,0 +1,11 @@
+{
+  "method" : "AddColumn",
+  "args" : {
+    "t_id" : 1,
+    "icode" : 2,
+    "name" : "3",
+    "is_default" : true,
+    "par_type" : "QTABLE_INT64_TYPE",
+    "width" : 6
+  }
+}

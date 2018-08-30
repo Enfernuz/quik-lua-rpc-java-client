@@ -30,7 +30,6 @@ final class QluaJsonJacksonDeserializers extends SimpleDeserializers {
         super.addDeserializer(QuoteEventInfo.class, new QuoteEventInfoJsonDeserializer());
         super.addDeserializer(DateTimeEntry.class, new DateTimeEntryJsonDeserializer());
 
-        super.addDeserializer(AddColumn.Result.class, new AddColumnResultJsonDeserializer());
         super.addDeserializer(AddLabel.Result.class, new AddLabelResultJsonDeserializer());
         super.addDeserializer(AllocTable.Result.class, new AllocTableResultJsonDeserializer());
         super.addDeserializer(CalcBuySell.Result.class, new CalcBuySellResultJsonDeserializer());

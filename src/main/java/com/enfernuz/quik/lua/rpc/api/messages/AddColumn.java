@@ -1,5 +1,7 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.Builder;
 import lombok.NonNull;
@@ -14,18 +16,18 @@ public final class AddColumn {
 
         int tId;
         int iCode;
-        String name;
+        @NonNull String name;
         boolean isDefault;
-        ColumnParameterType parType;
+        @NonNull ColumnParameterType parType;
         int width;
 
         @Builder
         private Request(
                 final int tId,
                 final int iCode,
-                final @NonNull String name,
+                final String name,
                 final boolean isDefault,
-                final @NonNull ColumnParameterType parType,
+                final ColumnParameterType parType,
                 final int width) {
 
             this.tId = tId;
@@ -54,6 +56,11 @@ public final class AddColumn {
 
         int result;
 
+        @JsonCreator
+        public Result(@JsonProperty(value = "result", required = true) int result) {
+            this.result = result;
+        }
+
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
@@ -62,7 +69,7 @@ public final class AddColumn {
         }
     }
 
-    public static enum ColumnParameterType {
+    public enum ColumnParameterType {
 
         QTABLE_INT_TYPE,
         QTABLE_DOUBLE_TYPE,
