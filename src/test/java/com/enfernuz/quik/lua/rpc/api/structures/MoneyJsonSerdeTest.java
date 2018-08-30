@@ -30,7 +30,7 @@ public class MoneyJsonSerdeTest {
                 .moneyLimitAvailable("7")
                 .build();
 
-        moneyAsJson = Resources.toString(Resources.getResource("json/money.json"), Charsets.UTF_8);
+        moneyAsJson = Resources.toString(Resources.getResource("json/structures/Money.json"), Charsets.UTF_8);
     }
 
     @Test

@@ -63,7 +63,7 @@ public class PortfolioInfoJsonSerdeTest {
                 .currTag("40")
                 .build();
 
-        portfolioInfoAsJson = Resources.toString(Resources.getResource("json/portfolio_info.json"), Charsets.UTF_8);
+        portfolioInfoAsJson = Resources.toString(Resources.getResource("json/structures/PortfolioInfo.json"), Charsets.UTF_8);
     }
 
     @Test

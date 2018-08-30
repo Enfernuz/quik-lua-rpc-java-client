@@ -1,6 +1,5 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
-import com.enfernuz.quik.lua.rpc.api.structures.FuturesLimit;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
@@ -41,7 +40,7 @@ public class FuturesLimitJsonSerdeTest {
                 .realVarMargin("17")
                 .build();
 
-        expectedJson = Resources.toString(Resources.getResource("json/futures_limit.json"), Charsets.UTF_8);
+        expectedJson = Resources.toString(Resources.getResource("json/structures/FuturesLimit.json"), Charsets.UTF_8);
     }
 
     @Test

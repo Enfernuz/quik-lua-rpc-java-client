@@ -1,6 +1,5 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
-import com.enfernuz.quik.lua.rpc.api.structures.FuturesClientHolding;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
@@ -44,7 +43,7 @@ public class FuturesClientHoldingJsonSerdeTest {
                 .build();
 
         futuresClientHoldingAsJson =
-                Resources.toString(Resources.getResource("json/futures_client_holding.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/structures/FuturesClientHolding.json"), Charsets.UTF_8);
     }
 
     @Test
