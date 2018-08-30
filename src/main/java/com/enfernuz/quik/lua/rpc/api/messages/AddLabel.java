@@ -1,5 +1,7 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableMap;
 import lombok.Builder;
@@ -15,11 +17,11 @@ public final class AddLabel {
     @Value
     public static class Request {
 
-        String chartTag;
-        Map<String, String> labelParams;
+        @NonNull String chartTag;
+        @NonNull Map<String, String> labelParams;
 
         @Builder
-        public Request(final @NonNull String chartTag, final @NonNull Map<String, String> labelParams) {
+        private Request(final String chartTag, final Map<String, String> labelParams) {
             this.chartTag = chartTag;
             this.labelParams = ImmutableMap.copyOf(labelParams);
         }
@@ -37,6 +39,11 @@ public final class AddLabel {
     public static class Result {
 
         int labelId;
+
+        @JsonCreator
+        public Result(@JsonProperty(value = "label_id", required = true) int labelId) {
+            this.labelId = labelId;
+        }
 
         @Override
         public String toString() {
