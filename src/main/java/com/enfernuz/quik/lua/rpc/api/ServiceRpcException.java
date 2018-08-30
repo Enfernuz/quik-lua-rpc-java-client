@@ -8,7 +8,7 @@ public class ServiceRpcException extends RpcException {
 
     @NonNull ServiceError error;
 
-    public ServiceRpcException(@NonNull final ServiceError error) {
+    public ServiceRpcException(final ServiceError error) {
         this.error = error;
     }
 }
