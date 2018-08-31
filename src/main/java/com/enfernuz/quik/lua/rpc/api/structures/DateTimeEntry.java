@@ -1,5 +1,7 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ComparisonChain;
 import lombok.AccessLevel;
@@ -27,16 +29,17 @@ public class DateTimeEntry implements Comparable<DateTimeEntry> {
     private @NonFinal @Getter(AccessLevel.NONE) transient String asString;
 
     @Builder
+    @JsonCreator
     private DateTimeEntry(
-            final int mcs,
-            final int ms,
-            final int sec,
-            final int min,
-            final int hour,
-            final int day,
-            final int weekDay,
-            final int month,
-            final int year) {
+            @JsonProperty(value = "mcs", required = true) final int mcs,
+            @JsonProperty(value = "ms", required = true) final int ms,
+            @JsonProperty(value = "sec", required = true) final int sec,
+            @JsonProperty(value = "min", required = true) final int min,
+            @JsonProperty(value = "hour", required = true) final int hour,
+            @JsonProperty(value = "day", required = true) final int day,
+            @JsonProperty(value = "week_day", required = true) final int weekDay,
+            @JsonProperty(value = "month", required = true) final int month,
+            @JsonProperty(value = "year", required = true) final int year) {
 
         this.mcs = mcs;
         this.ms = ms;

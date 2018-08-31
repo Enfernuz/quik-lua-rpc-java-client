@@ -1,5 +1,7 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -35,24 +37,26 @@ public class AllTrade {
     private @NonFinal @Getter(AccessLevel.NONE) transient String asString;
 
     @Builder
-    private AllTrade(final long tradeNum,
-                    final int flags,
-                    final String price,
-                    final int qty,
-                    final String value,
-                    final String accruedInt,
-                    final String yield,
-                    final String settleCode,
-                    final String repoRate,
-                    final String repoValue,
-                    final String repo2Value,
-                    final String repoTerm,
-                    final String secCode,
-                    final String classCode,
-                    final DateTimeEntry datetime,
-                    final int period,
-                    final String openInterest,
-                    final String exchangeCode) {
+    @JsonCreator
+    private AllTrade(
+            @JsonProperty(value = "trade_num", required = true) final long tradeNum,
+            @JsonProperty(value = "flags", required = true) final int flags,
+            @JsonProperty(value = "price", required = true) final String price,
+            @JsonProperty(value = "qty", required = true) final int qty,
+            @JsonProperty("value") final String value,
+            @JsonProperty("accruedint") final String accruedInt,
+            @JsonProperty("yield") final String yield,
+            @JsonProperty("settlecode") final String settleCode,
+            @JsonProperty("reporate") final String repoRate,
+            @JsonProperty("repovalue") final String repoValue,
+            @JsonProperty("repo2value") final String repo2Value,
+            @JsonProperty("repoterm") final String repoTerm,
+            @JsonProperty("sec_code") final String secCode,
+            @JsonProperty("class_code") final String classCode,
+            @JsonProperty(value = "datetime", required = true) final DateTimeEntry datetime,
+            @JsonProperty(value = "period", required = true) final int period,
+            @JsonProperty("open_interest") final String openInterest,
+            @JsonProperty("exchange_code") final String exchangeCode) {
 
         this.tradeNum = tradeNum;
         this.flags = flags;
