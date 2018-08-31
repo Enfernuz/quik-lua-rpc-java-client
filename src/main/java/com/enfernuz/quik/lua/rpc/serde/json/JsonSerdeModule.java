@@ -1,13 +1,10 @@
 package com.enfernuz.quik.lua.rpc.serde.json;
 
-import com.enfernuz.quik.lua.rpc.api.structures.ResponseEnvelope;
 import com.enfernuz.quik.lua.rpc.events.api.QluaEvent;
 import com.enfernuz.quik.lua.rpc.serde.SerdeException;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import com.enfernuz.quik.lua.rpc.serde.json.jackson.QluaJsonModule;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.SneakyThrows;
 
 import static java.util.Objects.requireNonNull;
 

@@ -6,7 +6,6 @@ import com.enfernuz.quik.lua.rpc.events.api.LoggingEventHandler;
 import com.enfernuz.quik.lua.rpc.events.api.PollingMode;
 import com.enfernuz.quik.lua.rpc.events.api.QluaEventProcessor;
 import com.enfernuz.quik.lua.rpc.api.zmq.ZmqTcpQluaEventProcessor;
-import com.enfernuz.quik.lua.rpc.serde.json.JsonSerdeModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
