@@ -1,5 +1,6 @@
-package com.enfernuz.quik.lua.rpc.events.api;
+package com.enfernuz.quik.lua.rpc.api.zmq;
 
+import com.enfernuz.quik.lua.rpc.events.api.QluaEventProcessor;
 import com.enfernuz.quik.lua.rpc.io.transport.TcpGateway;
 
 /**

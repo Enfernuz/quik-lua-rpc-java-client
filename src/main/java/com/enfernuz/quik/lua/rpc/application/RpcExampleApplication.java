@@ -2,7 +2,6 @@ package com.enfernuz.quik.lua.rpc.application;
 
 import com.enfernuz.quik.lua.rpc.api.messages.Message;
 import com.enfernuz.quik.lua.rpc.api.zmq.ZmqTcpQluaRpcClient;
-import com.enfernuz.quik.lua.rpc.api.zmq.impl.ZmqTcpQluaRpcClientImpl;
 import com.enfernuz.quik.lua.rpc.config.ClientConfiguration;
 import com.enfernuz.quik.lua.rpc.config.JsonClientConfigurationReader;
 import org.slf4j.Logger;
@@ -40,7 +39,7 @@ public class RpcExampleApplication {
         }
 
         LOGGER.info("Инициализация клиента...");
-        try (final ZmqTcpQluaRpcClient rpcClient = ZmqTcpQluaRpcClientImpl.newInstance(config)) {
+        try (final ZmqTcpQluaRpcClient rpcClient = ZmqTcpQluaRpcClient.newInstance(config)) {
 
             LOGGER.info("Соединение с RPC-сервисом...");
             rpcClient.open();

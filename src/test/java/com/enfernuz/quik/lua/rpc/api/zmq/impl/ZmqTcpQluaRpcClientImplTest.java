@@ -22,14 +22,14 @@ import static org.mockito.Mockito.*;
 //@PrepareForTest(ZmqTcpRpcGatewayImpl.class)
 public class ZmqTcpQluaRpcClientImplTest {
 
-//    private ZmqTcpQluaRpcClientImpl sut;
+//    private ZmqTcpQluaRpcClient sut;
 //
 //    @Before
 //    public void setup() throws IOException {
 //
 //        final NetworkAddress networkAddress = new SimpleNetworkAddress("127.0.0.1", 5560);
 //
-//        this.sut = ZmqTcpQluaRpcClientImpl.newInstance(null);
+//        this.sut = ZmqTcpQluaRpcClient.newInstance(null);
 //    }
 //
 //    @After

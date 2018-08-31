@@ -1,10 +1,13 @@
-package com.enfernuz.quik.lua.rpc.events.impl;
+package com.enfernuz.quik.lua.rpc.api.zmq;
 
 import com.enfernuz.quik.lua.rpc.api.security.zmq.AuthContext;
+import com.enfernuz.quik.lua.rpc.api.security.zmq.ZmqSecurable;
 import com.enfernuz.quik.lua.rpc.api.structures.*;
+import com.enfernuz.quik.lua.rpc.config.ClientConfiguration;
 import com.enfernuz.quik.lua.rpc.events.api.*;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
+import com.enfernuz.quik.lua.rpc.serde.SerdeUtils;
 import com.google.common.collect.*;
 
 import java.io.IOException;
@@ -25,7 +28,7 @@ import static java.util.Objects.requireNonNull;
  * @see <a href="https://github.com/Enfernuz/quik-lua-rpc">quik-lua-rpc</a>
  * @see <a href="http://zeromq.org/">ZeroMQ - Distributed Messaging</a>
  */
-public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
+public final class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor, ZmqSecurable {
 
     private ZmqTcpQluaEventPoller eventPoller;
     private final List<QluaEventHandler> eventHandlers;
@@ -35,20 +38,26 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
      * Создаёт новый экземпляр компонента {@link ZmqTcpQluaEventProcessor}, с точкой подключения RPC-сервиса на стороне
      * терминала QUIK по заданному сетевому адресу с заданным контекстом защиты передачи данных.
      *
-     * @param networkAddress  сетевой адрес точки подключения RPC-сервиса на стороне терминала QUIK
-     * @param authContext  контекст защиты передачи данных
-     * @param serdeModule  модуль сериализации/десериализации доменных объектов QLua
+     * @param config  конфигурация клиента точки подключения к RPC-сервису QUIK
      * @return  новый экземпляр компонента {@link ZmqTcpQluaEventProcessor}
      */
-    public static ZmqTcpQluaEventProcessor newInstance(
-            final NetworkAddress networkAddress,
-            final AuthContext authContext,
-            final SerdeModule serdeModule) {
+    public static ZmqTcpQluaEventProcessor newInstance(final ClientConfiguration config, final PollingMode pollingMode) {
 
-        return new ZmqTcpQluaEventProcessor(
-                ZmqTcpQluaEventPoller.newInstance(networkAddress, authContext, serdeModule),
-                serdeModule
-        );
+        final SerdeModule serdeModule = SerdeUtils.getSerdeModule( config.getSerdeProtocol() );
+        final ZmqTcpQluaEventPoller eventPoller;
+        switch ( requireNonNull(pollingMode, "Аргумент 'pollingMode' не должен быть null.") ) {
+            case BLOCKING:
+                eventPoller = new BlockingZmqTcpQluaEventPoller(config.getNetworkAddress(), config.getAuthContext(), serdeModule);
+                break;
+            case NO_BLOCKING:
+                eventPoller = new NonBlockingZmqTcpQluaEventPoller(config.getNetworkAddress(), config.getAuthContext(), serdeModule);
+                break;
+            default:
+                throw new IllegalArgumentException(String.format("Неподдерживаемый режим чтения очереди событий: '%s'.", pollingMode));
+        }
+
+
+        return new ZmqTcpQluaEventProcessor(eventPoller, serdeModule);
     }
 
     private ZmqTcpQluaEventProcessor(final ZmqTcpQluaEventPoller eventPoller, final SerdeModule serdeModule) {
@@ -59,12 +68,17 @@ public class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor {
     }
 
     @Override
+    public AuthContext getAuthContext() {
+        return eventPoller.getAuthContext();
+    }
+
+    @Override
     public void process() throws QluaEventProcessingException {
 
         try {
-            final QluaEvent event = eventPoller.poll(QluaEventPoller.PollingMode.BLOCKING);
-            final byte[] eventData = event.getData();
+            final QluaEvent event = eventPoller.poll();
             if (event != null) {
+                final byte[] eventData = event.getData();
                 for (final QluaEventHandler eventHandler : eventHandlers) {
                     switch (event.getType()) {
                         case ON_STOP:

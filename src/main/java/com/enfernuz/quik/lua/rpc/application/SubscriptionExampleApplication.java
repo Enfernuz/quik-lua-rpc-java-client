@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.config.ClientConfiguration;
 import com.enfernuz.quik.lua.rpc.config.JsonClientConfigurationReader;
 import com.enfernuz.quik.lua.rpc.events.api.LoggingEventHandler;
 import com.enfernuz.quik.lua.rpc.events.api.QluaEventProcessor;
-import com.enfernuz.quik.lua.rpc.events.impl.ZmqTcpQluaEventProcessor;
+import com.enfernuz.quik.lua.rpc.api.zmq.ZmqTcpQluaEventProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
