@@ -3,6 +3,7 @@ package com.enfernuz.quik.lua.rpc.application;
 import com.enfernuz.quik.lua.rpc.config.ClientConfiguration;
 import com.enfernuz.quik.lua.rpc.config.JsonClientConfigurationReader;
 import com.enfernuz.quik.lua.rpc.events.api.LoggingEventHandler;
+import com.enfernuz.quik.lua.rpc.events.api.PollingMode;
 import com.enfernuz.quik.lua.rpc.events.api.QluaEventProcessor;
 import com.enfernuz.quik.lua.rpc.api.zmq.ZmqTcpQluaEventProcessor;
 import org.slf4j.Logger;
@@ -44,8 +45,7 @@ public class SubscriptionExampleApplication {
 
         LOGGER.info("Инициализация клиента...");
         final ExecutorService stdinScannerExecutorService = Executors.newSingleThreadExecutor();
-        try (final ZmqTcpQluaEventProcessor eventProcessor =
-                     ZmqTcpQluaEventProcessor.newInstance(config.getNetworkAddress(), config.getAuthContext(), null)) {
+        try (final ZmqTcpQluaEventProcessor eventProcessor = ZmqTcpQluaEventProcessor.newInstance(config, PollingMode.BLOCKING)) {
 
             LOGGER.info("Подписка на все события...");
             eventProcessor.subscribeToEverything();
