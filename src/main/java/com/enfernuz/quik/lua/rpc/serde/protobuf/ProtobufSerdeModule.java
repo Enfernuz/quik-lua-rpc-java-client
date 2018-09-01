@@ -1,5 +1,6 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
+import com.enfernuz.quik.lua.rpc.api.structures.AccountBalance;
 import com.enfernuz.quik.lua.rpc.events.api.QluaEvent;
 import com.enfernuz.quik.lua.rpc.api.structures.Firm;
 import com.enfernuz.quik.lua.rpc.api.structures.MoneyLimit;
@@ -75,6 +76,7 @@ public enum ProtobufSerdeModule implements SerdeModule {
         registerDeserializer(result, QluaEvent.EventType.class, ProtobufQluaEventTypeSerde.INSTANCE);
         registerDeserializer(result, Firm.class, FirmPbDeserializer.INSTANCE);
         registerDeserializer(result, MoneyLimit.class, MoneyLimitPbDeserializer.INSTANCE);
+        registerDeserializer(result, AccountBalance.class, AccountBalancePbDeserializer.INSTANCE);
 
         return result;
     }
