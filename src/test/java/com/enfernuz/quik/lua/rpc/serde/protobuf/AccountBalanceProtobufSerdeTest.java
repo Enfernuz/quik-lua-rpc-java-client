@@ -1,7 +1,6 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.AccountBalance;
-import com.enfernuz.quik.lua.rpc.api.structures.Firm;
 import com.enfernuz.quik.lua.rpc.serde.Deserializer;
 import org.jetbrains.annotations.NotNull;
 import org.junit.BeforeClass;
