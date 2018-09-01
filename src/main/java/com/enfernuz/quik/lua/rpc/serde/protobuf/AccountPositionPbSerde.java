@@ -1,8 +1,8 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.AccountPosition;
-import com.enfernuz.quik.lua.rpc.serde.Deserializer;
 import com.enfernuz.quik.lua.rpc.serde.PbConverter;
+import com.enfernuz.quik.lua.rpc.serde.Serde;
 import com.google.protobuf.InvalidProtocolBufferException;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
@@ -11,9 +11,14 @@ import qlua.structs.QluaStructures;
 import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.convertFromPbString;
 import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.convertToPbString;
 
-enum AccountPositionPbSerde implements Deserializer<AccountPosition>, PbConverter<QluaStructures.AccountPosition, AccountPosition> {
+enum AccountPositionPbSerde implements Serde<AccountPosition>, PbConverter<QluaStructures.AccountPosition, AccountPosition> {
 
     INSTANCE;
+
+    @Override
+    public byte[] serialize(final AccountPosition accountPosition) {
+        return convertToPb(accountPosition).toByteArray();
+    }
 
     @SneakyThrows(InvalidProtocolBufferException.class)
     @Override
@@ -71,6 +76,4 @@ enum AccountPositionPbSerde implements Deserializer<AccountPosition>, PbConverte
                 .setSettlebal( convertToPbString(accountPosition.getSettleBal()) )
                 .build();
     }
-
-
 }

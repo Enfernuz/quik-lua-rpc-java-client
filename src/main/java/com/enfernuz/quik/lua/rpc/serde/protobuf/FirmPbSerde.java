@@ -1,8 +1,8 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.Firm;
-import com.enfernuz.quik.lua.rpc.serde.Deserializer;
 import com.enfernuz.quik.lua.rpc.serde.PbConverter;
+import com.enfernuz.quik.lua.rpc.serde.Serde;
 import com.google.protobuf.InvalidProtocolBufferException;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
@@ -11,9 +11,14 @@ import qlua.structs.QluaStructures;
 import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.convertFromPbString;
 import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.convertToPbString;
 
-enum FirmPbSerde implements Deserializer<Firm>, PbConverter<QluaStructures.Firm, Firm> {
+enum FirmPbSerde implements Serde<Firm>, PbConverter<QluaStructures.Firm, Firm> {
 
     INSTANCE;
+
+    @Override
+    public byte[] serialize(final Firm firm) {
+        return convertToPb(firm).toByteArray();
+    }
 
     @SneakyThrows(InvalidProtocolBufferException.class)
     @Override
@@ -43,6 +48,4 @@ enum FirmPbSerde implements Deserializer<Firm>, PbConverter<QluaStructures.Firm,
                 .setExchange( convertToPbString(firm.getExchange()) )
                 .build();
     }
-
-
 }

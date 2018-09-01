@@ -1,16 +1,21 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.DateTimeEntry;
-import com.enfernuz.quik.lua.rpc.serde.Deserializer;
 import com.enfernuz.quik.lua.rpc.serde.PbConverter;
+import com.enfernuz.quik.lua.rpc.serde.Serde;
 import com.google.protobuf.InvalidProtocolBufferException;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import qlua.structs.QluaStructures;
 
-enum DateTimeEntryPbSerde implements Deserializer<DateTimeEntry>, PbConverter<QluaStructures.DateTimeEntry, DateTimeEntry> {
+enum DateTimeEntryPbSerde implements Serde<DateTimeEntry>, PbConverter<QluaStructures.DateTimeEntry, DateTimeEntry> {
 
     INSTANCE;
+
+    @Override
+    public byte[] serialize(final DateTimeEntry dateTimeEntry) {
+        return convertToPb(dateTimeEntry).toByteArray();
+    }
 
     @SneakyThrows(InvalidProtocolBufferException.class)
     @Override

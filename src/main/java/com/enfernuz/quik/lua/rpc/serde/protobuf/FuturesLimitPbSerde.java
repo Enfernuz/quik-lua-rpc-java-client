@@ -1,8 +1,8 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.FuturesLimit;
-import com.enfernuz.quik.lua.rpc.serde.Deserializer;
 import com.enfernuz.quik.lua.rpc.serde.PbConverter;
+import com.enfernuz.quik.lua.rpc.serde.Serde;
 import com.google.protobuf.InvalidProtocolBufferException;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
@@ -11,9 +11,14 @@ import qlua.structs.QluaStructures;
 import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.convertFromPbString;
 import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.convertToPbString;
 
-enum FuturesLimitPbSerde implements Deserializer<FuturesLimit>, PbConverter<QluaStructures.FuturesLimit, FuturesLimit> {
+enum FuturesLimitPbSerde implements Serde<FuturesLimit>, PbConverter<QluaStructures.FuturesLimit, FuturesLimit> {
 
     INSTANCE;
+
+    @Override
+    public byte[] serialize(final FuturesLimit futuresLimit) {
+        return convertToPb(futuresLimit).toByteArray();
+    }
 
     @SneakyThrows(InvalidProtocolBufferException.class)
     @Override
@@ -68,6 +73,4 @@ enum FuturesLimitPbSerde implements Deserializer<FuturesLimit>, PbConverter<Qlua
                 .setRealVarmargin( convertToPbString(futuresLimit.getRealVarMargin()) )
                 .build();
     }
-
-
 }

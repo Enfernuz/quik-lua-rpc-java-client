@@ -1,8 +1,8 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.AccountBalance;
-import com.enfernuz.quik.lua.rpc.serde.Deserializer;
 import com.enfernuz.quik.lua.rpc.serde.PbConverter;
+import com.enfernuz.quik.lua.rpc.serde.Serde;
 import com.google.protobuf.InvalidProtocolBufferException;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
@@ -11,9 +11,14 @@ import qlua.structs.QluaStructures;
 import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.convertFromPbString;
 import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.convertToPbString;
 
-enum AccountBalancePbSerde implements Deserializer<AccountBalance>, PbConverter<QluaStructures.AccountBalance, AccountBalance> {
+enum AccountBalancePbSerde implements Serde<AccountBalance>, PbConverter<QluaStructures.AccountBalance, AccountBalance> {
 
     INSTANCE;
+
+    @Override
+    public byte[] serialize(final AccountBalance accountBalance) {
+        return convertToPb(accountBalance).toByteArray();
+    }
 
     @SneakyThrows(InvalidProtocolBufferException.class)
     @Override
@@ -65,6 +70,4 @@ enum AccountBalancePbSerde implements Deserializer<AccountBalance>, PbConverter<
                 .setFirmuse( accountBalance.getFirmUse() )
                 .build();
     }
-
-
 }
