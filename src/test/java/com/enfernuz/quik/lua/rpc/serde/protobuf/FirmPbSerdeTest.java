@@ -1,18 +1,18 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.Firm;
-import com.enfernuz.quik.lua.rpc.serde.Deserializer;
-import org.jetbrains.annotations.NotNull;
+import com.enfernuz.quik.lua.rpc.serde.PbConverter;
+import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import qlua.structs.QluaStructures;
 
-import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.convertToPbString;
 import static org.junit.Assert.assertEquals;
 
-public class FirmProtobufSerdeTest {
+public class FirmPbSerdeTest {
 
-    private static Deserializer<Firm> sut;
+    private static SerdeModule sut;
+    private static PbConverter<QluaStructures.Firm, Firm> pbConverter;
 
     private static Firm expectedObject;
     private static byte[] expectedPbInput;
@@ -23,7 +23,8 @@ public class FirmProtobufSerdeTest {
     @BeforeClass
     public static void globalSetup() {
 
-        sut = FirmPbDeserializer.INSTANCE;
+        sut = ProtobufSerdeModule.INSTANCE;
+        pbConverter = FirmPbSerde.INSTANCE;
 
         expectedObject = Firm.builder()
                 .firmId("1")
@@ -31,19 +32,20 @@ public class FirmProtobufSerdeTest {
                 .status(3)
                 .exchange("4")
                 .build();
-        expectedPbInput = convertToPbByteArray(expectedObject);
+        expectedPbInput = pbConverter.convertToPb(expectedObject).toByteArray();
 
         expectedObjectWithNullNonRequiredStringFileds = Firm.builder()
                 .firmId("1")
                 .status(2)
                 .build();
-        expectedPbInputWithEmptyNonRequiredStringFields = convertToPbByteArray(expectedObjectWithNullNonRequiredStringFileds);
+        expectedPbInputWithEmptyNonRequiredStringFields =
+                pbConverter.convertToPb(expectedObjectWithNullNonRequiredStringFileds).toByteArray();
     }
 
     @Test
     public void testDeserialize() {
 
-        final Firm actualObject = sut.deserialize(expectedPbInput);
+        final Firm actualObject = sut.deserialize(Firm.class, expectedPbInput);
 
         assertEquals(actualObject, expectedObject);
     }
@@ -51,19 +53,8 @@ public class FirmProtobufSerdeTest {
     @Test
     public void testDeserializePbInputWithEmptyNonRequiredStringFields() {
 
-        final Firm actualObject = sut.deserialize(expectedPbInputWithEmptyNonRequiredStringFields);
+        final Firm actualObject = sut.deserialize(Firm.class, expectedPbInputWithEmptyNonRequiredStringFields);
 
         assertEquals(actualObject, expectedObjectWithNullNonRequiredStringFileds);
-    }
-
-    private static byte[] convertToPbByteArray(@NotNull final Firm firm) {
-
-        return QluaStructures.Firm.newBuilder()
-                .setFirmid( firm.getFirmId() )
-                .setFirmName( convertToPbString(firm.getFirmName()) )
-                .setStatus( firm.getStatus() )
-                .setExchange( convertToPbString(firm.getExchange()) )
-                .build()
-                .toByteArray();
     }
 }

@@ -3,10 +3,7 @@ package com.enfernuz.quik.lua.rpc.api.structures;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Value;
+import lombok.*;
 import lombok.experimental.NonFinal;
 
 import java.util.Objects;
@@ -16,7 +13,7 @@ public class AllTrade {
 
     long tradeNum;
     int flags;
-    String price;
+    @NonNull String price;
     int qty;
     String value;
     String accruedInt;
@@ -28,7 +25,7 @@ public class AllTrade {
     String repoTerm;
     String secCode;
     String classCode;
-    DateTimeEntry datetime;
+    @NonNull DateTimeEntry datetime;
     int period;
     String openInterest;
     String exchangeCode;
