@@ -73,7 +73,7 @@ public enum ProtobufSerdeModule implements SerdeModule {
         final Map<Class<?>, Deserializer<?>> result = new HashMap<>();
 
         registerDeserializer(result, QluaEvent.EventType.class, ProtobufQluaEventTypeSerde.INSTANCE);
-        registerDeserializer(result, Firm.class, ProtobufFirmDeserializer.INSTANCE);
+        registerDeserializer(result, Firm.class, FirmPbDeserializer.INSTANCE);
         registerDeserializer(result, MoneyLimit.class, ProtobufMoneyLimitDeserializer.INSTANCE);
 
         return result;

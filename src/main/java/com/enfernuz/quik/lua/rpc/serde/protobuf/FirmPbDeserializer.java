@@ -8,7 +8,7 @@ import qlua.structs.QluaStructures;
 
 import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.convertFromPbString;
 
-enum ProtobufFirmDeserializer implements Deserializer<Firm> {
+enum FirmPbDeserializer implements Deserializer<Firm> {
 
     INSTANCE;
 

@@ -38,7 +38,7 @@ public class FirmProtobufSerdeTest {
     @Test
     public void testDeserialize() {
 
-        final Firm actualObject = ProtobufFirmDeserializer.INSTANCE.deserialize(expectedPbInput);
+        final Firm actualObject = FirmPbDeserializer.INSTANCE.deserialize(expectedPbInput);
 
         assertEquals(actualObject, expectedObject);
     }
@@ -46,7 +46,7 @@ public class FirmProtobufSerdeTest {
     @Test
     public void testDeserializePbInputWithEmptyNonRequiredStringFields() {
 
-        final Firm actualObject = ProtobufFirmDeserializer.INSTANCE.deserialize(expectedPbInputWithEmptyNonRequiredStringFields);
+        final Firm actualObject = FirmPbDeserializer.INSTANCE.deserialize(expectedPbInputWithEmptyNonRequiredStringFields);
 
         assertEquals(actualObject, expectedObjectWithNullNonRequiredStringFileds);
     }
