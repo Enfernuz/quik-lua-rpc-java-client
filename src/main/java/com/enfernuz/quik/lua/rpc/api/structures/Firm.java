@@ -12,16 +12,16 @@ import java.util.Objects;
 @Value
 public class Firm {
 
-    @JsonProperty("firm_id") String firmId;
-    @JsonProperty("firm_name") String firmName;
-    @JsonProperty("status") int status;
-    @JsonProperty("exchange") String exchange;
+    String firmId;
+    String firmName;
+    int status;
+    String exchange;
 
     @Getter(AccessLevel.NONE)
-    private @JsonIgnore @NonFinal transient int hashCode;
+    private @NonFinal transient int hashCode;
 
     @Getter(AccessLevel.NONE)
-    private @JsonIgnore @NonFinal transient String asString;
+    private @NonFinal transient String asString;
 
     @Builder
     @JsonCreator

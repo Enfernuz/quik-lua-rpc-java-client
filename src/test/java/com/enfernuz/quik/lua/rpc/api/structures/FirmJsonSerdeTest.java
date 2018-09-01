@@ -31,14 +31,6 @@ public class FirmJsonSerdeTest {
     }
 
     @Test
-    public void testSerialize() throws IOException {
-
-        final String actual = sut.writerWithDefaultPrettyPrinter().writeValueAsString(firm);
-
-        assertEquals(firmAsJson, actual);
-    }
-
-    @Test
     public void testDeserialize() throws IOException {
 
         final Firm actual = sut.readValue(firmAsJson, Firm.class);
