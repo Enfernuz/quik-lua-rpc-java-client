@@ -8,7 +8,7 @@ import qlua.structs.QluaStructures;
 
 import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.convertFromPbString;
 
-enum ProtobufMoneyLimitDeserializer implements Deserializer<MoneyLimit> {
+enum MoneyLimitPbDeserializer implements Deserializer<MoneyLimit> {
 
     INSTANCE;
 
