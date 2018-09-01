@@ -1,6 +1,7 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.Firm;
+import com.enfernuz.quik.lua.rpc.serde.Deserializer;
 import org.jetbrains.annotations.NotNull;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -11,6 +12,8 @@ import static org.junit.Assert.assertEquals;
 
 public class FirmProtobufSerdeTest {
 
+    private static Deserializer<Firm> sut;
+
     private static Firm expectedObject;
     private static byte[] expectedPbInput;
 
@@ -19,6 +22,8 @@ public class FirmProtobufSerdeTest {
 
     @BeforeClass
     public static void globalSetup() {
+
+        sut = FirmPbDeserializer.INSTANCE;
 
         expectedObject = Firm.builder()
                 .firmId("1")
@@ -38,7 +43,7 @@ public class FirmProtobufSerdeTest {
     @Test
     public void testDeserialize() {
 
-        final Firm actualObject = FirmPbDeserializer.INSTANCE.deserialize(expectedPbInput);
+        final Firm actualObject = sut.deserialize(expectedPbInput);
 
         assertEquals(actualObject, expectedObject);
     }
@@ -46,7 +51,7 @@ public class FirmProtobufSerdeTest {
     @Test
     public void testDeserializePbInputWithEmptyNonRequiredStringFields() {
 
-        final Firm actualObject = FirmPbDeserializer.INSTANCE.deserialize(expectedPbInputWithEmptyNonRequiredStringFields);
+        final Firm actualObject = sut.deserialize(expectedPbInputWithEmptyNonRequiredStringFields);
 
         assertEquals(actualObject, expectedObjectWithNullNonRequiredStringFileds);
     }
