@@ -1,12 +1,14 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.AccountBalance;
+import com.enfernuz.quik.lua.rpc.api.structures.AccountPosition;
 import com.enfernuz.quik.lua.rpc.events.api.QluaEvent;
 import com.enfernuz.quik.lua.rpc.api.structures.Firm;
 import com.enfernuz.quik.lua.rpc.api.structures.MoneyLimit;
 import com.enfernuz.quik.lua.rpc.serde.Deserializer;
 import com.enfernuz.quik.lua.rpc.serde.SerdeException;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,9 +64,9 @@ public enum ProtobufSerdeModule implements SerdeModule {
     }
 
     private static <T> void registerDeserializer(
-            final Map<Class<?>, Deserializer<?>> map,
-            final Class<T> clazz,
-            final Deserializer<T> deserializer) {
+            @NotNull final Map<Class<?>, Deserializer<?>> map,
+            @NotNull final Class<T> clazz,
+            @NotNull final Deserializer<T> deserializer) {
 
         map.put(clazz, deserializer);
     }
@@ -77,6 +79,7 @@ public enum ProtobufSerdeModule implements SerdeModule {
         registerDeserializer(result, Firm.class, FirmPbDeserializer.INSTANCE);
         registerDeserializer(result, MoneyLimit.class, MoneyLimitPbDeserializer.INSTANCE);
         registerDeserializer(result, AccountBalance.class, AccountBalancePbDeserializer.INSTANCE);
+        registerDeserializer(result, AccountPosition.class, AccountPositionPbDeserializer.INSTANCE);
 
         return result;
     }
