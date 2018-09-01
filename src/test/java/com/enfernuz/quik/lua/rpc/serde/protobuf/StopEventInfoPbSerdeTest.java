@@ -1,6 +1,5 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
-import com.enfernuz.quik.lua.rpc.api.structures.Firm;
 import com.enfernuz.quik.lua.rpc.api.structures.StopEventInfo;
 import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;

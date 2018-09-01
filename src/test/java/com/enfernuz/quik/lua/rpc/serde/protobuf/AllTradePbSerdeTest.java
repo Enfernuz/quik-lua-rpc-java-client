@@ -8,7 +8,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import qlua.structs.QluaStructures;
 
+import java.util.Arrays;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class AllTradePbSerdeTest {
 
@@ -70,6 +73,22 @@ public class AllTradePbSerdeTest {
                 .build();
         expectedPbInputWithEmptyNonRequiredStringFields =
                 pbConverter.convertToPb(expectedObjectWithNullNonRequiredStringFileds).toByteArray();
+    }
+
+    @Test
+    public void testSerialize() {
+
+        final byte[] actual = sut.serialize(expectedObject);
+
+        assertTrue( Arrays.equals(expectedPbInput, actual) );
+    }
+
+    @Test
+    public void testSerializePbInputWithEmptyNonRequiredStringFields() {
+
+        final byte[] actual = sut.serialize(expectedObjectWithNullNonRequiredStringFileds);
+
+        assertTrue( Arrays.equals(expectedPbInputWithEmptyNonRequiredStringFields, actual) );
     }
 
     @Test

@@ -7,7 +7,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import qlua.structs.QluaStructures;
 
+import java.util.Arrays;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class DateTimeEntryPbSerdeTest {
 
@@ -35,6 +38,14 @@ public class DateTimeEntryPbSerdeTest {
                 .year(9)
                 .build();
         expectedPbInput = pbConverter.convertToPb(expectedObject).toByteArray();
+    }
+
+    @Test
+    public void testSerialize() {
+
+        final byte[] actual = sut.serialize(expectedObject);
+
+        assertTrue( Arrays.equals(expectedPbInput, actual) );
     }
 
     @Test
