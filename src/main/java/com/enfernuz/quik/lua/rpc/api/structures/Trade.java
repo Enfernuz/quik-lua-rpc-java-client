@@ -65,7 +65,7 @@ public class Trade {
     private transient @NonFinal @Getter(AccessLevel.NONE) String asString;
 
     @Builder
-    public Trade(
+    private Trade(
             final long tradeNum,
             final long orderNum,
             final String brokerRef,
@@ -96,7 +96,7 @@ public class Trade {
             final String exchangeComission,
             final String techCenterComission,
             final String settleDate,
-            final  String settleCurrency,
+            final String settleCurrency,
             final String tradeCurrency,
             final String exchangeCode,
             final String stationId,
