@@ -6,7 +6,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import lombok.SneakyThrows;
 import qlua.structs.QluaStructures;
 
-import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.nullIfNullOrEmpty;
+import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.convertFromPbString;
 
 enum ProtobufFirmDeserializer implements Deserializer<Firm> {
 
@@ -20,9 +20,9 @@ enum ProtobufFirmDeserializer implements Deserializer<Firm> {
         return Firm
                 .builder()
                 .firmId(firm.getFirmid())
-                .firmName( nullIfNullOrEmpty(firm.getFirmName()) )
+                .firmName( convertFromPbString(firm.getFirmName()) )
                 .status(firm.getStatus())
-                .exchange( nullIfNullOrEmpty(firm.getExchange()) )
+                .exchange( convertFromPbString(firm.getExchange()) )
                 .build();
     }
 }

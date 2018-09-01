@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 final class ProtobufSerdeUtils {
 
@@ -13,7 +14,11 @@ final class ProtobufSerdeUtils {
         throw new AssertionError("This should never be invoked.");
     }
 
-    static String nullIfNullOrEmpty(final String str) {
-        return Strings.isNullOrEmpty(str) ? null : str;
+    static String convertFromPbString(final String protobufString) {
+        return Strings.isNullOrEmpty(protobufString) ? null : protobufString;
+    }
+
+    static String convertToPbString(final String string) {
+        return Optional.ofNullable(string).orElse("");
     }
 }

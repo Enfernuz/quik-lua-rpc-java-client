@@ -6,7 +6,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import lombok.SneakyThrows;
 import qlua.structs.QluaStructures;
 
-import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.nullIfNullOrEmpty;
+import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.convertFromPbString;
 
 enum ProtobufMoneyLimitDeserializer implements Deserializer<MoneyLimit> {
 
@@ -19,18 +19,18 @@ enum ProtobufMoneyLimitDeserializer implements Deserializer<MoneyLimit> {
         final QluaStructures.MoneyLimit moneyLimit = QluaStructures.MoneyLimit.parseFrom(data);
         return MoneyLimit
                 .builder()
-                .currCode( nullIfNullOrEmpty(moneyLimit.getCurrcode()) )
-                .tag( nullIfNullOrEmpty(moneyLimit.getTag()) )
-                .firmId( nullIfNullOrEmpty(moneyLimit.getFirmid()) )
-                .clientCode( nullIfNullOrEmpty(moneyLimit.getClientCode()) )
-                .openBal( nullIfNullOrEmpty(moneyLimit.getOpenbal()) )
-                .openLimit( nullIfNullOrEmpty(moneyLimit.getOpenlimit()) )
-                .currentBal( nullIfNullOrEmpty(moneyLimit.getCurrentbal()) )
-                .currentLimit( nullIfNullOrEmpty(moneyLimit.getCurrentlimit()) )
-                .locked( nullIfNullOrEmpty(moneyLimit.getLocked()) )
-                .lockedValueCoef( nullIfNullOrEmpty(moneyLimit.getLockedValueCoef()) )
-                .lockedMarginValue( nullIfNullOrEmpty(moneyLimit.getLockedMarginValue()) )
-                .leverage( nullIfNullOrEmpty(moneyLimit.getLeverage()) )
+                .currCode( convertFromPbString(moneyLimit.getCurrcode()) )
+                .tag( convertFromPbString(moneyLimit.getTag()) )
+                .firmId( convertFromPbString(moneyLimit.getFirmid()) )
+                .clientCode( convertFromPbString(moneyLimit.getClientCode()) )
+                .openBal( convertFromPbString(moneyLimit.getOpenbal()) )
+                .openLimit( convertFromPbString(moneyLimit.getOpenlimit()) )
+                .currentBal( convertFromPbString(moneyLimit.getCurrentbal()) )
+                .currentLimit( convertFromPbString(moneyLimit.getCurrentlimit()) )
+                .locked( convertFromPbString(moneyLimit.getLocked()) )
+                .lockedValueCoef( convertFromPbString(moneyLimit.getLockedValueCoef()) )
+                .lockedMarginValue( convertFromPbString(moneyLimit.getLockedMarginValue()) )
+                .leverage( convertFromPbString(moneyLimit.getLeverage()) )
                 .limitKind( moneyLimit.getLimitKind() )
                 .build();
     }
