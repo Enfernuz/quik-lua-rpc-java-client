@@ -18,7 +18,7 @@ final class ZmqUtils {
 
     public static @NotNull byte[] convertZMsgToByteArray(@NotNull final ZMsg message) throws IOException {
 
-        // our event data is small (at the moment, at least), so it's safe to cast the content size to a long
+        // our event data is small (at the moment, at least), so it's safe to cast the content size to int
         final ByteArrayOutputStream output = new ByteArrayOutputStream( (int) message.contentSize() );
         for (final ZFrame frame : message) {
             output.write( frame.getData() );
