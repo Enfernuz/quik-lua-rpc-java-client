@@ -80,6 +80,7 @@ public enum ProtobufSerdeModule implements SerdeModule {
         registerDeserializer(result, DateTimeEntry.class, DateTimeEntryPbSerde.INSTANCE);
         registerDeserializer(result, AllTrade.class, AllTradePbSerde.INSTANCE);
         registerDeserializer(result, FuturesClientHolding.class, FuturesClientHoldingPbSerde.INSTANCE);
+        registerDeserializer(result, FuturesLimit.class, FuturesLimitPbSerde.INSTANCE);
 
         return result;
     }
