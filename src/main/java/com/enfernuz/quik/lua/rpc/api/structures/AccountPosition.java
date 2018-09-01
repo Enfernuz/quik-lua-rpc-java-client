@@ -14,24 +14,24 @@ import java.util.Objects;
 @Value
 public class AccountPosition {
 
-    String firmId;
-    String currCode;
-    String tag;
-    String description;
-    String openBal;
-    String currentPos;
-    String plannedPos;
-    String limit1;
-    String limit2;
-    String orderBuy;
-    String orderSell;
-    String netto;
-    String plannedBal;
-    String debit;
-    String credit;
-    String bankAccId;
-    String marginCall;
-    String settleBal;
+    @JsonProperty("firmid") String firmId;
+    @JsonProperty("currcode") String currCode;
+    @JsonProperty("tag") String tag;
+    @JsonProperty("description") String description;
+    @JsonProperty("openbal") String openBal;
+    @JsonProperty("currentpos") String currentPos;
+    @JsonProperty("plannedpos") String plannedPos;
+    @JsonProperty("limit1") String limit1;
+    @JsonProperty("limit2") String limit2;
+    @JsonProperty("orderbuy") String orderBuy;
+    @JsonProperty("ordersell") String orderSell;
+    @JsonProperty("netto") String netto;
+    @JsonProperty("plannedbal") String plannedBal;
+    @JsonProperty("debit") String debit;
+    @JsonProperty("credit") String credit;
+    @JsonProperty("bank_acc_id") String bankAccId;
+    @JsonProperty("margincall") String marginCall;
+    @JsonProperty("settlebal") String settleBal;
 
     private transient @NonFinal @Getter(AccessLevel.NONE) int hashCode;
     private transient @NonFinal @Getter(AccessLevel.NONE) String asString;

@@ -15,13 +15,13 @@ import java.util.Objects;
 @Value
 public class Money {
 
-    String moneyOpenLimit;
-    String moneyLimitLockedNonMarginalValue;
-    String moneyLimitLocked;
-    String moneyOpenBalance;
-    String moneyCurrentLimit;
-    String moneyCurrentBalance;
-    String moneyLimitAvailable;
+    @JsonProperty("money_open_limit") String moneyOpenLimit;
+    @JsonProperty("money_limit_locked_nonmarginal_value") String moneyLimitLockedNonMarginalValue;
+    @JsonProperty("money_limit_locked") String moneyLimitLocked;
+    @JsonProperty("money_open_balance") String moneyOpenBalance;
+    @JsonProperty("money_current_limit") String moneyCurrentLimit;
+    @JsonProperty("money_current_balance") String moneyCurrentBalance;
+    @JsonProperty("money_limit_available") String moneyLimitAvailable;
 
     @Getter(AccessLevel.NONE)
     private @JsonIgnore @NonFinal transient int hashCode;

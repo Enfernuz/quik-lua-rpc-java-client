@@ -1,24 +1,31 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
+import com.enfernuz.quik.lua.rpc.serde.json.JsonSerdeModule;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.Arrays;
 
+import static com.enfernuz.quik.lua.rpc.serde.SerdeUtils.trimAndRemoveLineBreaks;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class FuturesLimitJsonSerdeTest {
 
-    private final ObjectMapper sut = new ObjectMapper();
+    private static SerdeModule sut;
 
     private static FuturesLimit expectedObj;
     private static String expectedJson;
+    private static byte[] expectedJsonAsBytes;
 
     @BeforeClass
     public static void globalSetup() throws IOException {
+
+        sut = JsonSerdeModule.INSTANCE;
 
         expectedObj = FuturesLimit.builder()
                 .firmId("1")
@@ -41,20 +48,21 @@ public class FuturesLimitJsonSerdeTest {
                 .build();
 
         expectedJson = Resources.toString(Resources.getResource("json/structures/FuturesLimit.json"), Charsets.UTF_8);
+        expectedJsonAsBytes = trimAndRemoveLineBreaks(expectedJson).getBytes(Charsets.UTF_8);
     }
 
     @Test
-    public void testSerialize() throws IOException {
+    public void testSerialize() {
 
-        final String actualJson = sut.writerWithDefaultPrettyPrinter().writeValueAsString(expectedObj);
+        final byte[] actual = sut.serialize(expectedObj);
 
-        assertEquals(expectedJson, actualJson);
+        assertTrue( Arrays.equals(expectedJsonAsBytes, actual) );
     }
 
     @Test
-    public void testDeserialize() throws IOException {
+    public void testDeserialize() {
 
-        final FuturesLimit actualObj = sut.readValue(expectedJson, FuturesLimit.class);
+        final FuturesLimit actualObj = sut.deserialize(FuturesLimit.class, expectedJsonAsBytes);
 
         assertEquals(expectedObj, actualObj);
     }

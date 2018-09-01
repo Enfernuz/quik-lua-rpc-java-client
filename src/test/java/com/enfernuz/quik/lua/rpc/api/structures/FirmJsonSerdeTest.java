@@ -1,40 +1,56 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
+import com.enfernuz.quik.lua.rpc.serde.json.JsonSerdeModule;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.Arrays;
 
+import static com.enfernuz.quik.lua.rpc.serde.SerdeUtils.trimAndRemoveLineBreaks;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class FirmJsonSerdeTest {
 
-    private final ObjectMapper sut = new ObjectMapper();
+    private static SerdeModule sut;
 
-    private static Firm firm;
-    private static String firmAsJson;
+    private static Firm expectedObject;
+    private static String expectedJson;
+    private static byte[] expectedJsonAsBytes;
 
     @BeforeClass
     public static void globalSetup() throws IOException {
 
-        firm = Firm.builder()
+        sut = JsonSerdeModule.INSTANCE;
+
+        expectedObject = Firm.builder()
                 .firmId("1")
                 .firmName("2")
                 .status(3)
                 .exchange("4")
                 .build();
 
-        firmAsJson = Resources.toString(Resources.getResource("json/structures/Firm.json"), Charsets.UTF_8);
+        expectedJson = Resources.toString(Resources.getResource("json/structures/Firm.json"), Charsets.UTF_8);
+        expectedJsonAsBytes = trimAndRemoveLineBreaks(expectedJson).getBytes(Charsets.UTF_8);
     }
 
     @Test
-    public void testDeserialize() throws IOException {
+    public void testSerialize() {
 
-        final Firm actual = sut.readValue(firmAsJson, Firm.class);
+        final byte[] actual = sut.serialize(expectedObject);
 
-        assertEquals(firm, actual);
+        assertTrue( Arrays.equals(expectedJsonAsBytes, actual) );
+    }
+
+    @Test
+    public void testDeserialize() {
+
+        final Firm actual = sut.deserialize(Firm.class, expectedJsonAsBytes);
+
+        assertEquals(expectedObject, actual);
     }
 }

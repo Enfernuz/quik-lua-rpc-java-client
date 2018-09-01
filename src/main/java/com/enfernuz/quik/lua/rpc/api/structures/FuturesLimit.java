@@ -17,7 +17,7 @@ public class FuturesLimit {
 
     @JsonProperty("firmid") String firmId;
     @JsonProperty("trdaccid") String trdAccId;
-    @JsonProperty(value = "limit_type") int limitType;
+    @JsonProperty("limit_type") int limitType;
     @JsonProperty("liquidity_coef") String liquidityCoef;
     @JsonProperty("cbp_prev_limit") String cbpPrevLimit;
     @JsonProperty("cbplimit") String cbpLimit;

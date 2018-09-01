@@ -14,21 +14,21 @@ import java.util.Objects;
 @Value
 public class AccountBalance {
 
-    String firmId;
-    String secCode;
-    String trdAccId;
-    String depAccId;
-    String openBal;
-    String currentPos;
-    String plannedPosSell;
-    String plannedPosBuy;
-    String planBal;
-    String usqtyb;
-    String usqtys;
-    String planned;
-    String settleBal;
-    String bankAccId;
-    int firmUse;
+    @JsonProperty("firmid") String firmId;
+    @JsonProperty("sec_code") String secCode;
+    @JsonProperty("trdaccid") String trdAccId;
+    @JsonProperty("depaccid") String depAccId;
+    @JsonProperty("openbal") String openBal;
+    @JsonProperty("currentpos") String currentPos;
+    @JsonProperty("plannedpossell") String plannedPosSell;
+    @JsonProperty("plannedposbuy") String plannedPosBuy;
+    @JsonProperty("planbal") String planBal;
+    @JsonProperty("usqtyb") String usqtyb;
+    @JsonProperty("usqtys") String usqtys;
+    @JsonProperty("planned") String planned;
+    @JsonProperty("settlebal") String settleBal;
+    @JsonProperty("bank_acc_id") String bankAccId;
+    @JsonProperty(value = "firmuse") int firmUse;
 
     private transient @NonFinal @Getter(AccessLevel.NONE) int hashCode;
     private transient @NonFinal @Getter(AccessLevel.NONE) String asString;

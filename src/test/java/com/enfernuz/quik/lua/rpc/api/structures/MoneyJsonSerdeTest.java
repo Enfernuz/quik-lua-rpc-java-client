@@ -1,26 +1,33 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
+import com.enfernuz.quik.lua.rpc.serde.json.JsonSerdeModule;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.Arrays;
 
+import static com.enfernuz.quik.lua.rpc.serde.SerdeUtils.trimAndRemoveLineBreaks;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class MoneyJsonSerdeTest {
 
-    private final ObjectMapper sut = new ObjectMapper();
+    private static SerdeModule sut;
 
-    private static Money money;
-    private static String moneyAsJson;
+    private static Money expectedObj;
+    private static String expectedJson;
+    private static byte[] expectedJsonAsBytes;
 
     @BeforeClass
     public static void globalSetup() throws IOException {
 
-        money = Money.builder()
+        sut = JsonSerdeModule.INSTANCE;
+
+        expectedObj = Money.builder()
                 .moneyOpenLimit("1")
                 .moneyLimitLockedNonMarginalValue("2")
                 .moneyLimitLocked("3")
@@ -30,14 +37,23 @@ public class MoneyJsonSerdeTest {
                 .moneyLimitAvailable("7")
                 .build();
 
-        moneyAsJson = Resources.toString(Resources.getResource("json/structures/Money.json"), Charsets.UTF_8);
+        expectedJson = Resources.toString(Resources.getResource("json/structures/Money.json"), Charsets.UTF_8);
+        expectedJsonAsBytes = trimAndRemoveLineBreaks(expectedJson).getBytes(Charsets.UTF_8);
     }
 
     @Test
-    public void testDeserialize() throws IOException {
+    public void testSerialize() {
 
-        final Money actual = sut.readValue(moneyAsJson, Money.class);
+        final byte[] actual = sut.serialize(expectedObj);
 
-        assertEquals(money, actual);
+        assertTrue( Arrays.equals(expectedJsonAsBytes, actual) );
+    }
+
+    @Test
+    public void testDeserialize() {
+
+        final Money actual = sut.deserialize(Money.class, expectedJsonAsBytes);
+
+        assertEquals(expectedObj, actual);
     }
 }

@@ -12,10 +12,10 @@ import java.util.Objects;
 @Value
 public class Firm {
 
-    String firmId;
-    String firmName;
-    int status;
-    String exchange;
+    @JsonProperty("firm_id") String firmId;
+    @JsonProperty("firm_name") String firmName;
+    @JsonProperty("status") int status;
+    @JsonProperty("exchange") String exchange;
 
     @Getter(AccessLevel.NONE)
     private @NonFinal transient int hashCode;

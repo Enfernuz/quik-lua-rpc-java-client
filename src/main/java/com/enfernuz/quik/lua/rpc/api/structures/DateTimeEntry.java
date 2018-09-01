@@ -15,15 +15,15 @@ import java.util.Objects;
 @Value
 public class DateTimeEntry implements Comparable<DateTimeEntry> {
 
-    int mcs;
-    int ms;
-    int sec;
-    int min;
-    int hour;
-    int day;
-    int weekDay;
-    int month;
-    int year;
+    @JsonProperty("mcs") int mcs;
+    @JsonProperty("ms") int ms;
+    @JsonProperty("sec") int sec;
+    @JsonProperty("min") int min;
+    @JsonProperty("hour") int hour;
+    @JsonProperty("day") int day;
+    @JsonProperty("week_day") int weekDay;
+    @JsonProperty("month") int month;
+    @JsonProperty("year") int year;
 
     private @NonFinal @Getter(AccessLevel.NONE) transient int hashCode;
     private @NonFinal @Getter(AccessLevel.NONE) transient String asString;

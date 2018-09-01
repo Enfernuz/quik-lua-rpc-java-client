@@ -11,24 +11,24 @@ import java.util.Objects;
 @Value
 public class AllTrade {
 
-    long tradeNum;
-    int flags;
-    @NonNull String price;
-    int qty;
-    String value;
-    String accruedInt;
-    String yield;
-    String settleCode;
-    String repoRate;
-    String repoValue;
-    String repo2Value;
-    String repoTerm;
-    String secCode;
-    String classCode;
-    @NonNull DateTimeEntry datetime;
-    int period;
-    String openInterest;
-    String exchangeCode;
+    @JsonProperty("trade_num") long tradeNum;
+    @JsonProperty("flags") int flags;
+    @JsonProperty("price") @NonNull String price;
+    @JsonProperty("qty") int qty;
+    @JsonProperty("value") String value;
+    @JsonProperty("accruedint") String accruedInt;
+    @JsonProperty("yield") String yield;
+    @JsonProperty("settlecode") String settleCode;
+    @JsonProperty("reporate") String repoRate;
+    @JsonProperty("repovalue") String repoValue;
+    @JsonProperty("repo2value") String repo2Value;
+    @JsonProperty("repoterm") String repoTerm;
+    @JsonProperty("sec_code") String secCode;
+    @JsonProperty("class_code") String classCode;
+    @JsonProperty("datetime") @NonNull DateTimeEntry datetime;
+    @JsonProperty("period") int period;
+    @JsonProperty("open_interest") String openInterest;
+    @JsonProperty("exchange_code") String exchangeCode;
 
     private @NonFinal @Getter(AccessLevel.NONE) transient int hashCode;
     private @NonFinal @Getter(AccessLevel.NONE) transient String asString;

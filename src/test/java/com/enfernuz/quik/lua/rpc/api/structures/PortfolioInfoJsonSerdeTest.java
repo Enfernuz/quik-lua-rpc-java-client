@@ -1,26 +1,33 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
+import com.enfernuz.quik.lua.rpc.serde.json.JsonSerdeModule;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.Arrays;
 
+import static com.enfernuz.quik.lua.rpc.serde.SerdeUtils.trimAndRemoveLineBreaks;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class PortfolioInfoJsonSerdeTest {
 
-    private final ObjectMapper sut = new ObjectMapper();
+    private static SerdeModule sut;
 
-    private static PortfolioInfo portfolioInfo;
-    private static String portfolioInfoAsJson;
+    private static PortfolioInfo expectedObject;
+    private static String expectedJson;
+    private static byte[] expectedJsonAsBytes;
 
     @BeforeClass
     public static void globalSetup() throws IOException {
 
-        portfolioInfo = PortfolioInfo.builder()
+        sut = JsonSerdeModule.INSTANCE;
+
+        expectedObject = PortfolioInfo.builder()
                 .isLeverage("1")
                 .inAssets("2")
                 .leverage("3")
@@ -63,22 +70,23 @@ public class PortfolioInfoJsonSerdeTest {
                 .currTag("40")
                 .build();
 
-        portfolioInfoAsJson = Resources.toString(Resources.getResource("json/structures/PortfolioInfo.json"), Charsets.UTF_8);
+        expectedJson = Resources.toString(Resources.getResource("json/structures/PortfolioInfo.json"), Charsets.UTF_8);
+        expectedJsonAsBytes = trimAndRemoveLineBreaks(expectedJson).getBytes(Charsets.UTF_8);
     }
 
     @Test
-    public void testSerialize() throws IOException {
+    public void testSerialize() {
 
-        final String actual = sut.writerWithDefaultPrettyPrinter().writeValueAsString(portfolioInfo);
+        final byte[] actual = sut.serialize(expectedObject);
 
-        assertEquals(portfolioInfoAsJson, actual);
+        assertTrue( Arrays.equals(expectedJsonAsBytes, actual) );
     }
 
     @Test
-    public void testDeserialize() throws IOException {
+    public void testDeserialize() {
 
-        final PortfolioInfo actual = sut.readValue(portfolioInfoAsJson, PortfolioInfo.class);
+        final PortfolioInfo actual = sut.deserialize(PortfolioInfo.class, expectedJsonAsBytes);
 
-        assertEquals(portfolioInfo, actual);
+        assertEquals(expectedObject, actual);
     }
 }

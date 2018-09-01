@@ -1,24 +1,31 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
+import com.enfernuz.quik.lua.rpc.serde.json.JsonSerdeModule;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.Arrays;
 
+import static com.enfernuz.quik.lua.rpc.serde.SerdeUtils.trimAndRemoveLineBreaks;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class AccountPositionJsonSerdeTest {
 
-    private final ObjectMapper sut = new ObjectMapper();
+    private static SerdeModule sut;
 
     private static AccountPosition expectedObject;
     private static String expectedJson;
+    private static byte[] expectedJsonAsBytes;
 
     @BeforeClass
     public static void globalSetup() throws IOException {
+
+        sut = JsonSerdeModule.INSTANCE;
 
         expectedObject = AccountPosition.builder()
                 .firmId("1")
@@ -42,12 +49,21 @@ public class AccountPositionJsonSerdeTest {
                 .build();
 
         expectedJson = Resources.toString(Resources.getResource("json/structures/AccountPosition.json"), Charsets.UTF_8);
+        expectedJsonAsBytes = trimAndRemoveLineBreaks(expectedJson).getBytes(Charsets.UTF_8);
     }
 
     @Test
-    public void testDeserialize() throws IOException {
+    public void testSerialize() {
 
-        final AccountPosition actualObject = sut.readValue(expectedJson, AccountPosition.class);
+        final byte[] actual = sut.serialize(expectedObject);
+
+        assertTrue( Arrays.equals(expectedJsonAsBytes, actual) );
+    }
+
+    @Test
+    public void testDeserialize() {
+
+        final AccountPosition actualObject = sut.deserialize(AccountPosition.class, expectedJsonAsBytes);
 
         assertEquals(expectedObject, actualObject);
     }
