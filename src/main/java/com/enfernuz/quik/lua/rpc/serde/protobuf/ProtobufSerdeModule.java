@@ -87,6 +87,7 @@ public enum ProtobufSerdeModule implements SerdeModule {
         registerSerde(result, AccountPosition.class, AccountPositionPbSerde.INSTANCE);
         registerSerde(result, NegDeal.class, NegDealPbSerde.INSTANCE);
         registerSerde(result, NegTrade.class, NegTradePbSerde.INSTANCE);
+        registerSerde(result, StopOrder.class, StopOrderPbSerde.INSTANCE);
         registerSerde(result, DateTimeEntry.class, DateTimeEntryPbSerde.INSTANCE);
         registerSerde(result, AllTrade.class, AllTradePbSerde.INSTANCE);
         registerSerde(result, FuturesClientHolding.class, FuturesClientHoldingPbSerde.INSTANCE);
