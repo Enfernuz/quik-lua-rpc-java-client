@@ -67,18 +67,22 @@ enum MessageRequestPbSerde implements Serde<Message.Request>, PbConverter<qlua.r
 
         final Message.IconType iconType = request.getIconType();
         final qlua.rpc.Message.IconType pbIconType;
-        switch (iconType) {
-            case INFO:
-                pbIconType = qlua.rpc.Message.IconType.INFO;
-                break;
-            case WARNING:
-                pbIconType = qlua.rpc.Message.IconType.WARNING;
-                break;
-            case ERROR:
-                pbIconType = qlua.rpc.Message.IconType.ERROR;
-                break;
-            default:
-                throw new IllegalArgumentException(String.format("Неизвестный IconType (тип иконки сообщения): '%s'.", iconType));
+        if (iconType == null) {
+            pbIconType = qlua.rpc.Message.IconType.UNDEFINED;
+        } else {
+            switch (iconType) {
+                case INFO:
+                    pbIconType = qlua.rpc.Message.IconType.INFO;
+                    break;
+                case WARNING:
+                    pbIconType = qlua.rpc.Message.IconType.WARNING;
+                    break;
+                case ERROR:
+                    pbIconType = qlua.rpc.Message.IconType.ERROR;
+                    break;
+                default:
+                    throw new IllegalArgumentException(String.format("Неизвестный IconType (тип иконки сообщения): '%s'.", iconType));
+            }
         }
 
         return qlua.rpc.Message.Request.newBuilder()
