@@ -506,8 +506,7 @@ public final class ZmqTcpQluaRpcClient extends AbstractTcpZmqClient implements T
             final byte[] response = ZmqUtils.convertZMsgToByteArray(zResponse);
             zResponse.destroy();
 
-            final ResponseEnvelope responseEnvelope =
-                    serdeModule.deserialize(ResponseEnvelope.class, response);
+            final ResponseEnvelope responseEnvelope = serdeModule.deserialize(ResponseEnvelope.class, response);
             final ServiceError error = responseEnvelope.getError();
             if (error == null) {
                 return serdeModule.deserialize(resultClass, responseEnvelope.getResult());
