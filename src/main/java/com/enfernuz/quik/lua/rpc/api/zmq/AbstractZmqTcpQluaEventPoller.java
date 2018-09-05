@@ -71,7 +71,6 @@ abstract class AbstractZmqTcpQluaEventPoller extends AbstractTcpZmqClient implem
             if (subscriptionKeyAsBytes == null) {
                 result = null;
             } else {
-
                 final QluaEvent.EventType eventType = serdeModule.deserialize(QluaEvent.EventType.class, subscriptionKeyAsBytes);
                 if (eventType == null) {
                     throw new PollingException(

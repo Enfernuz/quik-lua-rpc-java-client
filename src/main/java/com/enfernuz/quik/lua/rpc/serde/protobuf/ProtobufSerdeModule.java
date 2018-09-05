@@ -1,5 +1,7 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
+import com.enfernuz.quik.lua.rpc.api.ServiceError;
+import com.enfernuz.quik.lua.rpc.api.messages.Message;
 import com.enfernuz.quik.lua.rpc.api.structures.*;
 import com.enfernuz.quik.lua.rpc.events.api.QluaEvent;
 import com.enfernuz.quik.lua.rpc.serde.Serde;
@@ -27,7 +29,9 @@ public enum ProtobufSerdeModule implements SerdeModule {
         @SuppressWarnings("unchecked")
         final Serde<T> serde = (Serde<T>) CLASS_TO_SERDE_MAP.get(t.getClass());
         if (serde == null) {
-            throw new SerdeException( new IllegalArgumentException("Неподдерживаемый класс для сериализации.") );
+            throw new SerdeException(
+                    String.format("Неподдерживаемый класс для сериализации в protobuf-представление: %s.", t.getClass().getName())
+            );
         } else {
             try {
                 return serde.serialize(t);
@@ -47,7 +51,11 @@ public enum ProtobufSerdeModule implements SerdeModule {
         @SuppressWarnings("unchecked")
         final Serde<T> serde = (Serde<T>) CLASS_TO_SERDE_MAP.get(clazz);
         if (serde == null) {
-            throw new SerdeException( new IllegalArgumentException("Неподдерживаемый класс для десериализации.") );
+            throw new SerdeException(
+                    new IllegalArgumentException(
+                            String.format("Неподдерживаемый класс для десериализации из protobuf-представления: %s.", clazz.getName())
+                    )
+            );
         } else {
             try {
                 return serde.deserialize(data);
@@ -95,6 +103,11 @@ public enum ProtobufSerdeModule implements SerdeModule {
         registerSerde(result, FuturesLimit.class, FuturesLimitPbSerde.INSTANCE);
         registerSerde(result, ParamEventInfo.class, ParamEventInfoPbSerde.INSTANCE);
         registerSerde(result, QuoteEventInfo.class, QuoteEventInfoPbSerde.INSTANCE);
+
+        registerSerde(result, ServiceError.class, ServiceErrorPbSerde.INSTANCE);
+        registerSerde(result, ResponseEnvelope.class, ResponseEnvelopePbSerde.INSTANCE);
+        registerSerde(result, Message.Request.class, MessageRequestPbSerde.INSTANCE);
+        registerSerde(result, Message.Result.class, MessageResultPbSerde.INSTANCE);
 
         return result;
     }

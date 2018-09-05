@@ -2,9 +2,12 @@ package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.DateTimeEntry;
 import com.enfernuz.quik.lua.rpc.serde.PbConverter;
+import com.enfernuz.quik.lua.rpc.serde.SerdeException;
 import com.google.common.base.Strings;
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import qlua.rpc.RPC;
 import qlua.structs.QluaStructures;
 
 import java.nio.charset.Charset;
@@ -42,5 +45,14 @@ final class ProtobufSerdeUtils {
 
     static QluaStructures.DateTimeEntry convertToPbDateTimeEntry(final DateTimeEntry dateTimeEntry) {
         return dateTimeEntry == null ? QluaStructures.DateTimeEntry.getDefaultInstance() : DATE_TIME_ENTRY_PB_CONVERTER.convertToPb(dateTimeEntry);
+    }
+
+    static void assertEquals(@NotNull final RPC.ProcedureType actual, @NotNull final RPC.ProcedureType expected) {
+
+        if (actual != expected) {
+            throw new SerdeException(
+                    String.format("Неожиданный тип процедуры. Получено: %s, ожидалось: %s.", actual, expected)
+            );
+        }
     }
 }
