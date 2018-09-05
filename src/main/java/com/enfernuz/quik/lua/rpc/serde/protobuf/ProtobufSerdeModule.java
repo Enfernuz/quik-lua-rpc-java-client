@@ -1,6 +1,7 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.ServiceError;
+import com.enfernuz.quik.lua.rpc.api.messages.AddColumn;
 import com.enfernuz.quik.lua.rpc.api.messages.Message;
 import com.enfernuz.quik.lua.rpc.api.structures.*;
 import com.enfernuz.quik.lua.rpc.events.api.QluaEvent;
@@ -106,6 +107,8 @@ public enum ProtobufSerdeModule implements SerdeModule {
 
         registerSerde(result, ServiceError.class, ServiceErrorPbSerde.INSTANCE);
         registerSerde(result, ResponseEnvelope.class, ResponseEnvelopePbSerde.INSTANCE);
+        registerSerde(result, AddColumn.Request.class, AddColumnRequestPbSerde.INSTANCE);
+        registerSerde(result, AddColumn.Result.class, AddColumnResultPbSerde.INSTANCE);
         registerSerde(result, Message.Request.class, MessageRequestPbSerde.INSTANCE);
         registerSerde(result, Message.Result.class, MessageResultPbSerde.INSTANCE);
 
