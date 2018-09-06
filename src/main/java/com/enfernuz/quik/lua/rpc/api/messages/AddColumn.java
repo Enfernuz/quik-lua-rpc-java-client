@@ -25,9 +25,9 @@ public final class AddColumn {
         private Request(
                 final int tId,
                 final int iCode,
-                final String name,
+                @NonNull final String name,
                 final boolean isDefault,
-                final ColumnParameterType parType,
+                @NonNull final ColumnParameterType parType,
                 final int width) {
 
             this.tId = tId;

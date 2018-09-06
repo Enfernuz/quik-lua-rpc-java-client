@@ -45,9 +45,6 @@ enum AddColumnRequestPbSerde implements Serde<AddColumn.Request>, PbConverter<ql
         final qlua.rpc.AddColumn.ColumnParameterType pbParType = request.getParType();
         final AddColumn.ColumnParameterType parType;
         switch (pbParType) {
-            case UNDEFINED:
-                parType = null;
-                break;
             case QTABLE_INT_TYPE:
                 parType = AddColumn.ColumnParameterType.QTABLE_INT_TYPE;
                 break;
@@ -70,7 +67,7 @@ enum AddColumnRequestPbSerde implements Serde<AddColumn.Request>, PbConverter<ql
                 parType = AddColumn.ColumnParameterType.QTABLE_STRING_TYPE;
                 break;
             default:
-                throw new IllegalArgumentException(String.format("Неизвестный ColumnParameterType (тип столбца) для формата protobuf: '%s'.", pbParType));
+                throw new IllegalArgumentException(String.format("Неподдерживаемый ColumnParameterType (тип столбца) для формата protobuf: '%s'.", pbParType));
         }
 
         return AddColumn.Request.builder()
@@ -88,34 +85,30 @@ enum AddColumnRequestPbSerde implements Serde<AddColumn.Request>, PbConverter<ql
 
         final AddColumn.ColumnParameterType parType = request.getParType();
         final qlua.rpc.AddColumn.ColumnParameterType pbParType;
-        if (parType == null) {
-            pbParType = qlua.rpc.AddColumn.ColumnParameterType.UNDEFINED;
-        } else {
-            switch (parType) {
-                case QTABLE_INT_TYPE:
-                    pbParType = qlua.rpc.AddColumn.ColumnParameterType.QTABLE_INT_TYPE;
-                    break;
-                case QTABLE_DOUBLE_TYPE:
-                    pbParType = qlua.rpc.AddColumn.ColumnParameterType.QTABLE_DOUBLE_TYPE;
-                    break;
-                case QTABLE_INT64_TYPE:
-                    pbParType = qlua.rpc.AddColumn.ColumnParameterType.QTABLE_INT64_TYPE;
-                    break;
-                case QTABLE_CACHED_STRING_TYPE:
-                    pbParType = qlua.rpc.AddColumn.ColumnParameterType.QTABLE_CACHED_STRING_TYPE;
-                    break;
-                case QTABLE_TIME_TYPE:
-                    pbParType = qlua.rpc.AddColumn.ColumnParameterType.QTABLE_TIME_TYPE;
-                    break;
-                case QTABLE_DATE_TYPE:
-                    pbParType = qlua.rpc.AddColumn.ColumnParameterType.QTABLE_DATE_TYPE;
-                    break;
-                case QTABLE_STRING_TYPE:
-                    pbParType = qlua.rpc.AddColumn.ColumnParameterType.QTABLE_STRING_TYPE;
-                    break;
-                default:
-                    throw new IllegalArgumentException(String.format("Неизвестный ColumnParameterType (тип столбца): '%s'.", parType));
-            }
+        switch (parType) {
+            case QTABLE_INT_TYPE:
+                pbParType = qlua.rpc.AddColumn.ColumnParameterType.QTABLE_INT_TYPE;
+                break;
+            case QTABLE_DOUBLE_TYPE:
+                pbParType = qlua.rpc.AddColumn.ColumnParameterType.QTABLE_DOUBLE_TYPE;
+                break;
+            case QTABLE_INT64_TYPE:
+                pbParType = qlua.rpc.AddColumn.ColumnParameterType.QTABLE_INT64_TYPE;
+                break;
+            case QTABLE_CACHED_STRING_TYPE:
+                pbParType = qlua.rpc.AddColumn.ColumnParameterType.QTABLE_CACHED_STRING_TYPE;
+                break;
+            case QTABLE_TIME_TYPE:
+                pbParType = qlua.rpc.AddColumn.ColumnParameterType.QTABLE_TIME_TYPE;
+                break;
+            case QTABLE_DATE_TYPE:
+                pbParType = qlua.rpc.AddColumn.ColumnParameterType.QTABLE_DATE_TYPE;
+                break;
+            case QTABLE_STRING_TYPE:
+                pbParType = qlua.rpc.AddColumn.ColumnParameterType.QTABLE_STRING_TYPE;
+                break;
+            default:
+                throw new IllegalArgumentException(String.format("Неподдерживаемый ColumnParameterType (тип столбца): '%s'.", parType));
         }
 
         return qlua.rpc.AddColumn.Request.newBuilder()
