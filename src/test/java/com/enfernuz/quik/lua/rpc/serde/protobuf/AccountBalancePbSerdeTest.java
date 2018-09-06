@@ -1,7 +1,6 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.AccountBalance;
-import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,7 +14,6 @@ import static org.junit.Assert.assertTrue;
 public class AccountBalancePbSerdeTest {
 
     private static SerdeModule sut;
-    private static PbConverter<QluaStructures.AccountBalance, AccountBalance> pbConverter;
 
     private static AccountBalance expectedObject;
     private static byte[] expectedPbInput;
@@ -27,7 +25,6 @@ public class AccountBalancePbSerdeTest {
     public static void globalSetup() {
 
         sut = ProtobufSerdeModule.INSTANCE;
-        pbConverter = AccountBalancePbSerde.INSTANCE;
 
         expectedObject = AccountBalance.builder()
                 .firmId("1")
@@ -46,13 +43,32 @@ public class AccountBalancePbSerdeTest {
                 .bankAccId("14")
                 .firmUse(15)
                 .build();
-        expectedPbInput = pbConverter.convertToPb(expectedObject).toByteArray();
+        expectedPbInput = QluaStructures.AccountBalance.newBuilder()
+                .setFirmid("1")
+                .setSecCode("2")
+                .setTrdaccid("3")
+                .setDepaccid("4")
+                .setOpenbal("5")
+                .setCurrentpos("6")
+                .setPlannedpossell("7")
+                .setPlannedposbuy("8")
+                .setPlanbal("9")
+                .setUsqtyb("10")
+                .setUsqtys("11")
+                .setPlanned("12")
+                .setSettlebal("13")
+                .setBankAccId("14")
+                .setFirmuse(15)
+                .build()
+                .toByteArray();
 
         expectedObjectWithNullNonRequiredStringFileds = AccountBalance.builder()
                 .firmUse(1)
                 .build();
-        expectedPbInputWithEmptyNonRequiredStringFields =
-                pbConverter.convertToPb(expectedObjectWithNullNonRequiredStringFileds).toByteArray();
+        expectedPbInputWithEmptyNonRequiredStringFields = QluaStructures.AccountBalance.newBuilder()
+                .setFirmuse(1)
+                .build()
+                .toByteArray();
     }
 
     @Test
