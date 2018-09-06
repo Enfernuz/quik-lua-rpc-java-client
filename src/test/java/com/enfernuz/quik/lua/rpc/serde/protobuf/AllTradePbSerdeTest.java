@@ -2,7 +2,6 @@ package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.AllTrade;
 import com.enfernuz.quik.lua.rpc.api.structures.DateTimeEntry;
-import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -16,7 +15,6 @@ import static org.junit.Assert.assertTrue;
 public class AllTradePbSerdeTest {
 
     private static SerdeModule sut;
-    private static PbConverter<QluaStructures.AllTrade, AllTrade> pbConverter;
 
     private static AllTrade expectedObject;
     private static byte[] expectedPbInput;
@@ -28,7 +26,6 @@ public class AllTradePbSerdeTest {
     public static void globalSetup() {
 
         sut = ProtobufSerdeModule.INSTANCE;
-        pbConverter = AllTradePbSerde.INSTANCE;
 
         final DateTimeEntry dateTimeEntry = DateTimeEntry.builder()
                 .mcs(1)
@@ -40,6 +37,17 @@ public class AllTradePbSerdeTest {
                 .weekDay(7)
                 .month(8)
                 .year(9)
+                .build();
+        final QluaStructures.DateTimeEntry pbDateTimeEntry = QluaStructures.DateTimeEntry.newBuilder()
+                .setMcs(1)
+                .setMs(2)
+                .setSec(3)
+                .setMin(4)
+                .setHour(5)
+                .setDay(6)
+                .setWeekDay(7)
+                .setMonth(8)
+                .setYear(9)
                 .build();
 
         expectedObject = AllTrade.builder()
@@ -62,7 +70,27 @@ public class AllTradePbSerdeTest {
                 .openInterest("17")
                 .exchangeCode("18")
                 .build();
-        expectedPbInput = pbConverter.convertToPb(expectedObject).toByteArray();
+        expectedPbInput = QluaStructures.AllTrade.newBuilder()
+                .setTradeNum(1L)
+                .setFlags(2)
+                .setPrice("3")
+                .setQty(4)
+                .setValue("5")
+                .setAccruedint("6")
+                .setYield("7")
+                .setSettlecode("8")
+                .setReporate("9")
+                .setRepovalue("10")
+                .setRepo2Value("11")
+                .setRepoterm("12")
+                .setSecCode("13")
+                .setClassCode("14")
+                .setDatetime(pbDateTimeEntry)
+                .setPeriod(16)
+                .setOpenInterest("17")
+                .setExchangeCode("18")
+                .build()
+                .toByteArray();
 
         expectedObjectWithNullNonRequiredStringFileds = AllTrade.builder()
                 .tradeNum(1L)
@@ -71,8 +99,14 @@ public class AllTradePbSerdeTest {
                 .period(4)
                 .datetime(dateTimeEntry)
                 .build();
-        expectedPbInputWithEmptyNonRequiredStringFields =
-                pbConverter.convertToPb(expectedObjectWithNullNonRequiredStringFileds).toByteArray();
+        expectedPbInputWithEmptyNonRequiredStringFields = QluaStructures.AllTrade.newBuilder()
+                .setTradeNum(1L)
+                .setFlags(2)
+                .setPrice("3")
+                .setPeriod(4)
+                .setDatetime(pbDateTimeEntry)
+                .build()
+                .toByteArray();
     }
 
     @Test
