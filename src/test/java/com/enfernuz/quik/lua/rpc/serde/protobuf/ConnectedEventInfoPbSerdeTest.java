@@ -1,7 +1,6 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.ConnectedEventInfo;
-import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,7 +14,6 @@ import static org.junit.Assert.assertTrue;
 public class ConnectedEventInfoPbSerdeTest {
 
     private static SerdeModule sut;
-    private static PbConverter<QluaStructures.ConnectedEventInfo, ConnectedEventInfo> pbConverter;
 
     private static ConnectedEventInfo expectedObject;
     private static byte[] expectedPbInput;
@@ -24,10 +22,12 @@ public class ConnectedEventInfoPbSerdeTest {
     public static void globalSetup() {
 
         sut = ProtobufSerdeModule.INSTANCE;
-        pbConverter = ConnectedEventInfoPbSerde.INSTANCE;
 
         expectedObject = new ConnectedEventInfo(true);
-        expectedPbInput = pbConverter.convertToPb(expectedObject).toByteArray();
+        expectedPbInput = QluaStructures.ConnectedEventInfo.newBuilder()
+                .setFlag(true)
+                .build()
+                .toByteArray();
     }
 
     @Test
