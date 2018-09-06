@@ -1,7 +1,6 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.DepoLimit;
-import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,7 +14,6 @@ import static org.junit.Assert.assertTrue;
 public class DepoLimitPbSerdeTest {
 
     private static SerdeModule sut;
-    private static PbConverter<QluaStructures.DepoLimit, DepoLimit> pbConverter;
 
     private static DepoLimit expectedObject;
     private static byte[] expectedPbInput;
@@ -27,7 +25,6 @@ public class DepoLimitPbSerdeTest {
     public static void globalSetup() {
 
         sut = ProtobufSerdeModule.INSTANCE;
-        pbConverter = DepoLimitPbSerde.INSTANCE;
 
         expectedObject = DepoLimit.builder()
                 .secCode("1")
@@ -45,7 +42,23 @@ public class DepoLimitPbSerdeTest {
                 .awgPositionPrice("13")
                 .limitKind(14)
                 .build();
-        expectedPbInput = pbConverter.convertToPb(expectedObject).toByteArray();
+        expectedPbInput = QluaStructures.DepoLimit.newBuilder()
+                .setSecCode("1")
+                .setTrdaccid("2")
+                .setFirmid("3")
+                .setClientCode("4")
+                .setOpenbal(5)
+                .setOpenlimit(6)
+                .setCurrentbal(7)
+                .setCurrentlimit(8)
+                .setLockedSell(9)
+                .setLockedBuy(10)
+                .setLockedBuyValue("11")
+                .setLockedSellValue("12")
+                .setAwgPositionPrice("13")
+                .setLimitKind(14)
+                .build()
+                .toByteArray();
 
         expectedObjectWithNullNonRequiredStringFileds = DepoLimit.builder()
                 .openBal(1)
@@ -56,8 +69,16 @@ public class DepoLimitPbSerdeTest {
                 .lockedBuy(6)
                 .limitKind(7)
                 .build();
-        expectedPbInputWithEmptyNonRequiredStringFields =
-                pbConverter.convertToPb(expectedObjectWithNullNonRequiredStringFileds).toByteArray();
+        expectedPbInputWithEmptyNonRequiredStringFields = QluaStructures.DepoLimit.newBuilder()
+                .setOpenbal(1)
+                .setOpenlimit(2)
+                .setCurrentbal(3)
+                .setCurrentlimit(4)
+                .setLockedSell(5)
+                .setLockedBuy(6)
+                .setLimitKind(7)
+                .build()
+                .toByteArray();
     }
 
     @Test
