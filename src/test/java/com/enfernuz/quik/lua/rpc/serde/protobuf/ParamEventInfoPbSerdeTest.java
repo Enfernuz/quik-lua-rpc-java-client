@@ -1,7 +1,6 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.ParamEventInfo;
-import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,29 +14,30 @@ import static org.junit.Assert.assertTrue;
 public class ParamEventInfoPbSerdeTest {
 
     private static SerdeModule sut;
-    private static PbConverter<QluaStructures.ParamEventInfo, ParamEventInfo> pbConverter;
 
     private static ParamEventInfo expectedObject;
     private static byte[] expectedPbInput;
 
-    private static ParamEventInfo expectedObjectWithNullNonRequiredStringFileds;
-    private static byte[] expectedPbInputWithEmptyNonRequiredStringFields;
+    private static ParamEventInfo expectedObjectWithOnlyRequiredFields;
+    private static byte[] expectedPbInputWithOnlyRequiredFields;
 
     @BeforeClass
     public static void globalSetup() {
 
         sut = ProtobufSerdeModule.INSTANCE;
-        pbConverter = ParamEventInfoPbSerde.INSTANCE;
 
         expectedObject = ParamEventInfo.builder()
                 .classCode("1")
                 .secCode("2")
                 .build();
-        expectedPbInput = pbConverter.convertToPb(expectedObject).toByteArray();
+        expectedPbInput = QluaStructures.ParamEventInfo.newBuilder()
+                .setClassCode("1")
+                .setSecCode("2")
+                .build()
+                .toByteArray();
 
-        expectedObjectWithNullNonRequiredStringFileds = ParamEventInfo.builder().build();
-        expectedPbInputWithEmptyNonRequiredStringFields =
-                pbConverter.convertToPb(expectedObjectWithNullNonRequiredStringFileds).toByteArray();
+        expectedObjectWithOnlyRequiredFields = ParamEventInfo.builder().build();
+        expectedPbInputWithOnlyRequiredFields = QluaStructures.ParamEventInfo.newBuilder().build().toByteArray();
     }
 
     @Test
@@ -51,9 +51,9 @@ public class ParamEventInfoPbSerdeTest {
     @Test
     public void testSerializePbInputWithEmptyNonRequiredStringFields() {
 
-        final byte[] actual = sut.serialize(expectedObjectWithNullNonRequiredStringFileds);
+        final byte[] actual = sut.serialize(expectedObjectWithOnlyRequiredFields);
 
-        assertTrue( Arrays.equals(expectedPbInputWithEmptyNonRequiredStringFields, actual) );
+        assertTrue( Arrays.equals(expectedPbInputWithOnlyRequiredFields, actual) );
     }
 
     @Test
@@ -67,8 +67,8 @@ public class ParamEventInfoPbSerdeTest {
     @Test
     public void testDeserializePbInputWithEmptyNonRequiredStringFields() {
 
-        final ParamEventInfo actualObject = sut.deserialize(ParamEventInfo.class, expectedPbInputWithEmptyNonRequiredStringFields);
+        final ParamEventInfo actualObject = sut.deserialize(ParamEventInfo.class, expectedPbInputWithOnlyRequiredFields);
 
-        assertEquals(actualObject, expectedObjectWithNullNonRequiredStringFileds);
+        assertEquals(actualObject, expectedObjectWithOnlyRequiredFields);
     }
 }
