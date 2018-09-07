@@ -2,7 +2,6 @@ package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.DateTimeEntry;
 import com.enfernuz.quik.lua.rpc.api.structures.Order;
-import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -16,19 +15,17 @@ import static org.junit.Assert.assertTrue;
 public class OrderPbSerdeTest {
 
     private static SerdeModule sut;
-    private static PbConverter<QluaStructures.Order, Order> pbConverter;
 
     private static Order expectedObject;
     private static byte[] expectedPbInput;
 
-    private static Order expectedObjectWithNullNonRequiredStringFileds;
-    private static byte[] expectedPbInputWithEmptyNonRequiredStringFields;
+    private static Order expectedObjectWithOnlyRequiredFields;
+    private static byte[] expectedPbInputWithOnlyRequiredFields;
 
     @BeforeClass
     public static void globalSetup() {
 
         sut = ProtobufSerdeModule.INSTANCE;
-        pbConverter = OrderPbSerde.INSTANCE;
 
         final DateTimeEntry dateTimeEntry = DateTimeEntry.builder()
                 .mcs(1)
@@ -40,6 +37,17 @@ public class OrderPbSerdeTest {
                 .weekDay(7)
                 .month(8)
                 .year(9)
+                .build();
+        final QluaStructures.DateTimeEntry pbDateTimeEntry = QluaStructures.DateTimeEntry.newBuilder()
+                .setMcs(1)
+                .setMs(2)
+                .setSec(3)
+                .setMin(4)
+                .setHour(5)
+                .setDay(6)
+                .setWeekDay(7)
+                .setMonth(8)
+                .setYear(9)
                 .build();
 
         expectedObject = Order.builder()
@@ -86,9 +94,53 @@ public class OrderPbSerdeTest {
                 .passiveOnlyOrder(41)
                 .visible(42)
                 .build();
-        expectedPbInput = pbConverter.convertToPb(expectedObject).toByteArray();
+        expectedPbInput = QluaStructures.Order.newBuilder()
+                .setOrderNum(1L)
+                .setFlags(2)
+                .setBrokerref("3")
+                .setUserid("4")
+                .setFirmid("5")
+                .setAccount("6")
+                .setPrice("7")
+                .setQty(8)
+                .setBalance("9")
+                .setValue("10")
+                .setAccruedint("11")
+                .setYield("12")
+                .setTransId("13")
+                .setClientCode("14")
+                .setPrice2("15")
+                .setSettlecode("16")
+                .setUid("17")
+                .setCanceledUid("18")
+                .setExchangeCode("19")
+                .setActivationTime("20")
+                .setLinkedorder("21")
+                .setExpiry("22")
+                .setSecCode("23")
+                .setClassCode("24")
+                .setDatetime(pbDateTimeEntry)
+                .setWithdrawDatetime(pbDateTimeEntry)
+                .setBankAccId("27")
+                .setValueEntryType(28)
+                .setRepoterm("29")
+                .setRepovalue("30")
+                .setRepo2Value("31")
+                .setRepoValueBalance("32")
+                .setStartDiscount("33")
+                .setRejectReason("34")
+                .setExtOrderFlags("35")
+                .setMinQty(36)
+                .setExecType(37)
+                .setSideQualifier(38)
+                .setAcntType(39)
+                .setCapacity(40)
+                .setPassiveOnlyOrder(41)
+                .setVisible(42)
+                .build()
+                .toByteArray();
 
-        expectedObjectWithNullNonRequiredStringFileds = Order.builder()
+        expectedObjectWithOnlyRequiredFields = Order.builder()
                 .orderNum(1L)
                 .flags(2)
                 .qty(8)
@@ -101,8 +153,20 @@ public class OrderPbSerdeTest {
                 .passiveOnlyOrder(41)
                 .visible(42)
                 .build();
-        expectedPbInputWithEmptyNonRequiredStringFields =
-                pbConverter.convertToPb(expectedObjectWithNullNonRequiredStringFileds).toByteArray();
+        expectedPbInputWithOnlyRequiredFields = QluaStructures.Order.newBuilder()
+                .setOrderNum(1L)
+                .setFlags(2)
+                .setQty(8)
+                .setValueEntryType(28)
+                .setMinQty(36)
+                .setExecType(37)
+                .setSideQualifier(38)
+                .setAcntType(39)
+                .setCapacity(40)
+                .setPassiveOnlyOrder(41)
+                .setVisible(42)
+                .build()
+                .toByteArray();
     }
 
     @Test
@@ -116,9 +180,9 @@ public class OrderPbSerdeTest {
     @Test
     public void testSerializePbInputWithEmptyNonRequiredStringFields() {
 
-        final byte[] actual = sut.serialize(expectedObjectWithNullNonRequiredStringFileds);
+        final byte[] actual = sut.serialize(expectedObjectWithOnlyRequiredFields);
 
-        assertTrue( Arrays.equals(expectedPbInputWithEmptyNonRequiredStringFields, actual) );
+        assertTrue( Arrays.equals(expectedPbInputWithOnlyRequiredFields, actual) );
     }
 
     @Test
@@ -132,8 +196,8 @@ public class OrderPbSerdeTest {
     @Test
     public void testDeserializePbInputWithEmptyNonRequiredStringFields() {
 
-        final Order actualObject = sut.deserialize(Order.class, expectedPbInputWithEmptyNonRequiredStringFields);
+        final Order actualObject = sut.deserialize(Order.class, expectedPbInputWithOnlyRequiredFields);
 
-        assertEquals(actualObject, expectedObjectWithNullNonRequiredStringFileds);
+        assertEquals(actualObject, expectedObjectWithOnlyRequiredFields);
     }
 }
