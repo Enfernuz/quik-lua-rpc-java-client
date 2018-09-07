@@ -1,7 +1,6 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.Firm;
-import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,7 +14,6 @@ import static org.junit.Assert.assertTrue;
 public class FirmPbSerdeTest {
 
     private static SerdeModule sut;
-    private static PbConverter<QluaStructures.Firm, Firm> pbConverter;
 
     private static Firm expectedObject;
     private static byte[] expectedPbInput;
@@ -27,7 +25,6 @@ public class FirmPbSerdeTest {
     public static void globalSetup() {
 
         sut = ProtobufSerdeModule.INSTANCE;
-        pbConverter = FirmPbSerde.INSTANCE;
 
         expectedObject = Firm.builder()
                 .firmId("1")
@@ -35,14 +32,23 @@ public class FirmPbSerdeTest {
                 .status(3)
                 .exchange("4")
                 .build();
-        expectedPbInput = pbConverter.convertToPb(expectedObject).toByteArray();
+        expectedPbInput = QluaStructures.Firm.newBuilder()
+                .setFirmid("1")
+                .setFirmName("2")
+                .setStatus(3)
+                .setExchange("4")
+                .build()
+                .toByteArray();
 
         expectedObjectWithNullNonRequiredStringFileds = Firm.builder()
                 .firmId("1")
                 .status(2)
                 .build();
-        expectedPbInputWithEmptyNonRequiredStringFields =
-                pbConverter.convertToPb(expectedObjectWithNullNonRequiredStringFileds).toByteArray();
+        expectedPbInputWithEmptyNonRequiredStringFields = QluaStructures.Firm.newBuilder()
+                .setFirmid("1")
+                .setStatus(2)
+                .build()
+                .toByteArray();
     }
 
     @Test
