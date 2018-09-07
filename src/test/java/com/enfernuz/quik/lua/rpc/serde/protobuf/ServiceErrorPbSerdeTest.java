@@ -1,7 +1,6 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.ServiceError;
-import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -14,26 +13,30 @@ import static org.junit.Assert.assertTrue;
 public class ServiceErrorPbSerdeTest {
 
     private static SerdeModule sut;
-    private static PbConverter<qlua.rpc.RPC.Error, ServiceError> pbConverter;
 
     private static ServiceError expectedObject;
     private static byte[] expectedPbInput;
 
-    private static ServiceError expectedObjectWithNullNonRequiredStringFileds;
-    private static byte[] expectedPbInputWithEmptyNonRequiredStringFields;
+    private static ServiceError expectedObjectWithOnlyRequiredFields;
+    private static byte[] expectedPbInputWithOnlyRequiredFields;
 
     @BeforeClass
     public static void globalSetup() {
 
         sut = ProtobufSerdeModule.INSTANCE;
-        pbConverter = ServiceErrorPbSerde.INSTANCE;
 
         expectedObject = new ServiceError(500, "Ошибочка вышла.");
-        expectedPbInput = pbConverter.convertToPb(expectedObject).toByteArray();
+        expectedPbInput = qlua.rpc.RPC.Error.newBuilder()
+                .setCode(500)
+                .setMessage("Ошибочка вышла.")
+                .build()
+                .toByteArray();
 
-        expectedObjectWithNullNonRequiredStringFileds = new ServiceError(404, null);
-        expectedPbInputWithEmptyNonRequiredStringFields =
-                pbConverter.convertToPb(expectedObjectWithNullNonRequiredStringFileds).toByteArray();
+        expectedObjectWithOnlyRequiredFields = new ServiceError(404, null);
+        expectedPbInputWithOnlyRequiredFields = qlua.rpc.RPC.Error.newBuilder()
+                .setCode(404)
+                .build()
+                .toByteArray();
     }
 
     @Test
@@ -47,9 +50,9 @@ public class ServiceErrorPbSerdeTest {
     @Test
     public void testSerializePbInputWithEmptyNonRequiredStringFields() {
 
-        final byte[] actual = sut.serialize(expectedObjectWithNullNonRequiredStringFileds);
+        final byte[] actual = sut.serialize(expectedObjectWithOnlyRequiredFields);
 
-        assertTrue( Arrays.equals(expectedPbInputWithEmptyNonRequiredStringFields, actual) );
+        assertTrue( Arrays.equals(expectedPbInputWithOnlyRequiredFields, actual) );
     }
 
     @Test
@@ -63,8 +66,8 @@ public class ServiceErrorPbSerdeTest {
     @Test
     public void testDeserializePbInputWithEmptyNonRequiredStringFields() {
 
-        final ServiceError actualObject = sut.deserialize(ServiceError.class, expectedPbInputWithEmptyNonRequiredStringFields);
+        final ServiceError actualObject = sut.deserialize(ServiceError.class, expectedPbInputWithOnlyRequiredFields);
 
-        assertEquals(actualObject, expectedObjectWithNullNonRequiredStringFileds);
+        assertEquals(actualObject, expectedObjectWithOnlyRequiredFields);
     }
 }
