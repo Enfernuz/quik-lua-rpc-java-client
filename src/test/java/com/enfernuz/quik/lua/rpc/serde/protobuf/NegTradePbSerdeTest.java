@@ -1,7 +1,6 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.NegTrade;
-import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,19 +14,17 @@ import static org.junit.Assert.assertTrue;
 public class NegTradePbSerdeTest {
 
     private static SerdeModule sut;
-    private static PbConverter<QluaStructures.NegTrade, NegTrade> pbConverter;
 
     private static NegTrade expectedObject;
     private static byte[] expectedPbInput;
 
-    private static NegTrade expectedObjectWithNullNonRequiredStringFileds;
-    private static byte[] expectedPbInputWithEmptyNonRequiredStringFields;
+    private static NegTrade expectedObjectWithOnlyRequiredFields;
+    private static byte[] expectedPbInputWithOnlyRequiredFields;
 
     @BeforeClass
     public static void globalSetup() {
 
         sut = ProtobufSerdeModule.INSTANCE;
-        pbConverter = NegTradePbSerde.INSTANCE;
 
         expectedObject = NegTrade.builder()
                 .tradeNum(1L)
@@ -92,9 +89,72 @@ public class NegTradePbSerdeTest {
                 .exFlags(60)
                 .confirmReport("61")
                 .build();
-        expectedPbInput = pbConverter.convertToPb(expectedObject).toByteArray();
+        expectedPbInput = QluaStructures.NegTrade.newBuilder()
+                .setTradeNum(1L)
+                .setTradeDate("2")
+                .setSettleDate("3")
+                .setFlags(4)
+                .setBrokerref("5")
+                .setFirmid("6")
+                .setAccount("7")
+                .setCpfirmid("8")
+                .setCpaccount("9")
+                .setPrice("10")
+                .setQty(11)
+                .setValue("12")
+                .setSettlecode("13")
+                .setReportNum("14")
+                .setCpreportNum("15")
+                .setAccruedint("16")
+                .setRepotradeno("17")
+                .setPrice1("18")
+                .setReporate("19")
+                .setPrice2("20")
+                .setClientCode("21")
+                .setTsComission("22")
+                .setBalance("23")
+                .setSettleTime("24")
+                .setAmount("25")
+                .setRepovalue("26")
+                .setRepoterm("27")
+                .setRepo2Value("28")
+                .setReturnValue("29")
+                .setDiscount("30")
+                .setLowerDiscount("31")
+                .setUpperDiscount("32")
+                .setBlockSecurities("33")
+                .setUrgencyFlag("34")
+                .setType(35)
+                .setOperationType(36)
+                .setExpectedDiscount("37")
+                .setExpectedQuantity("38")
+                .setExpectedRepovalue("39")
+                .setExpectedRepo2Value("40")
+                .setExpectedReturnValue("41")
+                .setOrderNum("42")
+                .setReportTradeDate("43")
+                .setSettled(44)
+                .setClearingType(45)
+                .setReportComission("46")
+                .setCouponPayment("47")
+                .setPrincipalPayment("48")
+                .setPrincipalPaymentDate("49")
+                .setNextdaysettle("50")
+                .setSettleCurrency("51")
+                .setSecCode("52")
+                .setClassCode("53")
+                .setCompval("54")
+                .setParenttradeno("55")
+                .setBankid("56")
+                .setBankaccid("57")
+                .setPrecisebalance("58")
+                .setConfirmtime("59")
+                .setExFlags(60)
+                .setConfirmreport("61")
+                .build()
+                .toByteArray();
 
-        expectedObjectWithNullNonRequiredStringFileds = NegTrade.builder()
+        expectedObjectWithOnlyRequiredFields = NegTrade.builder()
                 .tradeNum(1L)
                 .flags(2)
                 .qty(3)
@@ -104,8 +164,17 @@ public class NegTradePbSerdeTest {
                 .clearingType(7)
                 .exFlags(8)
                 .build();
-        expectedPbInputWithEmptyNonRequiredStringFields =
-                pbConverter.convertToPb(expectedObjectWithNullNonRequiredStringFileds).toByteArray();
+        expectedPbInputWithOnlyRequiredFields = QluaStructures.NegTrade.newBuilder()
+                .setTradeNum(1L)
+                .setFlags(2)
+                .setQty(3)
+                .setType(4)
+                .setOperationType(5)
+                .setSettled(6)
+                .setClearingType(7)
+                .setExFlags(8)
+                .build()
+                .toByteArray();
     }
 
     @Test
@@ -119,9 +188,9 @@ public class NegTradePbSerdeTest {
     @Test
     public void testSerializePbInputWithEmptyNonRequiredStringFields() {
 
-        final byte[] actual = sut.serialize(expectedObjectWithNullNonRequiredStringFileds);
+        final byte[] actual = sut.serialize(expectedObjectWithOnlyRequiredFields);
 
-        assertTrue( Arrays.equals(expectedPbInputWithEmptyNonRequiredStringFields, actual) );
+        assertTrue( Arrays.equals(expectedPbInputWithOnlyRequiredFields, actual) );
     }
 
     @Test
@@ -135,8 +204,8 @@ public class NegTradePbSerdeTest {
     @Test
     public void testDeserializePbInputWithEmptyNonRequiredStringFields() {
 
-        final NegTrade actualObject = sut.deserialize(NegTrade.class, expectedPbInputWithEmptyNonRequiredStringFields);
+        final NegTrade actualObject = sut.deserialize(NegTrade.class, expectedPbInputWithOnlyRequiredFields);
 
-        assertEquals(actualObject, expectedObjectWithNullNonRequiredStringFileds);
+        assertEquals(actualObject, expectedObjectWithOnlyRequiredFields);
     }
 }
