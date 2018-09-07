@@ -1,7 +1,6 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.MoneyLimitDelete;
-import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,31 +14,35 @@ import static org.junit.Assert.assertTrue;
 public class MoneyLimitDeletePbSerdeTest {
 
     private static SerdeModule sut;
-    private static PbConverter<QluaStructures.MoneyLimitDelete, MoneyLimitDelete> pbConverter;
 
     private static MoneyLimitDelete expectedObject;
     private static byte[] expectedPbInput;
 
-    private static MoneyLimitDelete expectedObjectWithNullNonRequiredStringFileds;
-    private static byte[] expectedPbInputWithEmptyNonRequiredStringFields;
+    private static MoneyLimitDelete expectedObjectWithOnlyRequiredFields;
+    private static byte[] expectedPbInputWithOnlyRequiredFields;
 
     @BeforeClass
     public static void globalSetup() {
 
         sut = ProtobufSerdeModule.INSTANCE;
-        pbConverter = MoneyLimitDeletePbSerde.INSTANCE;
 
         expectedObject = MoneyLimitDelete.builder()
                 .firmId("1")
                 .limitKind(2)
                 .build();
-        expectedPbInput = pbConverter.convertToPb(expectedObject).toByteArray();
+        expectedPbInput = QluaStructures.MoneyLimitDelete.newBuilder()
+                .setFirmid("1")
+                .setLimitKind(2)
+                .build()
+                .toByteArray();
 
-        expectedObjectWithNullNonRequiredStringFileds = MoneyLimitDelete.builder()
+        expectedObjectWithOnlyRequiredFields = MoneyLimitDelete.builder()
                 .limitKind(1)
                 .build();
-        expectedPbInputWithEmptyNonRequiredStringFields =
-                pbConverter.convertToPb(expectedObjectWithNullNonRequiredStringFileds).toByteArray();
+        expectedPbInputWithOnlyRequiredFields = QluaStructures.MoneyLimitDelete.newBuilder()
+                .setLimitKind(1)
+                .build()
+                .toByteArray();
     }
 
     @Test
@@ -53,9 +56,9 @@ public class MoneyLimitDeletePbSerdeTest {
     @Test
     public void testSerializePbInputWithEmptyNonRequiredStringFields() {
 
-        final byte[] actual = sut.serialize(expectedObjectWithNullNonRequiredStringFileds);
+        final byte[] actual = sut.serialize(expectedObjectWithOnlyRequiredFields);
 
-        assertTrue( Arrays.equals(expectedPbInputWithEmptyNonRequiredStringFields, actual) );
+        assertTrue( Arrays.equals(expectedPbInputWithOnlyRequiredFields, actual) );
     }
 
     @Test
@@ -69,8 +72,8 @@ public class MoneyLimitDeletePbSerdeTest {
     @Test
     public void testDeserializePbInputWithEmptyNonRequiredStringFields() {
 
-        final MoneyLimitDelete actualObject = sut.deserialize(MoneyLimitDelete.class, expectedPbInputWithEmptyNonRequiredStringFields);
+        final MoneyLimitDelete actualObject = sut.deserialize(MoneyLimitDelete.class, expectedPbInputWithOnlyRequiredFields);
 
-        assertEquals(actualObject, expectedObjectWithNullNonRequiredStringFileds);
+        assertEquals(actualObject, expectedObjectWithOnlyRequiredFields);
     }
 }
