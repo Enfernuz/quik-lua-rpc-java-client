@@ -2,7 +2,6 @@ package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.DateTimeEntry;
 import com.enfernuz.quik.lua.rpc.api.structures.StopOrder;
-import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -16,19 +15,17 @@ import static org.junit.Assert.assertTrue;
 public class StopOrderPbSerdeTest {
 
     private static SerdeModule sut;
-    private static PbConverter<QluaStructures.StopOrder, StopOrder> pbConverter;
 
     private static StopOrder expectedObject;
     private static byte[] expectedPbInput;
 
-    private static StopOrder expectedObjectWithNullNonRequiredStringFileds;
-    private static byte[] expectedPbInputWithEmptyNonRequiredStringFields;
+    private static StopOrder expectedObjectWithOnlyRequiredFields;
+    private static byte[] expectedPbInputWithOnlyRequiredFields;
 
     @BeforeClass
     public static void globalSetup() {
 
         sut = ProtobufSerdeModule.INSTANCE;
-        pbConverter = StopOrderPbSerde.INSTANCE;
 
         final DateTimeEntry dateTimeEntry = DateTimeEntry.builder()
                 .mcs(1)
@@ -40,6 +37,17 @@ public class StopOrderPbSerdeTest {
                 .weekDay(7)
                 .month(8)
                 .year(9)
+                .build();
+        final QluaStructures.DateTimeEntry pbDateTimeEntry = QluaStructures.DateTimeEntry.newBuilder()
+                .setMcs(1)
+                .setMs(2)
+                .setSec(3)
+                .setMin(4)
+                .setHour(5)
+                .setDay(6)
+                .setWeekDay(7)
+                .setMonth(8)
+                .setYear(9)
                 .build();
 
         expectedObject = StopOrder.builder()
@@ -80,9 +88,47 @@ public class StopOrderPbSerdeTest {
                 .orderDateTime(dateTimeEntry)
                 .withdrawDateTime(dateTimeEntry)
                 .build();
-        expectedPbInput = pbConverter.convertToPb(expectedObject).toByteArray();
+        expectedPbInput = QluaStructures.StopOrder.newBuilder()
+                .setOrderNum(1L)
+                .setOrdertime("2")
+                .setFlags(3)
+                .setBrokerref("4")
+                .setFirmid("5")
+                .setAccount("6")
+                .setCondition(7)
+                .setConditionPrice("8")
+                .setPrice("9")
+                .setQty(10)
+                .setLinkedorder("11")
+                .setExpiry("12")
+                .setTransId("13")
+                .setClientCode("14")
+                .setCoOrderNum("15")
+                .setCoOrderPrice("16")
+                .setStopOrderType(17)
+                .setOrderdate("18")
+                .setAlltradeNum("19")
+                .setStopflags(20)
+                .setOffset("21")
+                .setSpread("22")
+                .setBalance("23")
+                .setUid("24")
+                .setFilledQty(25)
+                .setWithdrawTime("26")
+                .setConditionPrice2("27")
+                .setActiveFromTime("28")
+                .setActiveToTime("29")
+                .setSecCode("30")
+                .setClassCode("31")
+                .setConditionSecCode("32")
+                .setConditionClassCode("33")
+                .setCanceledUid("34")
+                .setOrderDateTime(pbDateTimeEntry)
+                .setWithdrawDatetime(pbDateTimeEntry)
+                .build()
+                .toByteArray();
 
-        expectedObjectWithNullNonRequiredStringFileds = StopOrder.builder()
+        expectedObjectWithOnlyRequiredFields = StopOrder.builder()
                 .orderNum(1L)
                 .flags(2)
                 .condition(3)
@@ -91,8 +137,16 @@ public class StopOrderPbSerdeTest {
                 .stopFlags(6)
                 .filledQty(7)
                 .build();
-        expectedPbInputWithEmptyNonRequiredStringFields =
-                pbConverter.convertToPb(expectedObjectWithNullNonRequiredStringFileds).toByteArray();
+        expectedPbInputWithOnlyRequiredFields = QluaStructures.StopOrder.newBuilder()
+                .setOrderNum(1L)
+                .setFlags(2)
+                .setCondition(3)
+                .setQty(4)
+                .setStopOrderType(5)
+                .setStopflags(6)
+                .setFilledQty(7)
+                .build()
+                .toByteArray();
     }
 
     @Test
@@ -106,9 +160,9 @@ public class StopOrderPbSerdeTest {
     @Test
     public void testSerializePbInputWithEmptyNonRequiredStringFields() {
 
-        final byte[] actual = sut.serialize(expectedObjectWithNullNonRequiredStringFileds);
+        final byte[] actual = sut.serialize(expectedObjectWithOnlyRequiredFields);
 
-        assertTrue( Arrays.equals(expectedPbInputWithEmptyNonRequiredStringFields, actual) );
+        assertTrue( Arrays.equals(expectedPbInputWithOnlyRequiredFields, actual) );
     }
 
     @Test
@@ -122,8 +176,8 @@ public class StopOrderPbSerdeTest {
     @Test
     public void testDeserializePbInputWithEmptyNonRequiredStringFields() {
 
-        final StopOrder actualObject = sut.deserialize(StopOrder.class, expectedPbInputWithEmptyNonRequiredStringFields);
+        final StopOrder actualObject = sut.deserialize(StopOrder.class, expectedPbInputWithOnlyRequiredFields);
 
-        assertEquals(actualObject, expectedObjectWithNullNonRequiredStringFileds);
+        assertEquals(actualObject, expectedObjectWithOnlyRequiredFields);
     }
 }

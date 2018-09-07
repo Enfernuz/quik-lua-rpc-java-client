@@ -1,5 +1,6 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
+import com.enfernuz.quik.lua.rpc.api.structures.DateTimeEntry;
 import com.enfernuz.quik.lua.rpc.api.structures.StopOrder;
 import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.Serde;
@@ -71,7 +72,7 @@ enum StopOrderPbSerde implements Serde<StopOrder>, PbConverter<QluaStructures.St
     @Override
     public QluaStructures.StopOrder convertToPb(@NotNull final StopOrder stopOrder) {
 
-        return QluaStructures.StopOrder.newBuilder()
+        final QluaStructures.StopOrder.Builder result = QluaStructures.StopOrder.newBuilder()
                 .setOrderNum( stopOrder.getOrderNum() )
                 .setOrdertime( convertToPbString(stopOrder.getOrderTime()) )
                 .setFlags( stopOrder.getFlags() )
@@ -105,9 +106,18 @@ enum StopOrderPbSerde implements Serde<StopOrder>, PbConverter<QluaStructures.St
                 .setClassCode( convertToPbString(stopOrder.getClassCode()) )
                 .setConditionSecCode( convertToPbString(stopOrder.getConditionSecCode()) )
                 .setConditionClassCode( convertToPbString(stopOrder.getConditionClassCode()) )
-                .setCanceledUid( convertToPbString(stopOrder.getCanceledUid()) )
-                .setOrderDateTime( convertToPbDateTimeEntry(stopOrder.getOrderDateTime()) )
-                .setWithdrawDatetime( convertToPbDateTimeEntry(stopOrder.getWithdrawDateTime()) )
-                .build();
+                .setCanceledUid( convertToPbString(stopOrder.getCanceledUid()) );
+
+        final DateTimeEntry orderDateTime = stopOrder.getOrderDateTime();
+        if (orderDateTime != null) {
+            result.setOrderDateTime( convertToPbDateTimeEntry(orderDateTime) );
+        }
+
+        final DateTimeEntry withdrawDateTime = stopOrder.getWithdrawDateTime();
+        if (withdrawDateTime != null) {
+            result.setWithdrawDatetime( convertToPbDateTimeEntry(withdrawDateTime) );
+        }
+
+        return result.build();
     }
 }
