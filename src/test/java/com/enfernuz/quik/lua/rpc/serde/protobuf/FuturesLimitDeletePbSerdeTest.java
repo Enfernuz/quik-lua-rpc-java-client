@@ -1,7 +1,6 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.FuturesLimitDelete;
-import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,7 +14,6 @@ import static org.junit.Assert.assertTrue;
 public class FuturesLimitDeletePbSerdeTest {
 
     private static SerdeModule sut;
-    private static PbConverter<QluaStructures.FuturesLimitDelete, FuturesLimitDelete> pbConverter;
 
     private static FuturesLimitDelete expectedObject;
     private static byte[] expectedPbInput;
@@ -27,19 +25,24 @@ public class FuturesLimitDeletePbSerdeTest {
     public static void globalSetup() {
 
         sut = ProtobufSerdeModule.INSTANCE;
-        pbConverter = FuturesLimitDeletePbSerde.INSTANCE;
 
         expectedObject = FuturesLimitDelete.builder()
                 .firmId("1")
                 .limitType(2)
                 .build();
-        expectedPbInput = pbConverter.convertToPb(expectedObject).toByteArray();
+        expectedPbInput = QluaStructures.FuturesLimitDelete.newBuilder()
+                .setFirmid("1")
+                .setLimitType(2)
+                .build()
+                .toByteArray();
 
         expectedObjectWithNullNonRequiredStringFileds = FuturesLimitDelete.builder()
                 .limitType(1)
                 .build();
-        expectedPbInputWithEmptyNonRequiredStringFields =
-                pbConverter.convertToPb(expectedObjectWithNullNonRequiredStringFileds).toByteArray();
+        expectedPbInputWithEmptyNonRequiredStringFields = QluaStructures.FuturesLimitDelete.newBuilder()
+                .setLimitType(1)
+                .build()
+                .toByteArray();
     }
 
     @Test
