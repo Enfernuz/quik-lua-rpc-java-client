@@ -10,6 +10,8 @@ import lombok.Value;
 
 import java.util.Map;
 
+import static java.util.Collections.emptyMap;
+
 public final class AddLabel {
 
     private AddLabel() {}
@@ -21,9 +23,9 @@ public final class AddLabel {
         @NonNull Map<String, String> labelParams;
 
         @Builder
-        private Request(final String chartTag, final Map<String, String> labelParams) {
+        private Request(@NonNull final String chartTag, final Map<String, String> labelParams) {
             this.chartTag = chartTag;
-            this.labelParams = ImmutableMap.copyOf(labelParams);
+            this.labelParams = (labelParams == null) ? emptyMap() : ImmutableMap.copyOf(labelParams);
         }
 
         @Override
