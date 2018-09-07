@@ -11,15 +11,11 @@ import qlua.structs.QluaStructures;
 
 import java.util.Objects;
 
-import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.convertFromPbString;
-import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.convertToPbString;
+import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.*;
 
 enum OrderPbSerde implements Serde<Order>, PbConverter<QluaStructures.Order, Order> {
 
     INSTANCE;
-
-    private static final PbConverter<QluaStructures.DateTimeEntry, DateTimeEntry> DATE_TIME_ENTRY_PB_CONVERTER =
-            DateTimeEntryPbSerde.INSTANCE;
 
     @Override
     public byte[] serialize(final Order firm) {
@@ -35,8 +31,6 @@ enum OrderPbSerde implements Serde<Order>, PbConverter<QluaStructures.Order, Ord
     @Override
     public Order convertFromPb(@NotNull QluaStructures.Order order) {
 
-        final QluaStructures.DateTimeEntry dateTime = order.getDatetime();
-        final QluaStructures.DateTimeEntry withdrawDateTime = order.getWithdrawDatetime();
         return Order.builder()
                 .orderNum( order.getOrderNum() )
                 .flags( order.getFlags() )
@@ -62,8 +56,8 @@ enum OrderPbSerde implements Serde<Order>, PbConverter<QluaStructures.Order, Ord
                 .expiry( convertFromPbString(order.getExpiry()) )
                 .secCode( convertFromPbString(order.getSecCode()) )
                 .classCode( convertFromPbString(order.getClassCode()) )
-                .datetime( Objects.equals(dateTime, QluaStructures.DateTimeEntry.getDefaultInstance()) ? null : DATE_TIME_ENTRY_PB_CONVERTER.convertFromPb(dateTime) )
-                .withdrawDatetime( Objects.equals(withdrawDateTime, QluaStructures.DateTimeEntry.getDefaultInstance()) ? null : DATE_TIME_ENTRY_PB_CONVERTER.convertFromPb(withdrawDateTime) )
+                .datetime( convertFromPbDateTimeEntry(order.getDatetime()) )
+                .withdrawDatetime( convertFromPbDateTimeEntry(order.getWithdrawDatetime()) )
                 .bankAccId( convertFromPbString(order.getBankAccId()) )
                 .valueEntryType( order.getValueEntryType() )
                 .repoTerm( convertFromPbString(order.getRepoterm()) )
@@ -114,12 +108,12 @@ enum OrderPbSerde implements Serde<Order>, PbConverter<QluaStructures.Order, Ord
 
         final DateTimeEntry dateTime = order.getDatetime();
         if (dateTime != null) {
-            result.setDatetime( DATE_TIME_ENTRY_PB_CONVERTER.convertToPb(dateTime) );
+            result.setDatetime( convertToPbDateTimeEntry(dateTime) );
         }
 
         final DateTimeEntry withdrawDateTime = order.getWithdrawDatetime();
         if (withdrawDateTime != null) {
-            result.setWithdrawDatetime( DATE_TIME_ENTRY_PB_CONVERTER.convertToPb(withdrawDateTime) );
+            result.setWithdrawDatetime( convertToPbDateTimeEntry(withdrawDateTime) );
         }
 
         return result
