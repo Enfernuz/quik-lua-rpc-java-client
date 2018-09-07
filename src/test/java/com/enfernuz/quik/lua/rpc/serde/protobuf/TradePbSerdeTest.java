@@ -2,7 +2,6 @@ package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.DateTimeEntry;
 import com.enfernuz.quik.lua.rpc.api.structures.Trade;
-import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -16,7 +15,6 @@ import static org.junit.Assert.assertTrue;
 public class TradePbSerdeTest {
 
     private static SerdeModule sut;
-    private static PbConverter<QluaStructures.Trade, Trade> pbConverter;
 
     private static Trade expectedObject;
     private static byte[] expectedPbInput;
@@ -28,7 +26,6 @@ public class TradePbSerdeTest {
     public static void globalSetup() {
 
         sut = ProtobufSerdeModule.INSTANCE;
-        pbConverter = TradePbSerde.INSTANCE;
 
         final DateTimeEntry dateTimeEntry = DateTimeEntry.builder()
                 .mcs(1)
@@ -40,6 +37,17 @@ public class TradePbSerdeTest {
                 .weekDay(7)
                 .month(8)
                 .year(9)
+                .build();
+        final QluaStructures.DateTimeEntry pbDateTimeEntry = QluaStructures.DateTimeEntry.newBuilder()
+                .setMcs(1)
+                .setMs(2)
+                .setSec(3)
+                .setMin(4)
+                .setHour(5)
+                .setDay(6)
+                .setWeekDay(7)
+                .setMonth(8)
+                .setYear(9)
                 .build();
 
         expectedObject = Trade.builder()
@@ -92,7 +100,57 @@ public class TradePbSerdeTest {
                 .systemRef("47")
                 .uid("48")
                 .build();
-        expectedPbInput = pbConverter.convertToPb(expectedObject).toByteArray();
+        expectedPbInput = QluaStructures.Trade.newBuilder()
+                .setTradeNum(1L)
+                .setOrderNum(2L)
+                .setBrokerref("3")
+                .setUserid("4")
+                .setFirmid("5")
+                .setCanceledUid("6")
+                .setAccount("7")
+                .setPrice("8")
+                .setQty(9)
+                .setValue("10")
+                .setAccruedint("11")
+                .setYield("12")
+                .setSettlecode("13")
+                .setCpfirmid("14")
+                .setFlags(15)
+                .setPrice2("16")
+                .setReporate("17")
+                .setClientCode("18")
+                .setAccrued2("19")
+                .setRepoterm("20")
+                .setRepovalue("21")
+                .setRepo2Value("22")
+                .setStartDiscount("23")
+                .setLowerDiscount("24")
+                .setUpperDiscount("25")
+                .setBlockSecurities("26")
+                .setClearingComission("27")
+                .setExchangeComission("28")
+                .setTechCenterComission("29")
+                .setSettleDate("30")
+                .setSettleCurrency("31")
+                .setTradeCurrency("32")
+                .setExchangeCode("33")
+                .setStationId("34")
+                .setSecCode("35")
+                .setClassCode("36")
+                .setDatetime(pbDateTimeEntry)
+                .setBankAccId("38")
+                .setBrokerComission("39")
+                .setLinkedTrade("40")
+                .setPeriod(41)
+                .setTransId("42")
+                .setKind(43)
+                .setClearingBankAccid("44")
+                .setCanceledDatetime(pbDateTimeEntry)
+                .setClearingFirmid("46")
+                .setSystemRef("47")
+                .setUid("48")
+                .build()
+                .toByteArray();
 
         expectedObjectWithNullNonRequiredStringFileds = Trade.builder()
                 .tradeNum(1L)
@@ -102,8 +160,15 @@ public class TradePbSerdeTest {
                 .period(5)
                 .kind(6)
                 .build();
-        expectedPbInputWithEmptyNonRequiredStringFields =
-                pbConverter.convertToPb(expectedObjectWithNullNonRequiredStringFileds).toByteArray();
+        expectedPbInputWithEmptyNonRequiredStringFields = QluaStructures.Trade.newBuilder()
+                .setTradeNum(1L)
+                .setOrderNum(2L)
+                .setQty(3)
+                .setFlags(4)
+                .setPeriod(5)
+                .setKind(6)
+                .build()
+                .toByteArray();
     }
 
     @Test

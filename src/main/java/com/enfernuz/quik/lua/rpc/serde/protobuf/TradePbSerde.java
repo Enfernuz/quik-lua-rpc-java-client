@@ -11,15 +11,11 @@ import qlua.structs.QluaStructures;
 
 import java.util.Objects;
 
-import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.convertFromPbString;
-import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.convertToPbString;
+import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.*;
 
 enum TradePbSerde implements Serde<Trade>, PbConverter<QluaStructures.Trade, Trade> {
 
     INSTANCE;
-
-    private static final PbConverter<QluaStructures.DateTimeEntry, DateTimeEntry> DATE_TIME_ENTRY_PB_CONVERTER =
-            DateTimeEntryPbSerde.INSTANCE;
 
     @Override
     public byte[] serialize(final Trade trade) {
@@ -35,8 +31,6 @@ enum TradePbSerde implements Serde<Trade>, PbConverter<QluaStructures.Trade, Tra
     @Override
     public Trade convertFromPb(@NotNull QluaStructures.Trade trade) {
 
-        final QluaStructures.DateTimeEntry dateTime = trade.getDatetime();
-        final QluaStructures.DateTimeEntry canceledDateTime = trade.getCanceledDatetime();
         return Trade.builder()
                 .tradeNum( trade.getTradeNum() )
                 .orderNum( trade.getOrderNum() )
@@ -74,7 +68,7 @@ enum TradePbSerde implements Serde<Trade>, PbConverter<QluaStructures.Trade, Tra
                 .stationId( convertFromPbString(trade.getStationId()) )
                 .secCode( convertFromPbString(trade.getSecCode()) )
                 .classCode( convertFromPbString(trade.getClassCode()) )
-                .datetime(Objects.equals(dateTime, QluaStructures.DateTimeEntry.getDefaultInstance()) ? null : DATE_TIME_ENTRY_PB_CONVERTER.convertFromPb(dateTime) )
+                .datetime( convertFromPbDateTimeEntry(trade.getDatetime()) )
                 .bankAccId( convertFromPbString(trade.getBankAccId()) )
                 .brokerComission( convertFromPbString(trade.getBrokerComission()) )
                 .linkedTrade( convertFromPbString(trade.getLinkedTrade()) )
@@ -82,7 +76,7 @@ enum TradePbSerde implements Serde<Trade>, PbConverter<QluaStructures.Trade, Tra
                 .transId( convertFromPbString(trade.getTransId()) )
                 .kind( trade.getKind() )
                 .clearingBankAccId( convertFromPbString(trade.getClearingBankAccid()) )
-                .canceledDatetime( Objects.equals(canceledDateTime, QluaStructures.DateTimeEntry.getDefaultInstance()) ? null : DATE_TIME_ENTRY_PB_CONVERTER.convertFromPb(canceledDateTime) )
+                .canceledDatetime( convertFromPbDateTimeEntry(trade.getCanceledDatetime()) )
                 .clearingFirmId( convertFromPbString(trade.getClearingFirmid()) )
                 .systemRef( convertFromPbString(trade.getSystemRef()) )
                 .uid( convertFromPbString(trade.getUid()) )
@@ -92,7 +86,7 @@ enum TradePbSerde implements Serde<Trade>, PbConverter<QluaStructures.Trade, Tra
     @Override
     public QluaStructures.Trade convertToPb(@NotNull final Trade trade) {
 
-        return QluaStructures.Trade.newBuilder()
+        final QluaStructures.Trade.Builder result = QluaStructures.Trade.newBuilder()
                 .setTradeNum( trade.getTradeNum() )
                 .setOrderNum( trade.getOrderNum() )
                 .setBrokerref( convertToPbString(trade.getBrokerRef()) )
@@ -128,16 +122,28 @@ enum TradePbSerde implements Serde<Trade>, PbConverter<QluaStructures.Trade, Tra
                 .setExchangeCode( convertToPbString(trade.getExchangeCode()) )
                 .setStationId( convertToPbString(trade.getStationId()) )
                 .setSecCode( convertToPbString(trade.getSecCode()) )
-                .setClassCode( convertToPbString(trade.getClassCode()) )
-                .setDatetime( trade.getDatetime() == null ? QluaStructures.DateTimeEntry.getDefaultInstance() : DATE_TIME_ENTRY_PB_CONVERTER.convertToPb(trade.getDatetime()))
+                .setClassCode( convertToPbString(trade.getClassCode()) );
+
+        final DateTimeEntry datetime = trade.getDatetime();
+        if (datetime != null) {
+            result.setDatetime( convertToPbDateTimeEntry(datetime) );
+        }
+
+        result
                 .setBankAccId( convertToPbString(trade.getBankAccId()) )
                 .setBrokerComission( convertToPbString(trade.getBrokerComission()) )
                 .setLinkedTrade( convertToPbString(trade.getLinkedTrade()) )
                 .setPeriod( trade.getPeriod() )
                 .setTransId( convertToPbString(trade.getTransId()) )
                 .setKind( trade.getKind() )
-                .setClearingBankAccid( convertToPbString(trade.getClearingBankAccId()) )
-                .setCanceledDatetime( trade.getCanceledDatetime() == null ? QluaStructures.DateTimeEntry.getDefaultInstance() : DATE_TIME_ENTRY_PB_CONVERTER.convertToPb(trade.getCanceledDatetime()) )
+                .setClearingBankAccid( convertToPbString(trade.getClearingBankAccId()) );
+
+        final DateTimeEntry canceledDatetime = trade.getCanceledDatetime();
+        if (canceledDatetime != null) {
+            result.setCanceledDatetime( convertToPbDateTimeEntry(canceledDatetime) );
+        }
+
+        return result
                 .setClearingFirmid( convertToPbString(trade.getClearingFirmId()) )
                 .setSystemRef( convertToPbString(trade.getSystemRef()) )
                 .setUid( convertToPbString(trade.getUid()) )
