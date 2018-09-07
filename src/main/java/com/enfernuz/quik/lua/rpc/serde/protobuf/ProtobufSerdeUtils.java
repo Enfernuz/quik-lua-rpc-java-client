@@ -35,7 +35,7 @@ final class ProtobufSerdeUtils {
 
     @Contract("_ -> !null")
     static String convertToPbString(final String string) {
-        return Optional.ofNullable(string).orElse("");
+        return (string == null) ? "" : string;
     }
 
     @Nullable
@@ -43,8 +43,8 @@ final class ProtobufSerdeUtils {
         return Objects.equals(dateTimeEntry, QluaStructures.DateTimeEntry.getDefaultInstance()) ? null : DATE_TIME_ENTRY_PB_CONVERTER.convertFromPb(dateTimeEntry);
     }
 
-    static QluaStructures.DateTimeEntry convertToPbDateTimeEntry(final DateTimeEntry dateTimeEntry) {
-        return dateTimeEntry == null ? QluaStructures.DateTimeEntry.getDefaultInstance() : DATE_TIME_ENTRY_PB_CONVERTER.convertToPb(dateTimeEntry);
+    static QluaStructures.DateTimeEntry convertToPbDateTimeEntry(@NotNull final DateTimeEntry dateTimeEntry) {
+        return DATE_TIME_ENTRY_PB_CONVERTER.convertToPb(dateTimeEntry);
     }
 
     static void assertEquals(@NotNull final RPC.ProcedureType actual, @NotNull final RPC.ProcedureType expected) {
