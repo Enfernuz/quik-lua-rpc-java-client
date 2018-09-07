@@ -1,8 +1,8 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.messages.Message;
-import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
+import com.google.protobuf.ByteString;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import qlua.rpc.RPC;
@@ -15,33 +15,40 @@ import static org.junit.Assert.assertTrue;
 public class MessageRequestPbSerdeTest {
 
     private static SerdeModule sut;
-    private static PbConverter<qlua.rpc.Message.Request, Message.Request> pbConverter;
 
     private static Message.Request expectedObject;
     private static byte[] expectedPbInput;
 
-    private static Message.Request expectedObjectWithNullNonRequiredStringFileds;
-    private static byte[] expectedPbInputWithEmptyNonRequiredStringFields;
+    private static Message.Request expectedObjectWithOnlyRequiredFields;
+    private static byte[] expectedPbBytesWithOnlyRequiredFields;
 
     @BeforeClass
     public static void globalSetup() {
 
         sut = ProtobufSerdeModule.INSTANCE;
-        pbConverter = MessageRequestPbSerde.INSTANCE;
 
         expectedObject = new Message.Request("1", Message.IconType.WARNING);
+        final ByteString pbArgs = qlua.rpc.Message.Request.newBuilder()
+                .setMessage("1")
+                .setIconType(qlua.rpc.Message.IconType.WARNING)
+                .build()
+                .toByteString();
         expectedPbInput =
                 qlua.rpc.RPC.Request.newBuilder()
                         .setType(RPC.ProcedureType.MESSAGE)
-                        .setArgs(pbConverter.convertToPb(expectedObject).toByteString())
+                        .setArgs(pbArgs)
                         .build()
                         .toByteArray();
 
-        expectedObjectWithNullNonRequiredStringFileds = new Message.Request("1");
-        expectedPbInputWithEmptyNonRequiredStringFields =
+        expectedObjectWithOnlyRequiredFields = new Message.Request("1");
+        final ByteString pbArgsWithOnlyRequiredFields = qlua.rpc.Message.Request.newBuilder()
+                .setMessage("1")
+                .build()
+                .toByteString();
+        expectedPbBytesWithOnlyRequiredFields =
                 qlua.rpc.RPC.Request.newBuilder()
                         .setType(RPC.ProcedureType.MESSAGE)
-                        .setArgs(pbConverter.convertToPb(expectedObjectWithNullNonRequiredStringFileds).toByteString())
+                        .setArgs(pbArgsWithOnlyRequiredFields)
                         .build()
                         .toByteArray();
     }
@@ -57,9 +64,9 @@ public class MessageRequestPbSerdeTest {
     @Test
     public void testSerializePbInputWithEmptyNonRequiredStringFields() {
 
-        final byte[] actual = sut.serialize(expectedObjectWithNullNonRequiredStringFileds);
+        final byte[] actual = sut.serialize(expectedObjectWithOnlyRequiredFields);
 
-        assertTrue( Arrays.equals(expectedPbInputWithEmptyNonRequiredStringFields, actual) );
+        assertTrue( Arrays.equals(expectedPbBytesWithOnlyRequiredFields, actual) );
     }
 
     @Test
@@ -74,8 +81,8 @@ public class MessageRequestPbSerdeTest {
     public void testDeserializePbInputWithEmptyNonRequiredStringFields() {
 
         final Message.Request actualObject =
-                sut.deserialize(Message.Request.class, expectedPbInputWithEmptyNonRequiredStringFields);
+                sut.deserialize(Message.Request.class, expectedPbBytesWithOnlyRequiredFields);
 
-        assertEquals(actualObject, expectedObjectWithNullNonRequiredStringFileds);
+        assertEquals(actualObject, expectedObjectWithOnlyRequiredFields);
     }
 }
