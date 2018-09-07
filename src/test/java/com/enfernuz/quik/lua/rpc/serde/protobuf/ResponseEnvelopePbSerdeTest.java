@@ -2,8 +2,8 @@ package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.ServiceError;
 import com.enfernuz.quik.lua.rpc.api.structures.ResponseEnvelope;
-import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
+import com.google.protobuf.ByteString;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -16,7 +16,6 @@ import static org.junit.Assert.assertTrue;
 public class ResponseEnvelopePbSerdeTest {
 
     private static SerdeModule sut;
-    private static PbConverter<qlua.rpc.RPC.Response, ResponseEnvelope> pbConverter;
 
     private static ResponseEnvelope expectedObjectWithError;
     private static byte[] expectedPbInputForObjectWithError;
@@ -28,13 +27,25 @@ public class ResponseEnvelopePbSerdeTest {
     public static void globalSetup() {
 
         sut = ProtobufSerdeModule.INSTANCE;
-        pbConverter = ResponseEnvelopePbSerde.INSTANCE;
 
         expectedObjectWithError = ResponseEnvelope.withError(new ServiceError(1, "2"));
-        expectedPbInputForObjectWithError = pbConverter.convertToPb(expectedObjectWithError).toByteArray();
+        final ByteString pbError = qlua.rpc.RPC.Error.newBuilder()
+                .setCode(1)
+                .setMessage("2")
+                .build()
+                .toByteString();
+        expectedPbInputForObjectWithError = qlua.rpc.RPC.Response.newBuilder()
+                .setIsError(true)
+                .setResult(pbError)
+                .build()
+                .toByteArray();
 
-        expectedObjectWithResult = ResponseEnvelope.withResult("some data".getBytes(StandardCharsets.UTF_8));
-        expectedPbInputForObjectWithResult = pbConverter.convertToPb(expectedObjectWithResult).toByteArray();
+        final byte[] data = "some data".getBytes(StandardCharsets.UTF_8);
+        expectedObjectWithResult = ResponseEnvelope.withResult(data);
+        expectedPbInputForObjectWithResult = qlua.rpc.RPC.Response.newBuilder()
+                .setResult( ByteString.copyFrom(data) )
+                .build()
+                .toByteArray();
     }
 
     @Test
