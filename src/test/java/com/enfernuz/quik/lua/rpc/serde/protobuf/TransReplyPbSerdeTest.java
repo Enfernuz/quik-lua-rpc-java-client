@@ -2,7 +2,6 @@ package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.DateTimeEntry;
 import com.enfernuz.quik.lua.rpc.api.structures.TransReply;
-import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -16,19 +15,17 @@ import static org.junit.Assert.assertTrue;
 public class TransReplyPbSerdeTest {
 
     private static SerdeModule sut;
-    private static PbConverter<QluaStructures.Transaction, TransReply> pbConverter;
 
     private static TransReply expectedObject;
     private static byte[] expectedPbInput;
 
-    private static TransReply expectedObjectWithNullNonRequiredStringFileds;
-    private static byte[] expectedPbInputWithEmptyNonRequiredStringFields;
+    private static TransReply expectedObjectWithOnlyRequiredFields;
+    private static byte[] expectedPbInputWithOnlyRequiredFields;
 
     @BeforeClass
     public static void globalSetup() {
 
         sut = ProtobufSerdeModule.INSTANCE;
-        pbConverter = TransReplyPbSerde.INSTANCE;
 
         final DateTimeEntry dateTimeEntry = DateTimeEntry.builder()
                 .mcs(1)
@@ -40,6 +37,17 @@ public class TransReplyPbSerdeTest {
                 .weekDay(7)
                 .month(8)
                 .year(9)
+                .build();
+        final QluaStructures.DateTimeEntry pbDateTimeEntry = QluaStructures.DateTimeEntry.newBuilder()
+                .setMcs(1)
+                .setMs(2)
+                .setSec(3)
+                .setMin(4)
+                .setHour(5)
+                .setDay(6)
+                .setWeekDay(7)
+                .setMonth(8)
+                .setYear(9)
                 .build();
 
         expectedObject = TransReply.builder()
@@ -62,15 +70,39 @@ public class TransReplyPbSerdeTest {
                 .secCode("17")
                 .exchangeCode("18")
                 .build();
-        expectedPbInput = pbConverter.convertToPb(expectedObject).toByteArray();
+        expectedPbInput = QluaStructures.Transaction.newBuilder()
+                .setTransId(1L)
+                .setStatus(2)
+                .setResultMsg("3")
+                .setDateTime(pbDateTimeEntry)
+                .setUid("5")
+                .setFlags(6)
+                .setServerTransId("7")
+                .setOrderNum("8")
+                .setPrice("9")
+                .setQuantity("10")
+                .setBalance("11")
+                .setFirmId("12")
+                .setAccount("13")
+                .setClientCode("14")
+                .setBrokerref("15")
+                .setClassCode("16")
+                .setSecCode("17")
+                .setExchangeCode("18")
+                .build()
+                .toByteArray();
 
-        expectedObjectWithNullNonRequiredStringFileds = TransReply.builder()
+        expectedObjectWithOnlyRequiredFields = TransReply.builder()
                 .transId(1L)
                 .status(2)
                 .flags(3)
                 .build();
-        expectedPbInputWithEmptyNonRequiredStringFields =
-                pbConverter.convertToPb(expectedObjectWithNullNonRequiredStringFileds).toByteArray();
+        expectedPbInputWithOnlyRequiredFields = QluaStructures.Transaction.newBuilder()
+                .setTransId(1L)
+                .setStatus(2)
+                .setFlags(3)
+                .build()
+                .toByteArray();
     }
 
     @Test
@@ -84,9 +116,9 @@ public class TransReplyPbSerdeTest {
     @Test
     public void testSerializePbInputWithEmptyNonRequiredStringFields() {
 
-        final byte[] actual = sut.serialize(expectedObjectWithNullNonRequiredStringFileds);
+        final byte[] actual = sut.serialize(expectedObjectWithOnlyRequiredFields);
 
-        assertTrue( Arrays.equals(expectedPbInputWithEmptyNonRequiredStringFields, actual) );
+        assertTrue( Arrays.equals(expectedPbInputWithOnlyRequiredFields, actual) );
     }
 
     @Test
@@ -100,8 +132,8 @@ public class TransReplyPbSerdeTest {
     @Test
     public void testDeserializePbInputWithEmptyNonRequiredStringFields() {
 
-        final TransReply actualObject = sut.deserialize(TransReply.class, expectedPbInputWithEmptyNonRequiredStringFields);
+        final TransReply actualObject = sut.deserialize(TransReply.class, expectedPbInputWithOnlyRequiredFields);
 
-        assertEquals(actualObject, expectedObjectWithNullNonRequiredStringFileds);
+        assertEquals(actualObject, expectedObjectWithOnlyRequiredFields);
     }
 }

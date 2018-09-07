@@ -1,5 +1,6 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
+import com.enfernuz.quik.lua.rpc.api.structures.DateTimeEntry;
 import com.enfernuz.quik.lua.rpc.api.structures.TransReply;
 import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.Serde;
@@ -53,11 +54,17 @@ enum TransReplyPbSerde implements Serde<TransReply>, PbConverter<QluaStructures.
     @Override
     public QluaStructures.Transaction convertToPb(@NotNull final TransReply transReply) {
 
-        return QluaStructures.Transaction.newBuilder()
+        final QluaStructures.Transaction.Builder result = QluaStructures.Transaction.newBuilder()
                 .setTransId( transReply.getTransId() )
                 .setStatus( transReply.getStatus() )
-                .setResultMsg( convertToPbString(transReply.getResultMsg()) )
-                .setDateTime( convertToPbDateTimeEntry(transReply.getDateTime()) )
+                .setResultMsg( convertToPbString(transReply.getResultMsg()) );
+
+        final DateTimeEntry dateTime = transReply.getDateTime();
+        if (dateTime != null) {
+            result.setDateTime( convertToPbDateTimeEntry(dateTime) );
+        }
+
+        return result
                 .setUid( convertToPbString(transReply.getUid()) )
                 .setFlags( transReply.getFlags() )
                 .setServerTransId( convertToPbString(transReply.getServerTransId()) )
