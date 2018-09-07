@@ -2,7 +2,6 @@ package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.DateTimeEntry;
 import com.enfernuz.quik.lua.rpc.api.structures.NegDeal;
-import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -16,19 +15,17 @@ import static org.junit.Assert.assertTrue;
 public class NegDealPbSerdeTest {
 
     private static SerdeModule sut;
-    private static PbConverter<QluaStructures.NegDeal, NegDeal> pbConverter;
 
     private static NegDeal expectedObject;
     private static byte[] expectedPbInput;
 
-    private static NegDeal expectedObjectWithNullNonRequiredStringFileds;
-    private static byte[] expectedPbInputWithEmptyNonRequiredStringFields;
+    private static NegDeal expectedObjectWithOnlyRequiredFields;
+    private static byte[] expectedPbInputWithOnlyRequiredFields;
 
     @BeforeClass
     public static void globalSetup() {
 
         sut = ProtobufSerdeModule.INSTANCE;
-        pbConverter = NegDealPbSerde.INSTANCE;
 
         final DateTimeEntry dateTimeEntry = DateTimeEntry.builder()
                 .mcs(1)
@@ -40,6 +37,17 @@ public class NegDealPbSerdeTest {
                 .weekDay(7)
                 .month(8)
                 .year(9)
+                .build();
+        final QluaStructures.DateTimeEntry pbDateTimeEntry = QluaStructures.DateTimeEntry.newBuilder()
+                .setMcs(1)
+                .setMs(2)
+                .setSec(3)
+                .setMin(4)
+                .setHour(5)
+                .setDay(6)
+                .setWeekDay(7)
+                .setMonth(8)
+                .setYear(9)
                 .build();
 
         expectedObject = NegDeal.builder()
@@ -92,16 +100,71 @@ public class NegDealPbSerdeTest {
                 .withdrawDateTime(dateTimeEntry)
                 .dateTime(dateTimeEntry)
                 .build();
-        expectedPbInput = pbConverter.convertToPb(expectedObject).toByteArray();
+        expectedPbInput = QluaStructures.NegDeal.newBuilder()
+                .setNegDealNum(1L)
+                .setNegDealTime("2")
+                .setFlags(3)
+                .setBrokerref("4")
+                .setUserid("5")
+                .setFirmid("6")
+                .setCpuserid("7")
+                .setCpfirmid("8")
+                .setAccount("9")
+                .setPrice("10")
+                .setQty(11)
+                .setMatchref("12")
+                .setSettlecode("13")
+                .setYield("14")
+                .setAccruedint("15")
+                .setValue("16")
+                .setPrice2("17")
+                .setReporate("18")
+                .setRefundrate("19")
+                .setTransId("20")
+                .setClientCode("21")
+                .setRepoentry(22)
+                .setRepovalue("23")
+                .setRepo2Value("24")
+                .setRepoterm("25")
+                .setStartDiscount("26")
+                .setLowerDiscount("27")
+                .setUpperDiscount("28")
+                .setBlockSecurities("29")
+                .setUid("30")
+                .setWithdrawTime("31")
+                .setNegDealDate("32")
+                .setBalance("33")
+                .setOriginRepovalue("34")
+                .setOriginQty("35")
+                .setOriginDiscount("36")
+                .setNegDealActivationDate("37")
+                .setNegDealActivationTime("38")
+                .setQuoteno("39")
+                .setSettleCurrency("40")
+                .setSecCode("41")
+                .setClassCode("42")
+                .setBankAccId("43")
+                .setWithdrawDate("44")
+                .setLinkedorder("45")
+                .setActivationDateTime(pbDateTimeEntry)
+                .setWithdrawDateTime(pbDateTimeEntry)
+                .setDateTime(pbDateTimeEntry)
+                .build()
+                .toByteArray();
 
-        expectedObjectWithNullNonRequiredStringFileds = NegDeal.builder()
+        expectedObjectWithOnlyRequiredFields = NegDeal.builder()
                 .negDealNum(1L)
                 .flags(2)
                 .qty(3)
                 .repoEntry(4)
                 .build();
-        expectedPbInputWithEmptyNonRequiredStringFields =
-                pbConverter.convertToPb(expectedObjectWithNullNonRequiredStringFileds).toByteArray();
+        expectedPbInputWithOnlyRequiredFields = QluaStructures.NegDeal.newBuilder()
+                .setNegDealNum(1L)
+                .setFlags(2)
+                .setQty(3)
+                .setRepoentry(4)
+                .build()
+                .toByteArray();
     }
 
     @Test
@@ -113,11 +176,11 @@ public class NegDealPbSerdeTest {
     }
 
     @Test
-    public void testSerializePbInputWithEmptyNonRequiredStringFields() {
+    public void testSerializeWithOnlyRequiredFields() {
 
-        final byte[] actual = sut.serialize(expectedObjectWithNullNonRequiredStringFileds);
+        final byte[] actual = sut.serialize(expectedObjectWithOnlyRequiredFields);
 
-        assertTrue( Arrays.equals(expectedPbInputWithEmptyNonRequiredStringFields, actual) );
+        assertTrue( Arrays.equals(expectedPbInputWithOnlyRequiredFields, actual) );
     }
 
     @Test
@@ -129,10 +192,10 @@ public class NegDealPbSerdeTest {
     }
 
     @Test
-    public void testDeserializePbInputWithEmptyNonRequiredStringFields() {
+    public void testDeserializeWithOnlyRequiredFields() {
 
-        final NegDeal actualObject = sut.deserialize(NegDeal.class, expectedPbInputWithEmptyNonRequiredStringFields);
+        final NegDeal actualObject = sut.deserialize(NegDeal.class, expectedPbInputWithOnlyRequiredFields);
 
-        assertEquals(actualObject, expectedObjectWithNullNonRequiredStringFileds);
+        assertEquals(actualObject, expectedObjectWithOnlyRequiredFields);
     }
 }

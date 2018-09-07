@@ -1,5 +1,6 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
+import com.enfernuz.quik.lua.rpc.api.structures.DateTimeEntry;
 import com.enfernuz.quik.lua.rpc.api.structures.NegDeal;
 import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.Serde;
@@ -83,7 +84,7 @@ enum NegDealPbSerde implements Serde<NegDeal>, PbConverter<QluaStructures.NegDea
     @Override
     public QluaStructures.NegDeal convertToPb(@NotNull final NegDeal negDeal) {
 
-        return QluaStructures.NegDeal.newBuilder()
+        final QluaStructures.NegDeal.Builder result = QluaStructures.NegDeal.newBuilder()
                 .setNegDealNum( negDeal.getNegDealNum() )
                 .setNegDealTime( convertToPbString(negDeal.getNegDealTime()) )
                 .setFlags( negDeal.getFlags() )
@@ -128,10 +129,23 @@ enum NegDealPbSerde implements Serde<NegDeal>, PbConverter<QluaStructures.NegDea
                 .setClassCode( convertToPbString(negDeal.getClassCode()) )
                 .setBankAccId( convertToPbString(negDeal.getBankAccId()) )
                 .setWithdrawDate( convertToPbString(negDeal.getWithdrawDate()) )
-                .setLinkedorder( convertToPbString(negDeal.getLinkedOrder()) )
-                .setActivationDateTime( convertToPbDateTimeEntry(negDeal.getActivationDateTime()) )
-                .setWithdrawDateTime( convertToPbDateTimeEntry(negDeal.getWithdrawDateTime()) )
-                .setDateTime( convertToPbDateTimeEntry(negDeal.getDateTime()) )
-                .build();
+                .setLinkedorder( convertToPbString(negDeal.getLinkedOrder()) );
+
+        final DateTimeEntry activationDateTime = negDeal.getActivationDateTime();
+        if (activationDateTime != null) {
+            result.setActivationDateTime( convertToPbDateTimeEntry(activationDateTime) );
+        }
+
+        final DateTimeEntry withdrawDateTime = negDeal.getWithdrawDateTime();
+        if (withdrawDateTime != null) {
+            result.setWithdrawDateTime( convertToPbDateTimeEntry(withdrawDateTime) );
+        }
+
+        final DateTimeEntry dateTime = negDeal.getDateTime();
+        if (dateTime != null) {
+            result.setDateTime( convertToPbDateTimeEntry(dateTime) );
+        }
+
+        return result.build();
     }
 }
