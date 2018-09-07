@@ -1,7 +1,6 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.MoneyLimit;
-import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,19 +14,17 @@ import static org.junit.Assert.assertTrue;
 public class MoneyLimitPbSerdeTest {
 
     private static SerdeModule sut;
-    private static PbConverter<QluaStructures.MoneyLimit, MoneyLimit> pbConverter;
 
     private static MoneyLimit expectedObject;
     private static byte[] expectedPbInput;
 
-    private static MoneyLimit expectedObjectWithNullNonRequiredStringFileds;
-    private static byte[] expectedPbInputWithEmptyNonRequiredStringFields;
+    private static MoneyLimit expectedObjectWithOnlyRequiredFields;
+    private static byte[] expectedPbInputWithOnlyRequiredFields;
 
     @BeforeClass
     public static void globalSetup() {
 
         sut = ProtobufSerdeModule.INSTANCE;
-        pbConverter = MoneyLimitPbSerde.INSTANCE;
 
         expectedObject = MoneyLimit.builder()
                 .currCode("1")
@@ -44,13 +41,30 @@ public class MoneyLimitPbSerdeTest {
                 .leverage("12")
                 .limitKind(13)
                 .build();
-        expectedPbInput = pbConverter.convertToPb(expectedObject).toByteArray();
+        expectedPbInput = QluaStructures.MoneyLimit.newBuilder()
+                .setCurrcode("1")
+                .setTag("2")
+                .setFirmid("3")
+                .setClientCode("4")
+                .setOpenbal("5")
+                .setOpenlimit("6")
+                .setCurrentbal("7")
+                .setCurrentlimit("8")
+                .setLocked("9")
+                .setLockedValueCoef("10")
+                .setLockedMarginValue("11")
+                .setLeverage("12")
+                .setLimitKind(13)
+                .build()
+                .toByteArray();
 
-        expectedObjectWithNullNonRequiredStringFileds = MoneyLimit.builder()
+        expectedObjectWithOnlyRequiredFields = MoneyLimit.builder()
                 .limitKind(1)
                 .build();
-        expectedPbInputWithEmptyNonRequiredStringFields =
-                pbConverter.convertToPb(expectedObjectWithNullNonRequiredStringFileds).toByteArray();
+        expectedPbInputWithOnlyRequiredFields = QluaStructures.MoneyLimit.newBuilder()
+                .setLimitKind(1)
+                .build()
+                .toByteArray();
     }
 
     @Test
@@ -64,9 +78,9 @@ public class MoneyLimitPbSerdeTest {
     @Test
     public void testSerializePbInputWithEmptyNonRequiredStringFields() {
 
-        final byte[] actual = sut.serialize(expectedObjectWithNullNonRequiredStringFileds);
+        final byte[] actual = sut.serialize(expectedObjectWithOnlyRequiredFields);
 
-        assertTrue( Arrays.equals(expectedPbInputWithEmptyNonRequiredStringFields, actual) );
+        assertTrue( Arrays.equals(expectedPbInputWithOnlyRequiredFields, actual) );
     }
 
     @Test
@@ -80,8 +94,8 @@ public class MoneyLimitPbSerdeTest {
     @Test
     public void testDeserializePbInputWithEmptyNonRequiredStringFields() {
 
-        final MoneyLimit actualObject = sut.deserialize(MoneyLimit.class, expectedPbInputWithEmptyNonRequiredStringFields);
+        final MoneyLimit actualObject = sut.deserialize(MoneyLimit.class, expectedPbInputWithOnlyRequiredFields);
 
-        assertEquals(actualObject, expectedObjectWithNullNonRequiredStringFileds);
+        assertEquals(actualObject, expectedObjectWithOnlyRequiredFields);
     }
 }
