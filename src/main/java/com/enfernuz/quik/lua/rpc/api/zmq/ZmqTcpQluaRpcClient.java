@@ -137,8 +137,8 @@ public final class ZmqTcpQluaRpcClient extends AbstractTcpZmqClient implements T
     }
 
     @Override
-    public DelLabel.Result qlua_DelLabel(final DelLabel.Request request) {
-        return makeRPC(request, DelLabel.Result.class);
+    public boolean qlua_DelLabel(final DelLabel.Request request) {
+        return makeRPC(request, DelLabel.Result.class).isResult();
     }
 
     @Override

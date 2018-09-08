@@ -83,7 +83,7 @@ public interface QluaRpcClient extends Gateway, Securable {
      * @param request
      * @return
      */
-    DelLabel.Result qlua_DelLabel(DelLabel.Request request);
+    boolean qlua_DelLabel(DelLabel.Request request);
 
     /**
      *
