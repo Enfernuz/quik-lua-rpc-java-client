@@ -1,6 +1,7 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.messages.GetBuySellInfo;
+import com.enfernuz.quik.lua.rpc.api.messages.GetBuySellInfoEx;
 import com.enfernuz.quik.lua.rpc.api.structures.DateTimeEntry;
 import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.SerdeException;
@@ -24,6 +25,8 @@ final class ProtobufSerdeUtils {
             DateTimeEntryPbSerde.INSTANCE;
     private static final PbConverter<qlua.rpc.GetBuySellInfo.BuySellInfo, GetBuySellInfo.BuySellInfo> BUY_SELL_INFO_PB_CONVERTER =
             BuySellInfoPbSerde.INSTANCE;
+    private static final PbConverter<qlua.rpc.GetBuySellInfoEx.BuySellInfoEx, GetBuySellInfoEx.BuySellInfoEx> BUY_SELL_INFO_EX_PB_CONVERTER =
+            BuySellInfoExPbSerde.INSTANCE;
 
     @Contract(" -> fail")
     private ProtobufSerdeUtils() {
@@ -58,6 +61,16 @@ final class ProtobufSerdeUtils {
     @NotNull
     static qlua.rpc.GetBuySellInfo.BuySellInfo convertToPbBuySellInfo(@NotNull final GetBuySellInfo.BuySellInfo buySellInfo) {
         return BUY_SELL_INFO_PB_CONVERTER.convertToPb(buySellInfo);
+    }
+
+    @NotNull
+    static GetBuySellInfoEx.BuySellInfoEx convertFromPbBuySellInfoEx(@NotNull final qlua.rpc.GetBuySellInfoEx.BuySellInfoEx buySellInfoEx) {
+        return BUY_SELL_INFO_EX_PB_CONVERTER.convertFromPb(buySellInfoEx);
+    }
+
+    @NotNull
+    static qlua.rpc.GetBuySellInfoEx.BuySellInfoEx convertToPbBuySellInfoEx(@NotNull final GetBuySellInfoEx.BuySellInfoEx buySellInfoEx) {
+        return BUY_SELL_INFO_EX_PB_CONVERTER.convertToPb(buySellInfoEx);
     }
 
     static void assertEquals(@NotNull final RPC.ProcedureType actual, @NotNull final RPC.ProcedureType expected) {
