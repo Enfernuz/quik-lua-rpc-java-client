@@ -21,20 +21,20 @@ public interface QluaRpcClient extends Gateway, Securable {
      * @param request
      * @return
      */
-    AddColumn.Result qlua_AddColumn(AddColumn.Request request);
+    int qlua_AddColumn(AddColumn.Request request);
 
     /**
      *
      * @param request
      * @return
      */
-    AddLabel.Result qlua_AddLabel(AddLabel.Request request);
+    int qlua_AddLabel(AddLabel.Request request);
 
     /**
      *
      * @return
      */
-    AllocTable.Result qlua_AllocTable();
+    int qlua_AllocTable();
 
     /**
      *
@@ -48,28 +48,28 @@ public interface QluaRpcClient extends Gateway, Securable {
      * @param request
      * @return
      */
-    CancelParamRequest.Result qlua_CancelParamRequest(CancelParamRequest.Request request);
+    boolean qlua_CancelParamRequest(CancelParamRequest.Request request);
 
     /**
      *
      * @param request
      * @return
      */
-    Clear.Result qlua_Clear(Clear.Request request);
+    boolean qlua_Clear(Clear.Request request);
 
     /**
      *
      * @param request
      * @return
      */
-    CreateWindow.Result qlua_CreateWindow(CreateWindow.Request request);
+    int qlua_CreateWindow(CreateWindow.Request request);
 
     /**
      *
      * @param request
      * @return
      */
-    DelAllLabels.Result qlua_DelAllLabels(DelAllLabels.Request request);
+    boolean qlua_DelAllLabels(DelAllLabels.Request request);
 
     /**
      *

@@ -92,18 +92,18 @@ public final class ZmqTcpQluaRpcClient extends AbstractTcpZmqClient implements T
     }
 
     @Override
-    public AddColumn.Result qlua_AddColumn(final AddColumn.Request request) {
-        return makeRPC(request, AddColumn.Result.class);
+    public int qlua_AddColumn(final AddColumn.Request request) {
+        return makeRPC(request, AddColumn.Result.class).getResult();
     }
 
     @Override
-    public AddLabel.Result qlua_AddLabel(final AddLabel.Request request) {
-        return makeRPC(request, AddLabel.Result.class);
+    public int qlua_AddLabel(final AddLabel.Request request) {
+        return makeRPC(request, AddLabel.Result.class).getLabelId();
     }
 
     @Override
-    public AllocTable.Result qlua_AllocTable() {
-        return makeRPC(AllocTable.Request.INSTANCE, AllocTable.Result.class);
+    public int qlua_AllocTable() {
+        return makeRPC(AllocTable.Request.INSTANCE, AllocTable.Result.class).getTId();
     }
 
     @Override
@@ -112,23 +112,23 @@ public final class ZmqTcpQluaRpcClient extends AbstractTcpZmqClient implements T
     }
 
     @Override
-    public CancelParamRequest.Result qlua_CancelParamRequest(final CancelParamRequest.Request request) {
-        return makeRPC(request, CancelParamRequest.Result.class);
+    public boolean qlua_CancelParamRequest(final CancelParamRequest.Request request) {
+        return makeRPC(request, CancelParamRequest.Result.class).isResult();
     }
 
     @Override
-    public Clear.Result qlua_Clear(final Clear.Request request) {
-        return makeRPC(request, Clear.Result.class);
+    public boolean qlua_Clear(final Clear.Request request) {
+        return makeRPC(request, Clear.Result.class).isResult();
     }
 
     @Override
-    public CreateWindow.Result qlua_CreateWindow(final CreateWindow.Request request) {
-        return makeRPC(request, CreateWindow.Result.class);
+    public int qlua_CreateWindow(final CreateWindow.Request request) {
+        return makeRPC(request, CreateWindow.Result.class).getResult();
     }
 
     @Override
-    public DelAllLabels.Result qlua_DelAllLabels(final DelAllLabels.Request request) {
-        return makeRPC(request, DelAllLabels.Result.class);
+    public boolean qlua_DelAllLabels(final DelAllLabels.Request request) {
+        return makeRPC(request, DelAllLabels.Result.class).isResult();
     }
 
     @Override

@@ -14,6 +14,6 @@ final class DelAllLabelsResultJsonDeserializer extends JsonDeserializer<DelAllLa
     public DelAllLabels.Result deserialize(final JsonParser p, final DeserializationContext ctxt) throws IOException {
 
         final JsonNode node = p.getCodec().readTree(p);
-        return new DelAllLabels.Result( node.get("result").asBoolean() );
+        return DelAllLabels.Result.getInstance( node.get("result").asBoolean() );
     }
 }
