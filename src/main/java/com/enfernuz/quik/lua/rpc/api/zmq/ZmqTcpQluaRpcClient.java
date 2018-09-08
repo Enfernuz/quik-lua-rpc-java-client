@@ -152,8 +152,8 @@ public final class ZmqTcpQluaRpcClient extends AbstractTcpZmqClient implements T
     }
 
     @Override
-    public GetBuySellInfoEx.Result qlua_getBuySellInfoEx(final GetBuySellInfoEx.Request request) {
-        return makeRPC(request, GetBuySellInfoEx.Result.class);
+    public GetBuySellInfoEx.BuySellInfoEx qlua_getBuySellInfoEx(final GetBuySellInfoEx.Request request) {
+        return makeRPC(request, GetBuySellInfoEx.Result.class).getBuySellInfoEx();
     }
 
     @Override
