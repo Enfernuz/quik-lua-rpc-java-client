@@ -14,6 +14,6 @@ final class DeleteRowResultJsonDeserializer extends JsonDeserializer<DeleteRow.R
     public DeleteRow.Result deserialize(final JsonParser p, final DeserializationContext ctxt) throws IOException {
 
         final JsonNode node = p.getCodec().readTree(p);
-        return new DeleteRow.Result( node.get("result").asBoolean() );
+        return DeleteRow.Result.getInstance( node.get("result").asBoolean() );
     }
 }
