@@ -116,6 +116,8 @@ public enum ProtobufSerdeModule implements SerdeModule {
         registerSerde(result, CalcBuySell.Result.class, CalcBuySellResultPbSerde.INSTANCE);
         registerSerde(result, CancelParamRequest.Request.class, CancelParamRequestRequestPbSerde.INSTANCE);
         registerSerde(result, CancelParamRequest.Result.class, CancelParamRequestResultPbSerde.INSTANCE);
+        registerSerde(result, Clear.Request.class, ClearRequestPbSerde.INSTANCE);
+        registerSerde(result, Clear.Result.class, ClearResultPbSerde.INSTANCE);
         registerSerde(result, Message.Request.class, MessageRequestPbSerde.INSTANCE);
         registerSerde(result, Message.Result.class, MessageResultPbSerde.INSTANCE);
 

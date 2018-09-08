@@ -14,6 +14,6 @@ final class ClearResultJsonDeserializer extends JsonDeserializer<Clear.Result> {
     public Clear.Result deserialize(final JsonParser p, final DeserializationContext ctxt) throws IOException {
 
         final JsonNode node = p.getCodec().readTree(p);
-        return new Clear.Result( node.get("result").asBoolean() );
+        return Clear.Result.getInstance( node.get("result").asBoolean() );
     }
 }
