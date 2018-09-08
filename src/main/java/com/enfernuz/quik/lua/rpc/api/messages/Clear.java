@@ -47,6 +47,12 @@ public final class Clear {
 
             private static final Result TRUE = new Result(true);
             private static final Result FALSE = new Result(false);
+
+            // just in case
+            static {
+                assert TRUE.result == true;
+                assert FALSE.result == false;
+            }
         }
     }
 }
