@@ -15,6 +15,6 @@ final class DestroyTableResultJsonDeserializer extends JsonDeserializer<DestroyT
 
         final JsonNode node = p.getCodec().readTree(p);
 
-        return new DestroyTable.Result( node.get("result").asBoolean() );
+        return DestroyTable.Result.getInstance( node.get("result").asBoolean() );
     }
 }

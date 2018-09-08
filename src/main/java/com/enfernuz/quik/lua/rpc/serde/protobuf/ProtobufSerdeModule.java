@@ -126,6 +126,8 @@ public enum ProtobufSerdeModule implements SerdeModule {
         registerSerde(result, DeleteRow.Result.class, DeleteRowResultPbSerde.INSTANCE);
         registerSerde(result, DelLabel.Request.class, DelLabelRequestPbSerde.INSTANCE);
         registerSerde(result, DelLabel.Result.class, DelLabelResultPbSerde.INSTANCE);
+        registerSerde(result, DestroyTable.Request.class, DestroyTableRequestPbSerde.INSTANCE);
+        registerSerde(result, DestroyTable.Result.class, DestroyTableResultPbSerde.INSTANCE);
         registerSerde(result, Message.Request.class, MessageRequestPbSerde.INSTANCE);
         registerSerde(result, Message.Result.class, MessageResultPbSerde.INSTANCE);
 
