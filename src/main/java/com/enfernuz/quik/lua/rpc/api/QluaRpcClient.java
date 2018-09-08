@@ -76,7 +76,7 @@ public interface QluaRpcClient extends Gateway, Securable {
      * @param request
      * @return
      */
-    DeleteRow.Result qlua_DeleteRow(DeleteRow.Request request);
+    boolean qlua_DeleteRow(DeleteRow.Request request);
 
     /**
      *

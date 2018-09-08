@@ -132,8 +132,8 @@ public final class ZmqTcpQluaRpcClient extends AbstractTcpZmqClient implements T
     }
 
     @Override
-    public DeleteRow.Result qlua_DeleteRow(final DeleteRow.Request request) {
-        return makeRPC(request, DeleteRow.Result.class);
+    public boolean qlua_DeleteRow(final DeleteRow.Request request) {
+        return makeRPC(request, DeleteRow.Result.class).isResult();
     }
 
     @Override
