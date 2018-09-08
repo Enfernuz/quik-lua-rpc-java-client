@@ -97,7 +97,7 @@ public interface QluaRpcClient extends Gateway, Securable {
      * @param request
      * @return
      */
-    GetBuySellInfo.Result qlua_getBuySellInfo(GetBuySellInfo.Request request);
+    GetBuySellInfo.BuySellInfo qlua_getBuySellInfo(GetBuySellInfo.Request request);
 
     /**
      *
