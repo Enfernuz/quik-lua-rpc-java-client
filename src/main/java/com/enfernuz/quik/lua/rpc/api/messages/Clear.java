@@ -1,7 +1,6 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
 import com.google.common.base.MoreObjects;
-import lombok.EqualsAndHashCode;
 import lombok.Value;
 import org.jetbrains.annotations.Contract;
 
@@ -25,7 +24,7 @@ public final class Clear {
     @Value
     public static class Result {
 
-        private final boolean result;
+        boolean result;
 
         @Contract(pure = true)
         public static Result getInstance(final boolean result) {
