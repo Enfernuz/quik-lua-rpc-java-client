@@ -90,7 +90,7 @@ public interface QluaRpcClient extends Gateway, Securable {
      * @param request
      * @return
      */
-    DestroyTable.Result qlua_DestroyTable(DestroyTable.Request request);
+    boolean qlua_DestroyTable(DestroyTable.Request request);
 
     /**
      *

@@ -142,8 +142,8 @@ public final class ZmqTcpQluaRpcClient extends AbstractTcpZmqClient implements T
     }
 
     @Override
-    public DestroyTable.Result qlua_DestroyTable(final DestroyTable.Request request) {
-        return makeRPC(request, DestroyTable.Result.class);
+    public boolean qlua_DestroyTable(final DestroyTable.Request request) {
+        return makeRPC(request, DestroyTable.Result.class).isResult();
     }
 
     @Override
