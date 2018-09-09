@@ -26,7 +26,7 @@ public class Firm {
     @Builder
     @JsonCreator
     private Firm(
-            @JsonProperty("firm_id") @NonNull final String firmId,
+            @JsonProperty(value = "firm_id", required = true) @NonNull final String firmId,
             @JsonProperty("firm_name") final String firmName,
             @JsonProperty(value = "status", required = true) int status,
             @JsonProperty("exchange") final String exchange) {
