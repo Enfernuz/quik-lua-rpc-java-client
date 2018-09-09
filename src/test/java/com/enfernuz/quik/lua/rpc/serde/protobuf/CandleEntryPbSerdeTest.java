@@ -19,6 +19,9 @@ public class CandleEntryPbSerdeTest {
     private static CandleEntry expectedObject;
     private static byte[] expectedPbInput;
 
+    private static CandleEntry expectedObjectInitializedByDefault;
+    private static byte[] expectedPbInputInitializedByDefault;
+
     @BeforeClass
     public static void globalSetup() {
 
@@ -66,6 +69,9 @@ public class CandleEntryPbSerdeTest {
                 .setDoesExist(7)
                 .build()
                 .toByteArray();
+
+        expectedObjectInitializedByDefault = CandleEntry.builder().build();
+        expectedPbInputInitializedByDefault = QluaStructures.CandleEntry.getDefaultInstance().toByteArray();
     }
 
     @Test
@@ -82,5 +88,21 @@ public class CandleEntryPbSerdeTest {
         final CandleEntry actualObject = sut.deserialize(CandleEntry.class, expectedPbInput);
 
         assertEquals(actualObject, expectedObject);
+    }
+
+    @Test
+    public void testSerializeObjectInitializedByDefault() {
+
+        final byte[] actual = sut.serialize(expectedObjectInitializedByDefault);
+
+        assertTrue( Arrays.equals(expectedPbInputInitializedByDefault, actual) );
+    }
+
+    @Test
+    public void testDeserializePbInputInitializedByDefault() {
+
+        final CandleEntry actualObject = sut.deserialize(CandleEntry.class, expectedPbInputInitializedByDefault);
+
+        assertEquals(actualObject, expectedObjectInitializedByDefault);
     }
 }

@@ -16,7 +16,6 @@ import qlua.structs.QluaStructures;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 
 final class ProtobufSerdeUtils {
 
@@ -53,9 +52,9 @@ final class ProtobufSerdeUtils {
         return (string == null) ? "" : string;
     }
 
-    @Nullable
-    static DateTimeEntry convertFromPbDateTimeEntry(final QluaStructures.DateTimeEntry dateTimeEntry) {
-        return Objects.equals(dateTimeEntry, QluaStructures.DateTimeEntry.getDefaultInstance()) ? null : DATE_TIME_ENTRY_PB_CONVERTER.convertFromPb(dateTimeEntry);
+    @NotNull
+    static DateTimeEntry convertFromPbDateTimeEntry(@NotNull final QluaStructures.DateTimeEntry dateTimeEntry) {
+        return DATE_TIME_ENTRY_PB_CONVERTER.convertFromPb(dateTimeEntry);
     }
 
     static QluaStructures.DateTimeEntry convertToPbDateTimeEntry(@NotNull final DateTimeEntry dateTimeEntry) {

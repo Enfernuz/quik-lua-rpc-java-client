@@ -29,7 +29,7 @@ enum StopOrderPbSerde implements Serde<StopOrder>, PbConverter<QluaStructures.St
     @Override
     public StopOrder convertFromPb(@NotNull QluaStructures.StopOrder stopOrder) {
 
-        return StopOrder.builder()
+        final StopOrder.StopOrderBuilder result = StopOrder.builder()
                 .orderNum( stopOrder.getOrderNum() )
                 .orderTime( convertFromPbString(stopOrder.getOrdertime()) )
                 .flags( stopOrder.getFlags() )
@@ -63,10 +63,17 @@ enum StopOrderPbSerde implements Serde<StopOrder>, PbConverter<QluaStructures.St
                 .classCode( convertFromPbString(stopOrder.getClassCode()) )
                 .conditionSecCode( convertFromPbString(stopOrder.getConditionSecCode()) )
                 .conditionClassCode( convertFromPbString(stopOrder.getConditionClassCode()) )
-                .canceledUid( convertFromPbString(stopOrder.getCanceledUid()) )
-                .orderDateTime( convertFromPbDateTimeEntry(stopOrder.getOrderDateTime()) )
-                .withdrawDateTime( convertFromPbDateTimeEntry(stopOrder.getWithdrawDatetime()) )
-                .build();
+                .canceledUid( convertFromPbString(stopOrder.getCanceledUid()) );
+
+        if (stopOrder.hasOrderDateTime()) {
+            result.orderDateTime( convertFromPbDateTimeEntry(stopOrder.getOrderDateTime()) );
+        }
+
+        if (stopOrder.hasWithdrawDatetime()) {
+            result.withdrawDateTime( convertFromPbDateTimeEntry(stopOrder.getWithdrawDatetime()) );
+        }
+
+        return result.build();
     }
 
     @Override

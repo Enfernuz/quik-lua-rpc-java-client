@@ -31,7 +31,7 @@ enum TradePbSerde implements Serde<Trade>, PbConverter<QluaStructures.Trade, Tra
     @Override
     public Trade convertFromPb(@NotNull QluaStructures.Trade trade) {
 
-        return Trade.builder()
+        final Trade.TradeBuilder result = Trade.builder()
                 .tradeNum( trade.getTradeNum() )
                 .orderNum( trade.getOrderNum() )
                 .brokerRef( convertFromPbString(trade.getBrokerref()) )
@@ -68,7 +68,6 @@ enum TradePbSerde implements Serde<Trade>, PbConverter<QluaStructures.Trade, Tra
                 .stationId( convertFromPbString(trade.getStationId()) )
                 .secCode( convertFromPbString(trade.getSecCode()) )
                 .classCode( convertFromPbString(trade.getClassCode()) )
-                .datetime( convertFromPbDateTimeEntry(trade.getDatetime()) )
                 .bankAccId( convertFromPbString(trade.getBankAccId()) )
                 .brokerComission( convertFromPbString(trade.getBrokerComission()) )
                 .linkedTrade( convertFromPbString(trade.getLinkedTrade()) )
@@ -76,11 +75,19 @@ enum TradePbSerde implements Serde<Trade>, PbConverter<QluaStructures.Trade, Tra
                 .transId( convertFromPbString(trade.getTransId()) )
                 .kind( trade.getKind() )
                 .clearingBankAccId( convertFromPbString(trade.getClearingBankAccid()) )
-                .canceledDatetime( convertFromPbDateTimeEntry(trade.getCanceledDatetime()) )
                 .clearingFirmId( convertFromPbString(trade.getClearingFirmid()) )
                 .systemRef( convertFromPbString(trade.getSystemRef()) )
-                .uid( convertFromPbString(trade.getUid()) )
-                .build();
+                .uid( convertFromPbString(trade.getUid()) );
+
+        if (trade.hasDatetime()) {
+            result.datetime( convertFromPbDateTimeEntry(trade.getDatetime()) );
+        }
+
+        if (trade.hasCanceledDatetime()) {
+            result.canceledDatetime( convertFromPbDateTimeEntry(trade.getCanceledDatetime()) );
+        }
+
+        return result.build();
     }
 
     @Override
@@ -122,31 +129,28 @@ enum TradePbSerde implements Serde<Trade>, PbConverter<QluaStructures.Trade, Tra
                 .setExchangeCode( convertToPbString(trade.getExchangeCode()) )
                 .setStationId( convertToPbString(trade.getStationId()) )
                 .setSecCode( convertToPbString(trade.getSecCode()) )
-                .setClassCode( convertToPbString(trade.getClassCode()) );
-
-        final DateTimeEntry datetime = trade.getDatetime();
-        if (datetime != null) {
-            result.setDatetime( convertToPbDateTimeEntry(datetime) );
-        }
-
-        result
+                .setClassCode( convertToPbString(trade.getClassCode()) )
                 .setBankAccId( convertToPbString(trade.getBankAccId()) )
                 .setBrokerComission( convertToPbString(trade.getBrokerComission()) )
                 .setLinkedTrade( convertToPbString(trade.getLinkedTrade()) )
                 .setPeriod( trade.getPeriod() )
                 .setTransId( convertToPbString(trade.getTransId()) )
                 .setKind( trade.getKind() )
-                .setClearingBankAccid( convertToPbString(trade.getClearingBankAccId()) );
+                .setClearingBankAccid( convertToPbString(trade.getClearingBankAccId()) )
+                .setClearingFirmid( convertToPbString(trade.getClearingFirmId()) )
+                .setSystemRef( convertToPbString(trade.getSystemRef()) )
+                .setUid( convertToPbString(trade.getUid()) );
+
+        final DateTimeEntry datetime = trade.getDatetime();
+        if (datetime != null) {
+            result.setDatetime( convertToPbDateTimeEntry(datetime) );
+        }
 
         final DateTimeEntry canceledDatetime = trade.getCanceledDatetime();
         if (canceledDatetime != null) {
             result.setCanceledDatetime( convertToPbDateTimeEntry(canceledDatetime) );
         }
 
-        return result
-                .setClearingFirmid( convertToPbString(trade.getClearingFirmId()) )
-                .setSystemRef( convertToPbString(trade.getSystemRef()) )
-                .setUid( convertToPbString(trade.getUid()) )
-                .build();
+        return result.build();
     }
 }

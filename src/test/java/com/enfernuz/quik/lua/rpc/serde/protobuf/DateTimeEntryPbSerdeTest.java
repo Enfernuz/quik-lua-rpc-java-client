@@ -18,6 +18,9 @@ public class DateTimeEntryPbSerdeTest {
     private static DateTimeEntry expectedObject;
     private static byte[] expectedPbInput;
 
+    private static DateTimeEntry expectedObjectInitializedByDefault;
+    private static byte[] expectedPbInputInitializedByDefault;
+
     @BeforeClass
     public static void globalSetup() {
 
@@ -46,21 +49,41 @@ public class DateTimeEntryPbSerdeTest {
                 .setYear(9)
                 .build()
                 .toByteArray();
+
+        expectedObjectInitializedByDefault = DateTimeEntry.builder().build();
+        expectedPbInputInitializedByDefault = QluaStructures.DateTimeEntry.getDefaultInstance().toByteArray();
     }
 
     @Test
     public void testSerialize() {
 
-        final byte[] actual = sut.serialize(expectedObject);
-
-        assertTrue( Arrays.equals(expectedPbInput, actual) );
+        assertTrue(
+                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
+        );
     }
 
     @Test
     public void testDeserialize() {
+        assertEquals(expectedObject, sut.deserialize(DateTimeEntry.class, expectedPbInput));
+    }
 
-        final DateTimeEntry actualObject = sut.deserialize(DateTimeEntry.class, expectedPbInput);
+    @Test
+    public void testSerializeObjectInitializedByDefault() {
 
-        assertEquals(actualObject, expectedObject);
+        assertTrue(
+                Arrays.equals(
+                        expectedPbInputInitializedByDefault,
+                        sut.serialize(expectedObjectInitializedByDefault)
+                )
+        );
+    }
+
+    @Test
+    public void testDeserializePbInputInitializedByDefault() {
+
+        assertEquals(
+                expectedObjectInitializedByDefault,
+                sut.deserialize(DateTimeEntry.class, expectedPbInputInitializedByDefault)
+        );
     }
 }

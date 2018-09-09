@@ -27,7 +27,7 @@ public class CandleEntry implements Comparable<CandleEntry> {
             final String high,
             final String low,
             final String volume,
-            final @NonNull DateTimeEntry dateTimeEntry,
+            final DateTimeEntry dateTimeEntry,
             final int doesExist) {
 
         this.open = open;

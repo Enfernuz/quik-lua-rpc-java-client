@@ -31,7 +31,7 @@ enum OrderPbSerde implements Serde<Order>, PbConverter<QluaStructures.Order, Ord
     @Override
     public Order convertFromPb(@NotNull QluaStructures.Order order) {
 
-        return Order.builder()
+        final Order.OrderBuilder result = Order.builder()
                 .orderNum( order.getOrderNum() )
                 .flags( order.getFlags() )
                 .brokerRef( convertFromPbString(order.getBrokerref()) )
@@ -56,8 +56,6 @@ enum OrderPbSerde implements Serde<Order>, PbConverter<QluaStructures.Order, Ord
                 .expiry( convertFromPbString(order.getExpiry()) )
                 .secCode( convertFromPbString(order.getSecCode()) )
                 .classCode( convertFromPbString(order.getClassCode()) )
-                .datetime( convertFromPbDateTimeEntry(order.getDatetime()) )
-                .withdrawDatetime( convertFromPbDateTimeEntry(order.getWithdrawDatetime()) )
                 .bankAccId( convertFromPbString(order.getBankAccId()) )
                 .valueEntryType( order.getValueEntryType() )
                 .repoTerm( convertFromPbString(order.getRepoterm()) )
@@ -73,8 +71,17 @@ enum OrderPbSerde implements Serde<Order>, PbConverter<QluaStructures.Order, Ord
                 .acntType( order.getAcntType() )
                 .capacity( order.getCapacity() )
                 .passiveOnlyOrder( order.getPassiveOnlyOrder() )
-                .visible( order.getVisible() )
-                .build();
+                .visible( order.getVisible() );
+
+        if (order.hasDatetime()) {
+            result.datetime( convertFromPbDateTimeEntry(order.getDatetime()) );
+        }
+
+        if (order.hasWithdrawDatetime()) {
+            result.withdrawDatetime( convertFromPbDateTimeEntry(order.getWithdrawDatetime()) );
+        }
+
+        return result.build();
     }
 
     @Override
@@ -104,19 +111,7 @@ enum OrderPbSerde implements Serde<Order>, PbConverter<QluaStructures.Order, Ord
                 .setLinkedorder( convertToPbString(order.getLinkedOrder()) )
                 .setExpiry( convertToPbString(order.getExpiry()) )
                 .setSecCode( convertToPbString(order.getSecCode()) )
-                .setClassCode( convertToPbString(order.getClassCode()) );
-
-        final DateTimeEntry dateTime = order.getDatetime();
-        if (dateTime != null) {
-            result.setDatetime( convertToPbDateTimeEntry(dateTime) );
-        }
-
-        final DateTimeEntry withdrawDateTime = order.getWithdrawDatetime();
-        if (withdrawDateTime != null) {
-            result.setWithdrawDatetime( convertToPbDateTimeEntry(withdrawDateTime) );
-        }
-
-        return result
+                .setClassCode( convertToPbString(order.getClassCode()) )
                 .setBankAccId( convertToPbString(order.getBankAccId()) )
                 .setValueEntryType( order.getValueEntryType() )
                 .setRepoterm( convertToPbString(order.getRepoTerm()) )
@@ -132,7 +127,18 @@ enum OrderPbSerde implements Serde<Order>, PbConverter<QluaStructures.Order, Ord
                 .setAcntType( order.getAcntType() )
                 .setCapacity( order.getCapacity() )
                 .setPassiveOnlyOrder( order.getPassiveOnlyOrder() )
-                .setVisible( order.getVisible() )
-                .build();
+                .setVisible( order.getVisible() );
+
+        final DateTimeEntry dateTime = order.getDatetime();
+        if (dateTime != null) {
+            result.setDatetime( convertToPbDateTimeEntry(dateTime) );
+        }
+
+        final DateTimeEntry withdrawDateTime = order.getWithdrawDatetime();
+        if (withdrawDateTime != null) {
+            result.setWithdrawDatetime( convertToPbDateTimeEntry(withdrawDateTime) );
+        }
+
+        return result.build();
     }
 }

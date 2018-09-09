@@ -29,11 +29,10 @@ enum TransReplyPbSerde implements Serde<TransReply>, PbConverter<QluaStructures.
     @Override
     public TransReply convertFromPb(@NotNull QluaStructures.Transaction transaction) {
 
-        return TransReply.builder()
+        final TransReply.TransReplyBuilder result = TransReply.builder()
                 .transId( transaction.getTransId() )
                 .status( transaction.getStatus() )
                 .resultMsg( convertFromPbString(transaction.getResultMsg()) )
-                .dateTime( convertFromPbDateTimeEntry(transaction.getDateTime()) )
                 .uid( convertFromPbString(transaction.getUid()) )
                 .flags( transaction.getFlags() )
                 .serverTransId( convertFromPbString(transaction.getServerTransId()) )
@@ -47,8 +46,13 @@ enum TransReplyPbSerde implements Serde<TransReply>, PbConverter<QluaStructures.
                 .brokerRef( convertFromPbString(transaction.getBrokerref()) )
                 .classCode( convertFromPbString(transaction.getClassCode()) )
                 .secCode( convertFromPbString(transaction.getSecCode()) )
-                .exchangeCode( convertFromPbString(transaction.getExchangeCode()) )
-                .build();
+                .exchangeCode( convertFromPbString(transaction.getExchangeCode()) );
+
+        if (transaction.hasDateTime()) {
+            result.dateTime( convertFromPbDateTimeEntry(transaction.getDateTime()) );
+        }
+
+        return result.build();
     }
 
     @Override
@@ -57,14 +61,7 @@ enum TransReplyPbSerde implements Serde<TransReply>, PbConverter<QluaStructures.
         final QluaStructures.Transaction.Builder result = QluaStructures.Transaction.newBuilder()
                 .setTransId( transReply.getTransId() )
                 .setStatus( transReply.getStatus() )
-                .setResultMsg( convertToPbString(transReply.getResultMsg()) );
-
-        final DateTimeEntry dateTime = transReply.getDateTime();
-        if (dateTime != null) {
-            result.setDateTime( convertToPbDateTimeEntry(dateTime) );
-        }
-
-        return result
+                .setResultMsg( convertToPbString(transReply.getResultMsg()) )
                 .setUid( convertToPbString(transReply.getUid()) )
                 .setFlags( transReply.getFlags() )
                 .setServerTransId( convertToPbString(transReply.getServerTransId()) )
@@ -78,7 +75,13 @@ enum TransReplyPbSerde implements Serde<TransReply>, PbConverter<QluaStructures.
                 .setBrokerref( convertToPbString(transReply.getBrokerRef()) )
                 .setClassCode( convertToPbString(transReply.getClassCode()) )
                 .setSecCode( convertToPbString(transReply.getSecCode()) )
-                .setExchangeCode( convertToPbString(transReply.getExchangeCode()) )
-                .build();
+                .setExchangeCode( convertToPbString(transReply.getExchangeCode()) );
+
+        final DateTimeEntry dateTime = transReply.getDateTime();
+        if (dateTime != null) {
+            result.setDateTime( convertToPbDateTimeEntry(dateTime) );
+        }
+
+        return result.build();
     }
 }

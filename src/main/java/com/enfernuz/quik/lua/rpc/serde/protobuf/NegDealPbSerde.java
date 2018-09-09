@@ -29,7 +29,7 @@ enum NegDealPbSerde implements Serde<NegDeal>, PbConverter<QluaStructures.NegDea
     @Override
     public NegDeal convertFromPb(@NotNull QluaStructures.NegDeal negDeal) {
 
-        return NegDeal.builder()
+        final NegDeal.NegDealBuilder result = NegDeal.builder()
                 .negDealNum( negDeal.getNegDealNum() )
                 .negDealTime( convertFromPbString(negDeal.getNegDealTime()) )
                 .flags( negDeal.getFlags() )
@@ -74,11 +74,21 @@ enum NegDealPbSerde implements Serde<NegDeal>, PbConverter<QluaStructures.NegDea
                 .classCode( convertFromPbString(negDeal.getClassCode()) )
                 .bankAccId( convertFromPbString(negDeal.getBankAccId()) )
                 .withdrawDate( convertFromPbString(negDeal.getWithdrawDate()) )
-                .linkedOrder( convertFromPbString(negDeal.getLinkedorder()) )
-                .activationDateTime( convertFromPbDateTimeEntry(negDeal.getActivationDateTime()) )
-                .withdrawDateTime( convertFromPbDateTimeEntry(negDeal.getWithdrawDateTime()) )
-                .dateTime( convertFromPbDateTimeEntry(negDeal.getDateTime()) )
-                .build();
+                .linkedOrder( convertFromPbString(negDeal.getLinkedorder()) );
+
+        if (negDeal.hasActivationDateTime()) {
+            result.activationDateTime( convertFromPbDateTimeEntry(negDeal.getActivationDateTime()) );
+        }
+
+        if (negDeal.hasWithdrawDateTime()) {
+            result.withdrawDateTime( convertFromPbDateTimeEntry(negDeal.getWithdrawDateTime()) );
+        }
+
+        if (negDeal.hasDateTime()) {
+            result.dateTime( convertFromPbDateTimeEntry(negDeal.getDateTime()) );
+        }
+
+        return result.build();
     }
 
     @Override
