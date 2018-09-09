@@ -42,6 +42,9 @@ final class ProtobufSerdeUtils {
     private static final PbConverter<QluaStructures.FuturesClientHolding, FuturesClientHolding> FUTURES_CLIENT_HOLDING_PB_CONVERTER =
             FuturesClientHoldingPbSerde.INSTANCE;
 
+    private static final PbConverter<QluaStructures.FuturesLimit, FuturesLimit> FUTURES_LIMIT_PB_CONVERTER =
+            FuturesLimitPbSerde.INSTANCE;
+
     @Contract(" -> fail")
     private ProtobufSerdeUtils() {
         throw new AssertionError("This should never be invoked.");
@@ -135,6 +138,16 @@ final class ProtobufSerdeUtils {
     @NotNull
     static FuturesClientHolding convertFromPbFuturesClientHolding(@NotNull final QluaStructures.FuturesClientHolding futuresClientHolding) {
         return FUTURES_CLIENT_HOLDING_PB_CONVERTER.convertFromPb(futuresClientHolding);
+    }
+
+    @NotNull
+    static QluaStructures.FuturesLimit convertToPbFuturesLimit(@NotNull final FuturesLimit futuresLimit) {
+        return FUTURES_LIMIT_PB_CONVERTER.convertToPb(futuresLimit);
+    }
+
+    @NotNull
+    static FuturesLimit convertFromPbFuturesLimit(@NotNull final QluaStructures.FuturesLimit futuresLimit) {
+        return FUTURES_LIMIT_PB_CONVERTER.convertFromPb(futuresLimit);
     }
 
     static void assertEquals(@NotNull final RPC.ProcedureType actual, @NotNull final RPC.ProcedureType expected) {
