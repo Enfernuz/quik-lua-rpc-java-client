@@ -115,7 +115,7 @@ public class TransReplyPbSerdeTest {
 
     @Test
     public void testDeserialize() {
-        assertEquals(expectedObject, sut.deserialize(DateTimeEntry.class, expectedPbInput));
+        assertEquals(expectedObject, sut.deserialize(TransReply.class, expectedPbInput));
     }
 
     @Test
@@ -134,7 +134,7 @@ public class TransReplyPbSerdeTest {
 
         assertEquals(
                 expectedObjectWithOnlyRequiredFields,
-                sut.deserialize(DateTimeEntry.class, expectedPbInputWithOnlyRequiredFields)
+                sut.deserialize(TransReply.class, expectedPbInputWithOnlyRequiredFields)
         );
     }
 }
