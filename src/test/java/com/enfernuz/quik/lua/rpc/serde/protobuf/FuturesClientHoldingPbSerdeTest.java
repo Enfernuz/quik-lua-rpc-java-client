@@ -18,8 +18,8 @@ public class FuturesClientHoldingPbSerdeTest {
     private static FuturesClientHolding expectedObject;
     private static byte[] expectedPbInput;
 
-    private static FuturesClientHolding expectedObjectWithNullNonRequiredStringFileds;
-    private static byte[] expectedPbInputWithEmptyNonRequiredStringFields;
+    private static FuturesClientHolding expectedObjectWithOnlyRequiredFields;
+    private static byte[] expectedPbInputWithOnlyRequiredFields;
 
     @BeforeClass
     public static void globalSetup() {
@@ -70,50 +70,40 @@ public class FuturesClientHoldingPbSerdeTest {
                 .build()
                 .toByteArray();
 
-        expectedObjectWithNullNonRequiredStringFileds = FuturesClientHolding.builder()
-                .type(1)
-                .openBuys(2)
-                .openSells(3)
-                .sessionStatus(4)
-                .build();
-        expectedPbInputWithEmptyNonRequiredStringFields = QluaStructures.FuturesClientHolding.newBuilder()
-                .setType(1)
-                .setOpenbuys(2)
-                .setOpensells(3)
-                .setSessionStatus(4)
-                .build()
-                .toByteArray();
+        expectedObjectWithOnlyRequiredFields = FuturesClientHolding.builder().build();
+        expectedPbInputWithOnlyRequiredFields = QluaStructures.FuturesClientHolding.newBuilder().build().toByteArray();
     }
 
     @Test
     public void testSerialize() {
 
-        final byte[] actual = sut.serialize(expectedObject);
-
-        assertTrue( Arrays.equals(expectedPbInput, actual) );
-    }
-
-    @Test
-    public void testSerializePbInputWithEmptyNonRequiredStringFields() {
-
-        final byte[] actual = sut.serialize(expectedObjectWithNullNonRequiredStringFileds);
-
-        assertTrue( Arrays.equals(expectedPbInputWithEmptyNonRequiredStringFields, actual) );
+        assertTrue(
+                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
+        );
     }
 
     @Test
     public void testDeserialize() {
-
-        final FuturesClientHolding actualObject = sut.deserialize(FuturesClientHolding.class, expectedPbInput);
-
-        assertEquals(actualObject, expectedObject);
+        assertEquals(expectedObject, sut.deserialize(FuturesClientHolding.class, expectedPbInput));
     }
 
     @Test
-    public void testDeserializePbInputWithEmptyNonRequiredStringFields() {
+    public void testSerialize_WithOnlyRequiredFields() {
 
-        final FuturesClientHolding actualObject = sut.deserialize(FuturesClientHolding.class, expectedPbInputWithEmptyNonRequiredStringFields);
+        assertTrue(
+                Arrays.equals(
+                        expectedPbInputWithOnlyRequiredFields,
+                        sut.serialize(expectedObjectWithOnlyRequiredFields)
+                )
+        );
+    }
 
-        assertEquals(actualObject, expectedObjectWithNullNonRequiredStringFileds);
+    @Test
+    public void testDeserialize_WithOnlyRequiredFields() {
+
+        assertEquals(
+                expectedObjectWithOnlyRequiredFields,
+                sut.deserialize(FuturesClientHolding.class, expectedPbInputWithOnlyRequiredFields)
+        );
     }
 }

@@ -56,7 +56,7 @@ public class FirmPbSerdeTest {
                 Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
         );
     }
-    
+
     @Test
     public void testDeserialize() {
         assertEquals(expectedObject, sut.deserialize(Firm.class, expectedPbInput));
