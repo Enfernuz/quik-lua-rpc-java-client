@@ -1,6 +1,8 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
 import com.enfernuz.quik.lua.rpc.api.structures.DepoLimit;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.Builder;
 import lombok.NonNull;
@@ -13,10 +15,19 @@ public final class GetDepoEx {
     @Value
     public static class Request {
 
+        @JsonProperty(value = "firmid", required = true)
         String firmId;
+
+        @JsonProperty(value = "client_code", required = true)
         String clientCode;
+
+        @JsonProperty(value = "sec_code", required = true)
         String secCode;
+
+        @JsonProperty(value = "trdaccid", required = true)
         String trdAccId;
+
+        @JsonProperty(value = "limit_kind", required = true)
         int limitKind;
 
         @Builder
@@ -50,6 +61,11 @@ public final class GetDepoEx {
     public static class Result {
 
         DepoLimit depoEx;
+
+        @JsonCreator
+        public Result(@JsonProperty("depo_ex") final DepoLimit depoEx) {
+            this.depoEx = depoEx;
+        }
 
         @Override
         public String toString() {

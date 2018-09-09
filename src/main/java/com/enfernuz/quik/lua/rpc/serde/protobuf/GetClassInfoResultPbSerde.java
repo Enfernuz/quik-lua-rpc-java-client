@@ -45,7 +45,7 @@ enum GetClassInfoResultPbSerde implements Serde<GetClassInfo.Result>, PbConverte
         final qlua.rpc.GetClassInfo.Result.Builder pbResult = qlua.rpc.GetClassInfo.Result.newBuilder();
         final ClassInfo classInfo = result.getClassInfo();
         if (classInfo != null) {
-            pbResult.setClassInfo( convertToPbClassInfo(result.getClassInfo()) );
+            pbResult.setClassInfo( convertToPbClassInfo(classInfo) );
         }
 
         return pbResult.build();

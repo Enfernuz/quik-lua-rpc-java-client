@@ -1,6 +1,5 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
-import com.enfernuz.quik.lua.rpc.api.messages.GetFuturesHolding;
 import com.enfernuz.quik.lua.rpc.api.structures.FuturesClientHolding;
 import com.enfernuz.quik.lua.rpc.serde.json.jackson.QluaJsonModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,9 +17,13 @@ public class GetFuturesHoldingJsonSerdeTest {
     private static ObjectMapper sut;
 
     private static GetFuturesHolding.Request requestObj;
-    private static GetFuturesHolding.Result resultObj;
     private static String requestJson;
+
+    private static GetFuturesHolding.Result resultObj;
     private static String resultJson;
+
+    private static GetFuturesHolding.Result resultObjWithOnlyRequiredFields;
+    private static String resultJsonWithOnlyRequiredFields;
 
     @BeforeClass
     public static void globalSetup() throws IOException {
@@ -34,6 +37,8 @@ public class GetFuturesHoldingJsonSerdeTest {
                 .secCode("3")
                 .type(4)
                 .build();
+        requestJson =
+                Resources.toString(Resources.getResource("json/getFuturesHolding.request.json"), Charsets.UTF_8);
 
         final FuturesClientHolding futuresClientHolding = FuturesClientHolding.builder()
                 .firmId("1")
@@ -58,11 +63,11 @@ public class GetFuturesHoldingJsonSerdeTest {
                 .build();
 
         resultObj = new GetFuturesHolding.Result(futuresClientHolding);
+        resultJson = Resources.toString(Resources.getResource("json/getFuturesHolding.result.json"), Charsets.UTF_8);
 
-        requestJson =
-                Resources.toString(Resources.getResource("json/getFuturesHolding.request.json"), Charsets.UTF_8);
-        resultJson =
-                Resources.toString(Resources.getResource("json/getFuturesHolding.result.json"), Charsets.UTF_8);
+        resultObjWithOnlyRequiredFields = new GetFuturesHolding.Result(null);
+        resultJsonWithOnlyRequiredFields =
+                Resources.toString(Resources.getResource("json/getFuturesHolding.result.only_required_fields.json"), Charsets.UTF_8);
     }
 
     @Test
@@ -79,5 +84,13 @@ public class GetFuturesHoldingJsonSerdeTest {
         final GetFuturesHolding.Result actualResultObj = sut.readValue(resultJson, GetFuturesHolding.Result.class);
 
         assertEquals(resultObj, actualResultObj);
+    }
+
+    @Test
+    public void testDeserializeResultWithOnlyRequiredFields() throws IOException {
+
+        final GetFuturesHolding.Result actualResultObj = sut.readValue(resultJsonWithOnlyRequiredFields, GetFuturesHolding.Result.class);
+
+        assertEquals(resultObjWithOnlyRequiredFields, actualResultObj);
     }
 }
