@@ -18,8 +18,8 @@ public class FuturesLimitPbSerdeTest {
     private static FuturesLimit expectedObject;
     private static byte[] expectedPbInput;
 
-    private static FuturesLimit expectedObjectWithNullNonRequiredStringFileds;
-    private static byte[] expectedPbInputWithEmptyNonRequiredStringFields;
+    private static FuturesLimit expectedObjectWithOnlyRequiredFields;
+    private static byte[] expectedPbInputWithOnlyRequiredFields;
 
     @BeforeClass
     public static void globalSetup() {
@@ -66,44 +66,39 @@ public class FuturesLimitPbSerdeTest {
                 .build()
                 .toByteArray();
 
-        expectedObjectWithNullNonRequiredStringFileds = FuturesLimit.builder()
-                .limitType(1)
-                .build();
-        expectedPbInputWithEmptyNonRequiredStringFields = QluaStructures.FuturesLimit.newBuilder()
-                .setLimitType(1)
-                .build()
-                .toByteArray();
+        expectedObjectWithOnlyRequiredFields = FuturesLimit.builder().build();
+        expectedPbInputWithOnlyRequiredFields = QluaStructures.FuturesLimit.newBuilder().build().toByteArray();
     }
 
     @Test
     public void testSerialize() {
-
-        final byte[] actual = sut.serialize(expectedObject);
-
-        assertTrue( Arrays.equals(expectedPbInput, actual) );
-    }
-
-    @Test
-    public void testSerializePbInputWithEmptyNonRequiredStringFields() {
-
-        final byte[] actual = sut.serialize(expectedObjectWithNullNonRequiredStringFileds);
-
-        assertTrue( Arrays.equals(expectedPbInputWithEmptyNonRequiredStringFields, actual) );
+        assertTrue(
+                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
+        );
     }
 
     @Test
     public void testDeserialize() {
-
-        final FuturesLimit actualObject = sut.deserialize(FuturesLimit.class, expectedPbInput);
-
-        assertEquals(actualObject, expectedObject);
+        assertEquals(expectedObject, sut.deserialize(FuturesLimit.class, expectedPbInput));
     }
 
     @Test
-    public void testDeserializePbInputWithEmptyNonRequiredStringFields() {
+    public void testSerialize_WithOnlyRequiredFields() {
 
-        final FuturesLimit actualObject = sut.deserialize(FuturesLimit.class, expectedPbInputWithEmptyNonRequiredStringFields);
+        assertTrue(
+                Arrays.equals(
+                        expectedPbInputWithOnlyRequiredFields,
+                        sut.serialize(expectedObjectWithOnlyRequiredFields)
+                )
+        );
+    }
 
-        assertEquals(actualObject, expectedObjectWithNullNonRequiredStringFileds);
+    @Test
+    public void testDeserialize_WithOnlyRequiredFields() {
+
+        assertEquals(
+                expectedObjectWithOnlyRequiredFields,
+                sut.deserialize(FuturesLimit.class, expectedPbInputWithOnlyRequiredFields)
+        );
     }
 }
