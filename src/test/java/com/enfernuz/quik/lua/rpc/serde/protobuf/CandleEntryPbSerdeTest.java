@@ -19,8 +19,8 @@ public class CandleEntryPbSerdeTest {
     private static CandleEntry expectedObject;
     private static byte[] expectedPbInput;
 
-    private static CandleEntry expectedObjectInitializedByDefault;
-    private static byte[] expectedPbInputInitializedByDefault;
+    private static CandleEntry expectedObjectWithOnlyRequiredFields;
+    private static byte[] expectedPbInputWithOnlyRequiredFields;
 
     @BeforeClass
     public static void globalSetup() {
@@ -70,39 +70,40 @@ public class CandleEntryPbSerdeTest {
                 .build()
                 .toByteArray();
 
-        expectedObjectInitializedByDefault = CandleEntry.builder().build();
-        expectedPbInputInitializedByDefault = QluaStructures.CandleEntry.getDefaultInstance().toByteArray();
+        expectedObjectWithOnlyRequiredFields = CandleEntry.builder().build();
+        expectedPbInputWithOnlyRequiredFields = QluaStructures.CandleEntry.newBuilder().build().toByteArray();
     }
 
     @Test
     public void testSerialize() {
 
-        final byte[] actual = sut.serialize(expectedObject);
-
-        assertTrue( Arrays.equals(expectedPbInput, actual) );
+        assertTrue(
+                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
+        );
     }
 
     @Test
     public void testDeserialize() {
-
-        final CandleEntry actualObject = sut.deserialize(CandleEntry.class, expectedPbInput);
-
-        assertEquals(actualObject, expectedObject);
+        assertEquals(expectedObject, sut.deserialize(CandleEntry.class, expectedPbInput));
     }
 
     @Test
-    public void testSerializeObjectInitializedByDefault() {
+    public void testSerialize_WithOnlyRequiredFields() {
 
-        final byte[] actual = sut.serialize(expectedObjectInitializedByDefault);
-
-        assertTrue( Arrays.equals(expectedPbInputInitializedByDefault, actual) );
+        assertTrue(
+                Arrays.equals(
+                        expectedPbInputWithOnlyRequiredFields,
+                        sut.serialize(expectedObjectWithOnlyRequiredFields)
+                )
+        );
     }
 
     @Test
-    public void testDeserializePbInputInitializedByDefault() {
+    public void testDeserialize_WithOnlyRequiredFields() {
 
-        final CandleEntry actualObject = sut.deserialize(CandleEntry.class, expectedPbInputInitializedByDefault);
-
-        assertEquals(actualObject, expectedObjectInitializedByDefault);
+        assertEquals(
+                expectedObjectWithOnlyRequiredFields,
+                sut.deserialize(CandleEntry.class, expectedPbInputWithOnlyRequiredFields)
+        );
     }
 }
