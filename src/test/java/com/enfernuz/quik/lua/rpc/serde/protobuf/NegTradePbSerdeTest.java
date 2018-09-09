@@ -154,58 +154,40 @@ public class NegTradePbSerdeTest {
                 .build()
                 .toByteArray();
 
-        expectedObjectWithOnlyRequiredFields = NegTrade.builder()
-                .tradeNum(1L)
-                .flags(2)
-                .qty(3)
-                .type(4)
-                .operationType(5)
-                .settled(6)
-                .clearingType(7)
-                .exFlags(8)
-                .build();
-        expectedPbInputWithOnlyRequiredFields = QluaStructures.NegTrade.newBuilder()
-                .setTradeNum(1L)
-                .setFlags(2)
-                .setQty(3)
-                .setType(4)
-                .setOperationType(5)
-                .setSettled(6)
-                .setClearingType(7)
-                .setExFlags(8)
-                .build()
-                .toByteArray();
+        expectedObjectWithOnlyRequiredFields = NegTrade.builder().build();
+        expectedPbInputWithOnlyRequiredFields = QluaStructures.NegTrade.newBuilder().build().toByteArray();
     }
 
     @Test
     public void testSerialize() {
 
-        final byte[] actual = sut.serialize(expectedObject);
-
-        assertTrue( Arrays.equals(expectedPbInput, actual) );
-    }
-
-    @Test
-    public void testSerializePbInputWithEmptyNonRequiredStringFields() {
-
-        final byte[] actual = sut.serialize(expectedObjectWithOnlyRequiredFields);
-
-        assertTrue( Arrays.equals(expectedPbInputWithOnlyRequiredFields, actual) );
+        assertTrue(
+                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
+        );
     }
 
     @Test
     public void testDeserialize() {
-
-        final NegTrade actualObject = sut.deserialize(NegTrade.class, expectedPbInput);
-
-        assertEquals(actualObject, expectedObject);
+        assertEquals(expectedObject, sut.deserialize(NegTrade.class, expectedPbInput));
     }
 
     @Test
-    public void testDeserializePbInputWithEmptyNonRequiredStringFields() {
+    public void testSerialize_WithOnlyRequiredFields() {
 
-        final NegTrade actualObject = sut.deserialize(NegTrade.class, expectedPbInputWithOnlyRequiredFields);
+        assertTrue(
+                Arrays.equals(
+                        expectedPbInputWithOnlyRequiredFields,
+                        sut.serialize(expectedObjectWithOnlyRequiredFields)
+                )
+        );
+    }
 
-        assertEquals(actualObject, expectedObjectWithOnlyRequiredFields);
+    @Test
+    public void testDeserialize_WithOnlyRequiredFields() {
+
+        assertEquals(
+                expectedObjectWithOnlyRequiredFields,
+                sut.deserialize(NegTrade.class, expectedPbInputWithOnlyRequiredFields)
+        );
     }
 }
