@@ -18,8 +18,8 @@ public class DateTimeEntryPbSerdeTest {
     private static DateTimeEntry expectedObject;
     private static byte[] expectedPbInput;
 
-    private static DateTimeEntry expectedObjectInitializedByDefault;
-    private static byte[] expectedPbInputInitializedByDefault;
+    private static DateTimeEntry expectedObjectWithOnlyRequiredFields;
+    private static byte[] expectedPbInputWithOnlyRequiredFields;
 
     @BeforeClass
     public static void globalSetup() {
@@ -50,8 +50,8 @@ public class DateTimeEntryPbSerdeTest {
                 .build()
                 .toByteArray();
 
-        expectedObjectInitializedByDefault = DateTimeEntry.builder().build();
-        expectedPbInputInitializedByDefault = QluaStructures.DateTimeEntry.getDefaultInstance().toByteArray();
+        expectedObjectWithOnlyRequiredFields = DateTimeEntry.builder().build();
+        expectedPbInputWithOnlyRequiredFields = QluaStructures.DateTimeEntry.newBuilder().build().toByteArray();
     }
 
     @Test
@@ -68,22 +68,22 @@ public class DateTimeEntryPbSerdeTest {
     }
 
     @Test
-    public void testSerializeObjectInitializedByDefault() {
+    public void testSerialize_WithOnlyRequiredFields() {
 
         assertTrue(
                 Arrays.equals(
-                        expectedPbInputInitializedByDefault,
-                        sut.serialize(expectedObjectInitializedByDefault)
+                        expectedPbInputWithOnlyRequiredFields,
+                        sut.serialize(expectedObjectWithOnlyRequiredFields)
                 )
         );
     }
 
     @Test
-    public void testDeserializePbInputInitializedByDefault() {
+    public void testDeserialize_WithOnlyRequiredFields() {
 
         assertEquals(
-                expectedObjectInitializedByDefault,
-                sut.deserialize(DateTimeEntry.class, expectedPbInputInitializedByDefault)
+                expectedObjectWithOnlyRequiredFields,
+                sut.deserialize(DateTimeEntry.class, expectedPbInputWithOnlyRequiredFields)
         );
     }
 }
