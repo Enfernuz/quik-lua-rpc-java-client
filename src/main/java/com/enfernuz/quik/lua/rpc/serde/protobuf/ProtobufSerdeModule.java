@@ -105,6 +105,7 @@ public enum ProtobufSerdeModule implements SerdeModule {
         registerSerde(result, QuoteEventInfo.class, QuoteEventInfoPbSerde.INSTANCE);
         registerSerde(result, CandleEntry.class, CandleEntryPbSerde.INSTANCE);
         registerSerde(result, ClassInfo.class, ClassInfoPbSerde.INSTANCE);
+        registerSerde(result, Depo.class, DepoPbSerde.INSTANCE);
 
         registerSerde(result, ServiceError.class, ServiceErrorPbSerde.INSTANCE);
         registerSerde(result, ResponseEnvelope.class, ResponseEnvelopePbSerde.INSTANCE);
