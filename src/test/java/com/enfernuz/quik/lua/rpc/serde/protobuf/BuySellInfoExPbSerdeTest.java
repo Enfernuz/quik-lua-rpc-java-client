@@ -18,6 +18,9 @@ public class BuySellInfoExPbSerdeTest {
     private static BuySellInfoEx expectedObject;
     private static byte[] expectedPbInput;
 
+    private static BuySellInfoEx expectedObjectWithOnlyRequiredFields;
+    private static byte[] expectedPbInputWithOnlyRequiredFields;
+
     @BeforeClass
     public static void globalSetup() {
 
@@ -94,21 +97,46 @@ public class BuySellInfoExPbSerdeTest {
                 .setIsShortAllowed("9")
                 .build()
                 .toByteArray();
+
+        expectedObjectWithOnlyRequiredFields = BuySellInfoEx.builder()
+                .buySellInfo(buySellInfo)
+                .build();
+        expectedPbInputWithOnlyRequiredFields = qlua.rpc.GetBuySellInfoEx.BuySellInfoEx.newBuilder()
+                .setBuySellInfo(pbBuySellInfo)
+                .build()
+                .toByteArray();
     }
 
     @Test
     public void testSerialize() {
 
-        final byte[] actual = sut.serialize(expectedObject);
-
-        assertTrue( Arrays.equals(expectedPbInput, actual) );
+        assertTrue(
+                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
+        );
     }
 
     @Test
     public void testDeserialize() {
+        assertEquals(expectedObject, sut.deserialize(BuySellInfoEx.class, expectedPbInput));
+    }
 
-        final BuySellInfoEx actualObject = sut.deserialize(BuySellInfoEx.class, expectedPbInput);
+    @Test
+    public void testSerialize_WithOnlyRequiredFields() {
 
-        assertEquals(actualObject, expectedObject);
+        assertTrue(
+                Arrays.equals(
+                        expectedPbInputWithOnlyRequiredFields,
+                        sut.serialize(expectedObjectWithOnlyRequiredFields)
+                )
+        );
+    }
+
+    @Test
+    public void testDeserialize_WithOnlyRequiredFields() {
+
+        assertEquals(
+                expectedObjectWithOnlyRequiredFields,
+                sut.deserialize(BuySellInfoEx.class, expectedPbInputWithOnlyRequiredFields)
+        );
     }
 }
