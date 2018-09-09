@@ -155,6 +155,8 @@ public enum ProtobufSerdeModule implements SerdeModule {
         registerSerde(result, GetFuturesHolding.Result.class, GetFuturesHoldingResultPbSerde.INSTANCE);
         registerSerde(result, GetFuturesLimit.Request.class, GetFuturesLimitRequestPbSerde.INSTANCE);
         registerSerde(result, GetFuturesLimit.Result.class, GetFuturesLimitResultPbSerde.INSTANCE);
+        registerSerde(result, GetInfoParam.Request.class, GetInfoParamRequestPbSerde.INSTANCE);
+        registerSerde(result, GetInfoParam.Result.class, GetInfoParamResultPbSerde.INSTANCE);
         registerSerde(result, Message.Request.class, MessageRequestPbSerde.INSTANCE);
         registerSerde(result, Message.Result.class, MessageResultPbSerde.INSTANCE);
 

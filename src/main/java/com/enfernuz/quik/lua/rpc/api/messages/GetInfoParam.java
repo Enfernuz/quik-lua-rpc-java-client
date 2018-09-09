@@ -13,7 +13,11 @@ public final class GetInfoParam {
     @Value
     public static class Request {
 
-        @NonNull String paramName;
+        String paramName;
+
+        public Request(@NonNull final String paramName) {
+            this.paramName = paramName;
+        }
 
         @Override
         public String toString() {
@@ -29,7 +33,7 @@ public final class GetInfoParam {
         String infoParam;
 
         @JsonCreator
-        public Result(final @JsonProperty(value = "info_param") String infoParam) {
+        public Result(final @JsonProperty(value = "info_param", required = true) @NonNull String infoParam) {
             this.infoParam = infoParam;
         }
 
