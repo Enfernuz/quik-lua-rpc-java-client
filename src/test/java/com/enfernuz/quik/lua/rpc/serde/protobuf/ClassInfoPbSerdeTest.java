@@ -18,6 +18,9 @@ public class ClassInfoPbSerdeTest {
     private static ClassInfo expectedObject;
     private static byte[] expectedPbInput;
 
+    private static ClassInfo expectedObjectWithOnlyRequiredFields;
+    private static byte[] expectedPbInputWithOnlyRequiredFields;
+
     @BeforeClass
     public static void globalSetup() {
 
@@ -38,21 +41,41 @@ public class ClassInfoPbSerdeTest {
                 .setNsecs(5)
                 .build()
                 .toByteArray();
+
+        expectedObjectWithOnlyRequiredFields = ClassInfo.builder().build();
+        expectedPbInputWithOnlyRequiredFields = QluaStructures.Klass.newBuilder().build().toByteArray();
     }
 
     @Test
     public void testSerialize() {
 
-        final byte[] actual = sut.serialize(expectedObject);
-
-        assertTrue( Arrays.equals(expectedPbInput, actual) );
+        assertTrue(
+                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
+        );
     }
 
     @Test
     public void testDeserialize() {
+        assertEquals(expectedObject, sut.deserialize(ClassInfo.class, expectedPbInput));
+    }
 
-        final ClassInfo actualObject = sut.deserialize(ClassInfo.class, expectedPbInput);
+    @Test
+    public void testSerialize_WithOnlyRequiredFields() {
 
-        assertEquals(actualObject, expectedObject);
+        assertTrue(
+                Arrays.equals(
+                        expectedPbInputWithOnlyRequiredFields,
+                        sut.serialize(expectedObjectWithOnlyRequiredFields)
+                )
+        );
+    }
+
+    @Test
+    public void testDeserialize_WithOnlyRequiredFields() {
+
+        assertEquals(
+                expectedObjectWithOnlyRequiredFields,
+                sut.deserialize(ClassInfo.class, expectedPbInputWithOnlyRequiredFields)
+        );
     }
 }
