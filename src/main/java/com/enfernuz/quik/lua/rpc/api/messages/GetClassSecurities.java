@@ -11,7 +11,11 @@ public final class GetClassSecurities {
     @Value
     public static class Request {
 
-        @NonNull String classCode;
+        String classCode;
+
+        public Request(@NonNull final String classCode) {
+            this.classCode = classCode;
+        }
 
         @Override
         public String toString() {
