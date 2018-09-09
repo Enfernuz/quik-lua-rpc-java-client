@@ -33,16 +33,13 @@ public class StopEventInfoPbSerdeTest {
     @Test
     public void testSerialize() {
 
-        final byte[] actual = sut.serialize(expectedObject);
-
-        assertTrue( Arrays.equals(expectedPbInput, actual) );
+        assertTrue(
+                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
+        );
     }
 
     @Test
     public void testDeserialize() {
-
-        final StopEventInfo actualObject = sut.deserialize(StopEventInfo.class, expectedPbInput);
-
-        assertEquals(actualObject, expectedObject);
+        assertEquals(expectedObject, sut.deserialize(StopEventInfo.class, expectedPbInput));
     }
 }
