@@ -36,44 +36,40 @@ public class MoneyLimitDeletePbSerdeTest {
                 .build()
                 .toByteArray();
 
-        expectedObjectWithOnlyRequiredFields = MoneyLimitDelete.builder()
-                .limitKind(1)
-                .build();
-        expectedPbInputWithOnlyRequiredFields = QluaStructures.MoneyLimitDelete.newBuilder()
-                .setLimitKind(1)
-                .build()
-                .toByteArray();
+        expectedObjectWithOnlyRequiredFields = MoneyLimitDelete.builder().build();
+        expectedPbInputWithOnlyRequiredFields = QluaStructures.MoneyLimitDelete.newBuilder().build().toByteArray();
     }
 
     @Test
     public void testSerialize() {
 
-        final byte[] actual = sut.serialize(expectedObject);
-
-        assertTrue( Arrays.equals(expectedPbInput, actual) );
-    }
-
-    @Test
-    public void testSerializePbInputWithEmptyNonRequiredStringFields() {
-
-        final byte[] actual = sut.serialize(expectedObjectWithOnlyRequiredFields);
-
-        assertTrue( Arrays.equals(expectedPbInputWithOnlyRequiredFields, actual) );
+        assertTrue(
+                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
+        );
     }
 
     @Test
     public void testDeserialize() {
-
-        final MoneyLimitDelete actualObject = sut.deserialize(MoneyLimitDelete.class, expectedPbInput);
-
-        assertEquals(actualObject, expectedObject);
+        assertEquals(expectedObject, sut.deserialize(MoneyLimitDelete.class, expectedPbInput));
     }
 
     @Test
-    public void testDeserializePbInputWithEmptyNonRequiredStringFields() {
+    public void testSerialize_WithOnlyRequiredFields() {
 
-        final MoneyLimitDelete actualObject = sut.deserialize(MoneyLimitDelete.class, expectedPbInputWithOnlyRequiredFields);
+        assertTrue(
+                Arrays.equals(
+                        expectedPbInputWithOnlyRequiredFields,
+                        sut.serialize(expectedObjectWithOnlyRequiredFields)
+                )
+        );
+    }
 
-        assertEquals(actualObject, expectedObjectWithOnlyRequiredFields);
+    @Test
+    public void testDeserialize_WithOnlyRequiredFields() {
+
+        assertEquals(
+                expectedObjectWithOnlyRequiredFields,
+                sut.deserialize(MoneyLimitDelete.class, expectedPbInputWithOnlyRequiredFields)
+        );
     }
 }
