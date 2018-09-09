@@ -1,0 +1,6 @@
+{
+  "method" : "getClassInfo",
+  "args" : {
+    "class_code" : "1"
+  }
+}

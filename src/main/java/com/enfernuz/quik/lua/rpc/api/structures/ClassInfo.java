@@ -1,5 +1,7 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.*;
 import lombok.experimental.NonFinal;
@@ -22,12 +24,13 @@ public class ClassInfo {
     private @NonFinal transient String asString;
 
     @Builder
+    @JsonCreator
     private ClassInfo(
-            final String firmId,
-            final String name,
-            final String code,
-            int npars,
-            int nsecs) {
+            @JsonProperty(value = "firmid") final String firmId,
+            @JsonProperty(value = "name") final String name,
+            @JsonProperty(value = "code") final String code,
+            @JsonProperty(value = "npars", required = true) int npars,
+            @JsonProperty(value = "nsecs", required = true) int nsecs) {
 
         this.firmId = firmId;
         this.name = name;
