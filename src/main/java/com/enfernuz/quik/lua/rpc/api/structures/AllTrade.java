@@ -13,7 +13,7 @@ public class AllTrade {
 
     @JsonProperty("trade_num") long tradeNum;
     @JsonProperty("flags") int flags;
-    @JsonProperty("price") @NonNull String price;
+    @JsonProperty("price") String price;
     @JsonProperty("qty") int qty;
     @JsonProperty("value") String value;
     @JsonProperty("accruedint") String accruedInt;
@@ -25,7 +25,7 @@ public class AllTrade {
     @JsonProperty("repoterm") String repoTerm;
     @JsonProperty("sec_code") String secCode;
     @JsonProperty("class_code") String classCode;
-    @JsonProperty("datetime") @NonNull DateTimeEntry datetime;
+    @JsonProperty("datetime") DateTimeEntry datetime;
     @JsonProperty("period") int period;
     @JsonProperty("open_interest") String openInterest;
     @JsonProperty("exchange_code") String exchangeCode;
@@ -38,7 +38,7 @@ public class AllTrade {
     private AllTrade(
             @JsonProperty(value = "trade_num", required = true) final long tradeNum,
             @JsonProperty(value = "flags", required = true) final int flags,
-            @JsonProperty(value = "price", required = true) final String price,
+            @JsonProperty(value = "price", required = true) @NonNull final String price,
             @JsonProperty(value = "qty", required = true) final int qty,
             @JsonProperty("value") final String value,
             @JsonProperty("accruedint") final String accruedInt,
@@ -50,7 +50,7 @@ public class AllTrade {
             @JsonProperty("repoterm") final String repoTerm,
             @JsonProperty("sec_code") final String secCode,
             @JsonProperty("class_code") final String classCode,
-            @JsonProperty(value = "datetime", required = true) final DateTimeEntry datetime,
+            @JsonProperty(value = "datetime", required = true) @NonNull final DateTimeEntry datetime,
             @JsonProperty(value = "period", required = true) final int period,
             @JsonProperty("open_interest") final String openInterest,
             @JsonProperty("exchange_code") final String exchangeCode) {

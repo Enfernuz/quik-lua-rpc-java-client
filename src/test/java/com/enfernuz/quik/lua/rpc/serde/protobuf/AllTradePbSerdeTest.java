@@ -19,8 +19,8 @@ public class AllTradePbSerdeTest {
     private static AllTrade expectedObject;
     private static byte[] expectedPbInput;
 
-    private static AllTrade expectedObjectWithNullNonRequiredStringFileds;
-    private static byte[] expectedPbInputWithEmptyNonRequiredStringFields;
+    private static AllTrade expectedObjectWithOnlyRequiredFields;
+    private static byte[] expectedPbInputWithOnlyRequiredFields;
 
     @BeforeClass
     public static void globalSetup() {
@@ -92,14 +92,14 @@ public class AllTradePbSerdeTest {
                 .build()
                 .toByteArray();
 
-        expectedObjectWithNullNonRequiredStringFileds = AllTrade.builder()
+        expectedObjectWithOnlyRequiredFields = AllTrade.builder()
                 .tradeNum(1L)
                 .flags(2)
                 .price("3")
                 .period(4)
                 .datetime(dateTimeEntry)
                 .build();
-        expectedPbInputWithEmptyNonRequiredStringFields = QluaStructures.AllTrade.newBuilder()
+        expectedPbInputWithOnlyRequiredFields = QluaStructures.AllTrade.newBuilder()
                 .setTradeNum(1L)
                 .setFlags(2)
                 .setPrice("3")
@@ -112,32 +112,33 @@ public class AllTradePbSerdeTest {
     @Test
     public void testSerialize() {
 
-        final byte[] actual = sut.serialize(expectedObject);
-
-        assertTrue( Arrays.equals(expectedPbInput, actual) );
-    }
-
-    @Test
-    public void testSerializePbInputWithEmptyNonRequiredStringFields() {
-
-        final byte[] actual = sut.serialize(expectedObjectWithNullNonRequiredStringFileds);
-
-        assertTrue( Arrays.equals(expectedPbInputWithEmptyNonRequiredStringFields, actual) );
+        assertTrue(
+                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
+        );
     }
 
     @Test
     public void testDeserialize() {
-
-        final AllTrade actualObject = sut.deserialize(AllTrade.class, expectedPbInput);
-
-        assertEquals(actualObject, expectedObject);
+        assertEquals(expectedObject, sut.deserialize(AllTrade.class, expectedPbInput));
     }
 
     @Test
-    public void testDeserializePbInputWithEmptyNonRequiredStringFields() {
+    public void testSerialize_WithOnlyRequiredFields() {
 
-        final AllTrade actualObject = sut.deserialize(AllTrade.class, expectedPbInputWithEmptyNonRequiredStringFields);
+        assertTrue(
+                Arrays.equals(
+                        expectedPbInputWithOnlyRequiredFields,
+                        sut.serialize(expectedObjectWithOnlyRequiredFields)
+                )
+        );
+    }
 
-        assertEquals(actualObject, expectedObjectWithNullNonRequiredStringFileds);
+    @Test
+    public void testDeserialize_WithOnlyRequiredFields() {
+
+        assertEquals(
+                expectedObjectWithOnlyRequiredFields,
+                sut.deserialize(AllTrade.class, expectedPbInputWithOnlyRequiredFields)
+        );
     }
 }
