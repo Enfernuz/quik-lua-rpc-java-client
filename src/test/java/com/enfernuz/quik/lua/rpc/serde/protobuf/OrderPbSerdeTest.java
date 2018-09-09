@@ -140,64 +140,40 @@ public class OrderPbSerdeTest {
                 .build()
                 .toByteArray();
 
-        expectedObjectWithOnlyRequiredFields = Order.builder()
-                .orderNum(1L)
-                .flags(2)
-                .qty(8)
-                .valueEntryType(28)
-                .minQty(36)
-                .execType(37)
-                .sideQualifier(38)
-                .acntType(39)
-                .capacity(40)
-                .passiveOnlyOrder(41)
-                .visible(42)
-                .build();
-        expectedPbInputWithOnlyRequiredFields = QluaStructures.Order.newBuilder()
-                .setOrderNum(1L)
-                .setFlags(2)
-                .setQty(8)
-                .setValueEntryType(28)
-                .setMinQty(36)
-                .setExecType(37)
-                .setSideQualifier(38)
-                .setAcntType(39)
-                .setCapacity(40)
-                .setPassiveOnlyOrder(41)
-                .setVisible(42)
-                .build()
-                .toByteArray();
+        expectedObjectWithOnlyRequiredFields = Order.builder().build();
+        expectedPbInputWithOnlyRequiredFields = QluaStructures.Order.newBuilder().build().toByteArray();
     }
 
     @Test
     public void testSerialize() {
 
-        final byte[] actual = sut.serialize(expectedObject);
-
-        assertTrue( Arrays.equals(expectedPbInput, actual) );
-    }
-
-    @Test
-    public void testSerializePbInputWithEmptyNonRequiredStringFields() {
-
-        final byte[] actual = sut.serialize(expectedObjectWithOnlyRequiredFields);
-
-        assertTrue( Arrays.equals(expectedPbInputWithOnlyRequiredFields, actual) );
+        assertTrue(
+                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
+        );
     }
 
     @Test
     public void testDeserialize() {
-
-        final Order actualObject = sut.deserialize(Order.class, expectedPbInput);
-
-        assertEquals(actualObject, expectedObject);
+        assertEquals(expectedObject, sut.deserialize(Order.class, expectedPbInput));
     }
 
     @Test
-    public void testDeserializePbInputWithEmptyNonRequiredStringFields() {
+    public void testSerialize_WithOnlyRequiredFields() {
 
-        final Order actualObject = sut.deserialize(Order.class, expectedPbInputWithOnlyRequiredFields);
+        assertTrue(
+                Arrays.equals(
+                        expectedPbInputWithOnlyRequiredFields,
+                        sut.serialize(expectedObjectWithOnlyRequiredFields)
+                )
+        );
+    }
 
-        assertEquals(actualObject, expectedObjectWithOnlyRequiredFields);
+    @Test
+    public void testDeserialize_WithOnlyRequiredFields() {
+
+        assertEquals(
+                expectedObjectWithOnlyRequiredFields,
+                sut.deserialize(Order.class, expectedPbInputWithOnlyRequiredFields)
+        );
     }
 }
