@@ -49,7 +49,6 @@ public final class GetDepoEx {
     @Value
     public static class Result {
 
-        @NonNull
         DepoLimit depoEx;
 
         @Override
