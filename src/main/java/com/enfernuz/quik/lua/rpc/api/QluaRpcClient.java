@@ -124,7 +124,7 @@ public interface QluaRpcClient extends Gateway, Securable {
      *
      * @return
      */
-    GetClassesList.Result qlua_getClassesList();
+    String qlua_getClassesList();
 
     /**
      *

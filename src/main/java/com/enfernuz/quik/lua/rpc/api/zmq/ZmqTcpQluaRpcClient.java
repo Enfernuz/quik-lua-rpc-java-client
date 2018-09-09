@@ -15,6 +15,8 @@ import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import com.enfernuz.quik.lua.rpc.serde.SerdeUtils;
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMsg;
 
@@ -106,6 +108,7 @@ public final class ZmqTcpQluaRpcClient extends AbstractTcpZmqClient implements T
         return makeRPC(AllocTable.Request.INSTANCE, AllocTable.Result.class).getTId();
     }
 
+    @NotNull
     @Override
     public CalcBuySell.Result qlua_CalcBuySell(final CalcBuySell.Request request) {
         return makeRPC(request, CalcBuySell.Result.class);
@@ -146,29 +149,34 @@ public final class ZmqTcpQluaRpcClient extends AbstractTcpZmqClient implements T
         return makeRPC(request, DestroyTable.Result.class).isResult();
     }
 
+    @NotNull
     @Override
     public GetBuySellInfo.BuySellInfo qlua_getBuySellInfo(final GetBuySellInfo.Request request) {
         return makeRPC(request, GetBuySellInfo.Result.class).getBuySellInfo();
     }
 
+    @NotNull
     @Override
     public GetBuySellInfoEx.BuySellInfoEx qlua_getBuySellInfoEx(final GetBuySellInfoEx.Request request) {
         return makeRPC(request, GetBuySellInfoEx.Result.class).getBuySellInfoEx();
     }
 
+    @NotNull
     @Override
     public GetCandlesByIndex.Result qlua_getCandlesByIndex(final GetCandlesByIndex.Request request) {
         return makeRPC(request, GetCandlesByIndex.Result.class);
     }
 
+    @NotNull
     @Override
     public GetCell.Result qlua_GetCell(final GetCell.Result request) {
         return makeRPC(request, GetCell.Result.class);
     }
 
+    @Nullable
     @Override
-    public GetClassesList.Result qlua_getClassesList() {
-        return makeRPC(GetClassesList.Request.INSTANCE, GetClassesList.Result.class);
+    public String qlua_getClassesList() {
+        return makeRPC(GetClassesList.Request.INSTANCE, GetClassesList.Result.class).getClassesList();
     }
 
     @Override
