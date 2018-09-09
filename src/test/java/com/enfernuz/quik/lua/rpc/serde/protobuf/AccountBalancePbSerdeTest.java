@@ -18,8 +18,8 @@ public class AccountBalancePbSerdeTest {
     private static AccountBalance expectedObject;
     private static byte[] expectedPbInput;
 
-    private static AccountBalance expectedObjectWithNullNonRequiredStringFileds;
-    private static byte[] expectedPbInputWithEmptyNonRequiredStringFields;
+    private static AccountBalance expectedObjectWithOnlyRequiredFields;
+    private static byte[] expectedPbInputWithOnlyRequiredFields;
 
     @BeforeClass
     public static void globalSetup() {
@@ -62,10 +62,10 @@ public class AccountBalancePbSerdeTest {
                 .build()
                 .toByteArray();
 
-        expectedObjectWithNullNonRequiredStringFileds = AccountBalance.builder()
+        expectedObjectWithOnlyRequiredFields = AccountBalance.builder()
                 .firmUse(1)
                 .build();
-        expectedPbInputWithEmptyNonRequiredStringFields = QluaStructures.AccountBalance.newBuilder()
+        expectedPbInputWithOnlyRequiredFields = QluaStructures.AccountBalance.newBuilder()
                 .setFirmuse(1)
                 .build()
                 .toByteArray();
@@ -74,32 +74,33 @@ public class AccountBalancePbSerdeTest {
     @Test
     public void testSerialize() {
 
-        final byte[] actual = sut.serialize(expectedObject);
-
-        assertTrue( Arrays.equals(expectedPbInput, actual) );
-    }
-
-    @Test
-    public void testSerializePbInputWithEmptyNonRequiredStringFields() {
-
-        final byte[] actual = sut.serialize(expectedObjectWithNullNonRequiredStringFileds);
-
-        assertTrue( Arrays.equals(expectedPbInputWithEmptyNonRequiredStringFields, actual) );
+        assertTrue(
+                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
+        );
     }
 
     @Test
     public void testDeserialize() {
-
-        final AccountBalance actualObject = sut.deserialize(AccountBalance.class, expectedPbInput);
-
-        assertEquals(actualObject, expectedObject);
+        assertEquals(expectedObject, sut.deserialize(AccountBalance.class, expectedPbInput));
     }
 
     @Test
-    public void testDeserializePbInputWithEmptyNonRequiredStringFields() {
+    public void testSerialize_WithOnlyRequiredFields() {
 
-        final AccountBalance actualObject = sut.deserialize(AccountBalance.class, expectedPbInputWithEmptyNonRequiredStringFields);
+        assertTrue(
+                Arrays.equals(
+                        expectedPbInputWithOnlyRequiredFields,
+                        sut.serialize(expectedObjectWithOnlyRequiredFields)
+                )
+        );
+    }
 
-        assertEquals(actualObject, expectedObjectWithNullNonRequiredStringFileds);
+    @Test
+    public void testDeserialize_WithOnlyRequiredFields() {
+
+        assertEquals(
+                expectedObjectWithOnlyRequiredFields,
+                sut.deserialize(AccountBalance.class, expectedPbInputWithOnlyRequiredFields)
+        );
     }
 }
