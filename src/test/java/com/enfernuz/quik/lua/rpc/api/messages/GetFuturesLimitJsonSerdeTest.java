@@ -17,9 +17,13 @@ public class GetFuturesLimitJsonSerdeTest {
     private static ObjectMapper sut;
 
     private static GetFuturesLimit.Request requestObj;
-    private static GetFuturesLimit.Result resultObj;
     private static String requestJson;
+
+    private static GetFuturesLimit.Result resultObj;
     private static String resultJson;
+
+    private static GetFuturesLimit.Result resultObjWithOnlyRequiredFields;
+    private static String resultJsonWithOnlyRequiredFields;
 
     @BeforeClass
     public static void globalSetup() throws IOException {
@@ -33,6 +37,8 @@ public class GetFuturesLimitJsonSerdeTest {
                 .limitType(3)
                 .currCode("4")
                 .build();
+        requestJson =
+                Resources.toString(Resources.getResource("json/getFuturesLimit.request.json"), Charsets.UTF_8);
 
         final FuturesLimit futuresLimit = FuturesLimit.builder()
                 .firmId("1")
@@ -55,11 +61,12 @@ public class GetFuturesLimitJsonSerdeTest {
                 .build();
 
         resultObj = new GetFuturesLimit.Result(futuresLimit);
-
-        requestJson =
-                Resources.toString(Resources.getResource("json/getFuturesLimit.request.json"), Charsets.UTF_8);
         resultJson =
                 Resources.toString(Resources.getResource("json/getFuturesLimit.result.json"), Charsets.UTF_8);
+
+        resultObjWithOnlyRequiredFields = new GetFuturesLimit.Result(null);
+        resultJsonWithOnlyRequiredFields =
+                Resources.toString(Resources.getResource("json/getFuturesLimit.result.only_required_fields.json"), Charsets.UTF_8);
     }
 
     @Test
@@ -76,5 +83,13 @@ public class GetFuturesLimitJsonSerdeTest {
         final GetFuturesLimit.Result actualResultObj = sut.readValue(resultJson, GetFuturesLimit.Result.class);
 
         assertEquals(resultObj, actualResultObj);
+    }
+
+    @Test
+    public void testDeserializeResultWithOnlyRequiredFields() throws IOException {
+
+        final GetFuturesLimit.Result actualResultObj = sut.readValue(resultJsonWithOnlyRequiredFields, GetFuturesLimit.Result.class);
+
+        assertEquals(resultObjWithOnlyRequiredFields, actualResultObj);
     }
 }

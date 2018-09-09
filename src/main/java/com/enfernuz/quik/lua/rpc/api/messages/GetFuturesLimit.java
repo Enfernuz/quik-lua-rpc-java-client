@@ -15,17 +15,17 @@ public final class GetFuturesLimit {
     @Value
     public static class Request {
 
-        @NonNull String firmId;
-        @NonNull String trdAccId;
+        String firmId;
+        String trdAccId;
         int limitType;
-        @NonNull String currCode;
+        String currCode;
 
         @Builder
         private Request(
-                final String firmId,
-                final String trdAccId,
+                @NonNull final String firmId,
+                @NonNull final String trdAccId,
                 final int limitType,
-                final String currCode) {
+                @NonNull final String currCode) {
 
             this.firmId = firmId;
             this.trdAccId = trdAccId;
@@ -47,10 +47,10 @@ public final class GetFuturesLimit {
     @Value
     public static class Result {
 
-        @NonNull FuturesLimit futuresLimit;
+        FuturesLimit futuresLimit;
 
         @JsonCreator
-        public Result(final @JsonProperty(value = "futures_limit", required = true) FuturesLimit futuresLimit) {
+        public Result(final @JsonProperty(value = "futures_limit") FuturesLimit futuresLimit) {
             this.futuresLimit = futuresLimit;
         }
 
