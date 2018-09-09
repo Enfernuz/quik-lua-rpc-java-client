@@ -18,8 +18,8 @@ public class DepoLimitPbSerdeTest {
     private static DepoLimit expectedObject;
     private static byte[] expectedPbInput;
 
-    private static DepoLimit expectedObjectWithNullNonRequiredStringFileds;
-    private static byte[] expectedPbInputWithEmptyNonRequiredStringFields;
+    private static DepoLimit expectedObjectWithOnlyRequiredFields;
+    private static byte[] expectedPbInputWithOnlyRequiredFields;
 
     @BeforeClass
     public static void globalSetup() {
@@ -60,56 +60,40 @@ public class DepoLimitPbSerdeTest {
                 .build()
                 .toByteArray();
 
-        expectedObjectWithNullNonRequiredStringFileds = DepoLimit.builder()
-                .openBal(1)
-                .openLimit(2)
-                .currentBal(3)
-                .currentLimit(4)
-                .lockedSell(5)
-                .lockedBuy(6)
-                .limitKind(7)
-                .build();
-        expectedPbInputWithEmptyNonRequiredStringFields = QluaStructures.DepoLimit.newBuilder()
-                .setOpenbal(1)
-                .setOpenlimit(2)
-                .setCurrentbal(3)
-                .setCurrentlimit(4)
-                .setLockedSell(5)
-                .setLockedBuy(6)
-                .setLimitKind(7)
-                .build()
-                .toByteArray();
+        expectedObjectWithOnlyRequiredFields = DepoLimit.builder().build();
+        expectedPbInputWithOnlyRequiredFields = QluaStructures.DepoLimit.newBuilder().build().toByteArray();
     }
 
     @Test
     public void testSerialize() {
 
-        final byte[] actual = sut.serialize(expectedObject);
-
-        assertTrue( Arrays.equals(expectedPbInput, actual) );
-    }
-
-    @Test
-    public void testSerializePbInputWithEmptyNonRequiredStringFields() {
-
-        final byte[] actual = sut.serialize(expectedObjectWithNullNonRequiredStringFileds);
-
-        assertTrue( Arrays.equals(expectedPbInputWithEmptyNonRequiredStringFields, actual) );
+        assertTrue(
+                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
+        );
     }
 
     @Test
     public void testDeserialize() {
-
-        final DepoLimit actualObject = sut.deserialize(DepoLimit.class, expectedPbInput);
-
-        assertEquals(actualObject, expectedObject);
+        assertEquals(expectedObject, sut.deserialize(DepoLimit.class, expectedPbInput));
     }
 
     @Test
-    public void testDeserializePbInputWithEmptyNonRequiredStringFields() {
+    public void testSerialize_WithOnlyRequiredFields() {
 
-        final DepoLimit actualObject = sut.deserialize(DepoLimit.class, expectedPbInputWithEmptyNonRequiredStringFields);
+        assertTrue(
+                Arrays.equals(
+                        expectedPbInputWithOnlyRequiredFields,
+                        sut.serialize(expectedObjectWithOnlyRequiredFields)
+                )
+        );
+    }
 
-        assertEquals(actualObject, expectedObjectWithNullNonRequiredStringFileds);
+    @Test
+    public void testDeserialize_WithOnlyRequiredFields() {
+
+        assertEquals(
+                expectedObjectWithOnlyRequiredFields,
+                sut.deserialize(DepoLimit.class, expectedPbInputWithOnlyRequiredFields)
+        );
     }
 }
