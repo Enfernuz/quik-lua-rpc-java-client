@@ -45,8 +45,11 @@ public final class GetDepo {
     @Value
     public static class Result {
 
-        @NonNull
         Depo depo;
+
+        public Result(@NonNull final Depo depo) {
+            this.depo = depo;
+        }
 
         @Override
         public String toString() {

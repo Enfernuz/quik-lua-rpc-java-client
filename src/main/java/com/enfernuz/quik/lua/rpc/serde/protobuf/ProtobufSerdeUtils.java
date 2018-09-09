@@ -2,9 +2,11 @@ package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.messages.GetBuySellInfo;
 import com.enfernuz.quik.lua.rpc.api.messages.GetBuySellInfoEx;
+import com.enfernuz.quik.lua.rpc.api.messages.GetDepo;
 import com.enfernuz.quik.lua.rpc.api.structures.CandleEntry;
 import com.enfernuz.quik.lua.rpc.api.structures.ClassInfo;
 import com.enfernuz.quik.lua.rpc.api.structures.DateTimeEntry;
+import com.enfernuz.quik.lua.rpc.api.structures.Depo;
 import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.SerdeException;
 import com.google.common.base.Strings;
@@ -35,6 +37,8 @@ final class ProtobufSerdeUtils {
 
     private static final PbConverter<QluaStructures.Klass, ClassInfo> CLASS_INFO_PB_CONVERTER =
             ClassInfoPbSerde.INSTANCE;
+
+    private static final PbConverter<qlua.rpc.GetDepo.Depo, Depo> DEPO_PB_CONVERTER = DepoPbSerde.INSTANCE;
 
     @Contract(" -> fail")
     private ProtobufSerdeUtils() {
@@ -99,6 +103,16 @@ final class ProtobufSerdeUtils {
     @NotNull
     static ClassInfo convertFromPbClassInfo(@NotNull final QluaStructures.Klass classInfo) {
         return CLASS_INFO_PB_CONVERTER.convertFromPb(classInfo);
+    }
+
+    @NotNull
+    static qlua.rpc.GetDepo.Depo convertToPbDepo(@NotNull final Depo depo) {
+        return DEPO_PB_CONVERTER.convertToPb(depo);
+    }
+
+    @NotNull
+    static Depo convertFromPbDepo(@NotNull final qlua.rpc.GetDepo.Depo depo) {
+        return DEPO_PB_CONVERTER.convertFromPb(depo);
     }
 
     static void assertEquals(@NotNull final RPC.ProcedureType actual, @NotNull final RPC.ProcedureType expected) {
