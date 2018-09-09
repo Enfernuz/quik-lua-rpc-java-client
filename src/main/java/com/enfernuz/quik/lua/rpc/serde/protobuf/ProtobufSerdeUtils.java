@@ -3,6 +3,7 @@ package com.enfernuz.quik.lua.rpc.serde.protobuf;
 import com.enfernuz.quik.lua.rpc.api.messages.GetBuySellInfo;
 import com.enfernuz.quik.lua.rpc.api.messages.GetBuySellInfoEx;
 import com.enfernuz.quik.lua.rpc.api.structures.CandleEntry;
+import com.enfernuz.quik.lua.rpc.api.structures.ClassInfo;
 import com.enfernuz.quik.lua.rpc.api.structures.DateTimeEntry;
 import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.SerdeException;
@@ -16,7 +17,6 @@ import qlua.structs.QluaStructures;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
-import java.util.Optional;
 
 final class ProtobufSerdeUtils {
 
@@ -24,12 +24,18 @@ final class ProtobufSerdeUtils {
 
     private static final PbConverter<QluaStructures.DateTimeEntry, DateTimeEntry> DATE_TIME_ENTRY_PB_CONVERTER =
             DateTimeEntryPbSerde.INSTANCE;
+
     private static final PbConverter<qlua.rpc.GetBuySellInfo.BuySellInfo, GetBuySellInfo.BuySellInfo> BUY_SELL_INFO_PB_CONVERTER =
             BuySellInfoPbSerde.INSTANCE;
+
     private static final PbConverter<qlua.rpc.GetBuySellInfoEx.BuySellInfoEx, GetBuySellInfoEx.BuySellInfoEx> BUY_SELL_INFO_EX_PB_CONVERTER =
             BuySellInfoExPbSerde.INSTANCE;
+
     private static final PbConverter<QluaStructures.CandleEntry, CandleEntry> CANDLE_ENTRY_PB_CONVERTER =
             CandleEntryPbSerde.INSTANCE;
+
+    private static final PbConverter<QluaStructures.Klass, ClassInfo> CLASS_INFO_PB_CONVERTER =
+            ClassInfoPbSerde.INSTANCE;
 
     @Contract(" -> fail")
     private ProtobufSerdeUtils() {
@@ -84,6 +90,16 @@ final class ProtobufSerdeUtils {
     @NotNull
     static CandleEntry convertFromPbCandleEntry(@NotNull final QluaStructures.CandleEntry candleEntry) {
         return CANDLE_ENTRY_PB_CONVERTER.convertFromPb(candleEntry);
+    }
+
+    @NotNull
+    static QluaStructures.Klass convertToPbClassInfo(@NotNull final ClassInfo classInfo) {
+        return CLASS_INFO_PB_CONVERTER.convertToPb(classInfo);
+    }
+
+    @NotNull
+    static ClassInfo convertFromPbClassInfo(@NotNull final QluaStructures.Klass classInfo) {
+        return CLASS_INFO_PB_CONVERTER.convertFromPb(classInfo);
     }
 
     static void assertEquals(@NotNull final RPC.ProcedureType actual, @NotNull final RPC.ProcedureType expected) {

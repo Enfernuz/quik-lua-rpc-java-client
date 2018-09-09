@@ -104,6 +104,7 @@ public enum ProtobufSerdeModule implements SerdeModule {
         registerSerde(result, ParamEventInfo.class, ParamEventInfoPbSerde.INSTANCE);
         registerSerde(result, QuoteEventInfo.class, QuoteEventInfoPbSerde.INSTANCE);
         registerSerde(result, CandleEntry.class, CandleEntryPbSerde.INSTANCE);
+        registerSerde(result, ClassInfo.class, ClassInfoPbSerde.INSTANCE);
 
         registerSerde(result, ServiceError.class, ServiceErrorPbSerde.INSTANCE);
         registerSerde(result, ResponseEnvelope.class, ResponseEnvelopePbSerde.INSTANCE);
@@ -141,6 +142,8 @@ public enum ProtobufSerdeModule implements SerdeModule {
         registerSerde(result, GetCell.Result.class, GetCellResultPbSerde.INSTANCE);
         registerSerde(result, GetClassesList.Request.class, GetClassesListRequestPbSerde.INSTANCE);
         registerSerde(result, GetClassesList.Result.class, GetClassesListResultPbSerde.INSTANCE);
+        registerSerde(result, GetClassInfo.Request.class, GetClassInfoRequestPbSerde.INSTANCE);
+        registerSerde(result, GetClassInfo.Result.class, GetClassInfoResultPbSerde.INSTANCE);
         registerSerde(result, Message.Request.class, MessageRequestPbSerde.INSTANCE);
         registerSerde(result, Message.Result.class, MessageResultPbSerde.INSTANCE);
 
