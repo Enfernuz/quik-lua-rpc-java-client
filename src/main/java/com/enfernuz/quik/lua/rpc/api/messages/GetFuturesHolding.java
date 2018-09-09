@@ -15,16 +15,9 @@ public final class GetFuturesHolding {
     @Value
     public static class Request {
 
-        @JsonProperty(value = "firmid", required = true)
         String firmId;
-
-        @JsonProperty(value = "trdaccid", required = true)
         String trdAccId;
-
-        @JsonProperty(value = "sec_code", required = true)
         String secCode;
-
-        @JsonProperty(value = "type", required = true)
         int type;
 
         @Builder

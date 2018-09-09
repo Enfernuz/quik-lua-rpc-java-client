@@ -15,19 +15,10 @@ public final class GetDepoEx {
     @Value
     public static class Request {
 
-        @JsonProperty(value = "firmid", required = true)
         String firmId;
-
-        @JsonProperty(value = "client_code", required = true)
         String clientCode;
-
-        @JsonProperty(value = "sec_code", required = true)
         String secCode;
-
-        @JsonProperty(value = "trdaccid", required = true)
         String trdAccId;
-
-        @JsonProperty(value = "limit_kind", required = true)
         int limitKind;
 
         @Builder
