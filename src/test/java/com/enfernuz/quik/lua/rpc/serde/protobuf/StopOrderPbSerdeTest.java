@@ -152,32 +152,33 @@ public class StopOrderPbSerdeTest {
     @Test
     public void testSerialize() {
 
-        final byte[] actual = sut.serialize(expectedObject);
-
-        assertTrue( Arrays.equals(expectedPbInput, actual) );
-    }
-
-    @Test
-    public void testSerializePbInputWithEmptyNonRequiredStringFields() {
-
-        final byte[] actual = sut.serialize(expectedObjectWithOnlyRequiredFields);
-
-        assertTrue( Arrays.equals(expectedPbInputWithOnlyRequiredFields, actual) );
+        assertTrue(
+                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
+        );
     }
 
     @Test
     public void testDeserialize() {
-
-        final StopOrder actualObject = sut.deserialize(StopOrder.class, expectedPbInput);
-
-        assertEquals(actualObject, expectedObject);
+        assertEquals(expectedObject, sut.deserialize(StopOrder.class, expectedPbInput));
     }
 
     @Test
-    public void testDeserializePbInputWithEmptyNonRequiredStringFields() {
+    public void testSerialize_WithOnlyRequiredFields() {
 
-        final StopOrder actualObject = sut.deserialize(StopOrder.class, expectedPbInputWithOnlyRequiredFields);
+        assertTrue(
+                Arrays.equals(
+                        expectedPbInputWithOnlyRequiredFields,
+                        sut.serialize(expectedObjectWithOnlyRequiredFields)
+                )
+        );
+    }
 
-        assertEquals(actualObject, expectedObjectWithOnlyRequiredFields);
+    @Test
+    public void testDeserialize_WithOnlyRequiredFields() {
+
+        assertEquals(
+                expectedObjectWithOnlyRequiredFields,
+                sut.deserialize(StopOrder.class, expectedPbInputWithOnlyRequiredFields)
+        );
     }
 }
