@@ -1,9 +1,12 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.Builder;
-import lombok.NonNull;
 import lombok.Value;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 public final class GetCell {
 
@@ -23,6 +26,7 @@ public final class GetCell {
             this.code = code;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
@@ -39,18 +43,42 @@ public final class GetCell {
         String image;
         String value;
 
+        @JsonCreator
         @Builder
-        private Result(final @NonNull String image, final @NonNull String value) {
+        private static Result getInstance(
+                @JsonProperty("image") final String image,
+                @JsonProperty("value") final String value) {
+
+            return image == null && value == null ? InstanceHolder.ERROR : new Result(image, value);
+        }
+
+        private Result(final String image, final String value) {
             this.image = image;
             this.value = value;
         }
 
+        @Contract(pure = true)
+        public boolean isError() {
+            return image == null && value == null;
+        }
+
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
                     .add("image", image)
                     .add("value", value)
                     .toString();
+        }
+
+        private static final class InstanceHolder {
+
+            private static final Result ERROR = new Result(null, null);
+
+            // just in case
+            static {
+                assert ERROR.isError();
+            }
         }
     }
 }
