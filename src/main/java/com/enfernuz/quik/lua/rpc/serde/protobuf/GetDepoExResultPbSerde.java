@@ -31,7 +31,7 @@ enum GetDepoExResultPbSerde implements Serde<GetDepoEx.Result>, PbConverter<qlua
     public GetDepoEx.Result convertFromPb(@NotNull final qlua.rpc.GetDepoEx.Result result) {
 
         final DepoLimit depoLimit = result.hasDepoEx() ? convertFromPbDepoLimit(result.getDepoEx()) : null;
-        return new GetDepoEx.Result(depoLimit);
+        return GetDepoEx.Result.getInstance(depoLimit);
     }
 
     @NotNull

@@ -60,13 +60,13 @@ public class GetDepoExResultPbSerdeTest {
                 .setLimitKind(14)
                 .build();
 
-        expectedObject = new GetDepoEx.Result(depoLimit);
+        expectedObject = GetDepoEx.Result.getInstance(depoLimit);
         expectedPbInput = qlua.rpc.GetDepoEx.Result.newBuilder()
                 .setDepoEx(pbDepoLimit)
                 .build()
                 .toByteArray();
 
-        expectedObjectWithOnlyRequiredFields = new GetDepoEx.Result(null);
+        expectedObjectWithOnlyRequiredFields = GetDepoEx.Result.getInstance(null);
         expectedPbInputWithOnlyRequiredFields = qlua.rpc.GetDepoEx.Result.newBuilder().build().toByteArray();
     }
 

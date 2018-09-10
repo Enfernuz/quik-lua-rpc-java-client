@@ -70,13 +70,13 @@ public class GetFuturesHoldingResultPbSerdeTest {
                 .setSessionStatus(19)
                 .build();
 
-        expectedObject = new GetFuturesHolding.Result(futuresClientHolding);
+        expectedObject = GetFuturesHolding.Result.getInstance(futuresClientHolding);
         expectedPbInput = qlua.rpc.GetFuturesHolding.Result.newBuilder()
                 .setFuturesHolding(pbFuturesClientHolding)
                 .build()
                 .toByteArray();
 
-        expectedObjectWithOnlyRequiredFields = new GetFuturesHolding.Result(null);
+        expectedObjectWithOnlyRequiredFields = GetFuturesHolding.Result.getInstance(null);
         expectedPbInputWithOnlyRequiredFields = qlua.rpc.GetFuturesHolding.Result.newBuilder().build().toByteArray();
     }
 

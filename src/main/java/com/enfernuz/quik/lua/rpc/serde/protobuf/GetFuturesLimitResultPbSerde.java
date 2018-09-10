@@ -31,7 +31,7 @@ enum GetFuturesLimitResultPbSerde implements Serde<GetFuturesLimit.Result>, PbCo
     public GetFuturesLimit.Result convertFromPb(@NotNull final qlua.rpc.GetFuturesLimit.Result result) {
 
         final FuturesLimit futuresLimit = result.hasFuturesLimit() ? convertFromPbFuturesLimit(result.getFuturesLimit()) : null;
-        return new GetFuturesLimit.Result(futuresLimit);
+        return GetFuturesLimit.Result.getInstance(futuresLimit);
     }
 
     @NotNull

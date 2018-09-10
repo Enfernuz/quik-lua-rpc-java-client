@@ -60,11 +60,11 @@ public class GetFuturesLimitJsonSerdeTest {
                 .realVarMargin("17")
                 .build();
 
-        resultObj = new GetFuturesLimit.Result(futuresLimit);
+        resultObj = GetFuturesLimit.Result.getInstance(futuresLimit);
         resultJson =
                 Resources.toString(Resources.getResource("json/getFuturesLimit.result.json"), Charsets.UTF_8);
 
-        resultObjWithOnlyRequiredFields = new GetFuturesLimit.Result(null);
+        resultObjWithOnlyRequiredFields = GetFuturesLimit.Result.getInstance(null);
         resultJsonWithOnlyRequiredFields =
                 Resources.toString(Resources.getResource("json/getFuturesLimit.result.only_required_fields.json"), Charsets.UTF_8);
     }

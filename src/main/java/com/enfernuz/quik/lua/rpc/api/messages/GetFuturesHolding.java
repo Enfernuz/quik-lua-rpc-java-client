@@ -7,6 +7,8 @@ import com.google.common.base.MoreObjects;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 public final class GetFuturesHolding {
 
@@ -33,6 +35,7 @@ public final class GetFuturesHolding {
             this.type = type;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
@@ -50,15 +53,35 @@ public final class GetFuturesHolding {
         FuturesClientHolding futuresHolding;
 
         @JsonCreator
-        public Result(@JsonProperty(value = "futures_holding") final FuturesClientHolding futuresHolding) {
+        public static Result getInstance(@JsonProperty("futures_holding") final FuturesClientHolding futuresHolding) {
+            return futuresHolding == null ? InstanceHolder.ERROR : new Result(futuresHolding);
+        }
+
+        private Result(final FuturesClientHolding futuresHolding) {
             this.futuresHolding = futuresHolding;
         }
 
+        @Contract(pure = true)
+        public boolean isError() {
+            return futuresHolding == null;
+        }
+
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
                     .add("futures_holding", futuresHolding)
                     .toString();
+        }
+
+        private static final class InstanceHolder {
+
+            private static final Result ERROR = new Result(null);
+
+            // just in case
+            static {
+                assert ERROR.isError();
+            }
         }
     }
 }

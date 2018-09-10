@@ -62,10 +62,10 @@ public class GetFuturesHoldingJsonSerdeTest {
                 .sessionStatus(19)
                 .build();
 
-        resultObj = new GetFuturesHolding.Result(futuresClientHolding);
+        resultObj = GetFuturesHolding.Result.getInstance(futuresClientHolding);
         resultJson = Resources.toString(Resources.getResource("json/getFuturesHolding.result.json"), Charsets.UTF_8);
 
-        resultObjWithOnlyRequiredFields = new GetFuturesHolding.Result(null);
+        resultObjWithOnlyRequiredFields = GetFuturesHolding.Result.getInstance(null);
         resultJsonWithOnlyRequiredFields =
                 Resources.toString(Resources.getResource("json/getFuturesHolding.result.only_required_fields.json"), Charsets.UTF_8);
     }

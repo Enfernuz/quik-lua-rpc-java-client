@@ -58,11 +58,11 @@ public class GetDepoExJsonSerdeTest {
                 .limitKind(14)
                 .build();
 
-        resultObj = new GetDepoEx.Result(depoLimit);
+        resultObj = GetDepoEx.Result.getInstance(depoLimit);
         resultJson =
                 Resources.toString(Resources.getResource("json/getDepoEx.result.json"), Charsets.UTF_8);
 
-        resultObjWithOnlyRequiredFields = new GetDepoEx.Result(null);
+        resultObjWithOnlyRequiredFields = GetDepoEx.Result.getInstance(null);
         resultJsonWithOnlyRequiredFields =
                 Resources.toString(Resources.getResource("json/getDepoEx.result.only_required_fields.json"), Charsets.UTF_8);
     }

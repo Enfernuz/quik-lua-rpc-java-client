@@ -32,7 +32,7 @@ enum GetFuturesHoldingResultPbSerde implements Serde<GetFuturesHolding.Result>, 
     public GetFuturesHolding.Result convertFromPb(@NotNull final qlua.rpc.GetFuturesHolding.Result result) {
 
         final FuturesClientHolding futuresClientHolding = result.hasFuturesHolding() ? convertFromPbFuturesClientHolding(result.getFuturesHolding()) : null;
-        return new GetFuturesHolding.Result(futuresClientHolding);
+        return GetFuturesHolding.Result.getInstance(futuresClientHolding);
     }
 
     @NotNull

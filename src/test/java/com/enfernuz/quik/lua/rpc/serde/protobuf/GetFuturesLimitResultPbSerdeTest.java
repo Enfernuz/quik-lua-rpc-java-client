@@ -66,13 +66,13 @@ public class GetFuturesLimitResultPbSerdeTest {
                 .setRealVarmargin("17")
                 .build();
 
-        expectedObject = new GetFuturesLimit.Result(futuresLimit);
+        expectedObject = GetFuturesLimit.Result.getInstance(futuresLimit);
         expectedPbInput = qlua.rpc.GetFuturesLimit.Result.newBuilder()
                 .setFuturesLimit(pbFuturesLimit)
                 .build()
                 .toByteArray();
 
-        expectedObjectWithOnlyRequiredFields = new GetFuturesLimit.Result(null);
+        expectedObjectWithOnlyRequiredFields = GetFuturesLimit.Result.getInstance(null);
         expectedPbInputWithOnlyRequiredFields = qlua.rpc.GetFuturesLimit.Result.newBuilder().build().toByteArray();
     }
 

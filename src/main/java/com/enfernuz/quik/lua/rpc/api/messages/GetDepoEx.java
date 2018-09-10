@@ -7,6 +7,8 @@ import com.google.common.base.MoreObjects;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 public final class GetDepoEx {
 
@@ -36,6 +38,7 @@ public final class GetDepoEx {
             this.limitKind = limitKind;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
@@ -54,15 +57,35 @@ public final class GetDepoEx {
         DepoLimit depoEx;
 
         @JsonCreator
-        public Result(@JsonProperty("depo_ex") final DepoLimit depoEx) {
+        public static Result getInstance(@JsonProperty("depo_ex") final DepoLimit depoEx) {
+            return depoEx == null ? InstanceHolder.ERROR : new Result(depoEx);
+        }
+
+        private Result(final DepoLimit depoEx) {
             this.depoEx = depoEx;
         }
 
+        @Contract(pure = true)
+        public boolean isError() {
+            return depoEx == null;
+        }
+
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
                     .add("depo_ex", depoEx)
                     .toString();
+        }
+
+        private static final class InstanceHolder {
+
+            private static final Result ERROR = new Result(null);
+
+            // just in case
+            static {
+                assert ERROR.isError();
+            }
         }
     }
 }
