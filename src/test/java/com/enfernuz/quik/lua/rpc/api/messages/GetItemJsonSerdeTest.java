@@ -22,7 +22,7 @@ public class GetItemJsonSerdeTest {
     private static GetItem.Result resultObj;
     private static String resultJson;
 
-    private static GetClassInfo.Result resultObjWithOnlyRequiredFields;
+    private static GetItem.Result resultObjWithOnlyRequiredFields;
     private static String resultJsonWithOnlyRequiredFields;
 
     @BeforeClass
@@ -44,7 +44,7 @@ public class GetItemJsonSerdeTest {
         resultObj = GetItem.Result.getInstance( tableRow.build() );
         resultJson = Resources.toString(Resources.getResource("json/getItem.result.json"), Charsets.UTF_8);
 
-        resultObjWithOnlyRequiredFields = new GetClassInfo.Result(null);
+        resultObjWithOnlyRequiredFields = GetItem.Result.getInstance(null);
         resultJsonWithOnlyRequiredFields =
                 Resources.toString(Resources.getResource("json/getItem.result.only_required_fields.json"), Charsets.UTF_8);
     }
@@ -64,7 +64,7 @@ public class GetItemJsonSerdeTest {
 
         assertEquals(
                 resultObjWithOnlyRequiredFields,
-                sut.readValue(resultJsonWithOnlyRequiredFields, GetClassInfo.Result.class)
+                sut.readValue(resultJsonWithOnlyRequiredFields, GetItem.Result.class)
         );
     }
 }

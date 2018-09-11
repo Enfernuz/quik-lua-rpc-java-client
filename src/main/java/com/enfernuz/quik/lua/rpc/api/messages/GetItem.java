@@ -1,6 +1,7 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableMap;
 import lombok.NonNull;
@@ -41,7 +42,7 @@ public final class GetItem {
         Map<String, String> tableRow;
 
         @JsonCreator
-        public static Result getInstance(final Map<String, String> tableRow) {
+        public static Result getInstance(@JsonProperty("table_row") final Map<String, String> tableRow) {
 
             if (tableRow == null || tableRow.isEmpty()) {
                 return InstanceHolder.ERROR;
