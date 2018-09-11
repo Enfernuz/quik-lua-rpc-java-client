@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.NonNull;
 import lombok.Value;
+import org.jetbrains.annotations.NotNull;
 
 public final class GetLinesCount {
 
@@ -13,8 +14,13 @@ public final class GetLinesCount {
     @Value
     public static class Request {
 
-        @NonNull String tag;
+        String tag;
 
+        public Request(@NonNull final String tag) {
+            this.tag = tag;
+        }
+
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
@@ -29,10 +35,11 @@ public final class GetLinesCount {
         int linesCount;
 
         @JsonCreator
-        public Result(final @JsonProperty(value = "lines_count", required = true) int linesCount) {
+        public Result(@JsonProperty(value = "lines_count", required = true) final int linesCount) {
             this.linesCount = linesCount;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
