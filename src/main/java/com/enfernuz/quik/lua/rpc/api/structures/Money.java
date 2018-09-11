@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Value;
 import lombok.experimental.NonFinal;
+import org.jetbrains.annotations.Contract;
 
 import java.util.Objects;
 
@@ -49,6 +50,7 @@ public class Money {
         this.moneyLimitAvailable = moneyLimitAvailable;
     }
 
+    @Contract(value = "null -> false", pure = true)
     @Override
     public boolean equals(final Object o) {
 
