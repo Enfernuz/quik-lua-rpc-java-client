@@ -2,65 +2,59 @@ package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.messages.GetDepo;
 import com.enfernuz.quik.lua.rpc.api.structures.Depo;
-import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
+public class GetDepoResultPbSerdeTest extends AbstractResultPbSerdeTest<GetDepo.Result, qlua.rpc.GetDepo.Result> {
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+    private static final String DEPO_LIMIT_LOCKED_BUY_VALUE = "1";
+    private static final String DEPO_CURRENT_BALANCE = "2";
+    private static final String DEPO_LIMIT_LOCKED_BUY = "3";
+    private static final String DEPO_LIMIT_LOCKED = "4";
+    private static final String DEPO_LIMIT_AVAILABLE = "5";
+    private static final String DEPO_CURRENT_LIMIT = "6";
+    private static final String DEPO_OPEN_BALANCE = "7";
+    private static final String DEPO_OPEN_LIMIT = "8";
 
-public class GetDepoResultPbSerdeTest {
+    @Override
+    public @NotNull Class<GetDepo.Result> getTargetObjectClass() {
+        return GetDepo.Result.class;
+    }
 
-    private static SerdeModule sut;
+    @NotNull
+    @Override
+    public qlua.rpc.GetDepo.Result getTargetObjectAsPbMessage() {
 
-    private static GetDepo.Result expectedObject;
-    private static byte[] expectedPbInput;
+        final qlua.rpc.GetDepo.Depo depo = qlua.rpc.GetDepo.Depo.newBuilder()
+                .setDepoLimitLockedBuyValue(DEPO_LIMIT_LOCKED_BUY_VALUE)
+                .setDepoCurrentBalance(DEPO_CURRENT_BALANCE)
+                .setDepoLimitLockedBuy(DEPO_LIMIT_LOCKED_BUY)
+                .setDepoLimitLocked(DEPO_LIMIT_LOCKED)
+                .setDepoLimitAvailable(DEPO_LIMIT_AVAILABLE)
+                .setDepoCurrentLimit(DEPO_CURRENT_LIMIT)
+                .setDepoOpenBalance(DEPO_OPEN_BALANCE)
+                .setDepoOpenLimit(DEPO_OPEN_LIMIT)
+                .build();
 
-    @BeforeClass
-    public static void globalSetup() {
+        return qlua.rpc.GetDepo.Result.newBuilder()
+                .setDepo(depo)
+                .build();
+    }
 
-        sut = ProtobufSerdeModule.INSTANCE;
+    @NotNull
+    @Override
+    public GetDepo.Result getTargetObject() {
 
         final Depo depo = Depo.builder()
-                .depoLimitLockedBuyValue("1")
-                .depoCurrentBalance("2")
-                .depoLimitLockedBuy("3")
-                .depoLimitLocked("4")
-                .depoLimitAvailable("5")
-                .depoCurrentLimit("6")
-                .depoOpenBalance("7")
-                .depoOpenLimit("8")
-                .build();
-        final qlua.rpc.GetDepo.Depo pbDepo = qlua.rpc.GetDepo.Depo.newBuilder()
-                .setDepoLimitLockedBuyValue("1")
-                .setDepoCurrentBalance("2")
-                .setDepoLimitLockedBuy("3")
-                .setDepoLimitLocked("4")
-                .setDepoLimitAvailable("5")
-                .setDepoCurrentLimit("6")
-                .setDepoOpenBalance("7")
-                .setDepoOpenLimit("8")
+                .depoLimitLockedBuyValue(DEPO_LIMIT_LOCKED_BUY_VALUE)
+                .depoCurrentBalance(DEPO_CURRENT_BALANCE)
+                .depoLimitLockedBuy(DEPO_LIMIT_LOCKED_BUY)
+                .depoLimitLocked(DEPO_LIMIT_LOCKED)
+                .depoLimitAvailable(DEPO_LIMIT_AVAILABLE)
+                .depoCurrentLimit(DEPO_CURRENT_LIMIT)
+                .depoOpenBalance(DEPO_OPEN_BALANCE)
+                .depoOpenLimit(DEPO_OPEN_LIMIT)
                 .build();
 
-        expectedObject = new GetDepo.Result(depo);
-        expectedPbInput = qlua.rpc.GetDepo.Result.newBuilder()
-                .setDepo(pbDepo)
-                .build()
-                .toByteArray();
-    }
-
-    @Test
-    public void testSerialize() {
-
-        assertTrue(
-                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
-        );
-    }
-
-    @Test
-    public void testDeserialize() {
-        assertEquals(expectedObject, sut.deserialize(GetDepo.Result.class, expectedPbInput));
+        return new GetDepo.Result(depo);
     }
 }

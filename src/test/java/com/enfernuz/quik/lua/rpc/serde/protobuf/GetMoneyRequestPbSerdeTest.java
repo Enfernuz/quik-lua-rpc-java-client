@@ -2,6 +2,7 @@ package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.messages.GetMoney;
 import com.google.protobuf.MessageLite;
+import org.jetbrains.annotations.NotNull;
 import qlua.rpc.RPC;
 
 public class GetMoneyRequestPbSerdeTest extends AbstractRequestPbSerdeTest<GetMoney.Request> {
@@ -11,6 +12,7 @@ public class GetMoneyRequestPbSerdeTest extends AbstractRequestPbSerdeTest<GetMo
     private static final String TAG = "3";
     private static final String CURR_CODE = "4";
 
+    @NotNull
     @Override
     public GetMoney.Request getTargetObject() {
         return GetMoney.Request.builder()
@@ -21,11 +23,13 @@ public class GetMoneyRequestPbSerdeTest extends AbstractRequestPbSerdeTest<GetMo
                 .build();
     }
 
+    @NotNull
     @Override
     public RPC.ProcedureType getProcedureType() {
         return RPC.ProcedureType.GET_MONEY;
     }
 
+    @NotNull
     @Override
     public MessageLite getPbRequestArgs() {
         return qlua.rpc.GetMoney.Request.newBuilder()
@@ -36,6 +40,7 @@ public class GetMoneyRequestPbSerdeTest extends AbstractRequestPbSerdeTest<GetMo
                 .build();
     }
 
+    @NotNull
     @Override
     public Class<GetMoney.Request> getTargetObjectClass() {
         return GetMoney.Request.class;

@@ -1,6 +1,8 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
+import com.google.protobuf.MessageLite;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -10,17 +12,21 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @Ignore
-public abstract class AbstractPbSerdeTest<T> {
+public abstract class AbstractPbSerdeTest<TARGET_OBJECT, PB_OBJECT extends MessageLite> {
 
+    @NotNull
     public SerdeModule getSerdeModuleUnderTest() {
         return ProtobufSerdeModule.INSTANCE;
     }
 
-    public abstract Class<T> getTargetObjectClass();
+    @NotNull
+    public abstract Class<TARGET_OBJECT> getTargetObjectClass();
 
-    public abstract byte[] getTargetObjectPbSerializedForm();
+    @NotNull
+    public abstract PB_OBJECT getTargetObjectAsPbMessage();
 
-    public abstract T getTargetObject();
+    @NotNull
+    public abstract TARGET_OBJECT getTargetObject();
 
     @Test
     public void testSerialize() {
@@ -33,5 +39,9 @@ public abstract class AbstractPbSerdeTest<T> {
     @Test
     public void testDeserialize() {
         assertEquals(getTargetObject(), getSerdeModuleUnderTest().deserialize(getTargetObjectClass(), getTargetObjectPbSerializedForm()));
+    }
+
+    private byte[] getTargetObjectPbSerializedForm() {
+        return getTargetObjectAsPbMessage().toByteArray();
     }
 }

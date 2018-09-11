@@ -1,19 +1,23 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
-import com.google.protobuf.ByteString;
 import com.google.protobuf.MessageLite;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.Ignore;
 import qlua.rpc.RPC;
 
 @Ignore
-public abstract class AbstractRequestPbSerdeTest<T> extends AbstractPbSerdeTest<T> {
+public abstract class AbstractRequestPbSerdeTest<TARGET_OBJECT> extends AbstractPbSerdeTest<TARGET_OBJECT, RPC.Request> {
 
+    @NotNull
     public abstract RPC.ProcedureType getProcedureType();
 
+    @Nullable
     public abstract MessageLite getPbRequestArgs();
 
+    @NotNull
     @Override
-    public final byte[] getTargetObjectPbSerializedForm() {
+    public final RPC.Request getTargetObjectAsPbMessage() {
 
         final RPC.Request.Builder request = RPC.Request.newBuilder();
         request.setType( getProcedureType() );
@@ -22,6 +26,6 @@ public abstract class AbstractRequestPbSerdeTest<T> extends AbstractPbSerdeTest<
             request.setArgs( requestArgs.toByteString() );
         }
 
-        return request.build().toByteArray();
+        return request.build();
     }
 }
