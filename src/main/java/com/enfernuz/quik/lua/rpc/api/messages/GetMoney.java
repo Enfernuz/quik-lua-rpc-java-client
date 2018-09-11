@@ -50,7 +50,7 @@ public final class GetMoney {
         Money money;
 
         @JsonCreator
-        public Result(final @JsonProperty(value = "money", required = true) @NonNull Money money) {
+        public Result(@JsonProperty(value = "money", required = true) @NonNull final Money money) {
             this.money = money;
         }
 
