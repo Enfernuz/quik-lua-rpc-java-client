@@ -17,12 +17,12 @@ public class GetDepoRequestPbSerdeTest extends AbstractRequestPbSerdeTest<GetDep
     }
 
     @Override
-    public Class<GetDepo.Request> getTargetClass() {
+    public Class<GetDepo.Request> getTargetObjectClass() {
         return GetDepo.Request.class;
     }
 
     @Override
-    public GetDepo.Request getExpectedDeserializedObject() {
+    public GetDepo.Request getTargetObject() {
         return GetDepo.Request.builder()
                 .clientCode(CLIENT_CODE)
                 .firmId(FIRM_ID)

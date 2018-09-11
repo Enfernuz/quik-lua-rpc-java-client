@@ -13,7 +13,7 @@ public abstract class AbstractRequestPbSerdeTest<T> extends AbstractPbSerdeTest<
     public abstract MessageLite getPbRequestArgs();
 
     @Override
-    public final byte[] getExpectedPbSerializedForm() {
+    public final byte[] getTargetObjectPbSerializedForm() {
 
         final RPC.Request.Builder request = RPC.Request.newBuilder();
         request.setType( getProcedureType() );

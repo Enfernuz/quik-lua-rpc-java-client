@@ -12,7 +12,7 @@ public class GetMoneyRequestPbSerdeTest extends AbstractRequestPbSerdeTest<GetMo
     private static final String CURR_CODE = "4";
 
     @Override
-    public GetMoney.Request getExpectedDeserializedObject() {
+    public GetMoney.Request getTargetObject() {
         return GetMoney.Request.builder()
                 .clientCode(CLIENT_CODE)
                 .firmId(FIRM_ID)
@@ -37,7 +37,7 @@ public class GetMoneyRequestPbSerdeTest extends AbstractRequestPbSerdeTest<GetMo
     }
 
     @Override
-    public Class<GetMoney.Request> getTargetClass() {
+    public Class<GetMoney.Request> getTargetObjectClass() {
         return GetMoney.Request.class;
     }
 }

@@ -12,26 +12,26 @@ import static org.junit.Assert.assertTrue;
 @Ignore
 public abstract class AbstractPbSerdeTest<T> {
 
-    public SerdeModule getSUT() {
+    public SerdeModule getSerdeModuleUnderTest() {
         return ProtobufSerdeModule.INSTANCE;
     }
 
-    public abstract Class<T> getTargetClass();
+    public abstract Class<T> getTargetObjectClass();
 
-    public abstract byte[] getExpectedPbSerializedForm();
+    public abstract byte[] getTargetObjectPbSerializedForm();
 
-    public abstract T getExpectedDeserializedObject();
+    public abstract T getTargetObject();
 
     @Test
     public void testSerialize() {
 
         assertTrue(
-                Arrays.equals(getExpectedPbSerializedForm(), getSUT().serialize(getExpectedDeserializedObject()))
+                Arrays.equals(getTargetObjectPbSerializedForm(), getSerdeModuleUnderTest().serialize(getTargetObject()))
         );
     }
 
     @Test
     public void testDeserialize() {
-        assertEquals(getExpectedDeserializedObject(), getSUT().deserialize(getTargetClass(), getExpectedPbSerializedForm()));
+        assertEquals(getTargetObject(), getSerdeModuleUnderTest().deserialize(getTargetObjectClass(), getTargetObjectPbSerializedForm()));
     }
 }
