@@ -17,9 +17,13 @@ public class GetLabelParamsJsonSerdeTest {
     private static ObjectMapper sut;
 
     private static GetLabelParams.Request requestObj;
-    private static GetLabelParams.Result resultObj;
     private static String requestJson;
+
+    private static GetLabelParams.Result resultObj;
     private static String resultJson;
+
+    private static GetLabelParams.Result resultObjWithOnlyRequiredFields;
+    private static String resultJsonWithOnlyRequiredFields;
 
     @BeforeClass
     public static void globalSetup() throws IOException {
@@ -28,6 +32,7 @@ public class GetLabelParamsJsonSerdeTest {
         sut.registerModule(new QluaJsonModule());
 
         requestObj = new GetLabelParams.Request("1", 2);
+        requestJson = Resources.toString(Resources.getResource("json/GetLabelParams.request.json"), Charsets.UTF_8);
 
         final ImmutableMap.Builder<String, String> labelParams = ImmutableMap.builder();
         labelParams.put("param_1", "value_1");
@@ -36,27 +41,30 @@ public class GetLabelParamsJsonSerdeTest {
         labelParams.put("param_...", "value_...");
         labelParams.put("param_n", "value_n");
 
-        resultObj = new GetLabelParams.Result( labelParams.build() );
+        resultObj = GetLabelParams.Result.getInstance( labelParams.build() );
+        resultJson = Resources.toString(Resources.getResource("json/GetLabelParams.result.json"), Charsets.UTF_8);
 
-        requestJson =
-                Resources.toString(Resources.getResource("json/GetLabelParams.request.json"), Charsets.UTF_8);
-        resultJson =
-                Resources.toString(Resources.getResource("json/GetLabelParams.result.json"), Charsets.UTF_8);
+        resultObjWithOnlyRequiredFields = GetLabelParams.Result.getInstance(null);
+        resultJsonWithOnlyRequiredFields =
+                Resources.toString(Resources.getResource("json/GetLabelParams.result.only_required_fields.json"), Charsets.UTF_8);
     }
 
     @Test
     public void testRequestSerialize() throws IOException {
-
-        final String actualRequestJson = sut.writerWithDefaultPrettyPrinter().writeValueAsString(requestObj);
-
-        assertEquals(requestJson, actualRequestJson);
+        assertEquals(requestJson, sut.writerWithDefaultPrettyPrinter().writeValueAsString(requestObj));
     }
 
     @Test
     public void testResultDeserialize() throws IOException {
+        assertEquals(resultObj, sut.readValue(resultJson, GetLabelParams.Result.class));
+    }
 
-        final GetLabelParams.Result actualResultObj = sut.readValue(resultJson, GetLabelParams.Result.class);
+    @Test
+    public void testDeserializeResultWithOnlyRequiredFields() throws IOException {
 
-        assertEquals(resultObj, actualResultObj);
+        assertEquals(
+                resultObjWithOnlyRequiredFields,
+                sut.readValue(resultJsonWithOnlyRequiredFields, GetLabelParams.Result.class)
+        );
     }
 }
