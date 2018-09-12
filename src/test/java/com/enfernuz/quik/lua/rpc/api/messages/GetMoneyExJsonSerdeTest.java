@@ -17,9 +17,13 @@ public class GetMoneyExJsonSerdeTest {
     private static ObjectMapper sut;
 
     private static GetMoneyEx.Request requestObj;
-    private static GetMoneyEx.Result resultObj;
     private static String requestJson;
+
+    private static GetMoneyEx.Result resultObj;
     private static String resultJson;
+
+    private static GetMoneyEx.Result resultObjWithOnlyRequiredFields;
+    private static String resultJsonWithOnlyRequiredFields;
 
     @BeforeClass
     public static void globalSetup() throws IOException {
@@ -34,6 +38,7 @@ public class GetMoneyExJsonSerdeTest {
                 .currCode("4")
                 .limitKind(5)
                 .build();
+        requestJson = Resources.toString(Resources.getResource("json/getMoneyEx.request.json"), Charsets.UTF_8);
 
         final MoneyLimit moneyEx = MoneyLimit.builder()
                 .currCode("1")
@@ -51,12 +56,12 @@ public class GetMoneyExJsonSerdeTest {
                 .limitKind(13)
                 .build();
 
-        resultObj = new GetMoneyEx.Result(moneyEx);
+        resultObj = GetMoneyEx.Result.getInstance(moneyEx);
+        resultJson = Resources.toString(Resources.getResource("json/getMoneyEx.result.json"), Charsets.UTF_8);
 
-        requestJson =
-                Resources.toString(Resources.getResource("json/getMoneyEx.request.json"), Charsets.UTF_8);
-        resultJson =
-                Resources.toString(Resources.getResource("json/getMoneyEx.result.json"), Charsets.UTF_8);
+        resultObjWithOnlyRequiredFields = GetMoneyEx.Result.getInstance(null);
+        resultJsonWithOnlyRequiredFields =
+                Resources.toString(Resources.getResource("json/getMoneyEx.result.only_required_fields.json"), Charsets.UTF_8);
     }
 
     @Test
@@ -73,5 +78,13 @@ public class GetMoneyExJsonSerdeTest {
         final GetMoneyEx.Result actualResultObj = sut.readValue(resultJson, GetMoneyEx.Result.class);
 
         assertEquals(resultObj, actualResultObj);
+    }
+
+    @Test
+    public void testDeserializeResultWithOnlyRequiredFields() throws IOException {
+
+        final GetMoneyEx.Result actualResultObj = sut.readValue(resultJsonWithOnlyRequiredFields, GetMoneyEx.Result.class);
+
+        assertEquals(resultObjWithOnlyRequiredFields, actualResultObj);
     }
 }

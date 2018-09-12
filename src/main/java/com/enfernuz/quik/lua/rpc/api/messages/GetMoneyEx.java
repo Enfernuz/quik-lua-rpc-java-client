@@ -7,6 +7,8 @@ import com.google.common.base.MoreObjects;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public final class GetMoneyEx {
 
@@ -35,6 +37,7 @@ public final class GetMoneyEx {
             this.limitKind = limitKind;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
@@ -50,18 +53,37 @@ public final class GetMoneyEx {
     @Value
     public static class Result {
 
-        MoneyLimit moneyEx;
+        @Nullable MoneyLimit moneyEx;
 
         @JsonCreator
-        public Result(final @JsonProperty(value = "money_ex", required = true) @NonNull MoneyLimit moneyEx) {
+        public static Result getInstance(@JsonProperty(value = "money_ex") final MoneyLimit moneyEx) {
+            return (moneyEx == null) ? InstanceHolder.ERROR : new Result(moneyEx);
+        }
+
+        private Result(final MoneyLimit moneyEx) {
             this.moneyEx = moneyEx;
         }
 
+        public boolean isError() {
+            return moneyEx == null;
+        }
+
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
                     .add("money_ex", moneyEx)
                     .toString();
+        }
+
+        private static final class InstanceHolder {
+
+            private static final Result ERROR = new Result(null);
+
+            // sanity check
+            static {
+                assert ERROR.isError();
+            }
         }
     }
 }
