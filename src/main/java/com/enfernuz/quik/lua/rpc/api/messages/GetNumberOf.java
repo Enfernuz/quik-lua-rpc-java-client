@@ -5,14 +5,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.NonNull;
 import lombok.Value;
+import org.jetbrains.annotations.NotNull;
 
 public final class GetNumberOf {
 
     @Value
     public static class Request {
 
-        @NonNull String tableName;
+        String tableName;
 
+        public Request(@NonNull final String tableName) {
+            this.tableName = tableName;
+        }
+
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
@@ -31,6 +37,7 @@ public final class GetNumberOf {
             this.result = result;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
