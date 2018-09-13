@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import qlua.rpc.RPC;
 
-public class GetNumberOfPbSerdeTest extends AbstractRequestPbSerdeTest<GetNumberOf.Request> {
+public class GetNumberOfRequestPbSerdeTest extends AbstractRequestPbSerdeTest<GetNumberOf.Request> {
 
     private static final String TABLE_NAME = "1";
 
