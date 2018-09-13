@@ -50,6 +50,8 @@ final class ProtobufSerdeUtils {
     private static final PbConverter<QluaStructures.MoneyLimit, MoneyLimit> MONEY_LIMIT_PB_CONVERTER =
             MoneyLimitPbSerde.INSTANCE;
 
+    private static final PbConverter<QluaStructures.Order, Order> ORDER_PB_CONVERTER = OrderPbSerde.INSTANCE;
+
     @Contract(" -> fail")
     private ProtobufSerdeUtils() {
         throw new AssertionError("This should never be invoked.");
@@ -173,6 +175,16 @@ final class ProtobufSerdeUtils {
     @NotNull
     static MoneyLimit convertFromPbMoneyLimit(@NotNull final QluaStructures.MoneyLimit moneyLimit) {
         return MONEY_LIMIT_PB_CONVERTER.convertFromPb(moneyLimit);
+    }
+
+    @NotNull
+    static QluaStructures.Order convertToPbOrder(@NotNull final Order order) {
+        return ORDER_PB_CONVERTER.convertToPb(order);
+    }
+
+    @NotNull
+    static Order convertFromPbOrder(@NotNull final QluaStructures.Order order) {
+        return ORDER_PB_CONVERTER.convertFromPb(order);
     }
 
     static void assertEquals(@NotNull final RPC.ProcedureType actual, @NotNull final RPC.ProcedureType expected) {

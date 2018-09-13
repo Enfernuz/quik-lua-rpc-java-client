@@ -18,9 +18,13 @@ public class GetOrderByNumberJsonSerdeTest {
     private static ObjectMapper sut;
 
     private static GetOrderByNumber.Request requestObj;
-    private static GetOrderByNumber.Result resultObj;
     private static String requestJson;
+
+    private static GetOrderByNumber.Result resultObj;
     private static String resultJson;
+
+    private static GetOrderByNumber.Result errorObj;
+    private static String errorJson;
 
     @BeforeClass
     public static void globalSetup() throws IOException {
@@ -29,6 +33,7 @@ public class GetOrderByNumberJsonSerdeTest {
         sut.registerModule(new QluaJsonModule());
 
         requestObj = new GetOrderByNumber.Request("1", 12345678909876577L);
+        requestJson = Resources.toString(Resources.getResource("json/getOrderByNumber.request.json"), Charsets.UTF_8);
 
         final DateTimeEntry datetime = DateTimeEntry.builder()
                 .mcs(1)
@@ -99,12 +104,11 @@ public class GetOrderByNumberJsonSerdeTest {
                 .visible(42)
                 .build();
 
-        resultObj = new GetOrderByNumber.Result(order, 2);
+        resultObj = GetOrderByNumber.Result.getInstance(order, 2);
+        resultJson = Resources.toString(Resources.getResource("json/getOrderByNumber.result.json"), Charsets.UTF_8);
 
-        requestJson =
-                Resources.toString(Resources.getResource("json/getOrderByNumber.request.json"), Charsets.UTF_8);
-        resultJson =
-                Resources.toString(Resources.getResource("json/getOrderByNumber.result.json"), Charsets.UTF_8);
+        errorObj = GetOrderByNumber.Result.getInstance(null, 0);
+        errorJson = Resources.toString(Resources.getResource("json/getOrderByNumber.error.json"), Charsets.UTF_8);
     }
 
     @Test
@@ -121,5 +125,10 @@ public class GetOrderByNumberJsonSerdeTest {
         final GetOrderByNumber.Result actualResultObj = sut.readValue(resultJson, GetOrderByNumber.Result.class);
 
         assertEquals(resultObj, actualResultObj);
+    }
+
+    @Test
+    public void testDeserializeError() throws IOException {
+        assertEquals(errorObj, sut.readValue(errorJson, GetOrderByNumber.Result.class));
     }
 }

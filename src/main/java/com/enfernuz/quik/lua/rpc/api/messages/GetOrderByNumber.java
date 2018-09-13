@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.NonNull;
 import lombok.Value;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 public final class GetOrderByNumber {
 
@@ -15,6 +17,12 @@ public final class GetOrderByNumber {
         String classCode;
         long orderId;
 
+        public Request(@NonNull final String classCode, final long orderId) {
+            this.classCode = classCode;
+            this.orderId = orderId;
+        }
+
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
@@ -31,20 +39,40 @@ public final class GetOrderByNumber {
         int indx;
 
         @JsonCreator
-        public Result(
-                final @JsonProperty(value = "order", required = true) @NonNull Order order,
-                final @JsonProperty(value = "indx", required = true) int indx) {
+        public static Result getInstance(
+                @JsonProperty("order") final Order order,
+                @JsonProperty("indx") final int indx) {
 
+            return (order == null) ? InstanceHolder.ERROR : new Result(order, indx);
+        }
+
+        private Result(final Order order, final int indx) {
             this.order = order;
             this.indx = indx;
         }
 
+        @Contract(pure = true)
+        public boolean isError() {
+            return order == null;
+        }
+
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
                     .add("order", order)
                     .add("indx", indx)
                     .toString();
+        }
+
+        private static final class InstanceHolder {
+
+            private static final Result ERROR = new Result(null, 0);
+
+            // sanity check
+            static  {
+                assert ERROR.isError();
+            }
         }
     }
 }
