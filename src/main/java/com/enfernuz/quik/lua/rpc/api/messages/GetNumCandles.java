@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.NonNull;
 import lombok.Value;
+import org.jetbrains.annotations.NotNull;
 
 public final class GetNumCandles {
 
@@ -13,8 +14,13 @@ public final class GetNumCandles {
     @Value
     public static class Request {
 
-        @NonNull String tag;
+        String tag;
 
+        public Request(@NonNull final String tag) {
+            this.tag = tag;
+        }
+
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
@@ -29,10 +35,11 @@ public final class GetNumCandles {
         int numCandles;
 
         @JsonCreator
-        public Result(final @JsonProperty(value = "num_candles", required = true) int numCandles) {
+        public Result(@JsonProperty(value = "num_candles", required = true) final int numCandles) {
             this.numCandles = numCandles;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
