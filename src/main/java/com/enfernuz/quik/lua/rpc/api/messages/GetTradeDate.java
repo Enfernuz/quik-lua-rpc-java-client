@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.*;
 import lombok.experimental.NonFinal;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -15,7 +16,12 @@ public final class GetTradeDate {
     @Value
     public static class TradeDate {
 
-        @NonNull String date;
+        private static final String DATE_FIELD = "date";
+        private static final String YEAR_FIELD = "year";
+        private static final String MONTH_FIELD = "month";
+        private static final String DAY_FIELD = "day";
+
+        String date;
         int year;
         int month;
         int day;
@@ -26,10 +32,10 @@ public final class GetTradeDate {
         @Builder
         @JsonCreator
         private TradeDate(
-                final @JsonProperty(value = "date", required = true) String date,
-                final @JsonProperty(value = "year", required = true) int year,
-                final @JsonProperty(value = "month", required = true) int month,
-                final @JsonProperty(value = "day", required = true) int day) {
+                @JsonProperty(value = DATE_FIELD, required = true) @NonNull final String date,
+                @JsonProperty(value = YEAR_FIELD, required = true) final int year,
+                @JsonProperty(value = MONTH_FIELD, required = true) final int month,
+                @JsonProperty(value = DAY_FIELD, required = true) final int day) {
 
             this.date = date;
             this.year = year;
@@ -68,10 +74,10 @@ public final class GetTradeDate {
 
             if (asString == null) {
                 asString = MoreObjects.toStringHelper(this)
-                        .add("date", date)
-                        .add("year", year)
-                        .add("month", month)
-                        .add("day", day)
+                        .add(DATE_FIELD, date)
+                        .add(YEAR_FIELD, year)
+                        .add(MONTH_FIELD, month)
+                        .add(DAY_FIELD, day)
                         .toString();
             }
 
@@ -84,17 +90,20 @@ public final class GetTradeDate {
     @Value
     public static class Result {
 
-        @NonNull TradeDate tradeDate;
+        private static final String TRADE_DATE_FIELD = "trade_date";
+
+        TradeDate tradeDate;
 
         @JsonCreator
-        public Result(final @JsonProperty(value = "trade_date", required = true) TradeDate tradeDate) {
+        public Result(@JsonProperty(value = TRADE_DATE_FIELD, required = true) @NonNull final TradeDate tradeDate) {
             this.tradeDate = tradeDate;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("trade_date", tradeDate)
+                    .add(TRADE_DATE_FIELD, tradeDate)
                     .toString();
         }
     }

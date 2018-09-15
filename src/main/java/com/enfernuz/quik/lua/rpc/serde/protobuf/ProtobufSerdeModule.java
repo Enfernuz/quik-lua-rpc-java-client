@@ -193,6 +193,8 @@ public enum ProtobufSerdeModule implements SerdeModule {
         registerSerde(result, GetSecurityInfo.Result.class, GetSecurityInfoResultPbSerde.INSTANCE);
         registerSerde(result, GetTableSize.Request.class, GetTableSizeRequestPbSerde.INSTANCE);
         registerSerde(result, GetTableSize.Result.class, GetTableSizeResultPbSerde.INSTANCE);
+        registerSerde(result, GetTradeDate.Request.class, GetTradeDateRequestPbSerde.INSTANCE);
+        registerSerde(result, GetTradeDate.Result.class, GetTradeDateResultPbSerde.INSTANCE);
         registerSerde(result, Message.Request.class, MessageRequestPbSerde.INSTANCE);
         registerSerde(result, Message.Result.class, MessageResultPbSerde.INSTANCE);
 
