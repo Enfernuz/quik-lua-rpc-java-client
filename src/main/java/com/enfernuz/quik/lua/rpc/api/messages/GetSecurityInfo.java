@@ -7,28 +7,33 @@ import com.google.common.base.MoreObjects;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
+import org.jetbrains.annotations.NotNull;
 
 public final class GetSecurityInfo {
 
     private GetSecurityInfo() {}
 
+    private static final String CLASS_CODE_FIELD = "class_code";
+    private static final String SEC_CODE_FIELD = "sec_code";
+
     @Value
     public static class Request {
 
-        @NonNull String classCode;
-        @NonNull String secCode;
+        String classCode;
+        String secCode;
 
         @Builder
-        private Request(final String classCode, final String secCode) {
+        private Request(@NonNull final String classCode, @NonNull final String secCode) {
             this.classCode = classCode;
             this.secCode = secCode;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("class_code", classCode)
-                    .add("sec_code", secCode)
+                    .add(CLASS_CODE_FIELD, classCode)
+                    .add(SEC_CODE_FIELD, secCode)
                     .toString();
         }
     }
@@ -36,17 +41,19 @@ public final class GetSecurityInfo {
     @Value
     public static class Result {
 
-        @NonNull Security securityInfo;
+        private static final String SECURITY_INFO_FIELD = "security_info";
+
+        Security securityInfo;
 
         @JsonCreator
-        public Result(final @JsonProperty(value = "security_info", required = true) Security securityInfo) {
+        public Result(@JsonProperty(value = SECURITY_INFO_FIELD, required = true) @NonNull final Security securityInfo) {
             this.securityInfo = securityInfo;
         }
 
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("security_info", securityInfo)
+                    .add(SECURITY_INFO_FIELD, securityInfo)
                     .toString();
         }
     }
