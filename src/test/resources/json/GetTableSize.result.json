@@ -1,4 +1,6 @@
 {
-  "rows" : 1,
-  "col" : 2
+  "table_size" : {
+    "rows" : 1,
+    "col" : 2
+  }
 }
