@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.NonNull;
 import lombok.Value;
+import org.jetbrains.annotations.NotNull;
 
 public final class GetScriptPath {
 
@@ -14,12 +15,13 @@ public final class GetScriptPath {
     @Value
     public static class Result {
 
-        @NonNull String scriptPath;
+        String scriptPath;
 
-        public Result(final @JsonProperty(value = "script_path", required = true) String scriptPath) {
+        public Result(@JsonProperty(value = "script_path", required = true) @NonNull final String scriptPath) {
             this.scriptPath = scriptPath;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)

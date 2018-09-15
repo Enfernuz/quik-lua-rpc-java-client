@@ -186,6 +186,8 @@ public enum ProtobufSerdeModule implements SerdeModule {
         registerSerde(result, GetQuoteLevel2.QuoteEntry.class, QuoteEntryPbSerde.INSTANCE);
         registerSerde(result, GetQuoteLevel2.Request.class, GetQuoteLevel2RequestPbSerde.INSTANCE);
         registerSerde(result, GetQuoteLevel2.Result.class, GetQuoteLevel2ResultPbSerde.INSTANCE);
+        registerSerde(result, GetScriptPath.Request.class, GetScriptPathRequestPbSerde.INSTANCE);
+        registerSerde(result, GetScriptPath.Result.class, GetScriptPathResultPbSerde.INSTANCE);
         registerSerde(result, Message.Request.class, MessageRequestPbSerde.INSTANCE);
         registerSerde(result, Message.Result.class, MessageResultPbSerde.INSTANCE);
 
