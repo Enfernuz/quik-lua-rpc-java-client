@@ -7,21 +7,23 @@ import com.google.common.base.MoreObjects;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
+import org.jetbrains.annotations.NotNull;
 
 public final class GetPortfolioInfo {
 
     @Value
     public static class Request {
 
-        @NonNull String firmId;
-        @NonNull String clientCode;
+        String firmId;
+        String clientCode;
 
         @Builder
-        private Request(final String firmId, final String clientCode) {
+        private Request(@NonNull final String firmId, @NonNull final String clientCode) {
             this.firmId = firmId;
             this.clientCode = clientCode;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
@@ -37,10 +39,11 @@ public final class GetPortfolioInfo {
         PortfolioInfo portfolioInfo;
 
         @JsonCreator
-        public Result(final @JsonProperty(value = "portfolio_info", required = true) @NonNull PortfolioInfo portfolioInfo) {
+        public Result(@JsonProperty(value = "portfolio_info", required = true) @NonNull final PortfolioInfo portfolioInfo) {
             this.portfolioInfo = portfolioInfo;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)

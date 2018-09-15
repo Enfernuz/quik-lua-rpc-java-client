@@ -52,6 +52,9 @@ final class ProtobufSerdeUtils {
 
     private static final PbConverter<QluaStructures.Order, Order> ORDER_PB_CONVERTER = OrderPbSerde.INSTANCE;
 
+    private static final PbConverter<qlua.rpc.GetPortfolioInfo.PortfolioInfo, PortfolioInfo> PORTFOLIO_INFO_PB_CONVERTER =
+            PortfolioInfoPbSerde.INSTANCE;
+
     @Contract(" -> fail")
     private ProtobufSerdeUtils() {
         throw new AssertionError("This should never be invoked.");
@@ -185,6 +188,16 @@ final class ProtobufSerdeUtils {
     @NotNull
     static Order convertFromPbOrder(@NotNull final QluaStructures.Order order) {
         return ORDER_PB_CONVERTER.convertFromPb(order);
+    }
+
+    @NotNull
+    static qlua.rpc.GetPortfolioInfo.PortfolioInfo convertToPbPortfolioInfo(@NotNull final PortfolioInfo portfolioInfo) {
+        return PORTFOLIO_INFO_PB_CONVERTER.convertToPb(portfolioInfo);
+    }
+
+    @NotNull
+    static PortfolioInfo convertFromPbPortfolioInfo(@NotNull final qlua.rpc.GetPortfolioInfo.PortfolioInfo portfolioInfo) {
+        return PORTFOLIO_INFO_PB_CONVERTER.convertFromPb(portfolioInfo);
     }
 
     static void assertEquals(@NotNull final RPC.ProcedureType actual, @NotNull final RPC.ProcedureType expected) {
