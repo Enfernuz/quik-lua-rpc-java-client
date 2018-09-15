@@ -64,7 +64,7 @@ public class GetParamEx2ResultPbSerdeTest extends AbstractResultPbSerdeTest<GetP
         thrown.expectCause(
                 allOf(
                         instanceOf(IllegalArgumentException.class),
-                        hasProperty("message", equalTo("Экземпляр protobuf-представления qlua.rpc.GetParamEx2.Result не содержит поля 'paramEx'."))
+                        hasProperty("message", equalTo("Поле 'param_ex' экземпляра protobuf-представления qlua.rpc.GetParamEx2.Result не инициализировано."))
                 )
         );
 
