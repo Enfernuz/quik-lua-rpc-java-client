@@ -3,6 +3,7 @@ package com.enfernuz.quik.lua.rpc.serde.protobuf;
 import com.enfernuz.quik.lua.rpc.api.messages.GetBuySellInfo;
 import com.enfernuz.quik.lua.rpc.api.messages.GetBuySellInfoEx;
 import com.enfernuz.quik.lua.rpc.api.messages.GetDepo;
+import com.enfernuz.quik.lua.rpc.api.messages.GetQuoteLevel2;
 import com.enfernuz.quik.lua.rpc.api.structures.*;
 import com.enfernuz.quik.lua.rpc.serde.PbConverter;
 import com.enfernuz.quik.lua.rpc.serde.SerdeException;
@@ -54,6 +55,9 @@ final class ProtobufSerdeUtils {
 
     private static final PbConverter<qlua.rpc.GetPortfolioInfo.PortfolioInfo, PortfolioInfo> PORTFOLIO_INFO_PB_CONVERTER =
             PortfolioInfoPbSerde.INSTANCE;
+
+    private static final PbConverter<qlua.rpc.GetQuoteLevel2.QuoteEntry, GetQuoteLevel2.QuoteEntry> QUOTE_ENTRY_PB_CONVERTER =
+            QuoteEntryPbSerde.INSTANCE;
 
     @Contract(" -> fail")
     private ProtobufSerdeUtils() {
@@ -198,6 +202,16 @@ final class ProtobufSerdeUtils {
     @NotNull
     static PortfolioInfo convertFromPbPortfolioInfo(@NotNull final qlua.rpc.GetPortfolioInfo.PortfolioInfo portfolioInfo) {
         return PORTFOLIO_INFO_PB_CONVERTER.convertFromPb(portfolioInfo);
+    }
+
+    @NotNull
+    static qlua.rpc.GetQuoteLevel2.QuoteEntry convertToPbQuoteEntry(@NotNull final GetQuoteLevel2.QuoteEntry quoteEntry) {
+        return QUOTE_ENTRY_PB_CONVERTER.convertToPb(quoteEntry);
+    }
+
+    @NotNull
+    static GetQuoteLevel2.QuoteEntry convertFromPbQuoteEntry(@NotNull final qlua.rpc.GetQuoteLevel2.QuoteEntry quoteEntry) {
+        return QUOTE_ENTRY_PB_CONVERTER.convertFromPb(quoteEntry);
     }
 
     static void assertEquals(@NotNull final RPC.ProcedureType actual, @NotNull final RPC.ProcedureType expected) {

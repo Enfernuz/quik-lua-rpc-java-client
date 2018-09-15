@@ -6,6 +6,7 @@ import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 import lombok.*;
 import lombok.experimental.NonFinal;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
@@ -17,8 +18,11 @@ public final class GetQuoteLevel2 {
     @Value
     public static class QuoteEntry {
 
-        @NonNull String price;
-        @NonNull String quantity;
+        private static final String PRICE_FIELD = "price";
+        private static final String QUANTITY_FIELD = "quantity";
+
+        String price;
+        String quantity;
 
         private @NonFinal @Getter(AccessLevel.NONE) transient int hashCode;
         private @NonFinal @Getter(AccessLevel.NONE) transient String asString;
@@ -26,8 +30,8 @@ public final class GetQuoteLevel2 {
         @Builder
         @JsonCreator
         private QuoteEntry(
-                final @JsonProperty(value = "price", required = true) String price,
-                final @JsonProperty(value = "quantity", required = true) String quantity) {
+                @JsonProperty(value = PRICE_FIELD, required = true) @NonNull final String price,
+                @JsonProperty(value = QUANTITY_FIELD, required = true) @NonNull final String quantity) {
 
             this.price = price;
             this.quantity = quantity;
@@ -62,8 +66,8 @@ public final class GetQuoteLevel2 {
 
             if (asString == null) {
                 asString = MoreObjects.toStringHelper(this)
-                        .add("price", price)
-                        .add("quantity", quantity)
+                        .add(PRICE_FIELD, price)
+                        .add(QUANTITY_FIELD, quantity)
                         .toString();
             }
 
@@ -74,15 +78,16 @@ public final class GetQuoteLevel2 {
     @Value
     public static class Request {
 
-        @NonNull String classCode;
-        @NonNull String secCode;
+        String classCode;
+        String secCode;
 
         @Builder
-        private Request(final String classCode, final String secCode) {
+        private Request(@NonNull final String classCode, @NonNull final String secCode) {
             this.classCode = classCode;
             this.secCode = secCode;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
@@ -95,10 +100,15 @@ public final class GetQuoteLevel2 {
     @Value
     public static class Result {
 
-        @NonNull String bidCount;
-        @NonNull String offerCount;
-        @NonNull List<QuoteEntry> bids;
-        @NonNull List<QuoteEntry> offers;
+        private static final String BID_COUNT_FIELD = "bid_count";
+        private static final String OFFER_COUNT_FIELD = "offer_count";
+        private static final String BIDS_FIELD = "bids";
+        private static final String OFFERS_FIELD = "offers";
+
+        String bidCount;
+        String offerCount;
+        List<QuoteEntry> bids;
+        List<QuoteEntry> offers;
 
         private @NonFinal @Getter(AccessLevel.NONE) transient int hashCode;
         private @NonFinal @Getter(AccessLevel.NONE) transient String asString;
@@ -106,10 +116,10 @@ public final class GetQuoteLevel2 {
         @Builder
         @JsonCreator
         private Result(
-                final @JsonProperty(value = "bid_count", required = true) String bidCount,
-                final @JsonProperty(value = "offer_count", required = true) String offerCount,
-                final @JsonProperty(value = "bids", required = true) Iterable<? extends QuoteEntry> bids,
-                final @JsonProperty(value = "offers", required = true) Iterable<? extends QuoteEntry> offers) {
+                @JsonProperty(value = BID_COUNT_FIELD, required = true) @NonNull final String bidCount,
+                @JsonProperty(value = OFFER_COUNT_FIELD, required = true) @NonNull final String offerCount,
+                @JsonProperty(value = BIDS_FIELD, required = true) @NonNull final Iterable<? extends QuoteEntry> bids,
+                @JsonProperty(value = OFFERS_FIELD, required = true) @NonNull final Iterable<? extends QuoteEntry> offers) {
 
             this.bidCount = bidCount;
             this.offerCount = offerCount;
@@ -148,10 +158,10 @@ public final class GetQuoteLevel2 {
 
             if (asString == null) {
                 asString = MoreObjects.toStringHelper(this)
-                        .add("bid_count", bidCount)
-                        .add("offer_count", offerCount)
-                        .add("bids", bids)
-                        .add("offers", offers)
+                        .add(BID_COUNT_FIELD, bidCount)
+                        .add(OFFER_COUNT_FIELD, offerCount)
+                        .add(BIDS_FIELD, bids)
+                        .add(OFFERS_FIELD, offers)
                         .toString();
             }
 
