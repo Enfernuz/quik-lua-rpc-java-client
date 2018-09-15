@@ -6,6 +6,7 @@ import com.google.common.base.MoreObjects;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
+import org.jetbrains.annotations.NotNull;
 
 public final class GetParamEx {
 
@@ -31,6 +32,7 @@ public final class GetParamEx {
             this.result = result;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
@@ -45,12 +47,12 @@ public final class GetParamEx {
     @Value
     public static class Request {
 
-        @NonNull String classCode;
-        @NonNull String secCode;
-        @NonNull String paramName;
+        String classCode;
+        String secCode;
+        String paramName;
 
         @Builder
-        private Request(final String classCode, final String secCode, final String paramName) {
+        private Request(@NonNull final String classCode, @NonNull final String secCode, @NonNull final String paramName) {
             this.classCode = classCode;
             this.secCode = secCode;
             this.paramName = paramName;
@@ -69,13 +71,14 @@ public final class GetParamEx {
     @Value
     public static class Result {
 
-        @NonNull ParamEx paramEx;
+        ParamEx paramEx;
 
         @JsonCreator
-        public Result(final @JsonProperty(value = "param_ex", required = true) ParamEx paramEx) {
+        public Result(@JsonProperty(value = "param_ex", required = true) @NonNull final ParamEx paramEx) {
             this.paramEx = paramEx;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)

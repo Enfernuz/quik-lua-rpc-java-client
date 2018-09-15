@@ -174,6 +174,8 @@ public enum ProtobufSerdeModule implements SerdeModule {
         registerSerde(result, GetNumCandles.Result.class, GetNumCandlesResultPbSerde.INSTANCE);
         registerSerde(result, GetOrderByNumber.Request.class, GetOrderByNumberRequestPbSerde.INSTANCE);
         registerSerde(result, GetOrderByNumber.Result.class, GetOrderByNumberResultPbSerde.INSTANCE);
+        registerSerde(result, GetParamEx.Request.class, GetParamExRequestPbSerde.INSTANCE);
+        registerSerde(result, GetParamEx.Result.class, GetParamExResultPbSerde.INSTANCE);
         registerSerde(result, Message.Request.class, MessageRequestPbSerde.INSTANCE);
         registerSerde(result, Message.Result.class, MessageResultPbSerde.INSTANCE);
 
