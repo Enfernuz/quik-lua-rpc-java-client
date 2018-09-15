@@ -197,6 +197,8 @@ public enum ProtobufSerdeModule implements SerdeModule {
         registerSerde(result, GetTradeDate.Result.class, GetTradeDateResultPbSerde.INSTANCE);
         registerSerde(result, GetWindowCaption.Request.class, GetWindowCaptionRequestPbSerde.INSTANCE);
         registerSerde(result, GetWindowCaption.Result.class, GetWindowCaptionResultPbSerde.INSTANCE);
+        registerSerde(result, GetWindowRect.Request.class, GetWindowRectRequestPbSerde.INSTANCE);
+        registerSerde(result, GetWindowRect.Result.class, GetWindowRectResultPbSerde.INSTANCE);
         registerSerde(result, Message.Request.class, MessageRequestPbSerde.INSTANCE);
         registerSerde(result, Message.Result.class, MessageResultPbSerde.INSTANCE);
 
