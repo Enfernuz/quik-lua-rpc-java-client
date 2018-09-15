@@ -16,9 +16,13 @@ public class HighlightJsonSerdeTest {
     private static ObjectMapper sut;
 
     private static Highlight.Request requestObj;
-    private static Highlight.Result resultObj;
     private static String requestJson;
-    private static String resultJson;
+
+    private static Highlight.Result trueObj;
+    private static String trueJson;
+
+    private static Highlight.Result falseObj;
+    private static String falseJson;
 
     @BeforeClass
     public static void globalSetup() throws IOException {
@@ -34,28 +38,27 @@ public class HighlightJsonSerdeTest {
                 .fColor(5)
                 .timeout(6)
                 .build();
+        requestJson = Resources.toString(Resources.getResource("json/Highlight.request.json"), Charsets.UTF_8);
 
-        resultObj = new Highlight.Result(true);
+        trueObj = Highlight.Result.getInstance(true);
+        trueJson = Resources.toString(Resources.getResource("json/Highlight.result.true.json"), Charsets.UTF_8);
 
-        requestJson =
-                Resources.toString(Resources.getResource("json/Highlight.request.json"), Charsets.UTF_8);
-        resultJson =
-                Resources.toString(Resources.getResource("json/Highlight.result.json"), Charsets.UTF_8);
+        falseObj = Highlight.Result.getInstance(false);
+        falseJson = Resources.toString(Resources.getResource("json/Highlight.result.false.json"), Charsets.UTF_8);
     }
 
     @Test
-    public void testRequestSerialize() throws IOException {
-
-        final String actualRequestJson = sut.writerWithDefaultPrettyPrinter().writeValueAsString(requestObj);
-
-        assertEquals(requestJson, actualRequestJson);
+    public void testSerialize_Request() throws IOException {
+        assertEquals(requestJson, sut.writerWithDefaultPrettyPrinter().writeValueAsString(requestObj));
     }
 
     @Test
-    public void testResultDeserialize() throws IOException {
+    public void testDeserialize_TrueResult() throws IOException {
+        assertEquals(trueObj, sut.readValue(trueJson, Highlight.Result.class));
+    }
 
-        final Highlight.Result actualResultObj = sut.readValue(resultJson, Highlight.Result.class);
-
-        assertEquals(resultObj, actualResultObj);
+    @Test
+    public void testDeserialize_FalseResult() throws IOException {
+        assertEquals(falseObj, sut.readValue(falseJson, Highlight.Result.class));
     }
 }
