@@ -17,8 +17,8 @@ public class Security {
     private static final String CODE_FIELD = "code";
     private static final String NAME_FIELD = "name";
     private static final String SHORT_NAME_FIELD = "short_name";
-    private static final String CLASS_CODE_FIELD = "class_code_field";
-    private static final String CLASS_NAME_FIELD = "class_name_field";
+    private static final String CLASS_CODE_FIELD = "class_code";
+    private static final String CLASS_NAME_FIELD = "class_name";
     private static final String FACE_VALUE_FIELD = "face_value";
     private static final String FACE_UNIT_FIELD = "face_unit";
     private static final String SCALE_FIELD = "scale";
