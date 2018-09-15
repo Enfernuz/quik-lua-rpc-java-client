@@ -32,7 +32,7 @@ enum GetParamExResultPbSerde implements Serde<GetParamEx.Result>, PbConverter<ql
     public GetParamEx.Result convertFromPb(@NotNull final qlua.rpc.GetParamEx.Result result) {
 
         if (!result.hasParamEx()) {
-            throw new IllegalArgumentException("Экземпляр protobuf-представления qlua.rpc.GetParamEx.Result не содержит поля 'paramEx'.");
+            throw new IllegalArgumentException("Поле 'param_ex' экземпляра protobuf-представления qlua.rpc.GetParamEx.Result не инициализировано.");
         }
 
         final qlua.rpc.GetParamEx.ParamEx pbParamEx = result.getParamEx();
