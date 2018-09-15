@@ -59,6 +59,8 @@ final class ProtobufSerdeUtils {
     private static final PbConverter<qlua.rpc.GetQuoteLevel2.QuoteEntry, GetQuoteLevel2.QuoteEntry> QUOTE_ENTRY_PB_CONVERTER =
             QuoteEntryPbSerde.INSTANCE;
 
+    private static final PbConverter<QluaStructures.Security, Security> SECURITY_PB_CONVERTER = SecurityPbSerde.INSTANCE;
+
     @Contract(" -> fail")
     private ProtobufSerdeUtils() {
         throw new AssertionError("This should never be invoked.");
@@ -212,6 +214,16 @@ final class ProtobufSerdeUtils {
     @NotNull
     static GetQuoteLevel2.QuoteEntry convertFromPbQuoteEntry(@NotNull final qlua.rpc.GetQuoteLevel2.QuoteEntry quoteEntry) {
         return QUOTE_ENTRY_PB_CONVERTER.convertFromPb(quoteEntry);
+    }
+
+    @NotNull
+    static QluaStructures.Security convertToPbSecurity(@NotNull final Security security) {
+        return SECURITY_PB_CONVERTER.convertToPb(security);
+    }
+
+    @NotNull
+    static Security convertFromPbSecurity(@NotNull final QluaStructures.Security security) {
+        return SECURITY_PB_CONVERTER.convertFromPb(security);
     }
 
     static void assertEquals(@NotNull final RPC.ProcedureType actual, @NotNull final RPC.ProcedureType expected) {

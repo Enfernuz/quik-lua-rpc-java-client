@@ -14,6 +14,19 @@ import java.util.Objects;
 @Value
 public class Security {
 
+    private static final String CODE_FIELD = "code";
+    private static final String NAME_FIELD = "name";
+    private static final String SHORT_NAME_FIELD = "short_name";
+    private static final String CLASS_CODE_FIELD = "class_code_field";
+    private static final String CLASS_NAME_FIELD = "class_name_field";
+    private static final String FACE_VALUE_FIELD = "face_value";
+    private static final String FACE_UNIT_FIELD = "face_unit";
+    private static final String SCALE_FIELD = "scale";
+    private static final String MAT_DATE_FIELD = "mat_date";
+    private static final String LOT_SIZE_FIELD = "lot_size";
+    private static final String ISIN_CODE_FIELD = "isin_code";
+    private static final String MIN_PRICE_STEP_FIELD = "min_price_step";
+
     String code;
     String name;
     String shortName;
@@ -33,18 +46,18 @@ public class Security {
     @Builder
     @JsonCreator
     private Security(
-            final @JsonProperty("code") String code,
-            final @JsonProperty("name") String name,
-            final @JsonProperty("short_name") String shortName,
-            final @JsonProperty("class_code") String classCode,
-            final @JsonProperty("class_name") String className,
-            final @JsonProperty("face_value") String faceValue,
-            final @JsonProperty("face_unit") String faceUnit,
-            final @JsonProperty("scale") String scale,
-            final @JsonProperty("mat_date") String matDate,
-            final @JsonProperty("lot_size") String lotSize,
-            final @JsonProperty("isin_code") String isinCode,
-            final @JsonProperty("min_price_step") String minPriceStep) {
+            @JsonProperty(CODE_FIELD) final String code,
+            @JsonProperty(NAME_FIELD) final String name,
+            @JsonProperty(SHORT_NAME_FIELD) final String shortName,
+            @JsonProperty(CLASS_CODE_FIELD) final String classCode,
+            @JsonProperty(CLASS_NAME_FIELD) final String className,
+            @JsonProperty(FACE_VALUE_FIELD) final String faceValue,
+            @JsonProperty(FACE_UNIT_FIELD) final String faceUnit,
+            @JsonProperty(SCALE_FIELD) final String scale,
+            @JsonProperty(MAT_DATE_FIELD) final String matDate,
+            @JsonProperty(LOT_SIZE_FIELD) final String lotSize,
+            @JsonProperty(ISIN_CODE_FIELD) final String isinCode,
+            @JsonProperty(MIN_PRICE_STEP_FIELD) final String minPriceStep) {
 
         this.code = code;
         this.name = name;
@@ -112,18 +125,18 @@ public class Security {
 
         if (asString == null) {
             asString = MoreObjects.toStringHelper(this)
-                    .add("code", code)
-                    .add("name", name)
-                    .add("short_name", shortName)
-                    .add("class_code", classCode)
-                    .add("class_name", className)
-                    .add("face_value", faceValue)
-                    .add("face_unit", faceUnit)
-                    .add("scale", scale)
-                    .add("mat_date", matDate)
-                    .add("lot_size", lotSize)
-                    .add("isin_code", isinCode)
-                    .add("min_price_step", minPriceStep)
+                    .add(CODE_FIELD, code)
+                    .add(NAME_FIELD, name)
+                    .add(SHORT_NAME_FIELD, shortName)
+                    .add(CLASS_CODE_FIELD, classCode)
+                    .add(CLASS_NAME_FIELD, className)
+                    .add(FACE_VALUE_FIELD, faceValue)
+                    .add(FACE_UNIT_FIELD, faceUnit)
+                    .add(SCALE_FIELD, scale)
+                    .add(MAT_DATE_FIELD, matDate)
+                    .add(LOT_SIZE_FIELD, lotSize)
+                    .add(ISIN_CODE_FIELD, isinCode)
+                    .add(MIN_PRICE_STEP_FIELD, minPriceStep)
                     .toString();
         }
 
