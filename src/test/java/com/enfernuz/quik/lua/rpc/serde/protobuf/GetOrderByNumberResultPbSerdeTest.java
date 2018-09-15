@@ -64,14 +64,14 @@ public class GetOrderByNumberResultPbSerdeTest extends AbstractResultPbSerdeTest
 
     @Test
     @Override
-    public void testSerialize_WithNonEssentialFieldsInitializedByDefault() {
-        super.testSerialize_WithNonEssentialFieldsInitializedByDefault();
+    public void testSerializeErrorObject() {
+        super.testSerializeErrorObject();
     }
 
     @Test
     @Override
-    public void testDeserialize_WithNonEssentialFieldsInitializedByDefault() {
-        super.testDeserialize_WithNonEssentialFieldsInitializedByDefault();
+    public void testDeserializeErrorObject() {
+        super.testDeserializeErrorObject();
     }
 
     @Override
@@ -212,13 +212,13 @@ public class GetOrderByNumberResultPbSerdeTest extends AbstractResultPbSerdeTest
 
     @NotNull
     @Override
-    public qlua.rpc.GetOrderByNumber.Result getTargetObject_WithNonEssentialFieldsInitializedByDefault_AsPbMessage() {
+    public qlua.rpc.GetOrderByNumber.Result getErrorObject_AsPbMessage() {
         return qlua.rpc.GetOrderByNumber.Result.newBuilder().build();
     }
 
     @NotNull
     @Override
-    public GetOrderByNumber.Result getTargetObject_WithNonEssentialFieldsInitializedByDefault() {
+    public GetOrderByNumber.Result getErrorObject() {
         return GetOrderByNumber.Result.getInstance(null, 0);
     }
 }

@@ -39,12 +39,12 @@ public abstract class AbstractPbSerdeTest<TARGET_OBJECT, PB_OBJECT extends Messa
     /**
      * Where applicable, this method must be overridden with the @Test annotation on it.
      */
-    public void testSerialize_WithNonEssentialFieldsInitializedByDefault() {
+    public void testSerializeErrorObject() {
 
         assertTrue(
                 Arrays.equals(
-                        getTargetObject_WithNonEssentialFieldsInitializedByDefault_PbSerializedForm(),
-                        getSerdeModuleUnderTest().serialize(getTargetObject_WithNonEssentialFieldsInitializedByDefault())
+                        getErrorObject_PbSerializedForm(),
+                        getSerdeModuleUnderTest().serialize(getErrorObject())
                 )
         );
     }
@@ -52,11 +52,11 @@ public abstract class AbstractPbSerdeTest<TARGET_OBJECT, PB_OBJECT extends Messa
     /**
      * Where applicable, this method must be overridden with the @Test annotation on it.
      */
-    public void testDeserialize_WithNonEssentialFieldsInitializedByDefault() {
+    public void testDeserializeErrorObject() {
 
         assertEquals(
-                getTargetObject_WithNonEssentialFieldsInitializedByDefault(),
-                getSerdeModuleUnderTest().deserialize(getTargetObjectClass(), getTargetObject_WithNonEssentialFieldsInitializedByDefault_PbSerializedForm())
+                getErrorObject(),
+                getSerdeModuleUnderTest().deserialize(getTargetObjectClass(), getErrorObject_PbSerializedForm())
         );
     }
 
@@ -67,21 +67,21 @@ public abstract class AbstractPbSerdeTest<TARGET_OBJECT, PB_OBJECT extends Messa
 
     /**
      * This method must be overridden with a proper implementation if either of the test methods
-     * {@link #testSerialize_WithNonEssentialFieldsInitializedByDefault()} or {@link #testDeserialize_WithNonEssentialFieldsInitializedByDefault()}
+     * {@link #testSerializeErrorObject()} or {@link #testDeserializeErrorObject()}
      * is overridden with the @Test annotation on it.
      */
     @NotNull
-    public PB_OBJECT getTargetObject_WithNonEssentialFieldsInitializedByDefault_AsPbMessage() {
+    public PB_OBJECT getErrorObject_AsPbMessage() {
         throw new UnsupportedOperationException();
     }
 
     /**
      * This method must be overridden with a proper implementation if either of the test methods
-     * {@link #testSerialize_WithNonEssentialFieldsInitializedByDefault()} or {@link #testDeserialize_WithNonEssentialFieldsInitializedByDefault()}
+     * {@link #testSerializeErrorObject()} or {@link #testDeserializeErrorObject()}
      * is overridden with the @Test annotation on it.
      */
     @NotNull
-    public TARGET_OBJECT getTargetObject_WithNonEssentialFieldsInitializedByDefault() {
+    public TARGET_OBJECT getErrorObject() {
         throw new UnsupportedOperationException();
     }
 
@@ -89,7 +89,7 @@ public abstract class AbstractPbSerdeTest<TARGET_OBJECT, PB_OBJECT extends Messa
         return getTargetObjectAsPbMessage().toByteArray();
     }
 
-    private byte[] getTargetObject_WithNonEssentialFieldsInitializedByDefault_PbSerializedForm() {
-        return getTargetObject_WithNonEssentialFieldsInitializedByDefault_AsPbMessage().toByteArray();
+    private byte[] getErrorObject_PbSerializedForm() {
+        return getErrorObject_AsPbMessage().toByteArray();
     }
 }

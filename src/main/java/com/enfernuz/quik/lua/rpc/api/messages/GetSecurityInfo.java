@@ -7,6 +7,7 @@ import com.google.common.base.MoreObjects;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public final class GetSecurityInfo {
@@ -46,15 +47,40 @@ public final class GetSecurityInfo {
         Security securityInfo;
 
         @JsonCreator
-        public Result(@JsonProperty(value = SECURITY_INFO_FIELD, required = true) @NonNull final Security securityInfo) {
+        public static Result getInstance(@JsonProperty(value = SECURITY_INFO_FIELD) final Security securityInfo) {
+            return securityInfo == null ? InstanceHolder.ERROR : new Result(securityInfo);
+        }
+
+        @Contract(pure = true)
+        public static Result getErrorInstance() {
+            return InstanceHolder.ERROR;
+        }
+
+        private Result(final Security securityInfo) {
             this.securityInfo = securityInfo;
         }
 
+        @Contract(pure = true)
+        public boolean isError() {
+            return securityInfo == null;
+        }
+
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
                     .add(SECURITY_INFO_FIELD, securityInfo)
                     .toString();
+        }
+
+        private static final class InstanceHolder {
+
+            private static final Result ERROR = new Result(null);
+
+            // sanity check
+            static {
+                assert ERROR.isError();
+            }
         }
     }
 }

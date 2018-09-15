@@ -65,25 +65,25 @@ public class SecurityPbSerdeTest extends AbstractPbSerdeTest<Security, QluaStruc
 
     @Test
     @Override
-    public void testSerialize_WithNonEssentialFieldsInitializedByDefault() {
-        super.testSerialize_WithNonEssentialFieldsInitializedByDefault();
+    public void testSerializeErrorObject() {
+        super.testSerializeErrorObject();
     }
 
     @Test
     @Override
-    public void testDeserialize_WithNonEssentialFieldsInitializedByDefault() {
-        super.testDeserialize_WithNonEssentialFieldsInitializedByDefault();
+    public void testDeserializeErrorObject() {
+        super.testDeserializeErrorObject();
     }
 
     @NotNull
     @Override
-    public QluaStructures.Security getTargetObject_WithNonEssentialFieldsInitializedByDefault_AsPbMessage() {
+    public QluaStructures.Security getErrorObject_AsPbMessage() {
         return QluaStructures.Security.newBuilder().build();
     }
 
     @NotNull
     @Override
-    public Security getTargetObject_WithNonEssentialFieldsInitializedByDefault() {
+    public Security getErrorObject() {
         return Security.builder().build();
     }
 }

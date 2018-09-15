@@ -2,22 +2,11 @@ package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.messages.GetSecurityInfo;
 import com.enfernuz.quik.lua.rpc.api.structures.Security;
-import com.enfernuz.quik.lua.rpc.serde.SerdeException;
 import org.jetbrains.annotations.NotNull;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import qlua.structs.QluaStructures;
 
-import static org.hamcrest.CoreMatchers.allOf;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.instanceOf;
-
 public class GetSecurityInfoResultPbSerdeTest extends AbstractResultPbSerdeTest<GetSecurityInfo.Result, qlua.rpc.GetSecurityInfo.Result> {
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Override
     public @NotNull Class<GetSecurityInfo.Result> getTargetObjectClass() {
@@ -67,21 +56,31 @@ public class GetSecurityInfoResultPbSerdeTest extends AbstractResultPbSerdeTest<
                 .minPriceStep(SecurityParameters.MIN_PRICE_STEP)
                 .build();
 
-        return new GetSecurityInfo.Result(security);
+        return GetSecurityInfo.Result.getInstance(security);
     }
 
     @Test
-    public void shouldFailOnUninitializedPbPortfolioInfo() {
+    @Override
+    public void testSerializeErrorObject() {
+        super.testSerializeErrorObject();
+    }
 
-        thrown.expect(SerdeException.class);
-        thrown.expectCause(
-                allOf(
-                        instanceOf(IllegalArgumentException.class),
-                        hasProperty("message", equalTo("Экземпляр protobuf-представления qlua.rpc.GetSecurityInfo.Result не содержит поля 'securityInfo'."))
-                )
-        );
+    @Test
+    @Override
+    public void testDeserializeErrorObject() {
+        super.testDeserializeErrorObject();
+    }
 
-        getSerdeModuleUnderTest().deserialize(GetSecurityInfo.Result.class, qlua.rpc.GetSecurityInfo.Result.newBuilder().build().toByteArray());
+    @NotNull
+    @Override
+    public qlua.rpc.GetSecurityInfo.Result getErrorObject_AsPbMessage() {
+        return qlua.rpc.GetSecurityInfo.Result.newBuilder().build();
+    }
+
+    @NotNull
+    @Override
+    public GetSecurityInfo.Result getErrorObject() {
+        return GetSecurityInfo.Result.getErrorInstance();
     }
 
     private static final class SecurityParameters {

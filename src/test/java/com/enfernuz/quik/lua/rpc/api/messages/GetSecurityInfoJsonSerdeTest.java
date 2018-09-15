@@ -17,9 +17,13 @@ public class GetSecurityInfoJsonSerdeTest {
     private static ObjectMapper sut;
 
     private static GetSecurityInfo.Request requestObj;
-    private static GetSecurityInfo.Result resultObj;
     private static String requestJson;
+
+    private static GetSecurityInfo.Result resultObj;
     private static String resultJson;
+
+    private static GetSecurityInfo.Result errorObj;
+    private static String errorJson;
 
     @BeforeClass
     public static void globalSetup() throws IOException {
@@ -31,6 +35,7 @@ public class GetSecurityInfoJsonSerdeTest {
                 .classCode("1")
                 .secCode("2")
                 .build();
+        requestJson = Resources.toString(Resources.getResource("json/getSecurityInfo.request.json"), Charsets.UTF_8);
 
         final Security securityInfo = Security.builder()
                 .code("1")
@@ -47,27 +52,26 @@ public class GetSecurityInfoJsonSerdeTest {
                 .minPriceStep("12")
                 .build();
 
-        resultObj = new GetSecurityInfo.Result(securityInfo);
+        resultObj = GetSecurityInfo.Result.getInstance(securityInfo);
+        resultJson = Resources.toString(Resources.getResource("json/getSecurityInfo.result.json"), Charsets.UTF_8);
 
-        requestJson =
-                Resources.toString(Resources.getResource("json/getSecurityInfo.request.json"), Charsets.UTF_8);
-        resultJson =
-                Resources.toString(Resources.getResource("json/getSecurityInfo.result.json"), Charsets.UTF_8);
+        errorObj = GetSecurityInfo.Result.getErrorInstance();
+        errorJson =
+                Resources.toString(Resources.getResource("json/getSecurityInfo.result.error.json"), Charsets.UTF_8);
     }
 
     @Test
     public void testRequestSerialize() throws IOException {
-
-        final String actualRequestJson = sut.writerWithDefaultPrettyPrinter().writeValueAsString(requestObj);
-
-        assertEquals(requestJson, actualRequestJson);
+        assertEquals(requestJson, sut.writerWithDefaultPrettyPrinter().writeValueAsString(requestObj));
     }
 
     @Test
     public void testResultDeserialize() throws IOException {
+        assertEquals(resultObj, sut.readValue(resultJson, GetSecurityInfo.Result.class));
+    }
 
-        final GetSecurityInfo.Result actualResultObj = sut.readValue(resultJson, GetSecurityInfo.Result.class);
-
-        assertEquals(resultObj, actualResultObj);
+    @Test
+    public void testDeserializeError() throws IOException {
+        assertEquals(errorObj, sut.readValue(errorJson, GetSecurityInfo.Result.class));
     }
 }
