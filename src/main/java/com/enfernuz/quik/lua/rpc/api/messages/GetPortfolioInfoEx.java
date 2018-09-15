@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.*;
 import lombok.experimental.NonFinal;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -16,17 +17,18 @@ public final class GetPortfolioInfoEx {
     @Value
     public static class Request {
 
-        @NonNull String firmId;
-        @NonNull String clientCode;
+        String firmId;
+        String clientCode;
         int limitKind;
 
         @Builder
-        private Request(final String firmId, final String clientCode, final int limitKind) {
+        private Request(@NonNull final String firmId, @NonNull final String clientCode, final int limitKind) {
             this.firmId = firmId;
             this.clientCode = clientCode;
             this.limitKind = limitKind;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
@@ -40,7 +42,7 @@ public final class GetPortfolioInfoEx {
     @Value
     public static class Result {
 
-        @NonNull PortfolioInfo portfolioInfo;
+        PortfolioInfo portfolioInfo;
         String initMargin;
         String minMargin;
         String correctedMargin;
@@ -69,7 +71,7 @@ public final class GetPortfolioInfoEx {
 
         @JsonCreator
         @Builder
-        private Result(final @JsonProperty(value = "portfolio_info", required = true) PortfolioInfo portfolioInfo,
+        private Result(final @JsonProperty(value = "portfolio_info", required = true) @NonNull PortfolioInfo portfolioInfo,
                        final @JsonProperty(value = "init_margin") String initMargin,
                        final @JsonProperty(value = "min_margin") String minMargin,
                        final @JsonProperty(value = "corrected_margin") String correctedMargin,
