@@ -16,11 +16,20 @@ public class MessageJsonSerdeTest {
     private static ObjectMapper sut;
 
     private static Message.Request fullArgsRequestObject;
-    private static Message.Request requiredArgsRequestObject;
-    private static Message.Result resultObj;
     private static String fullArgsRequestJson;
+
+    private static Message.Request requiredArgsRequestObject;
     private static String requiredArgsRequestJson;
-    private static String resultJson;
+
+    private static Message.Result okResultObj;
+    private static String okResultJson;
+
+    private static Message.Result notOkResultObj;
+    private static String notOkResultJson;
+
+    private static Message.Result errorResultObj;
+    private static String errorResultJson;
+
 
     @BeforeClass
     public static void globalSetup() throws IOException {
@@ -29,39 +38,43 @@ public class MessageJsonSerdeTest {
         sut.registerModule(new QluaJsonModule());
 
         fullArgsRequestObject = new Message.Request("1", Message.IconType.WARNING);
+        fullArgsRequestJson = Resources.toString(Resources.getResource("json/message.request_full_args.json"), Charsets.UTF_8);
+
         requiredArgsRequestObject = new Message.Request("1");
+        requiredArgsRequestJson = Resources.toString(Resources.getResource("json/message.request_required_args.json"), Charsets.UTF_8);
 
-        resultObj = new Message.Result(1);
+        okResultObj = Message.Result.getInstance( Message.MessageResult.getOkInstance() );
+        okResultJson = Resources.toString(Resources.getResource("json/message.result.ok.json"), Charsets.UTF_8);
 
-        fullArgsRequestJson =
-                Resources.toString(Resources.getResource("json/message.request_full_args.json"), Charsets.UTF_8);
-        requiredArgsRequestJson =
-                Resources.toString(Resources.getResource("json/message.request_required_args.json"), Charsets.UTF_8);
-        resultJson =
-                Resources.toString(Resources.getResource("json/message.result.json"), Charsets.UTF_8);
+        notOkResultObj = Message.Result.getInstance( Message.MessageResult.getInstance(789) );
+        notOkResultJson = Resources.toString(Resources.getResource("json/message.result.not_ok.json"), Charsets.UTF_8);
+
+        errorResultObj = Message.Result.getErrorInstance();
+        errorResultJson = Resources.toString(Resources.getResource("json/message.result.error.json"), Charsets.UTF_8);
     }
 
     @Test
     public void testFullArgsRequestSerialize() throws IOException {
-
-        final String actualRequestJson = sut.writerWithDefaultPrettyPrinter().writeValueAsString(fullArgsRequestObject);
-
-        assertEquals(fullArgsRequestJson, actualRequestJson);
+        assertEquals(fullArgsRequestJson, sut.writerWithDefaultPrettyPrinter().writeValueAsString(fullArgsRequestObject));
     }
 
     @Test
     public void testRequiredArgsRequestSerialize() throws IOException {
-
-        final String actualRequestJson = sut.writerWithDefaultPrettyPrinter().writeValueAsString(requiredArgsRequestObject);
-
-        assertEquals(requiredArgsRequestJson, actualRequestJson);
+        assertEquals(requiredArgsRequestJson, sut.writerWithDefaultPrettyPrinter().writeValueAsString(requiredArgsRequestObject));
     }
 
     @Test
-    public void testResultDeserialize() throws IOException {
+    public void testDeserializeOkResult() throws IOException {
+        assertEquals(okResultObj, sut.readValue(okResultJson, Message.Result.class));
+    }
 
-        final Message.Result actualResultObj = sut.readValue(resultJson, Message.Result.class);
+    @Test
+    public void testDeserializeNotOkResult() throws IOException {
+        assertEquals(notOkResultObj, sut.readValue(notOkResultJson, Message.Result.class));
+    }
 
-        assertEquals(resultObj, actualResultObj);
+    @Test
+    public void testDeserializeErrorResult() throws IOException {
+        assertEquals(errorResultObj, sut.readValue(errorResultJson, Message.Result.class));
     }
 }

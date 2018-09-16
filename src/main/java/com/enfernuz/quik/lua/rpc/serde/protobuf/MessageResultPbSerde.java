@@ -28,13 +28,26 @@ enum MessageResultPbSerde implements Serde<Message.Result>, PbConverter<qlua.rpc
 
     @Override
     public Message.Result convertFromPb(@NotNull final qlua.rpc.Message.Result result) {
-        return new Message.Result( result.getResult() );
+
+        if (result.getNullResult()) {
+            return Message.Result.getInstance(null);
+        }
+
+        return Message.Result.getInstance( Message.MessageResult.getInstance(result.getValueResult()) );
     }
 
     @Override
     public qlua.rpc.Message.Result convertToPb(@NotNull final Message.Result result) {
-        return qlua.rpc.Message.Result.newBuilder()
-                .setResult( result.getResult() )
-                .build();
+
+        final qlua.rpc.Message.Result.Builder pbResult = qlua.rpc.Message.Result.newBuilder();
+
+        final Message.MessageResult messageResult = result.getMessageResult();
+        if (messageResult == null) {
+            pbResult.setNullResult(true);
+        } else {
+            pbResult.setValueResult( messageResult.getResult() );
+        }
+
+        return pbResult.build();
     }
 }

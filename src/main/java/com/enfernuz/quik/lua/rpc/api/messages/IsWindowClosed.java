@@ -72,7 +72,7 @@ public final class IsWindowClosed {
         WindowClosed windowClosed;
 
         @JsonCreator
-        public static Result getInstance(@JsonProperty(value = WINDOW_CLOSED_FIELD) final WindowClosed windowClosed) {
+        public static Result getInstance(@JsonProperty(value = WINDOW_CLOSED_FIELD, required = true) final WindowClosed windowClosed) {
 
             if (isError(windowClosed)) {
                 return InstanceHolder.ERROR;
