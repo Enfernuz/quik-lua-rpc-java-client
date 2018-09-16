@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.Builder;
 import lombok.Value;
+import org.jetbrains.annotations.NotNull;
 
 public final class InsertRow {
 
@@ -12,6 +13,9 @@ public final class InsertRow {
 
     @Value
     public static class Request {
+
+        private static final String T_ID_FIELD = "t_id";
+        private static final String KEY_FIELD = "key";
 
         int tId;
         int key;
@@ -23,11 +27,12 @@ public final class InsertRow {
             this.key = key;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("t_id", tId)
-                    .add("key", key)
+                    .add(T_ID_FIELD, tId)
+                    .add(KEY_FIELD, key)
                     .toString();
         }
     }
@@ -35,17 +40,20 @@ public final class InsertRow {
     @Value
     public static class Result {
 
+        private static final String RESULT_FIELD = "result";
+
         int result;
 
         @JsonCreator
-        public Result(final @JsonProperty(value = "result", required = true) int result) {
+        public Result(final @JsonProperty(value = RESULT_FIELD, required = true) int result) {
             this.result = result;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("result", result)
+                    .add(RESULT_FIELD, result)
                     .toString();
         }
     }
