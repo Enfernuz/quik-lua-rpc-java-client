@@ -16,9 +16,13 @@ public class IsSubscribedLevel2QuotesJsonSerdeTest {
     private static ObjectMapper sut;
 
     private static IsSubscribedLevel2Quotes.Request requestObj;
-    private static IsSubscribedLevel2Quotes.Result resultObj;
     private static String requestJson;
-    private static String resultJson;
+
+    private static IsSubscribedLevel2Quotes.Result trueResultObj;
+    private static String trueResultJson;
+
+    private static IsSubscribedLevel2Quotes.Result falseResultObj;
+    private static String falseResultJson;
 
     @BeforeClass
     public static void globalSetup() throws IOException {
@@ -30,28 +34,27 @@ public class IsSubscribedLevel2QuotesJsonSerdeTest {
                 .classCode("1")
                 .secCode("2")
                 .build();
+        requestJson = Resources.toString(Resources.getResource("json/IsSubscribed_Level_II_Quotes.request.json"), Charsets.UTF_8);
 
-        resultObj = new IsSubscribedLevel2Quotes.Result(true);
+        trueResultObj = IsSubscribedLevel2Quotes.Result.getInstance(true);
+        trueResultJson = Resources.toString(Resources.getResource("json/IsSubscribed_Level_II_Quotes.result.true.json"), Charsets.UTF_8);
 
-        requestJson =
-                Resources.toString(Resources.getResource("json/IsSubscribed_Level_II_Quotes.request.json"), Charsets.UTF_8);
-        resultJson =
-                Resources.toString(Resources.getResource("json/IsSubscribed_Level_II_Quotes.result.json"), Charsets.UTF_8);
+        falseResultObj = IsSubscribedLevel2Quotes.Result.getInstance(false);
+        falseResultJson = Resources.toString(Resources.getResource("json/IsSubscribed_Level_II_Quotes.result.false.json"), Charsets.UTF_8);
     }
 
     @Test
     public void testRequestSerialize() throws IOException {
-
-        final String actualRequestJson = sut.writerWithDefaultPrettyPrinter().writeValueAsString(requestObj);
-
-        assertEquals(requestJson, actualRequestJson);
+        assertEquals(requestJson, sut.writerWithDefaultPrettyPrinter().writeValueAsString(requestObj));
     }
 
     @Test
-    public void testResultDeserialize() throws IOException {
+    public void testTrueResultDeserialize() throws IOException {
+        assertEquals(trueResultObj, sut.readValue(trueResultJson, IsSubscribedLevel2Quotes.Result.class));
+    }
 
-        final IsSubscribedLevel2Quotes.Result actualResultObj = sut.readValue(resultJson, IsSubscribedLevel2Quotes.Result.class);
-
-        assertEquals(resultObj, actualResultObj);
+    @Test
+    public void testFalseResultDeserialize() throws IOException {
+        assertEquals(falseResultObj, sut.readValue(falseResultJson, IsSubscribedLevel2Quotes.Result.class));
     }
 }
