@@ -16,9 +16,13 @@ public class IsWindowClosedJsonSerdeTest {
     private static ObjectMapper sut;
 
     private static IsWindowClosed.Request requestObj;
-    private static IsWindowClosed.Result resultObj;
     private static String requestJson;
-    private static String resultJson;
+
+    private static IsWindowClosed.Result trueResultObj;
+    private static String trueResultJson;
+
+    private static IsWindowClosed.Result falseResultObj;
+    private static String falseResultJson;
 
     @BeforeClass
     public static void globalSetup() throws IOException {
@@ -27,28 +31,27 @@ public class IsWindowClosedJsonSerdeTest {
         sut.registerModule(new QluaJsonModule());
 
         requestObj = new IsWindowClosed.Request(1);
+        requestJson = Resources.toString(Resources.getResource("json/IsWindowClosed.request.json"), Charsets.UTF_8);
 
-        resultObj = new IsWindowClosed.Result(true);
+        trueResultObj = IsWindowClosed.Result.getInstance(true);
+        trueResultJson = Resources.toString(Resources.getResource("json/IsWindowClosed.result.true.json"), Charsets.UTF_8);
 
-        requestJson =
-                Resources.toString(Resources.getResource("json/IsWindowClosed.request.json"), Charsets.UTF_8);
-        resultJson =
-                Resources.toString(Resources.getResource("json/IsWindowClosed.result.json"), Charsets.UTF_8);
+        falseResultObj = IsWindowClosed.Result.getInstance(false);
+        falseResultJson = Resources.toString(Resources.getResource("json/IsWindowClosed.result.false.json"), Charsets.UTF_8);
     }
 
     @Test
     public void testRequestSerialize() throws IOException {
-
-        final String actualRequestJson = sut.writerWithDefaultPrettyPrinter().writeValueAsString(requestObj);
-
-        assertEquals(requestJson, actualRequestJson);
+        assertEquals(requestJson, sut.writerWithDefaultPrettyPrinter().writeValueAsString(requestObj));
     }
 
     @Test
-    public void testResultDeserialize() throws IOException {
+    public void testTrueResultDeserialize() throws IOException {
+        assertEquals(trueResultObj, sut.readValue(trueResultJson, IsWindowClosed.Result.class));
+    }
 
-        final IsWindowClosed.Result actualResultObj = sut.readValue(resultJson, IsWindowClosed.Result.class);
-
-        assertEquals(resultObj, actualResultObj);
+    @Test
+    public void testFalseResultDeserialize() throws IOException {
+        assertEquals(falseResultObj, sut.readValue(falseResultJson, IsWindowClosed.Result.class));
     }
 }

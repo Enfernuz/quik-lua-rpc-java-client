@@ -209,6 +209,8 @@ public enum ProtobufSerdeModule implements SerdeModule {
         registerSerde(result, IsConnected.Result.class, IsConnectedResultPbSerde.INSTANCE);
         registerSerde(result, IsSubscribedLevel2Quotes.Request.class, IsSubscribedLevel2QuotesRequestPbSerde.INSTANCE);
         registerSerde(result, IsSubscribedLevel2Quotes.Result.class, IsSubscribedLevel2QuotesResultPbSerde.INSTANCE);
+        registerSerde(result, IsWindowClosed.Request.class, IsWindowClosedRequestPbSerde.INSTANCE);
+        registerSerde(result, IsWindowClosed.Result.class, IsWindowClosedResultPbSerde.INSTANCE);
         registerSerde(result, Message.Request.class, MessageRequestPbSerde.INSTANCE);
         registerSerde(result, Message.Result.class, MessageResultPbSerde.INSTANCE);
 
