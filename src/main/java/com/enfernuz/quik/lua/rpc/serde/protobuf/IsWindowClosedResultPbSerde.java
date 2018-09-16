@@ -25,13 +25,29 @@ enum IsWindowClosedResultPbSerde implements Serde<IsWindowClosed.Result>, PbConv
 
     @Override
     public IsWindowClosed.Result convertFromPb(@NotNull final qlua.rpc.IsWindowClosed.Result result) {
-        return IsWindowClosed.Result.getInstance( result.getResult() );
+
+        if (result.hasWindowClosed()) {
+            final IsWindowClosed.WindowClosed windowClosed =
+                    IsWindowClosed.WindowClosed.getInstance( result.getWindowClosed().getResult() );
+            return IsWindowClosed.Result.getInstance(windowClosed);
+        }
+
+        return IsWindowClosed.Result.getInstance(null);
     }
 
     @Override
     public qlua.rpc.IsWindowClosed.Result convertToPb(@NotNull final IsWindowClosed.Result result) {
-        return qlua.rpc.IsWindowClosed.Result.newBuilder()
-                .setResult( result.isResult() )
-                .build();
+
+        final qlua.rpc.IsWindowClosed.Result.Builder pbResult = qlua.rpc.IsWindowClosed.Result.newBuilder();
+
+        final IsWindowClosed.WindowClosed windowClosed = result.getWindowClosed();
+        if (windowClosed != null) {
+            final qlua.rpc.IsWindowClosed.WindowClosed pbWindowClosed = qlua.rpc.IsWindowClosed.WindowClosed.newBuilder()
+                    .setResult( windowClosed.isResult() )
+                    .build();
+            pbResult.setWindowClosed(pbWindowClosed);
+        }
+
+        return pbResult.build();
     }
 }
