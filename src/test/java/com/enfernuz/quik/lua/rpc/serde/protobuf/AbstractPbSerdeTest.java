@@ -24,7 +24,7 @@ public abstract class AbstractPbSerdeTest<TARGET_OBJECT, PB_OBJECT extends Messa
     public abstract TARGET_OBJECT getTargetObject();
 
     @Test
-    public void testSerialize() {
+    public void shouldSerialize_TargetObject_To_ByteArrayOf_PbTargetObject() {
 
         assertTrue(
                 Arrays.equals(getTargetObjectPbSerializedForm(), getSerdeModuleUnderTest().serialize(getTargetObject()))
@@ -32,14 +32,14 @@ public abstract class AbstractPbSerdeTest<TARGET_OBJECT, PB_OBJECT extends Messa
     }
 
     @Test
-    public void testDeserialize() {
+    public void shouldDeserialize_ByteArrayOf_PbTargetObject_To_TargetObject() {
         assertEquals(getTargetObject(), getSerdeModuleUnderTest().deserialize(getTargetObjectClass(), getTargetObjectPbSerializedForm()));
     }
 
     /**
      * Where applicable, this method must be overridden with the @Test annotation on it.
      */
-    public void testSerializeErrorObject() {
+    public void shouldSerialize_ErrorObject_To_ByteArrayOf_PbErrorObject() {
 
         assertTrue(
                 Arrays.equals(
@@ -52,7 +52,7 @@ public abstract class AbstractPbSerdeTest<TARGET_OBJECT, PB_OBJECT extends Messa
     /**
      * Where applicable, this method must be overridden with the @Test annotation on it.
      */
-    public void testDeserializeErrorObject() {
+    public void shouldDeserialize_ByteArrayOf_PbErrorObject_To_ErrorObject() {
 
         assertEquals(
                 getErrorObject(),
@@ -67,7 +67,7 @@ public abstract class AbstractPbSerdeTest<TARGET_OBJECT, PB_OBJECT extends Messa
 
     /**
      * This method must be overridden with a proper implementation if either of the test methods
-     * {@link #testSerializeErrorObject()} or {@link #testDeserializeErrorObject()}
+     * {@link #shouldSerialize_ErrorObject_To_ByteArrayOf_PbErrorObject()} or {@link #shouldDeserialize_ByteArrayOf_PbErrorObject_To_ErrorObject()}
      * is overridden with the @Test annotation on it.
      */
     @NotNull
@@ -77,7 +77,7 @@ public abstract class AbstractPbSerdeTest<TARGET_OBJECT, PB_OBJECT extends Messa
 
     /**
      * This method must be overridden with a proper implementation if either of the test methods
-     * {@link #testSerializeErrorObject()} or {@link #testDeserializeErrorObject()}
+     * {@link #shouldSerialize_ErrorObject_To_ByteArrayOf_PbErrorObject()} or {@link #shouldDeserialize_ByteArrayOf_PbErrorObject_To_ErrorObject()}
      * is overridden with the @Test annotation on it.
      */
     @NotNull

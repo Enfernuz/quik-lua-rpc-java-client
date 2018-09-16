@@ -61,14 +61,14 @@ public class GetSecurityInfoResultPbSerdeTest extends AbstractResultPbSerdeTest<
 
     @Test
     @Override
-    public void testSerializeErrorObject() {
-        super.testSerializeErrorObject();
+    public void shouldSerialize_ErrorObject_To_ByteArrayOf_PbErrorObject() {
+        super.shouldSerialize_ErrorObject_To_ByteArrayOf_PbErrorObject();
     }
 
     @Test
     @Override
-    public void testDeserializeErrorObject() {
-        super.testDeserializeErrorObject();
+    public void shouldDeserialize_ByteArrayOf_PbErrorObject_To_ErrorObject() {
+        super.shouldDeserialize_ByteArrayOf_PbErrorObject_To_ErrorObject();
     }
 
     @NotNull

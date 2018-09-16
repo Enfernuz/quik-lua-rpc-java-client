@@ -205,6 +205,8 @@ public enum ProtobufSerdeModule implements SerdeModule {
         registerSerde(result, Highlight.Result.class, HighlightResultPbSerde.INSTANCE);
         registerSerde(result, InsertRow.Request.class, InsertRowRequestPbSerde.INSTANCE);
         registerSerde(result, InsertRow.Result.class, InsertRowResultPbSerde.INSTANCE);
+        registerSerde(result, IsConnected.Request.class, IsConnectedRequestPbSerde.INSTANCE);
+        registerSerde(result, IsConnected.Result.class, IsConnectedResultPbSerde.INSTANCE);
         registerSerde(result, Message.Request.class, MessageRequestPbSerde.INSTANCE);
         registerSerde(result, Message.Result.class, MessageResultPbSerde.INSTANCE);
 
