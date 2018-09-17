@@ -6,18 +6,23 @@ import com.google.common.base.MoreObjects;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
+import org.jetbrains.annotations.NotNull;
 
 public final class ParamRequest {
 
     @Value
     public static class Request {
 
-        @NonNull String classCode;
-        @NonNull String secCode;
-        @NonNull String dbName;
+        private static final String CLASS_CODE_FIELD = "class_code";
+        private static final String SEC_CODE_FIELD = "sec_code";
+        private static final String DB_NAME_FIELD = "db_name";
+
+        String classCode;
+        String secCode;
+        String dbName;
 
         @Builder
-        private Request(final String classCode, final String secCode, final String dbName) {
+        private Request(@NonNull final String classCode, @NonNull final String secCode, @NonNull final String dbName) {
             this.classCode = classCode;
             this.secCode = secCode;
             this.dbName = dbName;
@@ -26,9 +31,9 @@ public final class ParamRequest {
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("class_code", classCode)
-                    .add("sec_code", secCode)
-                    .add("db_name", dbName)
+                    .add(CLASS_CODE_FIELD, classCode)
+                    .add(SEC_CODE_FIELD, secCode)
+                    .add(DB_NAME_FIELD, dbName)
                     .toString();
         }
     }
@@ -36,18 +41,37 @@ public final class ParamRequest {
     @Value
     public static class Result {
 
+        private static final String RESULT_FIELD = "result";
+
         boolean result;
 
         @JsonCreator
-        public Result(final @JsonProperty(value = "result", required = true) boolean result) {
+        public static Result getInstance(@JsonProperty(value = RESULT_FIELD, required = true) final boolean result) {
+            return result ? InstanceHolder.TRUE : InstanceHolder.FALSE;
+        }
+
+        private Result(final  boolean result) {
             this.result = result;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("result", result)
+                    .add(RESULT_FIELD, result)
                     .toString();
+        }
+
+        private static final class InstanceHolder {
+
+            private static final Result TRUE = new Result(true);
+            private static final Result FALSE = new Result(false);
+
+            // sanity check
+            static {
+                assert TRUE.result;
+                assert !FALSE.result;
+            }
         }
     }
 }
