@@ -20,18 +20,18 @@ public class IsConnectedJsonSerdeTest {
     private static final ObjectMapper SUT = getSUT();
 
     private static final IsConnected.Request OBJ_REQUEST = IsConnected.Request.INSTANCE;
-    private static final String JSON_REQUEST = getJsonOfRequest();
+    private static final String JSON_REQUEST = getJson("json/isConnected/request.json");
 
     private static final IsConnected.Result OBJ_TRUE_RESULT = getObjOfTrueResult();
-    private static final String JSON_TRUE_RESULT = getJsonOfTrueResult();
+    private static final String JSON_TRUE_RESULT = getJson("json/isConnected/result.true.json");
 
     private static final IsConnected.Result OBJ_FALSE_RESULT = getObjOfFalseResult();
-    private static final String JSON_FALSE_RESULT = getJsonOfFalseResult();
+    private static final String JSON_FALSE_RESULT = getJson("json/isConnected/result.false.json");
 
     private static final IsConnected.Result OBJ_GARBAGE_RESULT = getObjOfGarbageResult();
-    private static final String JSON_GARBAGE_RESULT = getJsonOfGarbageResult();
+    private static final String JSON_GARBAGE_RESULT = getJson("json/isConnected/result.garbage.json");
 
-    private static final String JSON_RESULT_MISSING_FIELD_IS_CONNECTED = getJsonOfResultWithMissingFieldIsConnected();
+    private static final String JSON_RESULT_MISSING_FIELD_IS_CONNECTED = getJson("json/isConnected/result.missing.is_connected.json");
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -65,11 +65,6 @@ public class IsConnectedJsonSerdeTest {
         SUT.readValue(JSON_RESULT_MISSING_FIELD_IS_CONNECTED, IsConnected.Result.class);
     }
 
-    @SneakyThrows(IOException.class)
-    private static String getJsonOfResultWithMissingFieldIsConnected() {
-        return Resources.toString(Resources.getResource("json/isConnected/result.missing.is_connected.json"), Charsets.UTF_8);
-    }
-
     private static ObjectMapper getSUT() {
 
         final ObjectMapper result = new ObjectMapper();
@@ -91,22 +86,7 @@ public class IsConnectedJsonSerdeTest {
     }
 
     @SneakyThrows(IOException.class)
-    private static String getJsonOfGarbageResult() {
-        return Resources.toString(Resources.getResource("json/isConnected/result.garbage.json"), Charsets.UTF_8);
-    }
-
-    @SneakyThrows(IOException.class)
-    private static String getJsonOfFalseResult() {
-        return Resources.toString(Resources.getResource("json/isConnected/result.false.json"), Charsets.UTF_8);
-    }
-
-    @SneakyThrows(IOException.class)
-    private static String getJsonOfTrueResult() {
-        return Resources.toString(Resources.getResource("json/isConnected/result.true.json"), Charsets.UTF_8);
-    }
-
-    @SneakyThrows(IOException.class)
-    private static String getJsonOfRequest() {
-        return Resources.toString(Resources.getResource("json/isConnected/request.json"), Charsets.UTF_8);
+    private static final String getJson(final String resourcePath) {
+        return Resources.toString(Resources.getResource(resourcePath), Charsets.UTF_8);
     }
 }
