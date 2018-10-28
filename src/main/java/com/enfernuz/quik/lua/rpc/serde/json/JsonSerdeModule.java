@@ -4,9 +4,8 @@ import com.enfernuz.quik.lua.rpc.events.api.QluaEvent;
 import com.enfernuz.quik.lua.rpc.serde.SerdeException;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
-
-import static java.util.Objects.requireNonNull;
 
 public enum JsonSerdeModule implements SerdeModule {
 
@@ -15,9 +14,7 @@ public enum JsonSerdeModule implements SerdeModule {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public <T> @NotNull byte[] serialize(final @NotNull T t) {
-
-        requireNonNull(t);
+    public <T> @NotNull byte[] serialize(final @NotNull @NonNull T t) {
 
         try {
 

@@ -4,11 +4,16 @@ import com.enfernuz.quik.lua.rpc.api.security.zmq.AuthContext;
 import com.enfernuz.quik.lua.rpc.api.security.zmq.ZmqSecurable;
 import com.enfernuz.quik.lua.rpc.api.structures.*;
 import com.enfernuz.quik.lua.rpc.config.ClientConfiguration;
-import com.enfernuz.quik.lua.rpc.events.api.*;
+import com.enfernuz.quik.lua.rpc.events.api.PollingMode;
+import com.enfernuz.quik.lua.rpc.events.api.QluaEvent;
+import com.enfernuz.quik.lua.rpc.events.api.QluaEventHandler;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import com.enfernuz.quik.lua.rpc.serde.SerdeUtils;
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import lombok.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.List;
@@ -40,12 +45,15 @@ public final class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor, Zm
      *
      * @param config  конфигурация клиента точки подключения к RPC-сервису QUIK
      * @return  новый экземпляр компонента {@link ZmqTcpQluaEventProcessor}
+     * @throws NullPointerException если какой-либо из аргументов является null
      */
-    public static ZmqTcpQluaEventProcessor newInstance(final ClientConfiguration config, final PollingMode pollingMode) {
+    public static @NotNull ZmqTcpQluaEventProcessor newInstance(
+            @NotNull @NonNull final ClientConfiguration config,
+            @NotNull @NonNull final PollingMode pollingMode) {
 
         final SerdeModule serdeModule = SerdeUtils.getSerdeModule( config.getSerdeProtocol() );
         final ZmqTcpQluaEventPoller eventPoller;
-        switch ( requireNonNull(pollingMode, "Аргумент 'pollingMode' не должен быть null.") ) {
+        switch (pollingMode) {
             case BLOCKING:
                 eventPoller = new BlockingZmqTcpQluaEventPoller(config.getNetworkAddress(), config.getAuthContext(), serdeModule);
                 break;
@@ -60,10 +68,12 @@ public final class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor, Zm
         return new ZmqTcpQluaEventProcessor(eventPoller, serdeModule);
     }
 
-    private ZmqTcpQluaEventProcessor(final ZmqTcpQluaEventPoller eventPoller, final SerdeModule serdeModule) {
+    private ZmqTcpQluaEventProcessor(
+            @NotNull @NonNull final ZmqTcpQluaEventPoller eventPoller,
+            @NotNull @NonNull final SerdeModule serdeModule) {
 
-        this.eventPoller = requireNonNull(eventPoller, "Аргумент 'eventPoller' не должен быть null.");
-        this.serdeModule = requireNonNull(serdeModule, "Аргумент 'serdeModule' не должен быть null.");
+        this.eventPoller = eventPoller;
+        this.serdeModule = serdeModule;
         this.eventHandlers = new CopyOnWriteArrayList<>();
     }
 
@@ -175,28 +185,46 @@ public final class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor, Zm
         } while (--maxEvents > 0);
     }
 
+    /**
+     * {@inheritDoc}
+     * @throws NullPointerException если аргумент {@code eventHandler} является null
+     */
     @Override
-    public void register(final QluaEventHandler eventHandler) {
-        eventHandlers.add( requireNonNull(eventHandler) );
+    public void register(@NotNull @NonNull final QluaEventHandler eventHandler) {
+        eventHandlers.add(eventHandler);
     }
 
+    /**
+     * {@inheritDoc}
+     * @throws NullPointerException если аргумент {@code eventHandlers} является null или какой-либо из его элементов
+     * является null
+     */
     @Override
-    public void register(final Iterable<? extends QluaEventHandler> eventHandlers) {
+    public void register(@NotNull @NonNull final Iterable<? extends QluaEventHandler> eventHandlers) {
 
-        for (final QluaEventHandler eventHandler : requireNonNull(eventHandlers)) {
+        for (final QluaEventHandler eventHandler : eventHandlers) {
             register(eventHandler);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * @throws NullPointerException если аргумент {@code eventHandler} является null
+     */
     @Override
-    public void unregister(final QluaEventHandler eventHandler) {
+    public void unregister(@NotNull @NonNull final QluaEventHandler eventHandler) {
         eventHandlers.remove(eventHandler);
     }
 
+    /**
+     * {@inheritDoc}
+     * @throws NullPointerException если аргумент {@code eventHandlers} является null или какой-либо из его элементов
+     * является null
+     */
     @Override
-    public void unregister(final Iterable<? extends QluaEventHandler> eventHandlers) {
+    public void unregister(@NotNull @NonNull final Iterable<? extends QluaEventHandler> eventHandlers) {
 
-        for (final QluaEventHandler eventHandler : requireNonNull(eventHandlers)) {
+        for (final QluaEventHandler eventHandler : eventHandlers) {
             unregister(eventHandler);
         }
     }
@@ -206,18 +234,32 @@ public final class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor, Zm
         return ImmutableList.copyOf(eventHandlers);
     }
 
+    /**
+     * {@inheritDoc}
+     * @throws NullPointerException если аргумент {@code eventType} является null
+     */
     @Override
-    public void subscribe(final QluaEvent.EventType eventType) {
+    public void subscribe(@NotNull @NonNull final QluaEvent.EventType eventType) {
         eventPoller.subscribe(eventType);
     }
 
+    /**
+     * {@inheritDoc}
+     * @throws NullPointerException если аргумент {@code eventTypes} является null или какой-либо из его элементов
+     * является null
+     */
     @Override
-    public void subscribe(final Iterable<? extends QluaEvent.EventType> eventTypes) {
+    public void subscribe(@NotNull @NonNull final Iterable<? extends QluaEvent.EventType> eventTypes) {
         eventPoller.subscribe(eventTypes);
     }
 
+    /**
+     * {@inheritDoc}
+     * @throws NullPointerException если аргумент {@code eventTypes} является null или какой-либо из его элементов
+     * является null
+     */
     @Override
-    public void subscribe(final QluaEvent.EventType... eventTypes) {
+    public void subscribe(@NotNull @NonNull final QluaEvent.EventType... eventTypes) {
         eventPoller.subscribe(eventTypes);
     }
 
@@ -226,18 +268,32 @@ public final class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor, Zm
         eventPoller.subscribeToEverything();
     }
 
+    /**
+     * {@inheritDoc}
+     * @throws NullPointerException если аргумент {@code eventType} является null
+     */
     @Override
-    public void unsubscribe(final QluaEvent.EventType eventType) {
+    public void unsubscribe(@NotNull @NonNull final QluaEvent.EventType eventType) {
         eventPoller.unsubscribe(eventType);
     }
 
+    /**
+     * {@inheritDoc}
+     * @throws NullPointerException если аргумент {@code eventTypes} является null или какой-либо из его элементов
+     * является null
+     */
     @Override
-    public void unsubscribe(final Iterable<? extends QluaEvent.EventType> eventTypes) {
+    public void unsubscribe(@NotNull @NonNull final Iterable<? extends QluaEvent.EventType> eventTypes) {
         eventPoller.unsubscribe(eventTypes);
     }
 
+    /**
+     * {@inheritDoc}
+     * @throws NullPointerException если аргумент {@code eventTypes} является null или какой-либо из его элементов
+     * является null
+     */
     @Override
-    public void unsubscribe(final QluaEvent.EventType... eventTypes) {
+    public void unsubscribe(@NotNull @NonNull final QluaEvent.EventType... eventTypes) {
         eventPoller.unsubscribe(eventTypes);
     }
 

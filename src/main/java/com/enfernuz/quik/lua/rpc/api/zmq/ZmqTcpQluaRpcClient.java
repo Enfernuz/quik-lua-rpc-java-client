@@ -11,6 +11,7 @@ import com.enfernuz.quik.lua.rpc.config.ClientConfiguration;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import com.enfernuz.quik.lua.rpc.serde.SerdeUtils;
+import lombok.NonNull;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -39,8 +40,9 @@ public final class ZmqTcpQluaRpcClient extends AbstractTcpZmqClient implements R
      *
      * @param config  конфигурация клиента точки подключения к RPC-сервису QUIK
      * @return новый экземпляр компонента {@link ZmqTcpQluaRpcClient}
+     * @throws NullPointerException если аргумент {@code config} является null
      */
-    public static ZmqTcpQluaRpcClient newInstance(final ClientConfiguration config) {
+    public static @NotNull ZmqTcpQluaRpcClient newInstance(@NotNull @NonNull final ClientConfiguration config) {
 
         return new ZmqTcpQluaRpcClient(
                 requireNonNull(config.getNetworkAddress(), "Свойство аргумента 'config.getNetworkAddress()' не должно быть null."),

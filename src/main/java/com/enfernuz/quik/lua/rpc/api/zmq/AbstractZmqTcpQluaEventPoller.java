@@ -5,7 +5,9 @@ import com.enfernuz.quik.lua.rpc.events.api.QluaEvent;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import com.google.common.collect.ImmutableSet;
+import lombok.NonNull;
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMsg;
 
@@ -105,7 +107,7 @@ abstract class AbstractZmqTcpQluaEventPoller extends AbstractTcpZmqClient implem
     }
 
     @Override
-    public void subscribe(final QluaEvent.EventType eventType) {
+    public void subscribe(@NotNull @NonNull final QluaEvent.EventType eventType) {
 
         if (isOpened()) {
             subSocket.subscribe( serdeModule.serialize(eventType) );
