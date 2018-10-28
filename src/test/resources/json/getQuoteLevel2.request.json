@@ -1,7 +1,0 @@
-{
-  "method" : "getQuoteLevel2",
-  "args" : {
-    "class_code" : "1",
-    "sec_code" : "2"
-  }
-}

@@ -26,5 +26,6 @@
   },
   "period" : 16,
   "open_interest" : "17",
-  "exchange_code" : "18"
+  "exchange_code" : "18",
+  "exec_market": "19"
 }

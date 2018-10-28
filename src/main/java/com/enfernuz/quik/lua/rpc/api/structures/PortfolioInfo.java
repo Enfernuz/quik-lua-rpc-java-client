@@ -1,7 +1,6 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.*;
@@ -11,99 +10,140 @@ import java.util.Objects;
 
 @Value
 public class PortfolioInfo {
-
-    @JsonProperty("is_leverage") String isLeverage;
-    @JsonProperty("in_assets") String inAssets;
-    @JsonProperty("leverage") String leverage;
-    @JsonProperty("open_limit") String openLimit;
-    @JsonProperty("val_short") String valShort;
-    @JsonProperty("val_long") String valLong;
-    @JsonProperty("val_long_margin") String valLongMargin;
-    @JsonProperty("val_long_asset") String valLongAsset;
-    @JsonProperty("assets") String assets;
-    @JsonProperty("cur_leverage") String curLeverage;
-    @JsonProperty("margin") String margin;
-    @JsonProperty("lim_all") String limAll;
-    @JsonProperty("av_lim_all") String avLimAll;
-    @JsonProperty("locked_buy") String lockedBuy;
-    @JsonProperty("locked_buy_margin") String lockedBuyMargin;
-    @JsonProperty("locked_buy_asset") String lockedBuyAsset;
-    @JsonProperty("locked_sell") String lockedSell;
-    @JsonProperty("locked_value_coef") String lockedValueCoef;
-    @JsonProperty("in_all_assets") String inAllAssets;
-    @JsonProperty("all_assets") String allAssets;
-    @JsonProperty("profit_loss") String profitLoss;
-    @JsonProperty("rate_change") String rateChange;
-    @JsonProperty("lim_buy") String limBuy;
-    @JsonProperty("lim_sell") String limSell;
-    @JsonProperty("lim_non_margin") String limNonMargin;
-    @JsonProperty("lim_buy_asset") String limBuyAsset;
-    @JsonProperty("val_short_net") String valShortNet;
-    @JsonProperty("val_long_net") String valLongNet;
-    @JsonProperty("total_money_bal") String totalMoneyBal;
-    @JsonProperty("total_locked_money") String totalLockedMoney;
-    @JsonProperty("haircuts") String haircuts;
-    @JsonProperty("assets_without_hc") String assetsWithoutHc;
-    @JsonProperty("status_coef") String statusCoef;
-    @JsonProperty("varmargin") String varMargin;
-    @JsonProperty("go_for_positions") String goForPositions;
-    @JsonProperty("go_for_orders") String goForOrders;
-    @JsonProperty("rate_futures") String rateFutures;
-    @JsonProperty("is_qual_client") String isQualClient;
-    @JsonProperty("is_futures") String isFutures;
-    @JsonProperty("curr_tag") String currTag;
+    
+    private static final String IS_LEVERAGE = "is_leverage";
+    private static final String IN_ASSETS = "in_assets";
+    private static final String LEVERAGE = "leverage";
+    private static final String OPEN_LIMIT = "open_limit";
+    private static final String VAL_SHORT = "val_short";
+    private static final String VAL_LONG = "val_long";
+    private static final String VAL_LONG_MARGIN = "val_long_margin";
+    private static final String VAL_LONG_ASSET = "val_long_asset";
+    private static final String ASSETS = "assets";
+    private static final String CUR_LEVERAGE = "cur_leverage";
+    private static final String MARGIN = "margin";
+    private static final String LIM_ALL = "lim_all";
+    private static final String AV_LIM_ALL = "av_lim_all";
+    private static final String LOCKED_BUY = "locked_buy";
+    private static final String LOCKED_BUY_MARGIN = "locked_buy_margin";
+    private static final String LOCKED_BUY_ASSET = "locked_buy_asset";
+    private static final String LOCKED_SELL = "locked_sell";
+    private static final String LOCKED_VALUE_COEF = "locked_value_coef";
+    private static final String IN_ALL_ASSETS = "in_all_assets";
+    private static final String ALL_ASSETS = "all_assets";
+    private static final String PROFIT_LOSS = "profit_loss";
+    private static final String RATE_CHANGE = "rate_change";
+    private static final String LIM_BUY = "lim_buy";
+    private static final String LIM_SELL = "lim_sell";
+    private static final String LIM_NON_MARGIN = "lim_non_margin";
+    private static final String LIM_BUY_ASSET = "lim_buy_asset";
+    private static final String VAL_SHORT_NET = "val_short_net";
+    private static final String VAL_LONG_NET = "val_long_net";
+    private static final String TOTAL_MONEY_BAL = "total_money_bal";
+    private static final String TOTAL_LOCKED_MONEY = "total_locked_money";
+    private static final String HAIRCUTS = "haircuts";
+    private static final String ASSETS_WITHOUT_HC = "assets_without_hc";
+    private static final String STATUS_COEF = "status_coef";
+    private static final String VAR_MARGIN = "varmargin";
+    private static final String GO_FOR_POSITIONS = "go_for_positions";
+    private static final String GO_FOR_ORDERS = "go_for_orders";
+    private static final String RATE_FUTURES = "rate_futures";
+    private static final String IS_QUAL_CLIENT = "is_qual_client";
+    private static final String IS_FUTURES = "is_futures";
+    private static final String CURR_TAG = "curr_tag";
+            
+    String isLeverage;
+    String inAssets;
+    String leverage;
+    String openLimit;
+    String valShort;
+    String valLong;
+    String valLongMargin;
+    String valLongAsset;
+    String assets;
+    String curLeverage;
+    String margin;
+    String limAll;
+    String avLimAll;
+    String lockedBuy;
+    String lockedBuyMargin;
+    String lockedBuyAsset;
+    String lockedSell;
+    String lockedValueCoef;
+    String inAllAssets;
+    String allAssets;
+    String profitLoss;
+    String rateChange;
+    String limBuy;
+    String limSell;
+    String limNonMargin;
+    String limBuyAsset;
+    String valShortNet;
+    String valLongNet;
+    String totalMoneyBal;
+    String totalLockedMoney;
+    String haircuts;
+    String assetsWithoutHc;
+    String statusCoef;
+    String varMargin;
+    String goForPositions;
+    String goForOrders;
+    String rateFutures;
+    String isQualClient;
+    String isFutures;
+    String currTag;
 
     @Getter(AccessLevel.NONE)
-    @JsonIgnore
-    private @NonFinal transient int hashCode;
+    @NonFinal
+    private transient int hashCode;
 
     @Getter(AccessLevel.NONE)
-    @JsonIgnore
-    private @NonFinal transient String asString;
+    @NonFinal
+    private transient String asString;
 
-    @Builder
     @JsonCreator
+    @Builder
     private PortfolioInfo(
-            final @JsonProperty("is_leverage") String isLeverage,
-            final @JsonProperty("in_assets") String inAssets,
-            final @JsonProperty("leverage") String leverage,
-            final @JsonProperty("open_limit") String openLimit,
-            final @JsonProperty("val_short") String valShort,
-            final @JsonProperty("val_long") String valLong,
-            final @JsonProperty("val_long_margin") String valLongMargin,
-            final @JsonProperty("val_long_asset") String valLongAsset,
-            final @JsonProperty("assets") String assets,
-            final @JsonProperty("cur_leverage") String curLeverage,
-            final @JsonProperty("margin") String margin,
-            final @JsonProperty("lim_all") String limAll,
-            final @JsonProperty("av_lim_all") String avLimAll,
-            final @JsonProperty("locked_buy") String lockedBuy,
-            final @JsonProperty("locked_buy_margin") String lockedBuyMargin,
-            final @JsonProperty("locked_buy_asset") String lockedBuyAsset,
-            final @JsonProperty("locked_sell") String lockedSell,
-            final @JsonProperty("locked_value_coef") String lockedValueCoef,
-            final @JsonProperty("in_all_assets") String inAllAssets,
-            final @JsonProperty("all_assets") String allAssets,
-            final @JsonProperty("profit_loss") String profitLoss,
-            final @JsonProperty("rate_change") String rateChange,
-            final @JsonProperty("lim_buy") String limBuy,
-            final @JsonProperty("lim_sell") String limSell,
-            final @JsonProperty("lim_non_margin") String limNonMargin,
-            final @JsonProperty("lim_buy_asset") String limBuyAsset,
-            final @JsonProperty("val_short_net") String valShortNet,
-            final @JsonProperty("val_long_net") String valLongNet,
-            final @JsonProperty("total_money_bal") String totalMoneyBal,
-            final @JsonProperty("total_locked_money") String totalLockedMoney,
-            final @JsonProperty("haircuts") String haircuts,
-            final @JsonProperty("assets_without_hc") String assetsWithoutHc,
-            final @JsonProperty("status_coef") String statusCoef,
-            final @JsonProperty("varmargin") String varMargin,
-            final @JsonProperty("go_for_positions") String goForPositions,
-            final @JsonProperty("go_for_orders") String goForOrders,
-            final @JsonProperty("rate_futures") String rateFutures,
-            final @JsonProperty("is_qual_client") String isQualClient,
-            final @JsonProperty("is_futures") String isFutures,
-            final @JsonProperty("curr_tag") String currTag) {
+            @JsonProperty(IS_LEVERAGE) final String isLeverage,
+            @JsonProperty(IN_ASSETS) final String inAssets,
+            @JsonProperty(LEVERAGE) final String leverage,
+            @JsonProperty(OPEN_LIMIT) final String openLimit,
+            @JsonProperty(VAL_SHORT) final String valShort,
+            @JsonProperty(VAL_LONG) final String valLong,
+            @JsonProperty(VAL_LONG_MARGIN) final String valLongMargin,
+            @JsonProperty(VAL_LONG_ASSET) final String valLongAsset,
+            @JsonProperty(ASSETS) final String assets,
+            @JsonProperty(CUR_LEVERAGE) final String curLeverage,
+            @JsonProperty(MARGIN) final String margin,
+            @JsonProperty(LIM_ALL) final String limAll,
+            @JsonProperty(AV_LIM_ALL) final String avLimAll,
+            @JsonProperty(LOCKED_BUY) final String lockedBuy,
+            @JsonProperty(LOCKED_BUY_MARGIN) final String lockedBuyMargin,
+            @JsonProperty(LOCKED_BUY_ASSET) final String lockedBuyAsset,
+            @JsonProperty(LOCKED_SELL) final String lockedSell,
+            @JsonProperty(LOCKED_VALUE_COEF) final String lockedValueCoef,
+            @JsonProperty(IN_ALL_ASSETS) final String inAllAssets,
+            @JsonProperty(ALL_ASSETS) final String allAssets,
+            @JsonProperty(PROFIT_LOSS) final String profitLoss,
+            @JsonProperty(RATE_CHANGE) final String rateChange,
+            @JsonProperty(LIM_BUY) final String limBuy,
+            @JsonProperty(LIM_SELL) final String limSell,
+            @JsonProperty(LIM_NON_MARGIN) final String limNonMargin,
+            @JsonProperty(LIM_BUY_ASSET) final String limBuyAsset,
+            @JsonProperty(VAL_SHORT_NET) final String valShortNet,
+            @JsonProperty(VAL_LONG_NET) final String valLongNet,
+            @JsonProperty(TOTAL_MONEY_BAL) final String totalMoneyBal,
+            @JsonProperty(TOTAL_LOCKED_MONEY) final String totalLockedMoney,
+            @JsonProperty(HAIRCUTS) final String haircuts,
+            @JsonProperty(ASSETS_WITHOUT_HC) final String assetsWithoutHc,
+            @JsonProperty(STATUS_COEF) final String statusCoef,
+            @JsonProperty(VAR_MARGIN) final String varMargin,
+            @JsonProperty(GO_FOR_POSITIONS) final String goForPositions,
+            @JsonProperty(GO_FOR_ORDERS) final String goForOrders,
+            @JsonProperty(RATE_FUTURES) final String rateFutures,
+            @JsonProperty(IS_QUAL_CLIENT) final String isQualClient,
+            @JsonProperty(IS_FUTURES) final String isFutures,
+            @JsonProperty(CURR_TAG) final String currTag) {
 
         this.isLeverage = isLeverage;
         this.inAssets = inAssets;
@@ -255,46 +295,46 @@ public class PortfolioInfo {
 
         if (asString == null) {
             asString = MoreObjects.toStringHelper(this)
-                    .add("is_leverage", isLeverage)
-                    .add("in_assets", inAssets)
-                    .add("leverage", leverage)
-                    .add("open_limit", openLimit)
-                    .add("val_short", valShort)
-                    .add("val_long", valLong)
-                    .add("val_long_margin", valLongMargin)
-                    .add("val_long_asset", valLongAsset)
-                    .add("assets", assets)
-                    .add("cur_leverage", curLeverage)
-                    .add("margin", margin)
-                    .add("lim_all", limAll)
-                    .add("av_lim_all", avLimAll)
-                    .add("locked_buy", lockedBuy)
-                    .add("locked_buy_margin", lockedBuyMargin)
-                    .add("locked_buy_asset", lockedBuyAsset)
-                    .add("locked_sell", lockedSell)
-                    .add("locked_value_coef", lockedValueCoef)
-                    .add("in_all_assets", inAllAssets)
-                    .add("all_assets", allAssets)
-                    .add("profit_loss", profitLoss)
-                    .add("rate_change", rateChange)
-                    .add("lim_buy", limBuy)
-                    .add("lim_sell", limSell)
-                    .add("lim_non_margin", limNonMargin)
-                    .add("lim_buy_asset", limBuyAsset)
-                    .add("val_short_net", valShortNet)
-                    .add("val_long_net", valLongNet)
-                    .add("total_money_bal", totalMoneyBal)
-                    .add("total_locked_money", totalLockedMoney)
-                    .add("haircuts", haircuts)
-                    .add("assets_without_hc", assetsWithoutHc)
-                    .add("status_coef", statusCoef)
-                    .add("varmargin", varMargin)
-                    .add("go_for_positions", goForPositions)
-                    .add("go_for_orders", goForOrders)
-                    .add("rate_futures", rateFutures)
-                    .add("is_qual_client", isQualClient)
-                    .add("is_futures", isFutures)
-                    .add("curr_tag", currTag)
+                    .add(IS_LEVERAGE, isLeverage)
+                    .add(IN_ASSETS, inAssets)
+                    .add(LEVERAGE, leverage)
+                    .add(OPEN_LIMIT, openLimit)
+                    .add(VAL_SHORT, valShort)
+                    .add(VAL_LONG, valLong)
+                    .add(VAL_LONG_MARGIN, valLongMargin)
+                    .add(VAL_LONG_ASSET, valLongAsset)
+                    .add(ASSETS, assets)
+                    .add(CUR_LEVERAGE, curLeverage)
+                    .add(MARGIN, margin)
+                    .add(LIM_ALL, limAll)
+                    .add(AV_LIM_ALL, avLimAll)
+                    .add(LOCKED_BUY, lockedBuy)
+                    .add(LOCKED_BUY_MARGIN, lockedBuyMargin)
+                    .add(LOCKED_BUY_ASSET, lockedBuyAsset)
+                    .add(LOCKED_SELL, lockedSell)
+                    .add(LOCKED_VALUE_COEF, lockedValueCoef)
+                    .add(IN_ALL_ASSETS, inAllAssets)
+                    .add(ALL_ASSETS, allAssets)
+                    .add(PROFIT_LOSS, profitLoss)
+                    .add(RATE_CHANGE, rateChange)
+                    .add(LIM_BUY, limBuy)
+                    .add(LIM_SELL, limSell)
+                    .add(LIM_NON_MARGIN, limNonMargin)
+                    .add(LIM_BUY_ASSET, limBuyAsset)
+                    .add(VAL_SHORT_NET, valShortNet)
+                    .add(VAL_LONG_NET, valLongNet)
+                    .add(TOTAL_MONEY_BAL, totalMoneyBal)
+                    .add(TOTAL_LOCKED_MONEY, totalLockedMoney)
+                    .add(HAIRCUTS, haircuts)
+                    .add(ASSETS_WITHOUT_HC, assetsWithoutHc)
+                    .add(STATUS_COEF, statusCoef)
+                    .add(VAR_MARGIN, varMargin)
+                    .add(GO_FOR_POSITIONS, goForPositions)
+                    .add(GO_FOR_ORDERS, goForOrders)
+                    .add(RATE_FUTURES, rateFutures)
+                    .add(IS_QUAL_CLIENT, isQualClient)
+                    .add(IS_FUTURES, isFutures)
+                    .add(CURR_TAG, currTag)
                     .toString();
         }
 

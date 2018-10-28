@@ -1,25 +1,37 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Value;
+import lombok.*;
 import lombok.experimental.NonFinal;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 @Value
 public class ParamEventInfo {
 
+    private static final String CLASS_CODE = "class_code";
+    private static final String SECURITY_CODE = "sec_code";
+
     String classCode;
     String secCode;
 
-    private transient @NonFinal @Getter(AccessLevel.NONE) int hashCode;
-    private transient @NonFinal @Getter(AccessLevel.NONE) String asString;
+    @Getter(AccessLevel.NONE)
+    @NonFinal
+    private transient int hashCode;
 
+    @Getter(AccessLevel.NONE)
+    @NonFinal
+    private transient String asString;
+
+    @JsonCreator
     @Builder
-    private ParamEventInfo(final String classCode, final String secCode) {
+    private ParamEventInfo(
+            @JsonProperty(value = CLASS_CODE, required = true) @NonNull final String classCode,
+            @JsonProperty(value = SECURITY_CODE, required = true) @NonNull final String secCode) {
+
         this.classCode = classCode;
         this.secCode = secCode;
     }
@@ -48,13 +60,14 @@ public class ParamEventInfo {
         return hashCode;
     }
 
+    @NotNull
     @Override
     public String toString() {
 
         if (asString == null) {
             asString = MoreObjects.toStringHelper(this)
-                    .add("class_code", classCode)
-                    .add("sec_code", secCode)
+                    .add(CLASS_CODE, classCode)
+                    .add(SECURITY_CODE, secCode)
                     .toString();
         }
 

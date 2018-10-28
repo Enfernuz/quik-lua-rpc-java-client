@@ -1,7 +1,0 @@
-{
-  "method" : "datasource.SetUpdateCallback",
-  "args" : {
-    "datasource_uuid" : "1",
-    "f_cb_def" : "2"
-  }
-}

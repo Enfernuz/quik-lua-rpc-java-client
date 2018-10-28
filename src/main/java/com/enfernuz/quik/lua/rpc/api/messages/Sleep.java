@@ -1,42 +1,95 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
+import com.enfernuz.quik.lua.rpc.api.RpcResult;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
+import lombok.EqualsAndHashCode;
 import lombok.Value;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
-public final class Sleep {
+public final class Sleep implements RemoteProcedure {
 
     private Sleep() {}
 
-    @Value
-    public static class Request {
+    @EqualsAndHashCode
+    public static final class Args implements RpcArgs<Sleep> {
 
-        int time;
+        private static final String TIME = "time";
 
+        @JsonProperty(TIME)
+        private final int time;
+
+        public Args(final int time) {
+            this.time = time;
+        }
+
+        public int getTime() {
+            return time;
+        }
+
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("time", time)
+                    .add(TIME, time)
                     .toString();
         }
     }
 
     @Value
-    public static class Result {
+    public static class Result implements RpcResult<Sleep> {
 
-        int result;
+        private static final String RESULT = "result";
+
+        Integer result;
 
         @JsonCreator
-        public Result(final @JsonProperty(value = "result", required = true) int result) {
+        public static Result getInstance(@JsonProperty(RESULT) final Integer result) {
+
+            if ( isError(result) ) {
+                return InstanceHolder.ERROR;
+            }
+
+            return new Result(result);
+        }
+
+        public static Result getErrorInstance() {
+            return InstanceHolder.ERROR;
+        }
+
+        private Result(final Integer result) {
             this.result = result;
         }
 
+        public boolean isError() {
+            return isError(result);
+        }
+
+        @Contract(value = "null -> true; !null -> false", pure = true)
+        private static boolean isError(final Integer result) {
+            return result == null;
+        }
+
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("result", result)
+                    .add(RESULT, result)
                     .toString();
+        }
+
+        private static final class InstanceHolder {
+
+            private static final Result ERROR = new Result(null);
+
+            // sanity check
+            static {
+                assert ERROR.isError();
+            }
         }
     }
 }

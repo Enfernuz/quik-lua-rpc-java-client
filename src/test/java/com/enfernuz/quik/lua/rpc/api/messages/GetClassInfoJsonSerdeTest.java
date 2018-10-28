@@ -16,7 +16,7 @@ public class GetClassInfoJsonSerdeTest {
 
     private static ObjectMapper sut;
 
-    private static GetClassInfo.Request requestObj;
+    private static GetClassInfo.Args requestObj;
     private static String requestJson;
 
     private static GetClassInfo.Result resultObj;
@@ -31,7 +31,7 @@ public class GetClassInfoJsonSerdeTest {
         sut = new ObjectMapper();
         sut.registerModule(new QluaJsonModule());
 
-        requestObj = new GetClassInfo.Request("1");
+        requestObj = new GetClassInfo.Args("1");
         requestJson =
                 Resources.toString(Resources.getResource("json/getClassInfo.request.json"), Charsets.UTF_8);
 

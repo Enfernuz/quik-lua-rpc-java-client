@@ -9,37 +9,53 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Value;
 import lombok.experimental.NonFinal;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 @Value
 public class DateTimeEntry implements Comparable<DateTimeEntry> {
 
-    @JsonProperty("mcs") int mcs;
-    @JsonProperty("ms") int ms;
-    @JsonProperty("sec") int sec;
-    @JsonProperty("min") int min;
-    @JsonProperty("hour") int hour;
-    @JsonProperty("day") int day;
-    @JsonProperty("week_day") int weekDay;
-    @JsonProperty("month") int month;
-    @JsonProperty("year") int year;
+    private static final String MCS = "mcs";
+    private static final String MS = "ms";
+    private static final String SEC = "sec";
+    private static final String MIN = "min";
+    private static final String HOUR = "hour";
+    private static final String DAY = "day";
+    private static final String WEEK_DAY = "week_day";
+    private static final String MONTH = "month";
+    private static final String YEAR = "year";
 
-    private @NonFinal @Getter(AccessLevel.NONE) transient int hashCode;
-    private @NonFinal @Getter(AccessLevel.NONE) transient String asString;
+    int mcs;
+    int ms;
+    int sec;
+    int min;
+    int hour;
+    int day;
+    int weekDay;
+    int month;
+    int year;
 
-    @Builder
+    @Getter(AccessLevel.NONE)
+    @NonFinal
+    private transient int hashCode;
+
+    @Getter(AccessLevel.NONE)
+    @NonFinal
+    private transient String asString;
+
     @JsonCreator
+    @Builder
     private DateTimeEntry(
-            @JsonProperty(value = "mcs", required = true) final int mcs,
-            @JsonProperty(value = "ms", required = true) final int ms,
-            @JsonProperty(value = "sec", required = true) final int sec,
-            @JsonProperty(value = "min", required = true) final int min,
-            @JsonProperty(value = "hour", required = true) final int hour,
-            @JsonProperty(value = "day", required = true) final int day,
-            @JsonProperty(value = "week_day", required = true) final int weekDay,
-            @JsonProperty(value = "month", required = true) final int month,
-            @JsonProperty(value = "year", required = true) final int year) {
+            @JsonProperty(value = MCS, required = true) final int mcs,
+            @JsonProperty(value = MS, required = true) final int ms,
+            @JsonProperty(value = SEC, required = true) final int sec,
+            @JsonProperty(value = MIN, required = true) final int min,
+            @JsonProperty(value = HOUR, required = true) final int hour,
+            @JsonProperty(value = DAY, required = true) final int day,
+            @JsonProperty(value = WEEK_DAY, required = true) final int weekDay,
+            @JsonProperty(value = MONTH, required = true) final int month,
+            @JsonProperty(value = YEAR, required = true) final int year) {
 
         this.mcs = mcs;
         this.ms = ms;
@@ -99,20 +115,21 @@ public class DateTimeEntry implements Comparable<DateTimeEntry> {
                 .result();
     }
 
+    @NotNull
     @Override
     public String toString() {
 
         if (asString == null) {
             asString = MoreObjects.toStringHelper(this)
-                    .add("mcs", mcs)
-                    .add("ms", ms)
-                    .add("sec", sec)
-                    .add("min", min)
-                    .add("hour", hour)
-                    .add("day", day)
-                    .add("week_day", weekDay)
-                    .add("month", month)
-                    .add("year", year)
+                    .add(MCS, mcs)
+                    .add(MS, ms)
+                    .add(SEC, sec)
+                    .add(MIN, min)
+                    .add(HOUR, hour)
+                    .add(DAY, day)
+                    .add(WEEK_DAY, weekDay)
+                    .add(MONTH, month)
+                    .add(YEAR, year)
                     .toString();
         }
 

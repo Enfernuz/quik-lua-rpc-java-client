@@ -42,16 +42,13 @@ public class RpcExampleApplication {
             log.info("Соединение с RPC-сервисом...");
             rpcClient.open();
 
-            final Message.Request request = new Message.Request("Hello, world!", Message.IconType.WARNING);
 
             log.info("Выполнение удалённой процедуры 'message' на терминале QUIK...");
-            final Message.Result result = rpcClient.qlua_message(request);
-
-            final Message.MessageResult messageResult = result.getMessageResult();
-            if (messageResult == null) {
+            final Integer result = rpcClient.qlua_message("Hello, world!", Message.IconType.WARNING);
+            if (result == null) {
                 log.error("Удалённая процедура 'message' выполнилась с ошибкой.");
             } else {
-                log.info("Результат выполнения удалённой процедуры 'message': {}.", result.getMessageResult().getResult());
+                log.info("Результат выполнения удалённой процедуры 'message': {}.", result);
             }
 
             log.info("Выход из программы...");

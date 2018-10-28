@@ -1,12 +1,15 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
 import com.enfernuz.quik.lua.rpc.api.ServiceError;
+import com.enfernuz.quik.lua.rpc.serde.json.jackson.ResponseEnvelopeJsonDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.MoreObjects;
 import lombok.NonNull;
 import lombok.Value;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+@JsonDeserialize(using = ResponseEnvelopeJsonDeserializer.class)
 @Value
 public class ResponseEnvelope {
 

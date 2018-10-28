@@ -1,7 +1,0 @@
-{
-  "method" : "getSecurityInfo",
-  "args" : {
-    "class_code" : "1",
-    "sec_code" : "2"
-  }
-}

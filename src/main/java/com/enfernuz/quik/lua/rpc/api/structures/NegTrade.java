@@ -1,16 +1,80 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Value;
 import lombok.experimental.NonFinal;
-
-import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @Value
 public class NegTrade {
+
+    private static final String TRADE_NUMBER = "trade_num";
+    private static final String TRADE_DATE = "trade_date";
+    private static final String SETTLE_DATE = "settle_date";
+    private static final String FLAGS = "flags";
+    private static final String BROKER_REF = "brokerref";
+    private static final String FIRM_ID = "firmid";
+    private static final String ACCOUNT = "account";
+    private static final String COUNTERPARTY_FIRM_ID = "cpfirmid";
+    private static final String COUNTERPARTY_ACCOUNT = "cpaccount";
+    private static final String PRICE = "price";
+    private static final String QUANTITY = "qty";
+    private static final String VALUE = "value";
+    private static final String SETTLE_CODE = "settlecode";
+    private static final String REPORT_NUMBER = "report_num";
+    private static final String COUNTERPARTY_REPORT_NUMBER = "cpreport_num";
+    private static final String ACCRUED_INTEREST = "accruedint";
+    private static final String REPO_TRADE_NUMBER = "repotradeno";
+    private static final String PRICE_1 = "price1";
+    private static final String REPO_RATE = "reporate";
+    private static final String PRICE_2 = "price2";
+    private static final String CLIENT_CODE = "client_code";
+    private static final String TS_COMMISSION = "ts_comission";
+    private static final String BALANCE = "balance";
+    private static final String SETTLE_TIME = "settle_time";
+    private static final String AMOUNT = "amount";
+    private static final String REPO_VALUE = "repovalue";
+    private static final String REPO_TERM = "repoterm";
+    private static final String REPO_2_VALUE = "repo2value";
+    private static final String RETURN_VALUE = "return_value";
+    private static final String DISCOUNT = "discount";
+    private static final String LOWER_DISCOUNT = "lower_discount";
+    private static final String UPPER_DISCOUNT = "upper_discount";
+    private static final String BLOCK_SECURITIES = "block_securities";
+    private static final String URGENCY_FLAG = "urgency_flag";
+    private static final String TYPE = "type";
+    private static final String OPERATION_TYPE = "operation_type";
+    private static final String EXPECTED_DISCOUNT = "expected_discount";
+    private static final String EXPECTED_QUANTITY = "expected_quantity";
+    private static final String EXPECTED_REPO_VALUE = "expected_repovalue";
+    private static final String EXPECTED_REPO_2_VALUE = "expected_repo2value";
+    private static final String EXPECTED_RETURN_VALUE = "expected_return_value";
+    private static final String ORDER_NUMBER = "order_num";
+    private static final String REPORT_TRADE_DATE = "report_trade_date";
+    private static final String SETTLED = "settled";
+    private static final String CLEARING_TYPE = "clearing_type";
+    private static final String REPORT_COMMISSION = "report_comission";
+    private static final String COUPON_PAYMENT = "coupon_payment";
+    private static final String PRINCIPAL_PAYMENT = "principal_payment";
+    private static final String PRINCIPAL_PAYMENT_DATE = "principal_payment_date";
+    private static final String NEXT_DAY_SETTLE = "nextdaysettle";
+    private static final String SETTLE_CURRENCY = "settle_currency";
+    private static final String SECURITY_CODE = "sec_code";
+    private static final String CLASS_CODE = "class_code";
+    private static final String COMP_VAL = "compval";
+    private static final String PARENT_TRADE_NUMBER = "parenttradeno";
+    private static final String BANK_ID = "bankid";
+    private static final String BANK_ACCOUNT_ID = "bankaccid";
+    private static final String PRECISE_BALANCE = "precisebalance";
+    private static final String CONFIRM_TIME = "confirmtime";
+    private static final String EX_FLAGS = "ex_flags";
+    private static final String CONFIRM_REPORT = "confirmreport";
+    private static final String EXT_REF = "extref";
 
     long tradeNum;
     String tradeDate;
@@ -73,73 +137,77 @@ public class NegTrade {
     String confirmTime;
     int exFlags;
     String confirmReport;
+    String extRef;
 
-    private transient @NonFinal @Getter(AccessLevel.NONE) int hashCode;
-    private transient @NonFinal @Getter(AccessLevel.NONE) String asString;
+    @Getter(AccessLevel.NONE)
+    @NonFinal
+    private transient String asString;
 
+    @JsonCreator
     @Builder
     private NegTrade(
-            final long tradeNum,
-            final String tradeDate,
-            final String settleDate,
-            final int flags,
-            final String brokerRef,
-            final String firmId,
-            final String account,
-            final String cpFirmId,
-            final String cpAccount,
-            final String price,
-            final int qty,
-            final String value,
-            final String settleCode,
-            final String reportNum,
-            final String cpReportNum,
-            final String accruedInt,
-            final String repoTradeNo,
-            final String price1,
-            final String repoRate,
-            final String price2,
-            final String clientCode,
-            final String tsComission,
-            final String balance,
-            final String settleTime,
-            final String amount,
-            final String repoValue,
-            final String repoTerm,
-            final String repo2Value,
-            final String returnValue,
-            final String discount,
-            final String lowerDiscount,
-            final String upperDiscount,
-            final String blockSecurities,
-            final String urgencyFlag,
-            final int type,
-            final int operationType,
-            final String expectedDiscount,
-            final String expectedQuantity,
-            final String expectedRepoValue,
-            final String expectedRepo2Value,
-            final String expectedReturnValue,
-            final String orderNum,
-            final String reportTradeDate,
-            final int settled,
-            final int clearingType,
-            final String reportComission,
-            final String couponPayment,
-            final String principalPayment,
-            final String principalPaymentDate,
-            final String nextDaySettle,
-            final String settleCurrency,
-            final String secCode,
-            final String classCode,
-            final String compVal,
-            final String parentTradeNo,
-            final String bankId,
-            final String bankAccId,
-            final String preciseBalance,
-            final String confirmTime,
-            final int exFlags,
-            final String confirmReport) {
+            @JsonProperty(value = TRADE_NUMBER, required = true) final long tradeNum,
+            @JsonProperty(TRADE_DATE) final String tradeDate,
+            @JsonProperty(SETTLE_DATE) final String settleDate,
+            @JsonProperty(value = FLAGS, required = true) final int flags,
+            @JsonProperty(BROKER_REF) final String brokerRef,
+            @JsonProperty(FIRM_ID) final String firmId,
+            @JsonProperty(ACCOUNT) final String account,
+            @JsonProperty(COUNTERPARTY_FIRM_ID) final String cpFirmId,
+            @JsonProperty(COUNTERPARTY_ACCOUNT) final String cpAccount,
+            @JsonProperty(value = PRICE, required = true) final String price,
+            @JsonProperty(value = QUANTITY, required = true) final int qty,
+            @JsonProperty(VALUE) final String value,
+            @JsonProperty(SETTLE_CODE) final String settleCode,
+            @JsonProperty(REPORT_NUMBER) final String reportNum,
+            @JsonProperty(COUNTERPARTY_REPORT_NUMBER) final String cpReportNum,
+            @JsonProperty(ACCRUED_INTEREST) final String accruedInt,
+            @JsonProperty(REPO_TRADE_NUMBER) final String repoTradeNo,
+            @JsonProperty(PRICE_1) final String price1,
+            @JsonProperty(REPO_RATE) final String repoRate,
+            @JsonProperty(PRICE_2) final String price2,
+            @JsonProperty(CLIENT_CODE) final String clientCode,
+            @JsonProperty(TS_COMMISSION) final String tsComission,
+            @JsonProperty(BALANCE) final String balance,
+            @JsonProperty(SETTLE_TIME) final String settleTime,
+            @JsonProperty(AMOUNT) final String amount,
+            @JsonProperty(REPO_VALUE) final String repoValue,
+            @JsonProperty(REPO_TERM) final String repoTerm,
+            @JsonProperty(REPO_2_VALUE) final String repo2Value,
+            @JsonProperty(RETURN_VALUE) final String returnValue,
+            @JsonProperty(DISCOUNT) final String discount,
+            @JsonProperty(LOWER_DISCOUNT) final String lowerDiscount,
+            @JsonProperty(UPPER_DISCOUNT) final String upperDiscount,
+            @JsonProperty(BLOCK_SECURITIES) final String blockSecurities,
+            @JsonProperty(URGENCY_FLAG) final String urgencyFlag,
+            @JsonProperty(value = TYPE, required = true) final int type,
+            @JsonProperty(value = OPERATION_TYPE, required = true) final int operationType,
+            @JsonProperty(EXPECTED_DISCOUNT) final String expectedDiscount,
+            @JsonProperty(EXPECTED_QUANTITY) final String expectedQuantity,
+            @JsonProperty(EXPECTED_REPO_VALUE) final String expectedRepoValue,
+            @JsonProperty(EXPECTED_REPO_2_VALUE) final String expectedRepo2Value,
+            @JsonProperty(EXPECTED_RETURN_VALUE) final String expectedReturnValue,
+            @JsonProperty(ORDER_NUMBER) final String orderNum,
+            @JsonProperty(REPORT_TRADE_DATE) final String reportTradeDate,
+            @JsonProperty(value = SETTLED, required = true) final int settled,
+            @JsonProperty(value = CLEARING_TYPE, required = true) final int clearingType,
+            @JsonProperty(REPORT_COMMISSION) final String reportComission,
+            @JsonProperty(COUPON_PAYMENT) final String couponPayment,
+            @JsonProperty(PRINCIPAL_PAYMENT) final String principalPayment,
+            @JsonProperty(PRINCIPAL_PAYMENT_DATE) final String principalPaymentDate,
+            @JsonProperty(NEXT_DAY_SETTLE) final String nextDaySettle,
+            @JsonProperty(SETTLE_CURRENCY) final String settleCurrency,
+            @JsonProperty(SECURITY_CODE) final String secCode,
+            @JsonProperty(CLASS_CODE) final String classCode,
+            @JsonProperty(COMP_VAL) final String compVal,
+            @JsonProperty(PARENT_TRADE_NUMBER) final String parentTradeNo,
+            @JsonProperty(BANK_ID) final String bankId,
+            @JsonProperty(BANK_ACCOUNT_ID) final String bankAccId,
+            @JsonProperty(PRECISE_BALANCE) final String preciseBalance,
+            @JsonProperty(CONFIRM_TIME) final String confirmTime,
+            @JsonProperty(value = EX_FLAGS, required = true) final int exFlags,
+            @JsonProperty(CONFIRM_REPORT) final String confirmReport,
+            @JsonProperty(EXT_REF) final String extRef) {
 
         this.tradeNum = tradeNum;
         this.tradeDate = tradeDate;
@@ -202,219 +270,77 @@ public class NegTrade {
         this.confirmTime = confirmTime;
         this.exFlags = exFlags;
         this.confirmReport = confirmReport;
+        this.extRef = extRef;
     }
 
-    @Override
-    public boolean equals(final Object o) {
-
-        if (o == this) {
-            return true;
-        } else if ( !(o instanceof NegTrade) ) {
-            return false;
-        } else {
-            final NegTrade negTrade = (NegTrade) o;
-            return tradeNum == negTrade.tradeNum &&
-                    flags == negTrade.flags &&
-                    qty == negTrade.qty &&
-                    type == negTrade.type &&
-                    operationType == negTrade.operationType &&
-                    settled == negTrade.settled &&
-                    clearingType == negTrade.clearingType &&
-                    exFlags == negTrade.exFlags &&
-                    Objects.equals(tradeDate, negTrade.tradeDate) &&
-                    Objects.equals(settleDate, negTrade.settleDate) &&
-                    Objects.equals(brokerRef, negTrade.brokerRef) &&
-                    Objects.equals(firmId, negTrade.firmId) &&
-                    Objects.equals(account, negTrade.account) &&
-                    Objects.equals(cpFirmId, negTrade.cpFirmId) &&
-                    Objects.equals(cpAccount, negTrade.cpAccount) &&
-                    Objects.equals(price, negTrade.price) &&
-                    Objects.equals(value, negTrade.value) &&
-                    Objects.equals(settleCode, negTrade.settleCode) &&
-                    Objects.equals(reportNum, negTrade.reportNum) &&
-                    Objects.equals(cpReportNum, negTrade.cpReportNum) &&
-                    Objects.equals(accruedInt, negTrade.accruedInt) &&
-                    Objects.equals(repoTradeNo, negTrade.repoTradeNo) &&
-                    Objects.equals(price1, negTrade.price1) &&
-                    Objects.equals(repoRate, negTrade.repoRate) &&
-                    Objects.equals(price2, negTrade.price2) &&
-                    Objects.equals(clientCode, negTrade.clientCode) &&
-                    Objects.equals(tsComission, negTrade.tsComission) &&
-                    Objects.equals(balance, negTrade.balance) &&
-                    Objects.equals(settleTime, negTrade.settleTime) &&
-                    Objects.equals(amount, negTrade.amount) &&
-                    Objects.equals(repoValue, negTrade.repoValue) &&
-                    Objects.equals(repoTerm, negTrade.repoTerm) &&
-                    Objects.equals(repo2Value, negTrade.repo2Value) &&
-                    Objects.equals(returnValue, negTrade.returnValue) &&
-                    Objects.equals(discount, negTrade.discount) &&
-                    Objects.equals(lowerDiscount, negTrade.lowerDiscount) &&
-                    Objects.equals(upperDiscount, negTrade.upperDiscount) &&
-                    Objects.equals(blockSecurities, negTrade.blockSecurities) &&
-                    Objects.equals(urgencyFlag, negTrade.urgencyFlag) &&
-                    Objects.equals(expectedDiscount, negTrade.expectedDiscount) &&
-                    Objects.equals(expectedQuantity, negTrade.expectedQuantity) &&
-                    Objects.equals(expectedRepoValue, negTrade.expectedRepoValue) &&
-                    Objects.equals(expectedRepo2Value, negTrade.expectedRepo2Value) &&
-                    Objects.equals(expectedReturnValue, negTrade.expectedReturnValue) &&
-                    Objects.equals(orderNum, negTrade.orderNum) &&
-                    Objects.equals(reportTradeDate, negTrade.reportTradeDate) &&
-                    Objects.equals(reportComission, negTrade.reportComission) &&
-                    Objects.equals(couponPayment, negTrade.couponPayment) &&
-                    Objects.equals(principalPayment, negTrade.principalPayment) &&
-                    Objects.equals(principalPaymentDate, negTrade.principalPaymentDate) &&
-                    Objects.equals(nextDaySettle, negTrade.nextDaySettle) &&
-                    Objects.equals(settleCurrency, negTrade.settleCurrency) &&
-                    Objects.equals(secCode, negTrade.secCode) &&
-                    Objects.equals(classCode, negTrade.classCode) &&
-                    Objects.equals(compVal, negTrade.compVal) &&
-                    Objects.equals(parentTradeNo, negTrade.parentTradeNo) &&
-                    Objects.equals(bankId, negTrade.bankId) &&
-                    Objects.equals(bankAccId, negTrade.bankAccId) &&
-                    Objects.equals(preciseBalance, negTrade.preciseBalance) &&
-                    Objects.equals(confirmTime, negTrade.confirmTime) &&
-                    Objects.equals(confirmReport, negTrade.confirmReport);
-        }
-    }
-
-    @Override
-    public int hashCode() {
-
-        if (hashCode == 0) {
-            hashCode = Objects.hash(
-                    tradeNum,
-                    tradeDate,
-                    settleDate,
-                    flags,
-                    brokerRef,
-                    firmId,
-                    account,
-                    cpFirmId,
-                    cpAccount,
-                    price,
-                    qty,
-                    value,
-                    settleCode,
-                    reportNum,
-                    cpReportNum,
-                    accruedInt,
-                    repoTradeNo,
-                    price1,
-                    repoRate,
-                    price2,
-                    clientCode,
-                    tsComission,
-                    balance,
-                    settleTime,
-                    amount,
-                    repoValue,
-                    repoTerm,
-                    repo2Value,
-                    returnValue,
-                    discount,
-                    lowerDiscount,
-                    upperDiscount,
-                    blockSecurities,
-                    urgencyFlag,
-                    type,
-                    operationType,
-                    expectedDiscount,
-                    expectedQuantity,
-                    expectedRepoValue,
-                    expectedRepo2Value,
-                    expectedReturnValue,
-                    orderNum,
-                    reportTradeDate,
-                    settled,
-                    clearingType,
-                    reportComission,
-                    couponPayment,
-                    principalPayment,
-                    principalPaymentDate,
-                    nextDaySettle,
-                    settleCurrency,
-                    secCode,
-                    classCode,
-                    compVal,
-                    parentTradeNo,
-                    bankId,
-                    bankAccId,
-                    preciseBalance,
-                    confirmTime,
-                    exFlags,
-                    confirmReport
-            );
-        }
-
-        return hashCode;
-    }
-
+    @NotNull
     @Override
     public String toString() {
 
         if (asString == null) {
             asString = MoreObjects.toStringHelper(this)
-                    .add("trade_num", tradeNum)
-                    .add("trade_date", tradeDate)
-                    .add("settle_date", settleDate)
-                    .add("flags", flags)
-                    .add("brokerref", brokerRef)
-                    .add("firmid", firmId)
-                    .add("account", account)
-                    .add("cpfirmid", cpFirmId)
-                    .add("cpaccount", cpAccount)
-                    .add("price", price)
-                    .add("qty", qty)
-                    .add("value", value)
-                    .add("settlecode", settleCode)
-                    .add("report_num", reportNum)
-                    .add("cpreport_num", cpReportNum)
-                    .add("accruedint", accruedInt)
-                    .add("repotradeno", repoTradeNo)
-                    .add("price1", price1)
-                    .add("reporate", repoRate)
-                    .add("price2", price2)
-                    .add("client_code", clientCode)
-                    .add("ts_comission", tsComission)
-                    .add("balance", balance)
-                    .add("settle_time", settleTime)
-                    .add("amount", amount)
-                    .add("repovalue", repoValue)
-                    .add("repoterm", repoTerm)
-                    .add("repo2value", repo2Value)
-                    .add("return_value", returnValue)
-                    .add("discount", discount)
-                    .add("lower_discount", lowerDiscount)
-                    .add("upper_discount", upperDiscount)
-                    .add("block_securities", blockSecurities)
-                    .add("urgency_flag", urgencyFlag)
-                    .add("type", type)
-                    .add("operation_type", operationType)
-                    .add("expected_discount", expectedDiscount)
-                    .add("expected_quantity", expectedQuantity)
-                    .add("expected_repovalue", expectedRepoValue)
-                    .add("expected_repo2value", expectedRepo2Value)
-                    .add("expected_return_value", expectedReturnValue)
-                    .add("order_num", orderNum)
-                    .add("report_trade_date", reportTradeDate)
-                    .add("settled", settled)
-                    .add("clearing_type", clearingType)
-                    .add("report_comission", reportComission)
-                    .add("coupon_payment", couponPayment)
-                    .add("principal_payment", principalPayment)
-                    .add("principal_payment_date", principalPaymentDate)
-                    .add("nextdaysettle", nextDaySettle)
-                    .add("settle_currency", settleCurrency)
-                    .add("sec_code", secCode)
-                    .add("class_code", classCode)
-                    .add("compval", compVal)
-                    .add("parenttradeno", parentTradeNo)
-                    .add("bankid", bankId)
-                    .add("bankaccid", bankAccId)
-                    .add("precisebalance", preciseBalance)
-                    .add("confirmtime", confirmTime)
-                    .add("ex_flags", exFlags)
-                    .add("confirmreport", confirmReport)
+                    .add(TRADE_NUMBER, tradeNum)
+                    .add(TRADE_DATE, tradeDate)
+                    .add(SETTLE_DATE, settleDate)
+                    .add(FLAGS, flags)
+                    .add(BROKER_REF, brokerRef)
+                    .add(FIRM_ID, firmId)
+                    .add(ACCOUNT, account)
+                    .add(COUNTERPARTY_FIRM_ID, cpFirmId)
+                    .add(COUNTERPARTY_ACCOUNT, cpAccount)
+                    .add(PRICE, price)
+                    .add(QUANTITY, qty)
+                    .add(VALUE, value)
+                    .add(SETTLE_CODE, settleCode)
+                    .add(REPORT_NUMBER, reportNum)
+                    .add(COUNTERPARTY_REPORT_NUMBER, cpReportNum)
+                    .add(ACCRUED_INTEREST, accruedInt)
+                    .add(REPO_TRADE_NUMBER, repoTradeNo)
+                    .add(PRICE_1, price1)
+                    .add(REPO_RATE, repoRate)
+                    .add(PRICE_2, price2)
+                    .add(CLIENT_CODE, clientCode)
+                    .add(TS_COMMISSION, tsComission)
+                    .add(BALANCE, balance)
+                    .add(SETTLE_TIME, settleTime)
+                    .add(AMOUNT, amount)
+                    .add(REPO_VALUE, repoValue)
+                    .add(REPO_TERM, repoTerm)
+                    .add(REPO_2_VALUE, repo2Value)
+                    .add(RETURN_VALUE, returnValue)
+                    .add(DISCOUNT, discount)
+                    .add(LOWER_DISCOUNT, lowerDiscount)
+                    .add(UPPER_DISCOUNT, upperDiscount)
+                    .add(BLOCK_SECURITIES, blockSecurities)
+                    .add(URGENCY_FLAG, urgencyFlag)
+                    .add(TYPE, type)
+                    .add(OPERATION_TYPE, operationType)
+                    .add(EXPECTED_DISCOUNT, expectedDiscount)
+                    .add(EXPECTED_QUANTITY, expectedQuantity)
+                    .add(EXPECTED_REPO_VALUE, expectedRepoValue)
+                    .add(EXPECTED_REPO_2_VALUE, expectedRepo2Value)
+                    .add(EXPECTED_RETURN_VALUE, expectedReturnValue)
+                    .add(ORDER_NUMBER, orderNum)
+                    .add(REPORT_TRADE_DATE, reportTradeDate)
+                    .add(SETTLED, settled)
+                    .add(CLEARING_TYPE, clearingType)
+                    .add(REPORT_COMMISSION, reportComission)
+                    .add(COUPON_PAYMENT, couponPayment)
+                    .add(PRINCIPAL_PAYMENT, principalPayment)
+                    .add(PRINCIPAL_PAYMENT_DATE, principalPaymentDate)
+                    .add(NEXT_DAY_SETTLE, nextDaySettle)
+                    .add(SETTLE_CURRENCY, settleCurrency)
+                    .add(SECURITY_CODE, secCode)
+                    .add(CLASS_CODE, classCode)
+                    .add(COMP_VAL, compVal)
+                    .add(PARENT_TRADE_NUMBER, parentTradeNo)
+                    .add(BANK_ID, bankId)
+                    .add(BANK_ACCOUNT_ID, bankAccId)
+                    .add(PRECISE_BALANCE, preciseBalance)
+                    .add(CONFIRM_TIME, confirmTime)
+                    .add(EX_FLAGS, exFlags)
+                    .add(CONFIRM_REPORT, confirmReport)
+                    .add(EXT_REF, extRef)
                     .toString();
         }
 

@@ -1,28 +1,42 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
+import com.enfernuz.quik.lua.rpc.api.RpcResult;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.MoreObjects;
-import lombok.Value;
+import lombok.EqualsAndHashCode;
+import lombok.NonNull;
+import org.jetbrains.annotations.NotNull;
 
-public final class PrintDbgStr {
+public final class PrintDbgStr implements RemoteProcedure {
 
     private PrintDbgStr() {}
 
-    public static enum Request { INSTANCE; }
+    @EqualsAndHashCode
+    public static final class Args implements RpcArgs<PrintDbgStr> {
 
-    @Value
-    public static class Result {
+        private static final String S = "s";
 
-        String s;
+        @JsonProperty(S)
+        private final String s;
 
-        public Result(final @JsonProperty("s") String s) {
+        public Args(@NonNull final String s) {
             this.s = s;
         }
 
+        @JsonIgnore
+        public String getS() {
+            return s;
+        }
+
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("s", s)
+                    .add(S, s)
                     .toString();
         }
     }

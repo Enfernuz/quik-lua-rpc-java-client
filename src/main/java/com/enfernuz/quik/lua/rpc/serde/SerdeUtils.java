@@ -34,8 +34,4 @@ public class SerdeUtils {
         }
         return serdeModule;
     }
-
-    public static String trimAndRemoveLineBreaks(final String str) {
-        return str.replaceAll("[\\s\\r\\n]", "");
-    }
 }

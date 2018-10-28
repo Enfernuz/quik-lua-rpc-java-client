@@ -16,7 +16,7 @@ public class AddLabelJsonSerdeTest {
 
     private static ObjectMapper sut;
 
-    private static AddLabel.Request requestObj;
+    private static AddLabel.Args requestObj;
     private static AddLabel.Result resultObj;
     private static String requestJson;
     private static String resultJson;
@@ -27,7 +27,7 @@ public class AddLabelJsonSerdeTest {
         sut = new ObjectMapper();
         sut.registerModule(new QluaJsonModule());
 
-        requestObj = AddLabel.Request.builder()
+        requestObj = AddLabel.Args.builder()
                 .chartTag("1")
                 .labelParams(ImmutableMap.of(
                         "key1", "value1",

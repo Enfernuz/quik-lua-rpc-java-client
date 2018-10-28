@@ -10,36 +10,47 @@ import lombok.Getter;
 import lombok.Value;
 import lombok.experimental.NonFinal;
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 @Value
 public class Money {
 
-    @JsonProperty("money_open_limit") String moneyOpenLimit;
-    @JsonProperty("money_limit_locked_nonmarginal_value") String moneyLimitLockedNonMarginalValue;
-    @JsonProperty("money_limit_locked") String moneyLimitLocked;
-    @JsonProperty("money_open_balance") String moneyOpenBalance;
-    @JsonProperty("money_current_limit") String moneyCurrentLimit;
-    @JsonProperty("money_current_balance") String moneyCurrentBalance;
-    @JsonProperty("money_limit_available") String moneyLimitAvailable;
+    private static final String MONEY_OPEN_LIMIT = "money_open_limit";
+    private static final String MONEY_LIMIT_LOCKED_NON_MARGINAL_VALUE = "money_limit_locked_nonmarginal_value";
+    private static final String MONEY_LIMIT_LOCKED = "money_limit_locked";
+    private static final String MONEY_OPEN_BALANCE = "money_open_balance";
+    private static final String MONEY_CURRENT_LIMIT = "money_current_limit";
+    private static final String MONEY_CURRENT_BALANCE = "money_current_balance";
+    private static final String MONEY_LIMIT_AVAILABLE = "money_limit_available";
+
+    String moneyOpenLimit;
+    String moneyLimitLockedNonMarginalValue;
+    String moneyLimitLocked;
+    String moneyOpenBalance;
+    String moneyCurrentLimit;
+    String moneyCurrentBalance;
+    String moneyLimitAvailable;
 
     @Getter(AccessLevel.NONE)
-    private @JsonIgnore @NonFinal transient int hashCode;
+    @NonFinal
+    private transient int hashCode;
 
     @Getter(AccessLevel.NONE)
-    private @JsonIgnore @NonFinal transient String asString;
+    @NonFinal
+    private transient String asString;
 
-    @Builder
     @JsonCreator
+    @Builder
     private Money(
-            final @JsonProperty("money_open_limit") String moneyOpenLimit,
-            final @JsonProperty("money_limit_locked_nonmarginal_value") String moneyLimitLockedNonMarginalValue,
-            final @JsonProperty("money_limit_locked") String moneyLimitLocked,
-            final @JsonProperty("money_open_balance") String moneyOpenBalance,
-            final @JsonProperty("money_current_limit") String moneyCurrentLimit,
-            final @JsonProperty("money_current_balance") String moneyCurrentBalance,
-            final @JsonProperty("money_limit_available") String moneyLimitAvailable) {
+            @JsonProperty(MONEY_OPEN_LIMIT) final String moneyOpenLimit,
+            @JsonProperty(MONEY_LIMIT_LOCKED_NON_MARGINAL_VALUE) final String moneyLimitLockedNonMarginalValue,
+            @JsonProperty(MONEY_LIMIT_LOCKED) final String moneyLimitLocked,
+            @JsonProperty(MONEY_OPEN_BALANCE) final String moneyOpenBalance,
+            @JsonProperty(MONEY_CURRENT_LIMIT) final String moneyCurrentLimit,
+            @JsonProperty(MONEY_CURRENT_BALANCE) final String moneyCurrentBalance,
+            @JsonProperty(MONEY_LIMIT_AVAILABLE) final String moneyLimitAvailable) {
 
         this.moneyOpenLimit = moneyOpenLimit;
         this.moneyLimitLockedNonMarginalValue = moneyLimitLockedNonMarginalValue;
@@ -50,7 +61,6 @@ public class Money {
         this.moneyLimitAvailable = moneyLimitAvailable;
     }
 
-    @Contract(value = "null -> false", pure = true)
     @Override
     public boolean equals(final Object o) {
 
@@ -88,18 +98,19 @@ public class Money {
         return hashCode;
     }
 
+    @NotNull
     @Override
     public String toString() {
 
         if (asString == null) {
             asString = MoreObjects.toStringHelper(this)
-                    .add("money_open_limit", moneyOpenLimit)
-                    .add("money_limit_locked_nonmarginal_value", moneyLimitLockedNonMarginalValue)
-                    .add("money_limit_locked", moneyLimitLocked)
-                    .add("money_open_balance", moneyOpenBalance)
-                    .add("money_current_limit", moneyCurrentLimit)
-                    .add("money_current_balance", moneyCurrentBalance)
-                    .add("money_limit_available", moneyLimitAvailable)
+                    .add(MONEY_OPEN_LIMIT, moneyOpenLimit)
+                    .add(MONEY_LIMIT_LOCKED_NON_MARGINAL_VALUE, moneyLimitLockedNonMarginalValue)
+                    .add(MONEY_LIMIT_LOCKED, moneyLimitLocked)
+                    .add(MONEY_OPEN_BALANCE, moneyOpenBalance)
+                    .add(MONEY_CURRENT_LIMIT, moneyCurrentLimit)
+                    .add(MONEY_CURRENT_BALANCE, moneyCurrentBalance)
+                    .add(MONEY_LIMIT_AVAILABLE, moneyLimitAvailable)
                     .toString();
         }
 

@@ -1,8 +1,10 @@
 package com.enfernuz.quik.lua.rpc.serde;
 
+import org.jetbrains.annotations.NotNull;
+
 public interface SerdeModule {
 
-    <T> byte[] serialize(T t);
+    <T> @NotNull byte[] serialize(@NotNull T t);
 
-    <T> T deserialize(Class<T> clazz, byte[] data);
+    <T> @NotNull T deserialize(@NotNull Class<T> clazz, @NotNull byte[] data);
 }

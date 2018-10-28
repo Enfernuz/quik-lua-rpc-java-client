@@ -1,7 +1,0 @@
-{
-  "method" : "datasource.V",
-  "args" : {
-    "datasource_uuid" : "1",
-    "candle_index" : 2
-  }
-}

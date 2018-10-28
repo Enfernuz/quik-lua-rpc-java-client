@@ -3,8 +3,8 @@ package com.enfernuz.quik.lua.rpc.serde.json;
 import com.enfernuz.quik.lua.rpc.events.api.QluaEvent;
 import com.enfernuz.quik.lua.rpc.serde.SerdeException;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
-import com.enfernuz.quik.lua.rpc.serde.json.jackson.QluaJsonModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jetbrains.annotations.NotNull;
 
 import static java.util.Objects.requireNonNull;
 
@@ -12,16 +12,10 @@ public enum JsonSerdeModule implements SerdeModule {
 
     INSTANCE;
 
-    private final ObjectMapper objectMapper;
-
-    private JsonSerdeModule() {
-
-        objectMapper = new ObjectMapper();
-        objectMapper.registerModule( new QluaJsonModule() );
-    }
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public <T> byte[] serialize(final T t) {
+    public <T> @NotNull byte[] serialize(final @NotNull T t) {
 
         requireNonNull(t);
 
@@ -44,7 +38,7 @@ public enum JsonSerdeModule implements SerdeModule {
     }
 
     @Override
-    public <T> T deserialize(final Class<T> clazz, byte[] data) {
+    public <T> @NotNull T deserialize(final @NotNull Class<T> clazz, final @NotNull byte[] data) {
 
         try {
 

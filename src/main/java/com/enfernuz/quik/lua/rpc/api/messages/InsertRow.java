@@ -1,51 +1,71 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
+import com.enfernuz.quik.lua.rpc.api.RpcResult;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.common.base.MoreObjects;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Value;
 import org.jetbrains.annotations.NotNull;
 
-public final class InsertRow {
+public final class InsertRow implements RemoteProcedure {
 
     private InsertRow() {}
 
-    @Value
-    public static class Request {
+    @JsonPropertyOrder({Args.T_ID, Args.KEY})
+    @EqualsAndHashCode
+    public static final class Args implements RpcArgs<InsertRow> {
 
-        private static final String T_ID_FIELD = "t_id";
-        private static final String KEY_FIELD = "key";
+        private static final String T_ID = "t_id";
+        private static final String KEY = "key";
 
-        int tId;
-        int key;
+        @JsonProperty(T_ID)
+        private final int tId;
+
+        @JsonProperty(KEY)
+        private final int key;
 
         @Builder
-        private Request(final int tId, final int key) {
+        private Args(final int tId, final int key) {
 
             this.tId = tId;
             this.key = key;
+        }
+
+        @JsonIgnore
+        public int getTId() {
+            return tId;
+        }
+
+        @JsonIgnore
+        public int getKey() {
+            return key;
         }
 
         @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add(T_ID_FIELD, tId)
-                    .add(KEY_FIELD, key)
+                    .add(T_ID, tId)
+                    .add(KEY, key)
                     .toString();
         }
     }
 
     @Value
-    public static class Result {
+    public static class Result implements RpcResult<InsertRow> {
 
-        private static final String RESULT_FIELD = "result";
+        private static final String RESULT = "result";
 
         int result;
 
         @JsonCreator
-        public Result(final @JsonProperty(value = RESULT_FIELD, required = true) int result) {
+        public Result(final @JsonProperty(value = RESULT, required = true) int result) {
             this.result = result;
         }
 
@@ -53,7 +73,7 @@ public final class InsertRow {
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add(RESULT_FIELD, result)
+                    .add(RESULT, result)
                     .toString();
         }
     }

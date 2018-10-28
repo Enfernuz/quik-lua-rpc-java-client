@@ -1,32 +1,47 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
+import com.enfernuz.quik.lua.rpc.api.RpcResult;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableMap;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Value;
+import lombok.*;
 import lombok.experimental.NonFinal;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.Objects;
 
-public final class SendTransaction {
+public final class SendTransaction implements RemoteProcedure {
 
     private SendTransaction() {}
 
-    @Value
-    public static class Request {
+    public static final class Args implements RpcArgs<SendTransaction> {
 
-        Map<String, String> transaction;
+        private static final String TRANSACTION = "transaction";
 
-        private transient @NonFinal @Getter(AccessLevel.NONE) int hashCode;
-        private transient @NonFinal @Getter(AccessLevel.NONE) String asString;
+        @JsonProperty(TRANSACTION)
+        private final Map<String, String> transaction;
 
-        public Request(final Map<String, String> transaction) {
+        @Getter(AccessLevel.NONE)
+        @NonFinal
+        private transient int hashCode;
+
+        @Getter(AccessLevel.NONE)
+        @NonFinal
+        private transient String asString;
+
+        public Args(@NonNull @NotNull final Map<String, String> transaction) {
             this.transaction = ImmutableMap.copyOf(transaction);
+        }
+
+        @NotNull
+        @JsonIgnore
+        public Map<String, String> getTransaction() {
+            return transaction;
         }
 
         @Override
@@ -34,10 +49,10 @@ public final class SendTransaction {
 
             if (o == this) {
                 return true;
-            } else if ( !(o instanceof Request) ) {
+            } else if ( !(o instanceof Args) ) {
                 return false;
             } else {
-                final Request request = (Request) o;
+                final Args request = (Args) o;
                 return Objects.equals(transaction, request.transaction);
             }
         }
@@ -57,7 +72,7 @@ public final class SendTransaction {
 
             if (asString == null) {
                 asString = MoreObjects.toStringHelper(this)
-                        .add("transaction", transaction)
+                        .add(TRANSACTION, transaction)
                         .toString();
             }
 
@@ -66,19 +81,22 @@ public final class SendTransaction {
     }
 
     @Value
-    public static class Result {
+    public static class Result implements RpcResult<SendTransaction> {
 
-        @NonNull String result;
+        private static final String RESULT = "result";
+
+        String result;
 
         @JsonCreator
-        public Result(final @JsonProperty(value = "result", required = true) String result) {
+        public Result(@JsonProperty(value = RESULT, required = true) @NonNull final String result) {
             this.result = result;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("result", result)
+                    .add(RESULT, result)
                     .toString();
         }
     }

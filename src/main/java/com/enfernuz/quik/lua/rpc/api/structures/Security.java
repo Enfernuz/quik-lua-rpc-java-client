@@ -14,18 +14,18 @@ import java.util.Objects;
 @Value
 public class Security {
 
-    private static final String CODE_FIELD = "code";
-    private static final String NAME_FIELD = "name";
-    private static final String SHORT_NAME_FIELD = "short_name";
-    private static final String CLASS_CODE_FIELD = "class_code";
-    private static final String CLASS_NAME_FIELD = "class_name";
-    private static final String FACE_VALUE_FIELD = "face_value";
-    private static final String FACE_UNIT_FIELD = "face_unit";
-    private static final String SCALE_FIELD = "scale";
-    private static final String MAT_DATE_FIELD = "mat_date";
-    private static final String LOT_SIZE_FIELD = "lot_size";
-    private static final String ISIN_CODE_FIELD = "isin_code";
-    private static final String MIN_PRICE_STEP_FIELD = "min_price_step";
+    private static final String CODE = "code";
+    private static final String NAME = "name";
+    private static final String SHORT_NAME = "short_name";
+    private static final String CLASS_CODE = "class_code";
+    private static final String CLASS_NAME = "class_name";
+    private static final String FACE_VALUE = "face_value";
+    private static final String FACE_UNIT = "face_unit";
+    private static final String SCALE = "scale";
+    private static final String MATURITY_DATE = "mat_date";
+    private static final String LOT_SIZE = "lot_size";
+    private static final String ISIN_CODE = "isin_code";
+    private static final String MIN_PRICE_STEP = "min_price_step";
 
     String code;
     String name;
@@ -40,24 +40,29 @@ public class Security {
     String isinCode;
     String minPriceStep;
 
-    private transient @NonFinal @Getter(AccessLevel.NONE) int hashCode;
-    private transient @NonFinal @Getter(AccessLevel.NONE) String asString;
+    @Getter(AccessLevel.NONE)
+    @NonFinal
+    private transient int hashCode;
 
-    @Builder
+    @Getter(AccessLevel.NONE)
+    @NonFinal
+    private transient String asString;
+
     @JsonCreator
+    @Builder
     private Security(
-            @JsonProperty(CODE_FIELD) final String code,
-            @JsonProperty(NAME_FIELD) final String name,
-            @JsonProperty(SHORT_NAME_FIELD) final String shortName,
-            @JsonProperty(CLASS_CODE_FIELD) final String classCode,
-            @JsonProperty(CLASS_NAME_FIELD) final String className,
-            @JsonProperty(FACE_VALUE_FIELD) final String faceValue,
-            @JsonProperty(FACE_UNIT_FIELD) final String faceUnit,
-            @JsonProperty(SCALE_FIELD) final String scale,
-            @JsonProperty(MAT_DATE_FIELD) final String matDate,
-            @JsonProperty(LOT_SIZE_FIELD) final String lotSize,
-            @JsonProperty(ISIN_CODE_FIELD) final String isinCode,
-            @JsonProperty(MIN_PRICE_STEP_FIELD) final String minPriceStep) {
+            @JsonProperty(CODE) final String code,
+            @JsonProperty(NAME) final String name,
+            @JsonProperty(SHORT_NAME) final String shortName,
+            @JsonProperty(CLASS_CODE) final String classCode,
+            @JsonProperty(CLASS_NAME) final String className,
+            @JsonProperty(FACE_VALUE) final String faceValue,
+            @JsonProperty(FACE_UNIT) final String faceUnit,
+            @JsonProperty(SCALE) final String scale,
+            @JsonProperty(MATURITY_DATE) final String matDate,
+            @JsonProperty(LOT_SIZE) final String lotSize,
+            @JsonProperty(ISIN_CODE) final String isinCode,
+            @JsonProperty(MIN_PRICE_STEP) final String minPriceStep) {
 
         this.code = code;
         this.name = name;
@@ -125,18 +130,18 @@ public class Security {
 
         if (asString == null) {
             asString = MoreObjects.toStringHelper(this)
-                    .add(CODE_FIELD, code)
-                    .add(NAME_FIELD, name)
-                    .add(SHORT_NAME_FIELD, shortName)
-                    .add(CLASS_CODE_FIELD, classCode)
-                    .add(CLASS_NAME_FIELD, className)
-                    .add(FACE_VALUE_FIELD, faceValue)
-                    .add(FACE_UNIT_FIELD, faceUnit)
-                    .add(SCALE_FIELD, scale)
-                    .add(MAT_DATE_FIELD, matDate)
-                    .add(LOT_SIZE_FIELD, lotSize)
-                    .add(ISIN_CODE_FIELD, isinCode)
-                    .add(MIN_PRICE_STEP_FIELD, minPriceStep)
+                    .add(CODE, code)
+                    .add(NAME, name)
+                    .add(SHORT_NAME, shortName)
+                    .add(CLASS_CODE, classCode)
+                    .add(CLASS_NAME, className)
+                    .add(FACE_VALUE, faceValue)
+                    .add(FACE_UNIT, faceUnit)
+                    .add(SCALE, scale)
+                    .add(MATURITY_DATE, matDate)
+                    .add(LOT_SIZE, lotSize)
+                    .add(ISIN_CODE, isinCode)
+                    .add(MIN_PRICE_STEP, minPriceStep)
                     .toString();
         }
 

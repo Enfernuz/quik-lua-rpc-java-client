@@ -86,7 +86,7 @@ enum JsonQluaEventTypeSerde implements Serde<QluaEvent.EventType> {
         result.put(hash("OnConnected"), QluaEvent.EventType.ON_CONNECTED);
         result.put(hash("OnCleanUp"), QluaEvent.EventType.ON_CLEAN_UP);
 
-        assert (result.size() == QluaEvent.EventType.values().length);
+        assert QluaEvent.EventType.values().length == result.size();
 
         return result;
     }
@@ -120,7 +120,7 @@ enum JsonQluaEventTypeSerde implements Serde<QluaEvent.EventType> {
         result.put(QluaEvent.EventType.ON_CONNECTED, asBytes("OnConnected"));
         result.put(QluaEvent.EventType.ON_CLEAN_UP, asBytes("OnCleanUp"));
 
-        assert (result.size() == QluaEvent.EventType.values().length);
+        assert QluaEvent.EventType.values().length == result.size();
 
         return result;
     }

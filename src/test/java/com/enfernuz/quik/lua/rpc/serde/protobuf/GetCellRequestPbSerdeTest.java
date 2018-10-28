@@ -16,7 +16,7 @@ public class GetCellRequestPbSerdeTest {
 
     private static SerdeModule sut;
 
-    private static GetCell.Request expectedObject;
+    private static GetCell.Args expectedObject;
     private static byte[] expectedPbInput;
 
     @BeforeClass
@@ -24,7 +24,7 @@ public class GetCellRequestPbSerdeTest {
 
         sut = ProtobufSerdeModule.INSTANCE;
 
-        expectedObject = GetCell.Request.builder()
+        expectedObject = GetCell.Args.builder()
                 .tId(1)
                 .key(2)
                 .code(3)
@@ -54,7 +54,7 @@ public class GetCellRequestPbSerdeTest {
     @Test
     public void testDeserialize() {
 
-        final GetCell.Request actualObject = sut.deserialize(GetCell.Request.class, expectedPbInput);
+        final GetCell.Args actualObject = sut.deserialize(GetCell.Args.class, expectedPbInput);
 
         assertEquals(actualObject, expectedObject);
     }

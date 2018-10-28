@@ -1,6 +1,0 @@
-{
-  "method" : "getLinesCount",
-  "args" : {
-    "tag" : "1"
-  }
-}

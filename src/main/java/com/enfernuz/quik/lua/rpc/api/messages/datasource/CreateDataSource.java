@@ -1,17 +1,21 @@
 package com.enfernuz.quik.lua.rpc.api.messages.datasource;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
+import com.enfernuz.quik.lua.rpc.api.RpcResult;
+import com.fasterxml.jackson.annotation.*;
 import com.google.common.base.MoreObjects;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.Value;
+import org.jetbrains.annotations.NotNull;
 
-public final class CreateDataSource {
+public final class CreateDataSource implements RemoteProcedure {
 
     private CreateDataSource() {}
 
-    public static enum Interval {
+    public enum Interval {
 
         INTERVAL_TICK,
         INTERVAL_M1,
@@ -29,22 +33,36 @@ public final class CreateDataSource {
         INTERVAL_H4,
         INTERVAL_D1,
         INTERVAL_W1,
-        INTERVAL_MN1;
+        INTERVAL_MN1
     }
 
-    @Value
-    public static class Request {
+    @JsonPropertyOrder({Args.CLASS_CODE, Args.SEC_CODE, Args.INTERVAL, Args.PARAM})
+    @EqualsAndHashCode
+    public static final class Args implements RpcArgs<CreateDataSource> {
 
-        @NonNull String classCode;
-        @NonNull String secCode;
-        @NonNull Interval interval;
-        String param;
+        private static final String CLASS_CODE = "class_code";
+        private static final String SEC_CODE = "sec_code";
+        private static final String INTERVAL = "interval";
+        private static final String PARAM = "param";
+
+        @JsonProperty(CLASS_CODE)
+        private final String classCode;
+
+        @JsonProperty(SEC_CODE)
+        private final String secCode;
+
+        @JsonProperty(INTERVAL)
+        private final Interval interval;
+
+        @JsonProperty(PARAM)
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        private final String param;
 
         @Builder
-        private Request(
-                final String classCode,
-                final String secCode,
-                final Interval interval,
+        private Args(
+                @NonNull final String classCode,
+                @NonNull final String secCode,
+                @NonNull final Interval interval,
                 final String param) {
 
             this.classCode = classCode;
@@ -53,19 +71,44 @@ public final class CreateDataSource {
             this.param = param;
         }
 
+        @JsonIgnore
+        public String getClassCode() {
+            return classCode;
+        }
+
+        @JsonIgnore
+        public String getSecCode() {
+            return secCode;
+        }
+
+        @JsonIgnore
+        public Interval getInterval() {
+            return interval;
+        }
+
+        @JsonIgnore
+        public String getParam() {
+            return param;
+        }
+
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("class_code", classCode)
-                    .add("sec_code", secCode)
-                    .add("interval", interval)
-                    .add("param", param)
+                    .add(CLASS_CODE, classCode)
+                    .add(SEC_CODE, secCode)
+                    .add(INTERVAL, interval)
+                    .add(PARAM, param)
                     .toString();
         }
     }
 
     @Value
-    public static class Result {
+    public static class Result implements RpcResult<CreateDataSource> {
+
+        private static final String DATASOURCE_UUID = "datasource_uuid";
+        private static final String IS_ERROR = "is_error";
+        private static final String ERROR_DESCRIPTION = "error_desc";
 
         String datasourceUUID;
         boolean error;
@@ -74,20 +117,22 @@ public final class CreateDataSource {
         @JsonCreator
         @Builder
         private Result(
-                final @JsonProperty(value = "datasource_uuid") String datasourceUUID,
-                final @JsonProperty(value = "is_error") boolean error,
-                final @JsonProperty(value = "error_desc") String errorDesc) {
+                @JsonProperty(value = DATASOURCE_UUID) final String datasourceUUID,
+                @JsonProperty(value = IS_ERROR, required = true) final boolean error,
+                @JsonProperty(value = ERROR_DESCRIPTION) final String errorDesc) {
+
             this.datasourceUUID = datasourceUUID;
             this.error = error;
             this.errorDesc = errorDesc;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("datasource_uuid", datasourceUUID)
-                    .add("is_error", error)
-                    .add("error_desc", errorDesc)
+                    .add(DATASOURCE_UUID, datasourceUUID)
+                    .add(IS_ERROR, error)
+                    .add(ERROR_DESCRIPTION, errorDesc)
                     .toString();
         }
     }

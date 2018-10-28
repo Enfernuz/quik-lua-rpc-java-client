@@ -1,33 +1,55 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
+import com.enfernuz.quik.lua.rpc.api.RpcResult;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
+import lombok.EqualsAndHashCode;
 import lombok.Value;
-import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
-public final class Clear {
+public final class Clear implements RemoteProcedure {
 
     private Clear() {}
 
-    @Value
-    public static class Request {
+    @EqualsAndHashCode
+    public static final class Args implements RpcArgs<Clear> {
 
-        int tId;
+        private static final String T_ID = "t_id";
 
+        @JsonProperty(T_ID)
+        private final int tId;
+
+        public Args(final int tId) {
+            this.tId = tId;
+        }
+
+        @JsonIgnore
+        public int getTId() {
+            return tId;
+        }
+
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("t_id", tId)
+                    .add(T_ID, tId)
                     .toString();
         }
     }
 
     @Value
-    public static class Result {
+    public static class Result implements RpcResult<Clear> {
+
+        private static final String RESULT = "result";
 
         boolean result;
 
-        @Contract(pure = true)
-        public static Result getInstance(final boolean result) {
+        @JsonCreator
+        public static Result getInstance(@JsonProperty(value = RESULT, required = true) final boolean result) {
             return result ? InstanceHolder.TRUE : InstanceHolder.FALSE;
         }
 
@@ -35,6 +57,7 @@ public final class Clear {
             this.result = result;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
@@ -47,10 +70,10 @@ public final class Clear {
             private static final Result TRUE = new Result(true);
             private static final Result FALSE = new Result(false);
 
-            // just in case
+            // sanity check
             static {
-                assert TRUE.result == true;
-                assert FALSE.result == false;
+                assert TRUE.result;
+                assert !FALSE.result;
             }
         }
     }

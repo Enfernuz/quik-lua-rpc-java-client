@@ -1,5 +1,7 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -7,10 +9,79 @@ import lombok.Getter;
 import lombok.Value;
 import lombok.experimental.NonFinal;
 
-import java.util.Objects;
-
 @Value
 public class Trade {
+
+    private static final String TRADE_NUM = "trade_num";
+    private static final String ORDER_NUM = "order_num";
+    private static final String BROKER_REF = "brokerref";
+    private static final String USER_ID = "userid";
+    private static final String FIRM_ID = "firmid";
+    private static final String CANCELED_UID = "canceled_uid";
+    private static final String ACCOUNT = "account";
+    private static final String PRICE = "price";
+    private static final String QUANTITY = "qty";
+    private static final String VALUE = "value";
+    private static final String ACCRUED_INTEREST = "accruedint";
+    private static final String YIELD = "yield";
+    private static final String SETTLE_CODE = "settlecode";
+    private static final String COUNTERPARTY_FIRM_ID = "cpfirmid";
+    private static final String FLAGS = "flags";
+    private static final String PRICE_2 = "price2";
+    private static final String REPO_RATE = "reporate";
+    private static final String CLIENT_CODE = "client_code";
+    private static final String ACCRUED_2 = "accrued2";
+    private static final String REPO_TERM = "repoterm";
+    private static final String REPO_VALUE = "repovalue";
+    private static final String REPO_2_VALUE = "repo2value";
+    private static final String START_DISCOUNT = "start_discount";
+    private static final String LOWER_DISCOUNT = "lower_discount";
+    private static final String UPPER_DISCOUNT = "upper_discount";
+    private static final String BLOCK_SECURITIES = "block_securities";
+    private static final String CLEARING_COMISSION = "clearing_comission";
+    private static final String EXCHANGE_COMISSION = "exchange_comission";
+    private static final String TECH_CENTER_COMISSION = "tech_center_comission";
+    private static final String SETTLE_DATE = "settle_date";
+    private static final String SETTLE_CURRENCY = "settle_currency";
+    private static final String TRADE_CURRENCY = "trade_currency";
+    private static final String EXCHANGE_CODE = "exchange_code";
+    private static final String STATION_ID = "station_id";
+    private static final String SECURITY_CODE = "sec_code";
+    private static final String CLASS_CODE = "class_code";
+    private static final String DATETIME = "datetime";
+    private static final String BANK_ACC_ID = "bank_acc_id";
+    private static final String BROKER_COMISSION = "broker_comission";
+    private static final String LINKED_TRADE = "linked_trade";
+    private static final String PERIOD = "period";
+    private static final String TRANS_ID = "trans_id";
+    private static final String KIND = "kind";
+    private static final String CLEARING_BANK_ACC_ID = "clearing_bank_accid";
+    private static final String CANCELED_DATETIME = "canceled_datetime";
+    private static final String CLEARING_FIRM_ID = "clearing_firmid";
+    private static final String SYSTEM_REF = "system_ref";
+    private static final String UID = "uid";
+    private static final String L_SECURITY_CODE = "lseccode";
+    private static final String ORDER_REVISION_NUMBER = "order_revision_number";
+    private static final String ORDER_QUANTITY = "order_qty";
+    private static final String ORDER_PRICE = "order_price";
+    private static final String ORDER_EXCHANGE_CODE = "order_exchange_code";
+    private static final String EXEC_MARKET = "exec_market";
+    private static final String LIQUIDITY_INDICATOR = "liquidity_indicator";
+    private static final String EXT_REF = "extref";
+    private static final String EXT_TRADE_FLAGS = "ext_trade_flags";
+    private static final String ON_BEHALF_OF_UID = "on_behalf_of_uid";
+    private static final String CLIENT_QUALIFIER = "client_qualifier";
+    private static final String CLIENT_SHORT_CODE = "client_short_code";
+    private static final String INVESTMENT_DECISION_MAKER_QUALIFIER = "investment_decision_maker_qualifier";
+    private static final String INVESTMENT_DECISION_MAKER_SHORT_CODE = "investment_decision_maker_short_code";
+    private static final String EXECUTING_TRADER_QUALIFIER = "executing_trader_qualifier";
+    private static final String EXECUTING_TRADER_SHORT_CODE = "executing_trader_short_code";
+    private static final String WAIVER_FLAG = "waiver_flag";
+    private static final String MLEG_BASE_SID = "mleg_base_sid";
+    private static final String SIDE_QUALIFIER = "side_qualifier";
+    private static final String OTC_POST_TRADE_INDICATOR = "otc_post_trade_indicator";
+    private static final String CAPACITY = "capacity";
+    private static final String CROSS_RATE = "cross_rate";
 
     long tradeNum;
     long orderNum;
@@ -60,60 +131,110 @@ public class Trade {
     String clearingFirmId;
     String systemRef;
     String uid;
+    String lSecCode;
+    String orderRevisionNumber;
+    String orderQty;
+    String orderPrice;
+    String orderExchangeCode;
+    String execMarket;
+    int liquidityIndicator;
+    String extRef;
+    String extTradeFlags;
+    String onBehalfOfUid;
+    int clientQualifier;
+    String clientShortCode;
+    int investmentDecisionMakerQualifier;
+    String investmentDecisionMakerShortCode;
+    int executingTraderQualifier;
+    String executingTraderShortCode;
+    int waiverFlag;
+    String mlegBaseSid;
+    int sideQualifier;
+    int otcPostTradeIndicator;
+    int capacity;
+    String crossRate;
 
-    private transient @NonFinal @Getter(AccessLevel.NONE) int hashCode;
-    private transient @NonFinal @Getter(AccessLevel.NONE) String asString;
+    @Getter(AccessLevel.NONE)
+    @NonFinal
+    private transient int hashCode;
 
+    @Getter(AccessLevel.NONE)
+    @NonFinal
+    private transient String asString;
+
+    @JsonCreator
     @Builder
     private Trade(
-            final long tradeNum,
-            final long orderNum,
-            final String brokerRef,
-            final String userId,
-            final String firmId,
-            final String canceledUid,
-            final String account,
-            final String price,
-            final int qty,
-            final String value,
-            final String accruedInt,
-            final String yield,
-            final String settleCode,
-            final String cpFirmId,
-            final int flags,
-            final String price2,
-            final String repoRate,
-            final String clientCode,
-            final String accrued2,
-            final String repoTerm,
-            final String repoValue,
-            final String repo2Value,
-            final String startDiscount,
-            final String lowerDiscount,
-            final String upperDiscount,
-            final String blockSecurities,
-            final String clearingComission,
-            final String exchangeComission,
-            final String techCenterComission,
-            final String settleDate,
-            final String settleCurrency,
-            final String tradeCurrency,
-            final String exchangeCode,
-            final String stationId,
-            final String secCode,
-            final String classCode,
-            final DateTimeEntry datetime,
-            final String bankAccId,
-            final String brokerComission,
-            final String linkedTrade,
-            final int period,
-            final String transId,
-            final int kind,
-            final String clearingBankAccId,
-            final DateTimeEntry canceledDatetime,
-            final String clearingFirmId,
-            final String systemRef,
-            final String uid) {
+            @JsonProperty(value = TRADE_NUM, required = true) final long tradeNum,
+            @JsonProperty(value = ORDER_NUM, required = true) final long orderNum,
+            @JsonProperty(BROKER_REF) final String brokerRef,
+            @JsonProperty(USER_ID) final String userId,
+            @JsonProperty(FIRM_ID) final String firmId,
+            @JsonProperty(CANCELED_UID) final String canceledUid,
+            @JsonProperty(ACCOUNT) final String account,
+            @JsonProperty(value = PRICE, required = true) final String price,
+            @JsonProperty(value = QUANTITY, required = true) final int qty,
+            @JsonProperty(value = VALUE, required = true) final String value,
+            @JsonProperty(ACCRUED_INTEREST) final String accruedInt,
+            @JsonProperty(YIELD) final String yield,
+            @JsonProperty(SETTLE_CODE) final String settleCode,
+            @JsonProperty(COUNTERPARTY_FIRM_ID) final String cpFirmId,
+            @JsonProperty(value = FLAGS, required = true) final int flags,
+            @JsonProperty(PRICE_2) final String price2,
+            @JsonProperty(REPO_RATE) final String repoRate,
+            @JsonProperty(CLIENT_CODE) final String clientCode,
+            @JsonProperty(ACCRUED_2) final String accrued2,
+            @JsonProperty(REPO_TERM) final String repoTerm,
+            @JsonProperty(REPO_VALUE) final String repoValue,
+            @JsonProperty(REPO_2_VALUE) final String repo2Value,
+            @JsonProperty(START_DISCOUNT) final String startDiscount,
+            @JsonProperty(LOWER_DISCOUNT) final String lowerDiscount,
+            @JsonProperty(UPPER_DISCOUNT) final String upperDiscount,
+            @JsonProperty(BLOCK_SECURITIES) final String blockSecurities,
+            @JsonProperty(CLEARING_COMISSION) final String clearingComission,
+            @JsonProperty(EXCHANGE_COMISSION) final String exchangeComission,
+            @JsonProperty(TECH_CENTER_COMISSION) final String techCenterComission,
+            @JsonProperty(SETTLE_DATE) final String settleDate,
+            @JsonProperty(SETTLE_CURRENCY) final String settleCurrency,
+            @JsonProperty(TRADE_CURRENCY) final String tradeCurrency,
+            @JsonProperty(EXCHANGE_CODE) final String exchangeCode,
+            @JsonProperty(STATION_ID) final String stationId,
+            @JsonProperty(SECURITY_CODE) final String secCode,
+            @JsonProperty(CLASS_CODE) final String classCode,
+            @JsonProperty(value = DATETIME, required = true) final DateTimeEntry datetime,
+            @JsonProperty(BANK_ACC_ID) final String bankAccId,
+            @JsonProperty(BROKER_COMISSION) final String brokerComission,
+            @JsonProperty(LINKED_TRADE) final String linkedTrade,
+            @JsonProperty(value = PERIOD, required = true) final int period,
+            @JsonProperty(TRANS_ID) final String transId,
+            @JsonProperty(value = KIND, required = true) final int kind,
+            @JsonProperty(CLEARING_BANK_ACC_ID) final String clearingBankAccId,
+            @JsonProperty(CANCELED_DATETIME) final DateTimeEntry canceledDatetime,
+            @JsonProperty(CLEARING_FIRM_ID) final String clearingFirmId,
+            @JsonProperty(SYSTEM_REF) final String systemRef,
+            @JsonProperty(UID) final String uid,
+            @JsonProperty(L_SECURITY_CODE) final String lSecCode,
+            @JsonProperty(ORDER_REVISION_NUMBER) final String orderRevisionNumber,
+            @JsonProperty(ORDER_QUANTITY) final String orderQty,
+            @JsonProperty(ORDER_PRICE) final String orderPrice,
+            @JsonProperty(ORDER_EXCHANGE_CODE) final String orderExchangeCode,
+            @JsonProperty(EXEC_MARKET) final String execMarket,
+            @JsonProperty(value = LIQUIDITY_INDICATOR, required = true) final int liquidityIndicator,
+            @JsonProperty(EXT_REF) final String extRef,
+            @JsonProperty(EXT_TRADE_FLAGS) final String extTradeFlags,
+            @JsonProperty(ON_BEHALF_OF_UID) final String onBehalfOfUid,
+            @JsonProperty(value = CLIENT_QUALIFIER, required = true) final int clientQualifier,
+            @JsonProperty(CLIENT_SHORT_CODE) final String clientShortCode,
+            @JsonProperty(value = INVESTMENT_DECISION_MAKER_QUALIFIER, required = true) final int investmentDecisionMakerQualifier,
+            @JsonProperty(INVESTMENT_DECISION_MAKER_SHORT_CODE) final String investmentDecisionMakerShortCode,
+            @JsonProperty(value = EXECUTING_TRADER_QUALIFIER, required = true) final int executingTraderQualifier,
+            @JsonProperty(EXECUTING_TRADER_SHORT_CODE) final String executingTraderShortCode,
+            @JsonProperty(value = WAIVER_FLAG, required = true) final int waiverFlag,
+            @JsonProperty(MLEG_BASE_SID) final String mlegBaseSid,
+            @JsonProperty(value = SIDE_QUALIFIER, required = true) final int sideQualifier,
+            @JsonProperty(value = OTC_POST_TRADE_INDICATOR, required = true) final int otcPostTradeIndicator,
+            @JsonProperty(value = CAPACITY, required = true) final int capacity,
+            @JsonProperty(CROSS_RATE) final String crossRate) {
 
         this.tradeNum = tradeNum;
         this.orderNum = orderNum;
@@ -163,125 +284,28 @@ public class Trade {
         this.clearingFirmId = clearingFirmId;
         this.systemRef = systemRef;
         this.uid = uid;
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-
-        if (o == this) {
-            return true;
-        } else if ( !(o instanceof Trade) ) {
-            return false;
-        } else {
-            final Trade trade = (Trade) o;
-            return tradeNum == trade.tradeNum &&
-                    orderNum == trade.orderNum &&
-                    qty == trade.qty &&
-                    flags == trade.flags &&
-                    period == trade.period &&
-                    kind == trade.kind &&
-                    Objects.equals(brokerRef, trade.brokerRef) &&
-                    Objects.equals(userId, trade.userId) &&
-                    Objects.equals(firmId, trade.firmId) &&
-                    Objects.equals(canceledUid, trade.canceledUid) &&
-                    Objects.equals(account, trade.account) &&
-                    Objects.equals(price, trade.price) &&
-                    Objects.equals(value, trade.value) &&
-                    Objects.equals(accruedInt, trade.accruedInt) &&
-                    Objects.equals(yield, trade.yield) &&
-                    Objects.equals(settleCode, trade.settleCode) &&
-                    Objects.equals(cpFirmId, trade.cpFirmId) &&
-                    Objects.equals(price2, trade.price2) &&
-                    Objects.equals(repoRate, trade.repoRate) &&
-                    Objects.equals(clientCode, trade.clientCode) &&
-                    Objects.equals(accrued2, trade.accrued2) &&
-                    Objects.equals(repoTerm, trade.repoTerm) &&
-                    Objects.equals(repoValue, trade.repoValue) &&
-                    Objects.equals(repo2Value, trade.repo2Value) &&
-                    Objects.equals(startDiscount, trade.startDiscount) &&
-                    Objects.equals(lowerDiscount, trade.lowerDiscount) &&
-                    Objects.equals(upperDiscount, trade.upperDiscount) &&
-                    Objects.equals(blockSecurities, trade.blockSecurities) &&
-                    Objects.equals(clearingComission, trade.clearingComission) &&
-                    Objects.equals(exchangeComission, trade.exchangeComission) &&
-                    Objects.equals(techCenterComission, trade.techCenterComission) &&
-                    Objects.equals(settleDate, trade.settleDate) &&
-                    Objects.equals(settleCurrency, trade.settleCurrency) &&
-                    Objects.equals(tradeCurrency, trade.tradeCurrency) &&
-                    Objects.equals(exchangeCode, trade.exchangeCode) &&
-                    Objects.equals(stationId, trade.stationId) &&
-                    Objects.equals(secCode, trade.secCode) &&
-                    Objects.equals(classCode, trade.classCode) &&
-                    Objects.equals(datetime, trade.datetime) &&
-                    Objects.equals(bankAccId, trade.bankAccId) &&
-                    Objects.equals(brokerComission, trade.brokerComission) &&
-                    Objects.equals(linkedTrade, trade.linkedTrade) &&
-                    Objects.equals(transId, trade.transId) &&
-                    Objects.equals(clearingBankAccId, trade.clearingBankAccId) &&
-                    Objects.equals(canceledDatetime, trade.canceledDatetime) &&
-                    Objects.equals(clearingFirmId, trade.clearingFirmId) &&
-                    Objects.equals(systemRef, trade.systemRef) &&
-                    Objects.equals(uid, trade.uid);
-        }
-    }
-
-    @Override
-    public int hashCode() {
-
-        if (hashCode == 0) {
-            hashCode = Objects.hash(
-                    tradeNum,
-                    orderNum,
-                    brokerRef,
-                    userId,
-                    firmId,
-                    canceledUid,
-                    account,
-                    price,
-                    qty,
-                    value,
-                    accruedInt,
-                    yield,
-                    settleCode,
-                    cpFirmId,
-                    flags,
-                    price2,
-                    repoRate,
-                    clientCode,
-                    accrued2,
-                    repoTerm,
-                    repoValue,
-                    repo2Value,
-                    startDiscount,
-                    lowerDiscount,
-                    upperDiscount,
-                    blockSecurities,
-                    clearingComission,
-                    exchangeComission,
-                    techCenterComission,
-                    settleDate,
-                    settleCurrency,
-                    tradeCurrency,
-                    exchangeCode,
-                    stationId,
-                    secCode,
-                    classCode,
-                    datetime,
-                    bankAccId,
-                    brokerComission,
-                    linkedTrade,
-                    period,
-                    transId,
-                    kind,
-                    clearingBankAccId,
-                    canceledDatetime,
-                    clearingFirmId,
-                    systemRef,
-                    uid
-            );
-        }
-
-        return hashCode;
+        this.lSecCode = lSecCode;
+        this.orderRevisionNumber = orderRevisionNumber;
+        this.orderQty = orderQty;
+        this.orderPrice = orderPrice;
+        this.orderExchangeCode = orderExchangeCode;
+        this.execMarket = execMarket;
+        this.liquidityIndicator = liquidityIndicator;
+        this.extRef = extRef;
+        this.extTradeFlags = extTradeFlags;
+        this.onBehalfOfUid = onBehalfOfUid;
+        this.clientQualifier = clientQualifier;
+        this.clientShortCode = clientShortCode;
+        this.investmentDecisionMakerQualifier = investmentDecisionMakerQualifier;
+        this.investmentDecisionMakerShortCode = investmentDecisionMakerShortCode;
+        this.executingTraderQualifier = executingTraderQualifier;
+        this.executingTraderShortCode = executingTraderShortCode;
+        this.waiverFlag = waiverFlag;
+        this.mlegBaseSid = mlegBaseSid;
+        this.sideQualifier = sideQualifier;
+        this.otcPostTradeIndicator = otcPostTradeIndicator;
+        this.capacity = capacity;
+        this.crossRate = crossRate;
     }
 
     @Override
@@ -289,54 +313,76 @@ public class Trade {
 
         if (asString == null) {
             asString = MoreObjects.toStringHelper(this)
-                    .add("trade_num", tradeNum)
-                    .add("order_num", orderNum)
-                    .add("brokerref", brokerRef)
-                    .add("userid", userId)
-                    .add("firmid", firmId)
-                    .add("canceled_uid", canceledUid)
-                    .add("account", account)
-                    .add("price", price)
-                    .add("qty", qty)
-                    .add("value", value)
-                    .add("accruedint", accruedInt)
-                    .add("yield", yield)
-                    .add("settlecode", settleCode)
-                    .add("cpfirmid", cpFirmId)
-                    .add("flags", flags)
-                    .add("price2", price2)
-                    .add("reporate", repoRate)
-                    .add("client_code", clientCode)
-                    .add("accrued2", accrued2)
-                    .add("repoterm", repoTerm)
-                    .add("repovalue", repoValue)
-                    .add("repo2value", repo2Value)
-                    .add("start_discount", startDiscount)
-                    .add("lower_discount", lowerDiscount)
-                    .add("upper_discount", upperDiscount)
-                    .add("block_securities", blockSecurities)
-                    .add("clearing_comission", clearingComission)
-                    .add("exchange_comission", exchangeComission)
-                    .add("tech_center_comission", techCenterComission)
-                    .add("settle_date", settleDate)
-                    .add("settle_currency", settleCurrency)
-                    .add("trade_currency", tradeCurrency)
-                    .add("exchange_code", exchangeCode)
-                    .add("station_id", stationId)
-                    .add("sec_code", secCode)
-                    .add("class_code", classCode)
-                    .add("datetime", datetime)
-                    .add("bank_acc_id", bankAccId)
-                    .add("broker_comission", brokerComission)
-                    .add("linked_trade", linkedTrade)
-                    .add("period", period)
-                    .add("trans_id", transId)
-                    .add("kind", kind)
-                    .add("clearing_bank_accid", clearingBankAccId)
-                    .add("canceled_datetime", canceledDatetime)
-                    .add("clearing_firmid", clearingFirmId)
-                    .add("system_ref", systemRef)
-                    .add("uid", uid)
+                    .add(TRADE_NUM, tradeNum)
+                    .add(ORDER_NUM, orderNum)
+                    .add(BROKER_REF, brokerRef)
+                    .add(USER_ID, userId)
+                    .add(FIRM_ID, firmId)
+                    .add(CANCELED_UID, canceledUid)
+                    .add(ACCOUNT, account)
+                    .add(PRICE, price)
+                    .add(QUANTITY, qty)
+                    .add(VALUE, value)
+                    .add(ACCRUED_INTEREST, accruedInt)
+                    .add(YIELD, yield)
+                    .add(SETTLE_CODE, settleCode)
+                    .add(COUNTERPARTY_FIRM_ID, cpFirmId)
+                    .add(FLAGS, flags)
+                    .add(PRICE_2, price2)
+                    .add(REPO_RATE, repoRate)
+                    .add(CLIENT_CODE, clientCode)
+                    .add(ACCRUED_2, accrued2)
+                    .add(REPO_TERM, repoTerm)
+                    .add(REPO_VALUE, repoValue)
+                    .add(REPO_2_VALUE, repo2Value)
+                    .add(START_DISCOUNT, startDiscount)
+                    .add(LOWER_DISCOUNT, lowerDiscount)
+                    .add(UPPER_DISCOUNT, upperDiscount)
+                    .add(BLOCK_SECURITIES, blockSecurities)
+                    .add(CLEARING_COMISSION, clearingComission)
+                    .add(EXCHANGE_COMISSION, exchangeComission)
+                    .add(TECH_CENTER_COMISSION, techCenterComission)
+                    .add(SETTLE_DATE, settleDate)
+                    .add(SETTLE_CURRENCY, settleCurrency)
+                    .add(TRADE_CURRENCY, tradeCurrency)
+                    .add(EXCHANGE_CODE, exchangeCode)
+                    .add(STATION_ID, stationId)
+                    .add(SECURITY_CODE, secCode)
+                    .add(CLASS_CODE, classCode)
+                    .add(DATETIME, datetime)
+                    .add(BANK_ACC_ID, bankAccId)
+                    .add(BROKER_COMISSION, brokerComission)
+                    .add(LINKED_TRADE, linkedTrade)
+                    .add(PERIOD, period)
+                    .add(TRANS_ID, transId)
+                    .add(KIND, kind)
+                    .add(CLEARING_BANK_ACC_ID, clearingBankAccId)
+                    .add(CANCELED_DATETIME, canceledDatetime)
+                    .add(CLEARING_FIRM_ID, clearingFirmId)
+                    .add(SYSTEM_REF, systemRef)
+                    .add(UID, uid)
+                    .add(L_SECURITY_CODE, lSecCode)
+                    .add(ORDER_REVISION_NUMBER, orderRevisionNumber)
+                    .add(ORDER_QUANTITY, orderQty)
+                    .add(ORDER_PRICE, orderPrice)
+                    .add(ORDER_EXCHANGE_CODE, orderExchangeCode)
+                    .add(EXEC_MARKET, execMarket)
+                    .add(LIQUIDITY_INDICATOR, liquidityIndicator)
+                    .add(EXT_REF, extRef)
+                    .add(EXT_TRADE_FLAGS, extTradeFlags)
+                    .add(ON_BEHALF_OF_UID, onBehalfOfUid)
+                    .add(CLIENT_QUALIFIER, clientQualifier)
+                    .add(CLIENT_SHORT_CODE, clientShortCode)
+                    .add(INVESTMENT_DECISION_MAKER_QUALIFIER, investmentDecisionMakerQualifier)
+                    .add(INVESTMENT_DECISION_MAKER_SHORT_CODE, investmentDecisionMakerShortCode)
+                    .add(EXECUTING_TRADER_QUALIFIER, executingTraderQualifier)
+                    .add(EXECUTING_TRADER_SHORT_CODE, executingTraderShortCode)
+                    .add(WAIVER_FLAG, waiverFlag)
+                    .add(MLEG_BASE_SID, mlegBaseSid)
+                    .add(SIDE_QUALIFIER, sideQualifier)
+                    .add(OTC_POST_TRADE_INDICATOR, otcPostTradeIndicator)
+                    .add(CAPACITY, capacity)
+                    .add(CROSS_RATE, crossRate)
                     .toString();
         }
 

@@ -11,6 +11,12 @@ import java.util.Objects;
 @Value
 public class ClassInfo {
 
+    private static final String FIRM_ID = "firmid";
+    private static final String NAME = "name";
+    private static final String CODE = "code";
+    private static final String NPARS = "npars";
+    private static final String NSECS = "nsecs";
+
     String firmId;
     String name;
     String code;
@@ -18,19 +24,21 @@ public class ClassInfo {
     int nsecs;
 
     @Getter(AccessLevel.NONE)
-    private @NonFinal transient int hashCode;
+    @NonFinal
+    private transient int hashCode;
 
     @Getter(AccessLevel.NONE)
-    private @NonFinal transient String asString;
+    @NonFinal
+    private transient String asString;
 
-    @Builder
     @JsonCreator
+    @Builder
     private ClassInfo(
-            @JsonProperty(value = "firmid") final String firmId,
-            @JsonProperty(value = "name") final String name,
-            @JsonProperty(value = "code") final String code,
-            @JsonProperty(value = "npars", required = true) int npars,
-            @JsonProperty(value = "nsecs", required = true) int nsecs) {
+            @JsonProperty(FIRM_ID) final String firmId,
+            @JsonProperty(NAME) final String name,
+            @JsonProperty(CODE) final String code,
+            @JsonProperty(NPARS) final int npars,
+            @JsonProperty(NSECS) final int nsecs) {
 
         this.firmId = firmId;
         this.name = name;
@@ -71,11 +79,11 @@ public class ClassInfo {
 
         if (asString == null) {
             asString = MoreObjects.toStringHelper(this)
-                    .add("firmid", firmId)
-                    .add("name", name)
-                    .add("code", code)
-                    .add("npars", npars)
-                    .add("nsecs", nsecs)
+                    .add(FIRM_ID, firmId)
+                    .add(NAME, name)
+                    .add(CODE, code)
+                    .add(NPARS, npars)
+                    .add(NSECS, nsecs)
                     .toString();
         }
 

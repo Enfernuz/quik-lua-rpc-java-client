@@ -15,7 +15,6 @@ public class AllocTableJsonSerdeTest {
 
     private static ObjectMapper sut;
 
-    private static AllocTable.Request requestObj;
     private static AllocTable.Result resultObj;
     private static String requestJson;
     private static String resultJson;
@@ -26,23 +25,18 @@ public class AllocTableJsonSerdeTest {
         sut = new ObjectMapper();
         sut.registerModule(new QluaJsonModule());
 
-        requestObj = AllocTable.Request.INSTANCE;
-
         resultObj = new AllocTable.Result(1);
-
-        requestJson =
-                Resources.toString(Resources.getResource("json/AllocTable.request.json"), Charsets.UTF_8);
         resultJson =
                 Resources.toString(Resources.getResource("json/AllocTable.result.json"), Charsets.UTF_8);
     }
 
-    @Test
-    public void testRequestSerialize() throws IOException {
-
-        final String actualRequestJson = sut.writerWithDefaultPrettyPrinter().writeValueAsString(requestObj);
-
-        assertEquals(requestJson, actualRequestJson);
-    }
+//    @Test
+//    public void testRequestSerialize() throws IOException {
+//
+//        final String actualRequestJson = sut.writerWithDefaultPrettyPrinter().writeValueAsString(requestObj);
+//
+//        assertEquals(requestJson, actualRequestJson);
+//    }
 
     @Test
     public void testResultDeserialize() throws IOException {

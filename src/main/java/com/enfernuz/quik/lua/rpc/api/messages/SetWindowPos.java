@@ -1,26 +1,49 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
+import com.enfernuz.quik.lua.rpc.api.RpcResult;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.common.base.MoreObjects;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Value;
+import org.jetbrains.annotations.NotNull;
 
-public final class SetWindowPos {
+public final class SetWindowPos implements RemoteProcedure {
 
     private SetWindowPos() {}
 
-    @Value
-    public static class Request {
+    @JsonPropertyOrder({Args.T_ID, Args.X, Args.Y, Args.DX, Args.DY})
+    @EqualsAndHashCode
+    public static final class Args implements RpcArgs<SetWindowPos> {
 
-        int tId;
-        int x;
-        int y;
-        int dx;
-        int dy;
+        private static final String T_ID = "t_id";
+        private static final String X = "x";
+        private static final String Y = "y";
+        private static final String DX = "dx";
+        private static final String DY = "dy";
+
+        @JsonProperty(T_ID)
+        private final int tId;
+
+        @JsonProperty(X)
+        private final int x;
+
+        @JsonProperty(Y)
+        private final int y;
+
+        @JsonProperty(DX)
+        private final int dx;
+
+        @JsonProperty(DY)
+        private final int dy;
 
         @Builder
-        private Request(
+        private Args(
                 final int tId,
                 final int x,
                 final int y,
@@ -34,33 +57,78 @@ public final class SetWindowPos {
             this.dy = dy;
         }
 
+        @JsonIgnore
+        public int getTId() {
+            return tId;
+        }
+
+        @JsonIgnore
+        public int getX() {
+            return x;
+        }
+
+        @JsonIgnore
+        public int getY() {
+            return y;
+        }
+
+        @JsonIgnore
+        public int getDX() {
+            return dx;
+        }
+
+        @JsonIgnore
+        public int getDY() {
+            return dy;
+        }
+
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("t_id", tId)
-                    .add("x", x)
-                    .add("y", y)
-                    .add("dx", dx)
-                    .add("dy", dy)
+                    .add(T_ID, tId)
+                    .add(X, x)
+                    .add(Y, y)
+                    .add(DX, dx)
+                    .add(DY, dy)
                     .toString();
         }
     }
 
     @Value
-    public static class Result {
+    public static class Result implements RpcResult<SetWindowPos> {
+
+        private static final String RESULT = "result";
 
         boolean result;
 
         @JsonCreator
-        public Result(final @JsonProperty(value = "result", required = true) boolean result) {
+        public static Result getInstance(@JsonProperty(value = RESULT, required = true) final boolean result) {
+            return result ? InstanceHolder.TRUE : InstanceHolder.FALSE;
+        }
+
+        private Result(final boolean result) {
             this.result = result;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("result", result)
+                    .add(RESULT, result)
                     .toString();
+        }
+
+        private static final class InstanceHolder {
+
+            private static final Result TRUE = new Result(true);
+            private static final Result FALSE = new Result(false);
+
+            // sanity check
+            static {
+                assert TRUE.result;
+                assert !FALSE.result;
+            }
         }
     }
 }

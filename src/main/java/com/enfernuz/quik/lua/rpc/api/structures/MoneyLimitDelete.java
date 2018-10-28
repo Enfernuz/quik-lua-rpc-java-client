@@ -1,5 +1,7 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -7,10 +9,14 @@ import lombok.Getter;
 import lombok.Value;
 import lombok.experimental.NonFinal;
 
-import java.util.Objects;
-
 @Value
 public class MoneyLimitDelete {
+
+    private static final String CURRENCY_CODE = "currcode";
+    private static final String TAG = "tag";
+    private static final String CLIENT_CODE = "client_code";
+    private static final String FIRM_ID = "firmid";
+    private static final String LIMIT_KIND = "limit_kind";
 
     String currCode;
     String tag;
@@ -18,16 +24,18 @@ public class MoneyLimitDelete {
     String firmId;
     int limitKind;
 
-    private transient @NonFinal @Getter(AccessLevel.NONE) int hashCode;
-    private transient @NonFinal @Getter(AccessLevel.NONE) String asString;
+    @Getter(AccessLevel.NONE)
+    @NonFinal
+    private transient String asString;
 
+    @JsonCreator
     @Builder
     private MoneyLimitDelete(
-            final String currCode,
-            final String tag,
-            final String clientCode,
-            final String firmId,
-            final int limitKind) {
+            @JsonProperty(CURRENCY_CODE) final String currCode,
+            @JsonProperty(TAG) final String tag,
+            @JsonProperty(CLIENT_CODE) final String clientCode,
+            @JsonProperty(FIRM_ID) final String firmId,
+            @JsonProperty(value = LIMIT_KIND, required = true) final int limitKind) {
 
         this.currCode = currCode;
         this.tag = tag;
@@ -37,42 +45,15 @@ public class MoneyLimitDelete {
     }
 
     @Override
-    public boolean equals(final Object o) {
-
-        if (o == this) {
-            return true;
-        } else if ( !(o instanceof MoneyLimitDelete) ) {
-            return false;
-        } else {
-            final MoneyLimitDelete that = (MoneyLimitDelete) o;
-            return limitKind == that.limitKind &&
-                    Objects.equals(currCode, that.currCode) &&
-                    Objects.equals(tag, that.tag) &&
-                    Objects.equals(clientCode, that.clientCode) &&
-                    Objects.equals(firmId, that.firmId);
-        }
-    }
-
-    @Override
-    public int hashCode() {
-
-        if (hashCode == 0) {
-            hashCode = Objects.hash(currCode, tag, clientCode, firmId, limitKind);
-        }
-
-        return hashCode;
-    }
-
-    @Override
     public String toString() {
 
         if (asString == null) {
             asString = MoreObjects.toStringHelper(this)
-                    .add("currcode", currCode)
-                    .add("tag", tag)
-                    .add("client_code", clientCode)
-                    .add("firmid", firmId)
-                    .add("limit_kind", limitKind)
+                    .add(CURRENCY_CODE, currCode)
+                    .add(TAG, tag)
+                    .add(CLIENT_CODE, clientCode)
+                    .add(FIRM_ID, firmId)
+                    .add(LIMIT_KIND, limitKind)
                     .toString();
         }
 

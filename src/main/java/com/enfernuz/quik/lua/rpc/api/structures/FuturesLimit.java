@@ -1,66 +1,75 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Value;
+import lombok.*;
 import lombok.experimental.NonFinal;
-
-import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @Value
 public class FuturesLimit {
 
-    @JsonProperty("firmid") String firmId;
-    @JsonProperty("trdaccid") String trdAccId;
-    @JsonProperty("limit_type") int limitType;
-    @JsonProperty("liquidity_coef") String liquidityCoef;
-    @JsonProperty("cbp_prev_limit") String cbpPrevLimit;
-    @JsonProperty("cbplimit") String cbpLimit;
-    @JsonProperty("cbplused") String cbplUsed;
-    @JsonProperty("cbplplanned") String cbplPlanned;
-    @JsonProperty("varmargin") String varMargin;
-    @JsonProperty("accruedint") String accruedInt;
-    @JsonProperty("cbplused_for_orders") String cbplUsedForOrders;
-    @JsonProperty("cbplused_for_positions") String cbplUsedForPositions;
-    @JsonProperty("options_premium") String optionsPremium;
-    @JsonProperty("ts_comission") String tsComission;
-    @JsonProperty("kgo") String kgo;
-    @JsonProperty("currcode") String currCode;
-    @JsonProperty("real_varmargin") String realVarMargin;
+    private static final String FIRM_ID = "firmid";
+    private static final String TRADING_ACCOUNT_ID = "trdaccid";
+    private static final String LIMIT_TYPE = "limit_type";
+    private static final String LIQUIDITY_COEF = "liquidity_coef";
+    private static final String CBP_PREV_LIMIT = "cbp_prev_limit";
+    private static final String CBP_LIMIT = "cbplimit";
+    private static final String CBP_L_USED = "cbplused";
+    private static final String CBP_L_PLANNED = "cbplplanned";
+    private static final String VAR_MARGIN = "varmargin";
+    private static final String ACCRUED_INTEREST = "accruedint";
+    private static final String CBP_L_USED_FOR_ORDERS = "cbplused_for_orders";
+    private static final String CBP_L_USED_FOR_POSITIONS = "cbplused_for_positions";
+    private static final String OPTIONS_PREMIUM = "options_premium";
+    private static final String TS_COMISSION = "ts_comission";
+    private static final String K_GO = "kgo";
+    private static final String CURRENCY_CODE = "currcode";
+    private static final String REAL_VAR_MARGIN = "real_varmargin";
+
+    String firmId;
+    String trdAccId;
+    int limitType;
+    String liquidityCoef;
+    String cbpPrevLimit;
+    String cbpLimit;
+    String cbplUsed;
+    String cbplPlanned;
+    String varMargin;
+    String accruedInt;
+    String cbplUsedForOrders;
+    String cbplUsedForPositions;
+    String optionsPremium;
+    String tsComission;
+    String kgo;
+    String currCode;
+    String realVarMargin;
 
     @Getter(AccessLevel.NONE)
-    @JsonIgnore
-    private @NonFinal transient int hashCode;
+    @NonFinal
+    private transient String asString;
 
-    @Getter(AccessLevel.NONE)
-    @JsonIgnore
-    private @NonFinal transient String asString;
-
-    @Builder
     @JsonCreator
+    @Builder
     private FuturesLimit(
-            final @JsonProperty("firmid") String firmId,
-            final @JsonProperty("trdaccid") String trdAccId,
-            final @JsonProperty(value = "limit_type", required = true) int limitType,
-            final @JsonProperty("liquidity_coef") String liquidityCoef,
-            final @JsonProperty("cbp_prev_limit") String cbpPrevLimit,
-            final @JsonProperty("cbplimit") String cbpLimit,
-            final @JsonProperty("cbplused") String cbplUsed,
-            final @JsonProperty("cbplplanned") String cbplPlanned,
-            final @JsonProperty("varmargin") String varMargin,
-            final @JsonProperty("accruedint") String accruedInt,
-            final @JsonProperty("cbplused_for_orders") String cbplUsedForOrders,
-            final @JsonProperty("cbplused_for_positions") String cbplUsedForPositions,
-            final @JsonProperty("options_premium") String optionsPremium,
-            final @JsonProperty("ts_comission") String tsComission,
-            final @JsonProperty("kgo") String kgo,
-            final @JsonProperty("currcode") String currCode,
-            final @JsonProperty("real_varmargin") String realVarMargin) {
+            @JsonProperty(value = FIRM_ID, required = true) @NonNull final String firmId,
+            @JsonProperty(value = TRADING_ACCOUNT_ID, required = true) @NonNull final String trdAccId,
+            @JsonProperty(value = LIMIT_TYPE, required = true) final int limitType,
+            final @JsonProperty(LIQUIDITY_COEF) String liquidityCoef,
+            final @JsonProperty(CBP_PREV_LIMIT) String cbpPrevLimit,
+            final @JsonProperty(CBP_LIMIT) String cbpLimit,
+            final @JsonProperty(CBP_L_USED) String cbplUsed,
+            final @JsonProperty(CBP_L_PLANNED) String cbplPlanned,
+            final @JsonProperty(VAR_MARGIN) String varMargin,
+            final @JsonProperty(ACCRUED_INTEREST) String accruedInt,
+            final @JsonProperty(CBP_L_USED_FOR_ORDERS) String cbplUsedForOrders,
+            final @JsonProperty(CBP_L_USED_FOR_POSITIONS) String cbplUsedForPositions,
+            final @JsonProperty(OPTIONS_PREMIUM) String optionsPremium,
+            final @JsonProperty(TS_COMISSION) String tsComission,
+            final @JsonProperty(K_GO) String kgo,
+            final @JsonProperty(value = CURRENCY_CODE, required = true) @NonNull String currCode,
+            final @JsonProperty(REAL_VAR_MARGIN) String realVarMargin) {
 
         this.firmId = firmId;
         this.trdAccId = trdAccId;
@@ -81,85 +90,29 @@ public class FuturesLimit {
         this.realVarMargin = realVarMargin;
     }
 
-    @Override
-    public boolean equals(final Object o) {
-
-        if (o == this) {
-            return true;
-        } else if ( !(o instanceof FuturesLimit) ) {
-            return false;
-        } else {
-            final FuturesLimit that = (FuturesLimit) o;
-            return limitType == that.limitType &&
-                    Objects.equals(firmId, that.firmId) &&
-                    Objects.equals(trdAccId, that.trdAccId) &&
-                    Objects.equals(liquidityCoef, that.liquidityCoef) &&
-                    Objects.equals(cbpPrevLimit, that.cbpPrevLimit) &&
-                    Objects.equals(cbpLimit, that.cbpLimit) &&
-                    Objects.equals(cbplUsed, that.cbplUsed) &&
-                    Objects.equals(cbplPlanned, that.cbplPlanned) &&
-                    Objects.equals(varMargin, that.varMargin) &&
-                    Objects.equals(accruedInt, that.accruedInt) &&
-                    Objects.equals(cbplUsedForOrders, that.cbplUsedForOrders) &&
-                    Objects.equals(cbplUsedForPositions, that.cbplUsedForPositions) &&
-                    Objects.equals(optionsPremium, that.optionsPremium) &&
-                    Objects.equals(tsComission, that.tsComission) &&
-                    Objects.equals(kgo, that.kgo) &&
-                    Objects.equals(currCode, that.currCode) &&
-                    Objects.equals(realVarMargin, that.realVarMargin);
-        }
-    }
-
-    @Override
-    public int hashCode() {
-
-        if (hashCode == 0) {
-            hashCode = Objects.hash(
-                    firmId,
-                    trdAccId,
-                    limitType,
-                    liquidityCoef,
-                    cbpPrevLimit,
-                    cbpLimit,
-                    cbplUsed,
-                    cbplPlanned,
-                    varMargin,
-                    accruedInt,
-                    cbplUsedForOrders,
-                    cbplUsedForPositions,
-                    optionsPremium,
-                    tsComission,
-                    kgo,
-                    currCode,
-                    realVarMargin
-            );
-        }
-
-        return hashCode;
-    }
-
+    @NotNull
     @Override
     public String toString() {
 
         if (asString == null) {
             asString = MoreObjects.toStringHelper(this)
-                    .add("firmid", firmId)
-                    .add("trdaccid", trdAccId)
-                    .add("limit_type", limitType)
-                    .add("liquidity_coef", liquidityCoef)
-                    .add("cbp_prev_limit", cbpPrevLimit)
-                    .add("cbplimit", cbpLimit)
-                    .add("cbplused", cbplUsed)
-                    .add("cbplplanned", cbplPlanned)
-                    .add("varmargin", varMargin)
-                    .add("accruedint", accruedInt)
-                    .add("cbplused_for_orders", cbplUsedForOrders)
-                    .add("cbplused_for_positions", cbplUsedForPositions)
-                    .add("options_premium", optionsPremium)
-                    .add("ts_comission", tsComission)
-                    .add("kgo", kgo)
-                    .add("currcode", currCode)
-                    .add("real_varmargin", realVarMargin)
+                    .add(FIRM_ID, firmId)
+                    .add(TRADING_ACCOUNT_ID, trdAccId)
+                    .add(LIMIT_TYPE, limitType)
+                    .add(LIQUIDITY_COEF, liquidityCoef)
+                    .add(CBP_PREV_LIMIT, cbpPrevLimit)
+                    .add(CBP_LIMIT, cbpLimit)
+                    .add(CBP_L_USED, cbplUsed)
+                    .add(CBP_L_PLANNED, cbplPlanned)
+                    .add(VAR_MARGIN, varMargin)
+                    .add(ACCRUED_INTEREST, accruedInt)
+                    .add(CBP_L_USED_FOR_ORDERS, cbplUsedForOrders)
+                    .add(CBP_L_USED_FOR_POSITIONS, cbplUsedForPositions)
+                    .add(OPTIONS_PREMIUM, optionsPremium)
+                    .add(TS_COMISSION, tsComission)
+                    .add(K_GO, kgo)
+                    .add(CURRENCY_CODE, currCode)
+                    .add(REAL_VAR_MARGIN, realVarMargin)
                     .toString();
         }
 

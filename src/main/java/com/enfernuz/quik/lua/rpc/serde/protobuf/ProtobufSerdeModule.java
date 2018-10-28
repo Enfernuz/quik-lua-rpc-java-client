@@ -1,40 +1,40 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
-import com.enfernuz.quik.lua.rpc.api.ServiceError;
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
 import com.enfernuz.quik.lua.rpc.api.messages.*;
 import com.enfernuz.quik.lua.rpc.api.structures.*;
 import com.enfernuz.quik.lua.rpc.events.api.QluaEvent;
-import com.enfernuz.quik.lua.rpc.serde.Serde;
+import com.enfernuz.quik.lua.rpc.serde.Deserializer;
 import com.enfernuz.quik.lua.rpc.serde.SerdeException;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
+import com.enfernuz.quik.lua.rpc.serde.Serializer;
+import com.google.common.collect.ImmutableMap;
+import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
 import java.util.Map;
-
-import static java.util.Objects.requireNonNull;
 
 public enum ProtobufSerdeModule implements SerdeModule {
 
     INSTANCE;
 
-    private static final Map<Class<?>, Serde<?>> CLASS_TO_SERDE_MAP = createClassToSerdeMap();
+    private static final Map<Class<?>, Serializer<?>> CLASS_TO_SERIALIZER_MAP = createClassToSerializerMap();
+    private static final Map<Class<?>, Deserializer<?>> CLASS_TO_DESERIALIZER_MAP = createClassToDeserializerMap();
 
     @Override
-    public <T> byte[] serialize(final T t) {
+    public <T> byte[] serialize(@NonNull final T t) {
 
-        requireNonNull(t, "Аргумент не должен быть null.");
-
-        // This cast is safe because we used the registerSerde method to fill the map.
+        // This cast is safe because we use the registerSerializer method to fill the map.
         @SuppressWarnings("unchecked")
-        final Serde<T> serde = (Serde<T>) CLASS_TO_SERDE_MAP.get(t.getClass());
-        if (serde == null) {
+        final Serializer<T> serializer = (Serializer<T>) CLASS_TO_SERIALIZER_MAP.get(t.getClass());
+        if (serializer == null) {
             throw new SerdeException(
                     String.format("Неподдерживаемый класс для сериализации в protobuf-представление: %s.", t.getClass().getName())
             );
         } else {
             try {
-                return serde.serialize(t);
+                return serializer.serialize(t);
             } catch (final Exception ex) {
                 throw new SerdeException(
                         String.format("Ошибка при сериализации экземпляра класса '%s' в protobuf-представление.", t.getClass().getName()),
@@ -45,12 +45,12 @@ public enum ProtobufSerdeModule implements SerdeModule {
     }
 
     @Override
-    public <T> T deserialize(final Class<T> clazz, final byte[] data) {
+    public <T> @NotNull T deserialize(@NotNull final Class<T> clazz, @NotNull final byte[] data) {
 
-        // This cast is safe because we used the registerSerde method to fill the map.
+        // This cast is safe because we use the registerDeserializer method to fill the map.
         @SuppressWarnings("unchecked")
-        final Serde<T> serde = (Serde<T>) CLASS_TO_SERDE_MAP.get(clazz);
-        if (serde == null) {
+        final Deserializer<T> deserializer = (Deserializer<T>) CLASS_TO_DESERIALIZER_MAP.get(clazz);
+        if (deserializer == null) {
             throw new SerdeException(
                     new IllegalArgumentException(
                             String.format("Неподдерживаемый класс для десериализации из protobuf-представления: %s.", clazz.getName())
@@ -58,7 +58,7 @@ public enum ProtobufSerdeModule implements SerdeModule {
             );
         } else {
             try {
-                return serde.deserialize(data);
+                return deserializer.deserialize(data);
             } catch (final Exception ex) {
                 throw new SerdeException(
                         String.format("Ошибка при десериализации экземпляра класса '%s' из protobuf-представления.", clazz.getName()),
@@ -68,154 +68,191 @@ public enum ProtobufSerdeModule implements SerdeModule {
         }
     }
 
-    private static <T> void registerSerde(
-            @NotNull final Map<Class<?>, Serde<?>> map,
+    private static <T extends RpcArgs<? extends RemoteProcedure>> void registerSerializer(
+            @NotNull final ImmutableMap.Builder<Class<?>, Serializer<?>> map,
             @NotNull final Class<T> clazz,
-            @NotNull final Serde<T> serde) {
+            @NotNull final Serializer<T> serde) {
 
         map.put(clazz, serde);
     }
 
-    private static Map<Class<?>, Serde<?>> createClassToSerdeMap() {
+    private static <T> void registerDeserializer(
+            @NotNull final ImmutableMap.Builder<Class<?>, Deserializer<?>> map,
+            @NotNull final Class<T> clazz,
+            @NotNull final Deserializer<T> serde) {
 
-        final Map<Class<?>, Serde<?>> result = new HashMap<>();
+        map.put(clazz, serde);
+    }
 
-        registerSerde(result, QluaEvent.EventType.class, ProtobufQluaEventTypeSerde.INSTANCE);
-        registerSerde(result, StopEventInfo.class, StopEventInfoPbSerde.INSTANCE);
-        registerSerde(result, ConnectedEventInfo.class, ConnectedEventInfoPbSerde.INSTANCE);
-        registerSerde(result, Trade.class, TradePbSerde.INSTANCE);
-        registerSerde(result, Order.class, OrderPbSerde.INSTANCE);
-        registerSerde(result, FuturesLimitDelete.class, FuturesLimitDeletePbSerde.INSTANCE);
-        registerSerde(result, Firm.class, FirmPbSerde.INSTANCE);
-        registerSerde(result, MoneyLimit.class, MoneyLimitPbSerde.INSTANCE);
-        registerSerde(result, MoneyLimitDelete.class, MoneyLimitDeletePbSerde.INSTANCE);
-        registerSerde(result, DepoLimit.class, DepoLimitPbSerde.INSTANCE);
-        registerSerde(result, DepoLimitDelete.class, DepoLimitDeletePbSerde.INSTANCE);
-        registerSerde(result, AccountBalance.class, AccountBalancePbSerde.INSTANCE);
-        registerSerde(result, AccountPosition.class, AccountPositionPbSerde.INSTANCE);
-        registerSerde(result, NegDeal.class, NegDealPbSerde.INSTANCE);
-        registerSerde(result, NegTrade.class, NegTradePbSerde.INSTANCE);
-        registerSerde(result, StopOrder.class, StopOrderPbSerde.INSTANCE);
-        registerSerde(result, TransReply.class, TransReplyPbSerde.INSTANCE);
-        registerSerde(result, DateTimeEntry.class, DateTimeEntryPbSerde.INSTANCE);
-        registerSerde(result, AllTrade.class, AllTradePbSerde.INSTANCE);
-        registerSerde(result, FuturesClientHolding.class, FuturesClientHoldingPbSerde.INSTANCE);
-        registerSerde(result, FuturesLimit.class, FuturesLimitPbSerde.INSTANCE);
-        registerSerde(result, ParamEventInfo.class, ParamEventInfoPbSerde.INSTANCE);
-        registerSerde(result, QuoteEventInfo.class, QuoteEventInfoPbSerde.INSTANCE);
-        registerSerde(result, CandleEntry.class, CandleEntryPbSerde.INSTANCE);
-        registerSerde(result, ClassInfo.class, ClassInfoPbSerde.INSTANCE);
-        registerSerde(result, Depo.class, DepoPbSerde.INSTANCE);
-        registerSerde(result, Money.class, MoneyPbSerde.INSTANCE);
-        registerSerde(result, PortfolioInfo.class, PortfolioInfoPbSerde.INSTANCE);
-        registerSerde(result, Security.class, SecurityPbSerde.INSTANCE);
+    private static Map<Class<?>, Serializer<?>> createClassToSerializerMap() {
 
-        registerSerde(result, ServiceError.class, ServiceErrorPbSerde.INSTANCE);
-        registerSerde(result, ResponseEnvelope.class, ResponseEnvelopePbSerde.INSTANCE);
-        registerSerde(result, AddColumn.Request.class, AddColumnRequestPbSerde.INSTANCE);
-        registerSerde(result, AddColumn.Result.class, AddColumnResultPbSerde.INSTANCE);
-        registerSerde(result, AddLabel.Request.class, AddLabelRequestPbSerde.INSTANCE);
-        registerSerde(result, AddLabel.Result.class, AddLabelResultPbSerde.INSTANCE);
-        registerSerde(result, AllocTable.Request.class, AllocTableRequestPbSerde.INSTANCE);
-        registerSerde(result, AllocTable.Result.class, AllocTableResultPbSerde.INSTANCE);
-        registerSerde(result, CalcBuySell.Request.class, CalcBuySellRequestPbSerde.INSTANCE);
-        registerSerde(result, CalcBuySell.Result.class, CalcBuySellResultPbSerde.INSTANCE);
-        registerSerde(result, CancelParamRequest.Request.class, CancelParamRequestRequestPbSerde.INSTANCE);
-        registerSerde(result, CancelParamRequest.Result.class, CancelParamRequestResultPbSerde.INSTANCE);
-        registerSerde(result, Clear.Request.class, ClearRequestPbSerde.INSTANCE);
-        registerSerde(result, Clear.Result.class, ClearResultPbSerde.INSTANCE);
-        registerSerde(result, CreateWindow.Request.class, CreateWindowRequestPbSerde.INSTANCE);
-        registerSerde(result, CreateWindow.Result.class, CreateWindowResultPbSerde.INSTANCE);
-        registerSerde(result, DelAllLabels.Request.class, DelAllLabelsRequestPbSerde.INSTANCE);
-        registerSerde(result, DelAllLabels.Result.class, DelAllLabelsResultPbSerde.INSTANCE);
-        registerSerde(result, DeleteRow.Request.class, DeleteRowRequestPbSerde.INSTANCE);
-        registerSerde(result, DeleteRow.Result.class, DeleteRowResultPbSerde.INSTANCE);
-        registerSerde(result, DelLabel.Request.class, DelLabelRequestPbSerde.INSTANCE);
-        registerSerde(result, DelLabel.Result.class, DelLabelResultPbSerde.INSTANCE);
-        registerSerde(result, DestroyTable.Request.class, DestroyTableRequestPbSerde.INSTANCE);
-        registerSerde(result, DestroyTable.Result.class, DestroyTableResultPbSerde.INSTANCE);
-        registerSerde(result, GetBuySellInfo.BuySellInfo.class, BuySellInfoPbSerde.INSTANCE);
-        registerSerde(result, GetBuySellInfo.Request.class, GetBuySellInfoRequestPbSerde.INSTANCE);
-        registerSerde(result, GetBuySellInfo.Result.class, GetBuySellInfoResultPbSerde.INSTANCE);
-        registerSerde(result, GetBuySellInfoEx.BuySellInfoEx.class, BuySellInfoExPbSerde.INSTANCE);
-        registerSerde(result, GetBuySellInfoEx.Request.class, GetBuySellInfoExRequestPbSerde.INSTANCE);
-        registerSerde(result, GetBuySellInfoEx.Result.class, GetBuySellInfoExResultPbSerde.INSTANCE);
-        registerSerde(result, GetCandlesByIndex.Request.class, GetCandlesByIndexRequestPbSerde.INSTANCE);
-        registerSerde(result, GetCandlesByIndex.Result.class, GetCandlesByIndexResultPbSerde.INSTANCE);
-        registerSerde(result, GetCell.Request.class, GetCellRequestPbSerde.INSTANCE);
-        registerSerde(result, GetCell.Result.class, GetCellResultPbSerde.INSTANCE);
-        registerSerde(result, GetClassesList.Request.class, GetClassesListRequestPbSerde.INSTANCE);
-        registerSerde(result, GetClassesList.Result.class, GetClassesListResultPbSerde.INSTANCE);
-        registerSerde(result, GetClassInfo.Request.class, GetClassInfoRequestPbSerde.INSTANCE);
-        registerSerde(result, GetClassInfo.Result.class, GetClassInfoResultPbSerde.INSTANCE);
-        registerSerde(result, GetClassSecurities.Request.class, GetClassSecuritiesRequestPbSerde.INSTANCE);
-        registerSerde(result, GetClassSecurities.Result.class, GetClassSecuritiesResultPbSerde.INSTANCE);
-        registerSerde(result, GetDepo.Request.class, GetDepoRequestPbSerde.INSTANCE);
-        registerSerde(result, GetDepo.Result.class, GetDepoResultPbSerde.INSTANCE);
-        registerSerde(result, GetDepoEx.Request.class, GetDepoExRequestPbSerde.INSTANCE);
-        registerSerde(result, GetDepoEx.Result.class, GetDepoExResultPbSerde.INSTANCE);
-        registerSerde(result, GetFuturesHolding.Request.class, GetFuturesHoldingRequestPbSerde.INSTANCE);
-        registerSerde(result, GetFuturesHolding.Result.class, GetFuturesHoldingResultPbSerde.INSTANCE);
-        registerSerde(result, GetFuturesLimit.Request.class, GetFuturesLimitRequestPbSerde.INSTANCE);
-        registerSerde(result, GetFuturesLimit.Result.class, GetFuturesLimitResultPbSerde.INSTANCE);
-        registerSerde(result, GetInfoParam.Request.class, GetInfoParamRequestPbSerde.INSTANCE);
-        registerSerde(result, GetInfoParam.Result.class, GetInfoParamResultPbSerde.INSTANCE);
-        registerSerde(result, GetItem.Request.class, GetItemRequestPbSerde.INSTANCE);
-        registerSerde(result, GetItem.Result.class, GetItemResultPbSerde.INSTANCE);
-        registerSerde(result, GetLabelParams.Request.class, GetLabelParamsRequestPbSerde.INSTANCE);
-        registerSerde(result, GetLabelParams.Result.class, GetLabelParamsResultPbSerde.INSTANCE);
-        registerSerde(result, GetLinesCount.Request.class, GetLinesCountRequestPbSerde.INSTANCE);
-        registerSerde(result, GetLinesCount.Result.class, GetLinesCountResultPbSerde.INSTANCE);
-        registerSerde(result, GetMoney.Request.class, GetMoneyRequestPbSerde.INSTANCE);
-        registerSerde(result, GetMoney.Result.class, GetMoneyResultPbSerde.INSTANCE);
-        registerSerde(result, GetMoneyEx.Request.class, GetMoneyExRequestPbSerde.INSTANCE);
-        registerSerde(result, GetMoneyEx.Result.class, GetMoneyExResultPbSerde.INSTANCE);
-        registerSerde(result, GetNumberOf.Request.class, GetNumberOfRequestPbSerde.INSTANCE);
-        registerSerde(result, GetNumberOf.Result.class, GetNumberOfResultPbSerde.INSTANCE);
-        registerSerde(result, GetNumCandles.Request.class, GetNumCandlesRequestPbSerde.INSTANCE);
-        registerSerde(result, GetNumCandles.Result.class, GetNumCandlesResultPbSerde.INSTANCE);
-        registerSerde(result, GetOrderByNumber.Request.class, GetOrderByNumberRequestPbSerde.INSTANCE);
-        registerSerde(result, GetOrderByNumber.Result.class, GetOrderByNumberResultPbSerde.INSTANCE);
-        registerSerde(result, GetParamEx.Request.class, GetParamExRequestPbSerde.INSTANCE);
-        registerSerde(result, GetParamEx.Result.class, GetParamExResultPbSerde.INSTANCE);
-        registerSerde(result, GetParamEx2.Request.class, GetParamEx2RequestPbSerde.INSTANCE);
-        registerSerde(result, GetParamEx2.Result.class, GetParamEx2ResultPbSerde.INSTANCE);
-        registerSerde(result, GetPortfolioInfo.Request.class, GetPortfolioInfoRequestPbSerde.INSTANCE);
-        registerSerde(result, GetPortfolioInfo.Result.class, GetPortfolioInfoResultPbSerde.INSTANCE);
-        registerSerde(result, GetPortfolioInfoEx.Request.class, GetPortfolioInfoExRequestPbSerde.INSTANCE);
-        registerSerde(result, GetPortfolioInfoEx.Result.class, GetPortfolioInfoExResultPbSerde.INSTANCE);
-        registerSerde(result, GetQuoteLevel2.QuoteEntry.class, QuoteEntryPbSerde.INSTANCE);
-        registerSerde(result, GetQuoteLevel2.Request.class, GetQuoteLevel2RequestPbSerde.INSTANCE);
-        registerSerde(result, GetQuoteLevel2.Result.class, GetQuoteLevel2ResultPbSerde.INSTANCE);
-        registerSerde(result, GetScriptPath.Request.class, GetScriptPathRequestPbSerde.INSTANCE);
-        registerSerde(result, GetScriptPath.Result.class, GetScriptPathResultPbSerde.INSTANCE);
-        registerSerde(result, GetSecurityInfo.Request.class, GetSecurityInfoRequestPbSerde.INSTANCE);
-        registerSerde(result, GetSecurityInfo.Result.class, GetSecurityInfoResultPbSerde.INSTANCE);
-        registerSerde(result, GetTableSize.Request.class, GetTableSizeRequestPbSerde.INSTANCE);
-        registerSerde(result, GetTableSize.Result.class, GetTableSizeResultPbSerde.INSTANCE);
-        registerSerde(result, GetTradeDate.Request.class, GetTradeDateRequestPbSerde.INSTANCE);
-        registerSerde(result, GetTradeDate.Result.class, GetTradeDateResultPbSerde.INSTANCE);
-        registerSerde(result, GetWindowCaption.Request.class, GetWindowCaptionRequestPbSerde.INSTANCE);
-        registerSerde(result, GetWindowCaption.Result.class, GetWindowCaptionResultPbSerde.INSTANCE);
-        registerSerde(result, GetWindowRect.Request.class, GetWindowRectRequestPbSerde.INSTANCE);
-        registerSerde(result, GetWindowRect.Result.class, GetWindowRectResultPbSerde.INSTANCE);
-        registerSerde(result, GetWorkingFolder.Request.class, GetWorkingFolderRequestPbSerde.INSTANCE);
-        registerSerde(result, GetWorkingFolder.Result.class, GetWorkingFolderResultPbSerde.INSTANCE);
-        registerSerde(result, Highlight.Request.class, HighlightRequestPbSerde.INSTANCE);
-        registerSerde(result, Highlight.Result.class, HighlightResultPbSerde.INSTANCE);
-        registerSerde(result, InsertRow.Request.class, InsertRowRequestPbSerde.INSTANCE);
-        registerSerde(result, InsertRow.Result.class, InsertRowResultPbSerde.INSTANCE);
-        registerSerde(result, IsConnected.Request.class, IsConnectedRequestPbSerde.INSTANCE);
-        registerSerde(result, IsConnected.Result.class, IsConnectedResultPbSerde.INSTANCE);
-        registerSerde(result, IsSubscribedLevel2Quotes.Request.class, IsSubscribedLevel2QuotesRequestPbSerde.INSTANCE);
-        registerSerde(result, IsSubscribedLevel2Quotes.Result.class, IsSubscribedLevel2QuotesResultPbSerde.INSTANCE);
-        registerSerde(result, IsWindowClosed.Request.class, IsWindowClosedRequestPbSerde.INSTANCE);
-        registerSerde(result, IsWindowClosed.Result.class, IsWindowClosedResultPbSerde.INSTANCE);
-        registerSerde(result, ParamRequest.Request.class, ParamRequestRequestPbSerde.INSTANCE);
-        registerSerde(result, ParamRequest.Result.class, ParamRequestResultPbSerde.INSTANCE);
-        registerSerde(result, Message.Request.class, MessageRequestPbSerde.INSTANCE);
-        registerSerde(result, Message.Result.class, MessageResultPbSerde.INSTANCE);
+        final ImmutableMap.Builder<Class<?>, Serializer<?>> result = ImmutableMap.builder();
 
-        return result;
+        registerSerializer(result, AddColumn.Args.class, AddColumnArgsPbSerializer.INSTANCE);
+        registerSerializer(result, AddLabel.Args.class, AddLabelArgsPbSerializer.INSTANCE);
+        registerSerializer(result, CalcBuySell.Args.class, CalcBuySellArgsPbSerializer.INSTANCE);
+        registerSerializer(result, CancelParamRequest.Args.class, CancelParamRequestArgsPbSerializer.INSTANCE);
+        registerSerializer(result, Clear.Args.class, ClearArgsPbSerializer.INSTANCE);
+        registerSerializer(result, CreateWindow.Args.class, CreateWindowArgsPbSerializer.INSTANCE);
+        registerSerializer(result, DelAllLabels.Args.class, DelAllLabelsArgsPbSerializer.INSTANCE);
+        registerSerializer(result, DeleteRow.Args.class, DeleteRowArgsPbSerializer.INSTANCE);
+        registerSerializer(result, DelLabel.Args.class, DelLabelArgsPbSerializer.INSTANCE);
+        registerSerializer(result, DestroyTable.Args.class, DestroyTableArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetBuySellInfo.Args.class, GetBuySellInfoArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetBuySellInfoEx.Args.class, GetBuySellInfoExArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetCandlesByIndex.Args.class, GetCandlesByIndexArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetCell.Args.class, GetCellArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetClassInfo.Args.class, GetClassInfoArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetClassSecurities.Args.class, GetClassSecuritiesArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetDepo.Args.class, GetDepoArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetDepoEx.Args.class, GetDepoExArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetFuturesHolding.Args.class, GetFuturesHoldingArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetFuturesLimit.Args.class, GetFuturesLimitArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetInfoParam.Args.class, GetInfoParamArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetItem.Args.class, GetItemArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetLabelParams.Args.class, GetLabelParamsArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetLinesCount.Args.class, GetLinesCountArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetMoney.Args.class, GetMoneyArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetMoneyEx.Args.class, GetMoneyExArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetNumberOf.Args.class, GetNumberOfArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetNumCandles.Args.class, GetNumCandlesArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetOrderByNumber.Args.class, GetOrderByNumberArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetParamEx.Args.class, GetParamExArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetParamEx2.Args.class, GetParamEx2ArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetPortfolioInfo.Args.class, GetPortfolioInfoArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetPortfolioInfoEx.Args.class, GetPortfolioInfoExArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetQuoteLevel2.Args.class, GetQuoteLevel2ArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetSecurityInfo.Args.class, GetSecurityInfoArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetTableSize.Args.class, GetTableSizeArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetWindowCaption.Args.class, GetWindowCaptionArgsPbSerializer.INSTANCE);
+        registerSerializer(result, GetWindowRect.Args.class, GetWindowRectArgsPbSerializer.INSTANCE);
+        registerSerializer(result, Highlight.Args.class, HighlightArgsPbSerializer.INSTANCE);
+        registerSerializer(result, InsertRow.Args.class, InsertRowArgsPbSerializer.INSTANCE);
+        registerSerializer(result, IsSubscribedLevel2Quotes.Args.class, IsSubscribedLevel2QuotesArgsPbSerializer.INSTANCE);
+        registerSerializer(result, IsWindowClosed.Args.class, IsWindowClosedArgsPbSerializer.INSTANCE);
+        registerSerializer(result, ParamRequest.Args.class, ParamRequestArgsPbSerializer.INSTANCE);
+        registerSerializer(result, Message.Args.class, MessageArgsPbSerializer.INSTANCE);
+        registerSerializer(result, ParamRequest.Args.class, ParamRequestArgsPbSerializer.INSTANCE);
+        registerSerializer(result, PrintDbgStr.Args.class, PrintDbgStrArgsPbSerializer.INSTANCE);
+        registerSerializer(result, RGB.Args.class, RGBArgsPbSerializer.INSTANCE);
+        registerSerializer(result, SearchItems.Args.class, SearchItemsArgsPbSerializer.INSTANCE);
+        registerSerializer(result, SendTransaction.Args.class, SendTransactionArgsPbSerializer.INSTANCE);
+        registerSerializer(result, SetCell.Args.class, SetCellArgsPbSerializer.INSTANCE);
+        registerSerializer(result, SetColor.Args.class, SetColorArgsPbSerializer.INSTANCE);
+        registerSerializer(result, SetLabelParams.Args.class, SetLabelParamsArgsPbSerializer.INSTANCE);
+        registerSerializer(result, SetSelectedRow.Args.class, SetSelectedRowArgsPbSerializer.INSTANCE);
+        registerSerializer(result, SetTableNotificationCallback.Args.class, SetTableNotificationCallbackArgsPbSerializer.INSTANCE);
+        registerSerializer(result, SetWindowCaption.Args.class, SetWindowCaptionArgsPbSerializer.INSTANCE);
+        registerSerializer(result, SetWindowPos.Args.class, SetWindowPosArgsPbSerializer.INSTANCE);
+        registerSerializer(result, Sleep.Args.class, SleepArgsPbSerializer.INSTANCE);
+        registerSerializer(result, SubscribeLevel2Quotes.Args.class, SubscribeLevel2QuotesArgsPbSerializer.INSTANCE);
+        registerSerializer(result, UnsubscribeLevel2Quotes.Args.class, UnsubscribeLevel2QuotesArgsPbSerializer.INSTANCE);
+
+        // FIXME: add the rest of the serializers
+
+        return result.build();
+    }
+
+    private static Map<Class<?>, Deserializer<?>> createClassToDeserializerMap() {
+
+        final ImmutableMap.Builder<Class<?>, Deserializer<?>> result = ImmutableMap.builder();
+
+        registerDeserializer(result, QluaEvent.EventType.class, ProtobufQluaEventTypeDeserializer.INSTANCE);
+        registerDeserializer(result, StopEventInfo.class, StopEventInfoPbDeserializer.INSTANCE);
+        registerDeserializer(result, ConnectedEventInfo.class, ConnectedEventInfoPbDeserializer.INSTANCE);
+        registerDeserializer(result, Trade.class, TradePbDeserializer.INSTANCE);
+        registerDeserializer(result, Order.class, OrderPbDeserializer.INSTANCE);
+        registerDeserializer(result, FuturesLimitDelete.class, FuturesLimitDeletePbDeserializer.INSTANCE);
+        registerDeserializer(result, Firm.class, FirmPbDeserializer.INSTANCE);
+        registerDeserializer(result, MoneyLimit.class, MoneyLimitPbDeserializer.INSTANCE);
+        registerDeserializer(result, MoneyLimitDelete.class, MoneyLimitDeletePbDeserializer.INSTANCE);
+        registerDeserializer(result, DepoLimit.class, DepoLimitPbDeserializer.INSTANCE);
+        registerDeserializer(result, DepoLimitDelete.class, DepoLimitDeletePbDeserializer.INSTANCE);
+        registerDeserializer(result, AccountBalance.class, AccountBalancePbDeserializer.INSTANCE);
+        registerDeserializer(result, AccountPosition.class, AccountPositionPbDeserializer.INSTANCE);
+        registerDeserializer(result, NegDeal.class, NegDealPbDeserializer.INSTANCE);
+        registerDeserializer(result, NegTrade.class, NegTradePbDeserializer.INSTANCE);
+        registerDeserializer(result, StopOrder.class, StopOrderPbDeserializer.INSTANCE);
+        registerDeserializer(result, TransReply.class, TransReplyPbDeserializer.INSTANCE);
+        registerDeserializer(result, DateTimeEntry.class, DateTimeEntryPbDeserializer.INSTANCE);
+        registerDeserializer(result, AllTrade.class, AllTradePbDeserializer.INSTANCE);
+        registerDeserializer(result, FuturesClientHolding.class, FuturesClientHoldingPbDeserializer.INSTANCE);
+        registerDeserializer(result, FuturesLimit.class, FuturesLimitPbDeserializer.INSTANCE);
+        registerDeserializer(result, ParamEventInfo.class, ParamEventInfoPbDeserializer.INSTANCE);
+        registerDeserializer(result, QuoteEventInfo.class, QuoteEventInfoPbDeserializer.INSTANCE);
+        registerDeserializer(result, CandleEntry.class, CandleEntryPbDeserializer.INSTANCE);
+        registerDeserializer(result, ClassInfo.class, ClassInfoPbDeserializer.INSTANCE);
+        registerDeserializer(result, Depo.class, DepoPbDeserializer.INSTANCE);
+        registerDeserializer(result, Money.class, MoneyPbDeserializer.INSTANCE);
+        registerDeserializer(result, PortfolioInfo.class, PortfolioInfoPbDeserializer.INSTANCE);
+        registerDeserializer(result, Security.class, SecurityPbDeserializer.INSTANCE);
+
+        registerDeserializer(result, AddColumn.Result.class, AddColumnResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, AddLabel.Result.class, AddLabelResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, AllocTable.Result.class, AllocTableResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, CalcBuySell.Result.class, CalcBuySellResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, CancelParamRequest.Result.class, CancelParamRequestResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, Clear.Result.class, ClearResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, CreateWindow.Result.class, CreateWindowResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, DelAllLabels.Result.class, DelAllLabelsResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, DeleteRow.Result.class, DeleteRowResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, DelLabel.Result.class, DelLabelResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, DestroyTable.Result.class, DestroyTableResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetBuySellInfoEx.Result.class, GetBuySellInfoExResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetBuySellInfo.Result.class, GetBuySellInfoResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetCandlesByIndex.Result.class, GetCandlesByIndexResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetCell.Result.class, GetCellResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetClassesList.Result.class, GetClassesListResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetClassInfo.Result.class, GetClassInfoResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetClassSecurities.Result.class, GetClassSecuritiesResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetDepoEx.Result.class, GetDepoExResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetDepo.Result.class, GetDepoResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetFuturesHolding.Result.class, GetFuturesHoldingResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetFuturesLimit.Result.class, GetFuturesLimitResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetInfoParam.Result.class, GetInfoParamResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetItem.Result.class, GetItemResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetLabelParams.Result.class, GetLabelParamsResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetLinesCount.Result.class, GetLinesCountResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetMoneyEx.Result.class, GetMoneyExResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetMoney.Result.class, GetMoneyResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetNumberOf.Result.class, GetNumberOfResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetNumCandles.Result.class, GetNumCandlesResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetOrderByNumber.Result.class, GetOrderByNumberResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetParamEx2.Result.class, GetParamEx2ResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetParamEx.Result.class, GetParamExResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetPortfolioInfo.Result.class, GetPortfolioInfoResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetPortfolioInfoEx.Result.class, GetPortfolioInfoExResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetQuoteLevel2.Result.class, GetQuoteLevel2ResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetScriptPath.Result.class, GetScriptPathResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetSecurityInfo.Result.class, GetSecurityInfoResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetTableSize.Result.class, GetTableSizeResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetTradeDate.Result.class, GetTradeDateResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetWindowCaption.Result.class, GetWindowCaptionResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetWindowRect.Result.class, GetWindowRectResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, GetWorkingFolder.Result.class, GetWorkingFolderResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, Highlight.Result.class, HighlightResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, InsertRow.Result.class, InsertRowResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, IsConnected.Result.class, IsConnectedResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, IsSubscribedLevel2Quotes.Result.class, IsSubscribedLevel2QuotesResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, IsWindowClosed.Result.class, IsWindowClosedResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, Message.Result.class, MessageResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, ParamRequest.Result.class, ParamRequestResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, RGB.Result.class, RGBResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, SearchItems.Result.class, SearchItemsResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, SendTransaction.Result.class, SendTransactionResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, SetCell.Result.class, SetCellResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, SetColor.Result.class, SetColorResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, SetLabelParams.Result.class, SetLabelParamsResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, SetSelectedRow.Result.class, SetSelectedRowResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, SetTableNotificationCallback.Result.class, SetTableNotificationCallbackResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, SetWindowCaption.Result.class, SetWindowCaptionResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, SetWindowPos.Result.class, SetWindowPosResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, Sleep.Result.class, SleepResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, SubscribeLevel2Quotes.Result.class, SubscribeLevel2QuotesResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, UnsubscribeLevel2Quotes.Result.class, UnsubscribeLevel2QuotesResultPbDeserializer.INSTANCE);
+
+        // FIXME: add the rest of the deserializers
+
+        return result.build();
     }
 }

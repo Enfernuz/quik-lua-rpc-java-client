@@ -16,7 +16,7 @@ public class GetFuturesHoldingJsonSerdeTest {
 
     private static ObjectMapper sut;
 
-    private static GetFuturesHolding.Request requestObj;
+    private static GetFuturesHolding.Args requestObj;
     private static String requestJson;
 
     private static GetFuturesHolding.Result resultObj;
@@ -31,7 +31,7 @@ public class GetFuturesHoldingJsonSerdeTest {
         sut = new ObjectMapper();
         sut.registerModule(new QluaJsonModule());
 
-        requestObj = GetFuturesHolding.Request.builder()
+        requestObj = GetFuturesHolding.Args.builder()
                 .firmId("1")
                 .trdAccId("2")
                 .secCode("3")

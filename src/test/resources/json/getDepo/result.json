@@ -1,0 +1,12 @@
+{
+  "depo" : {
+    "depo_limit_locked_buy_value" : "1",
+    "depo_current_balance" : "2",
+    "depo_limit_locked_buy" : "3",
+    "depo_limit_locked" : "4",
+    "depo_limit_available" : "5",
+    "depo_current_limit" : "6",
+    "depo_open_balance" : "7",
+    "depo_open_limit" : "8"
+  }
+}

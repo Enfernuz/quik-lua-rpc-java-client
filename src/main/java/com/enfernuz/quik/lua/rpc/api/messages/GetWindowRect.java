@@ -1,81 +1,57 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
+import com.enfernuz.quik.lua.rpc.api.RpcResult;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Value;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-public final class GetWindowRect {
+public final class GetWindowRect implements RemoteProcedure {
 
     private GetWindowRect() {}
 
-    @Value
-    public static class Request {
+    @EqualsAndHashCode
+    public static final class Args implements RpcArgs<GetWindowRect> {
 
-        private static final String T_ID_FIELD = "t_id";
+        private static final String T_ID = "t_id";
 
-        int tId;
+        @JsonProperty(T_ID)
+        private final int tId;
 
-        @NotNull
-        @Override
-        public String toString() {
-            return MoreObjects.toStringHelper(this)
-                    .add(T_ID_FIELD, tId)
-                    .toString();
+        public Args(final int tId) {
+            this.tId = tId;
         }
-    }
 
-    @Value
-    public static class WindowRect {
-
-        private static final String TOP_FIELD = "top";
-        private static final String LEFT_FIELD = "left";
-        private static final String BOTTOM_FIELD = "bottom";
-        private static final String RIGHT_FIELD = "right";
-
-        int top;
-        int left;
-        int bottom;
-        int right;
-
-        @Builder
-        @JsonCreator
-        private WindowRect(
-                @JsonProperty(value = TOP_FIELD, required = true) final int top,
-                @JsonProperty(value = LEFT_FIELD, required = true) final int left,
-                @JsonProperty(value = BOTTOM_FIELD, required = true) final int bottom,
-                @JsonProperty(value = RIGHT_FIELD, required = true) final int right) {
-
-            this.top = top;
-            this.left = left;
-            this.bottom = bottom;
-            this.right = right;
+        @JsonIgnore
+        public int getTId() {
+            return tId;
         }
 
         @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add(TOP_FIELD, top)
-                    .add(LEFT_FIELD, left)
-                    .add(BOTTOM_FIELD, bottom)
-                    .add(RIGHT_FIELD, right)
+                    .add(T_ID, tId)
                     .toString();
         }
     }
 
     @Value
-    public static class Result {
+    public static class Result implements RpcResult<GetWindowRect> {
 
-        private static final String WINDOW_RECT_FIELD = "window_rect";
+        private static final String WINDOW_RECT = "window_rect";
 
         WindowRect windowRect;
 
         @JsonCreator
-        public static Result getInstance(@JsonProperty(WINDOW_RECT_FIELD) final WindowRect windowRect) {
+        public static Result getInstance(@JsonProperty(WINDOW_RECT) final WindowRect windowRect) {
             return isError(windowRect) ? InstanceHolder.ERROR : new Result(windowRect);
         }
 
@@ -87,7 +63,6 @@ public final class GetWindowRect {
             this.windowRect = windowRect;
         }
 
-        @Contract(pure = true)
         public boolean isError() {
             return isError(windowRect);
         }
@@ -101,7 +76,7 @@ public final class GetWindowRect {
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add(WINDOW_RECT_FIELD, windowRect)
+                    .add(WINDOW_RECT, windowRect)
                     .toString();
         }
 
@@ -113,6 +88,45 @@ public final class GetWindowRect {
             static {
                 assert ERROR.isError();
             }
+        }
+    }
+
+    @Value
+    public static class WindowRect {
+
+        private static final String TOP = "top";
+        private static final String LEFT = "left";
+        private static final String BOTTOM = "bottom";
+        private static final String RIGHT = "right";
+
+        int top;
+        int left;
+        int bottom;
+        int right;
+
+        @JsonCreator
+        @Builder
+        private WindowRect(
+                @JsonProperty(value = TOP, required = true) final int top,
+                @JsonProperty(value = LEFT, required = true) final int left,
+                @JsonProperty(value = BOTTOM, required = true) final int bottom,
+                @JsonProperty(value = RIGHT, required = true) final int right) {
+
+            this.top = top;
+            this.left = left;
+            this.bottom = bottom;
+            this.right = right;
+        }
+
+        @NotNull
+        @Override
+        public String toString() {
+            return MoreObjects.toStringHelper(this)
+                    .add(TOP, top)
+                    .add(LEFT, left)
+                    .add(BOTTOM, bottom)
+                    .add(RIGHT, right)
+                    .toString();
         }
     }
 }

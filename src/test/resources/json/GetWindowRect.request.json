@@ -1,6 +1,0 @@
-{
-  "method" : "GetWindowRect",
-  "args" : {
-    "t_id" : 1
-  }
-}

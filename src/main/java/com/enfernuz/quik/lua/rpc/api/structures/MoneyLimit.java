@@ -1,16 +1,31 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Value;
+import lombok.*;
 import lombok.experimental.NonFinal;
-
-import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @Value
 public class MoneyLimit {
+
+    private static final String CURR_CODE = "currcode";
+    private static final String TAG = "tag";
+    private static final String FIRM_ID = "firmid";
+    private static final String CLIENT_CODE = "client_code";
+    private static final String OPEN_BAL = "openbal";
+    private static final String OPEN_LIMIT = "openlimit";
+    private static final String CURRENT_BAL = "currentbal";
+    private static final String CURRENT_LIMIT = "currentlimit";
+    private static final String LOCKED = "locked";
+    private static final String LOCKED_VALUE_COEF = "locked_value_coef";
+    private static final String LOCKED_MARGIN_VALUE = "locked_margin_value";
+    private static final String LEVERAGE = "leverage";
+    private static final String LIMIT_KIND = "limit_kind";
+    private static final String WEIGHED_AVERAGE_POSITION_PRICE = "wa_position_price";
+    private static final String ORDERS_COLLATERAL = "orders_collateral";
+    private static final String POSITIONS_COLLATERAL = "positions_collateral";
 
     String currCode;
     String tag;
@@ -25,25 +40,33 @@ public class MoneyLimit {
     String lockedMarginValue;
     String leverage;
     int limitKind;
+    String waPositionPrice;
+    String ordersCollateral;
+    String positionsCollateral;
 
-    private @NonFinal @Getter(AccessLevel.NONE) transient int hashCode;
-    private @NonFinal @Getter(AccessLevel.NONE) transient String asString;
+    @Getter(AccessLevel.NONE)
+    @NonFinal
+    private transient String asString;
 
+    @JsonCreator
     @Builder
     private MoneyLimit(
-            final String currCode,
-            final String tag,
-            final String firmId,
-            final String clientCode,
-            final String openBal,
-            final String openLimit,
-            final String currentBal,
-            final String currentLimit,
-            final String locked,
-            final String lockedValueCoef,
-            final String lockedMarginValue,
-            final String leverage,
-            final int limitKind) {
+            @JsonProperty(value = CURR_CODE, required = true) @NonNull final String currCode,
+            @JsonProperty(value = TAG, required = true) @NonNull final String tag,
+            @JsonProperty(value = FIRM_ID, required = true) @NonNull final String firmId,
+            @JsonProperty(value = CLIENT_CODE, required = true) @NonNull final String clientCode,
+            @JsonProperty(OPEN_BAL) final String openBal,
+            @JsonProperty(OPEN_LIMIT) final String openLimit,
+            @JsonProperty(CURRENT_BAL) final String currentBal,
+            @JsonProperty(CURRENT_LIMIT) final String currentLimit,
+            @JsonProperty(LOCKED) final String locked,
+            @JsonProperty(LOCKED_VALUE_COEF) final String lockedValueCoef,
+            @JsonProperty(LOCKED_MARGIN_VALUE) final String lockedMarginValue,
+            @JsonProperty(LEVERAGE) final String leverage,
+            @JsonProperty(value = LIMIT_KIND, required = true) final int limitKind,
+            @JsonProperty(WEIGHED_AVERAGE_POSITION_PRICE) final String waPositionPrice,
+            @JsonProperty(ORDERS_COLLATERAL) final String ordersCollateral,
+            @JsonProperty(POSITIONS_COLLATERAL) final String positionsCollateral) {
 
         this.currCode = currCode;
         this.tag = tag;
@@ -58,75 +81,33 @@ public class MoneyLimit {
         this.lockedMarginValue = lockedMarginValue;
         this.leverage = leverage;
         this.limitKind = limitKind;
+        this.waPositionPrice = waPositionPrice;
+        this.ordersCollateral = ordersCollateral;
+        this.positionsCollateral = positionsCollateral;
     }
 
-    @Override
-    public boolean equals(final Object o) {
-
-        if (o == this) {
-            return true;
-        } else if ( !(o instanceof MoneyLimit) ) {
-            return false;
-        } else {
-            final MoneyLimit other = (MoneyLimit) o;
-            return Integer.compare(limitKind, other.limitKind) == 0 &&
-                    Objects.equals(currCode, other.currCode) &&
-                    Objects.equals(tag, other.tag) &&
-                    Objects.equals(firmId, other.firmId) &&
-                    Objects.equals(clientCode, other.clientCode) &&
-                    Objects.equals(openBal, other.openBal) &&
-                    Objects.equals(openLimit, other.openLimit) &&
-                    Objects.equals(currentBal, other.currentBal) &&
-                    Objects.equals(currentLimit, other.currentLimit) &&
-                    Objects.equals(locked, other.locked) &&
-                    Objects.equals(lockedValueCoef, other.lockedValueCoef) &&
-                    Objects.equals(lockedMarginValue, other.lockedMarginValue) &&
-                    Objects.equals(leverage, other.leverage);
-        }
-    }
-
-    @Override
-    public int hashCode() {
-
-        if (hashCode == 0) {
-            hashCode = Objects.hash(
-                    currCode,
-                    tag,
-                    firmId,
-                    clientCode,
-                    openBal,
-                    openLimit,
-                    currentBal,
-                    currentLimit,
-                    locked,
-                    lockedValueCoef,
-                    lockedMarginValue,
-                    leverage,
-                    limitKind
-            );
-        }
-
-        return hashCode;
-    }
-
+    @NotNull
     @Override
     public String toString() {
 
         if (asString == null) {
             asString = MoreObjects.toStringHelper(this)
-                    .add("currcode", currCode)
-                    .add("tag", tag)
-                    .add("firmid", firmId)
-                    .add("client_code", clientCode)
-                    .add("openbal", openBal)
-                    .add("openlimit", openLimit)
-                    .add("currentbal", currentBal)
-                    .add("currentlimit", currentLimit)
-                    .add("locked", locked)
-                    .add("locked_value_coef", lockedValueCoef)
-                    .add("locked_margin_value", lockedMarginValue)
-                    .add("leverage", leverage)
-                    .add("limit_kind", limitKind)
+                    .add(CURR_CODE, currCode)
+                    .add(TAG, tag)
+                    .add(FIRM_ID, firmId)
+                    .add(CLIENT_CODE, clientCode)
+                    .add(OPEN_BAL, openBal)
+                    .add(OPEN_LIMIT, openLimit)
+                    .add(CURRENT_BAL, currentBal)
+                    .add(CURRENT_LIMIT, currentLimit)
+                    .add(LOCKED, locked)
+                    .add(LOCKED_VALUE_COEF, lockedValueCoef)
+                    .add(LOCKED_MARGIN_VALUE, lockedMarginValue)
+                    .add(LEVERAGE, leverage)
+                    .add(LIMIT_KIND, limitKind)
+                    .add(WEIGHED_AVERAGE_POSITION_PRICE, waPositionPrice)
+                    .add(ORDERS_COLLATERAL, ordersCollateral)
+                    .add(POSITIONS_COLLATERAL, positionsCollateral)
                     .toString();
         }
 

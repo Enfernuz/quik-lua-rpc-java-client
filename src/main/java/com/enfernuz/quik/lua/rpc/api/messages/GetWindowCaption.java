@@ -1,41 +1,56 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
+import com.enfernuz.quik.lua.rpc.api.RpcResult;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
+import lombok.EqualsAndHashCode;
 import lombok.Value;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-public final class GetWindowCaption {
+public final class GetWindowCaption implements RemoteProcedure {
 
     private GetWindowCaption() {}
 
-    @Value
-    public static class Request {
+    @EqualsAndHashCode
+    public static final class Args implements RpcArgs<GetWindowCaption> {
 
-        private static final String T_ID_FIELD = "t_id";
+        private static final String T_ID = "t_id";
 
-        int tId;
+        @JsonProperty(T_ID)
+        private final int tId;
+
+        public Args(final int tId) {
+            this.tId = tId;
+        }
+
+        @JsonIgnore
+        public int getTId() {
+            return tId;
+        }
 
         @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add(T_ID_FIELD, tId)
+                    .add(T_ID, tId)
                     .toString();
         }
     }
 
     @Value
-    public static class Result {
+    public static class Result implements RpcResult<GetWindowCaption> {
 
-        private static final String CAPTION_FIELD = "caption";
+        private static final String CAPTION = "caption";
 
         String caption;
 
         @JsonCreator
-        public static Result getInstance(@JsonProperty(CAPTION_FIELD) final String caption) {
+        public static Result getInstance(@JsonProperty(value = CAPTION, required = true) final String caption) {
             return isError(caption) ? InstanceHolder.ERROR : new Result(caption);
         }
 
@@ -47,7 +62,6 @@ public final class GetWindowCaption {
             this.caption = caption;
         }
 
-        @Contract(pure = true)
         public boolean isError() {
             return isError(caption);
         }
@@ -61,7 +75,7 @@ public final class GetWindowCaption {
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add(CAPTION_FIELD, caption)
+                    .add(CAPTION, caption)
                     .toString();
         }
 

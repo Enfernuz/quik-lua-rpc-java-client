@@ -2,16 +2,15 @@ package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.messages.GetBuySellInfo;
 import com.enfernuz.quik.lua.rpc.api.messages.GetBuySellInfoEx;
-import com.enfernuz.quik.lua.rpc.api.messages.GetDepo;
 import com.enfernuz.quik.lua.rpc.api.messages.GetQuoteLevel2;
 import com.enfernuz.quik.lua.rpc.api.structures.*;
-import com.enfernuz.quik.lua.rpc.serde.PbConverter;
-import com.enfernuz.quik.lua.rpc.serde.SerdeException;
 import com.google.common.base.Strings;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import qlua.rpc.RPC;
+import qlua.rpc.GetDepo;
+import qlua.rpc.GetMoney;
+import qlua.rpc.GetPortfolioInfo;
 import qlua.structs.QluaStructures;
 
 import java.nio.charset.Charset;
@@ -21,45 +20,45 @@ final class ProtobufSerdeUtils {
 
     static final Charset DEFAULT_PROTOBUF_CHARSET = StandardCharsets.UTF_8;
 
-    private static final PbConverter<QluaStructures.DateTimeEntry, DateTimeEntry> DATE_TIME_ENTRY_PB_CONVERTER =
-            DateTimeEntryPbSerde.INSTANCE;
+    private static final FromPbConverter<QluaStructures.DateTimeEntry, DateTimeEntry> DATE_TIME_ENTRY_PB_CONVERTER =
+            DateTimeEntryPbDeserializer.INSTANCE;
 
-    private static final PbConverter<qlua.rpc.GetBuySellInfo.BuySellInfo, GetBuySellInfo.BuySellInfo> BUY_SELL_INFO_PB_CONVERTER =
-            BuySellInfoPbSerde.INSTANCE;
+    private static final FromPbConverter<qlua.rpc.GetBuySellInfo.BuySellInfo, GetBuySellInfo.BuySellInfo> BUY_SELL_INFO_PB_CONVERTER =
+            BuySellInfoPbDeserializer.INSTANCE;
 
-    private static final PbConverter<qlua.rpc.GetBuySellInfoEx.BuySellInfoEx, GetBuySellInfoEx.BuySellInfoEx> BUY_SELL_INFO_EX_PB_CONVERTER =
-            BuySellInfoExPbSerde.INSTANCE;
+    private static final FromPbConverter<qlua.rpc.GetBuySellInfoEx.BuySellInfoEx, GetBuySellInfoEx.BuySellInfoEx> BUY_SELL_INFO_EX_PB_CONVERTER =
+            BuySellInfoExPbDeserializer.INSTANCE;
 
-    private static final PbConverter<QluaStructures.CandleEntry, CandleEntry> CANDLE_ENTRY_PB_CONVERTER =
-            CandleEntryPbSerde.INSTANCE;
+    private static final FromPbConverter<QluaStructures.CandleEntry, CandleEntry> CANDLE_ENTRY_PB_CONVERTER =
+            CandleEntryPbDeserializer.INSTANCE;
 
-    private static final PbConverter<QluaStructures.Klass, ClassInfo> CLASS_INFO_PB_CONVERTER =
-            ClassInfoPbSerde.INSTANCE;
+    private static final FromPbConverter<QluaStructures.Klass, ClassInfo> CLASS_INFO_PB_CONVERTER =
+            ClassInfoPbDeserializer.INSTANCE;
 
-    private static final PbConverter<qlua.rpc.GetDepo.Depo, Depo> DEPO_PB_CONVERTER = DepoPbSerde.INSTANCE;
+    private static final FromPbConverter<GetDepo.Depo, Depo> DEPO_PB_CONVERTER = DepoPbDeserializer.INSTANCE;
 
-    private static final PbConverter<QluaStructures.DepoLimit, DepoLimit> DEPO_LIMIT_PB_CONVERTER = DepoLimitPbSerde.INSTANCE;
+    private static final FromPbConverter<QluaStructures.DepoLimit, DepoLimit> DEPO_LIMIT_PB_CONVERTER = DepoLimitPbDeserializer.INSTANCE;
 
-    private static final PbConverter<QluaStructures.FuturesClientHolding, FuturesClientHolding> FUTURES_CLIENT_HOLDING_PB_CONVERTER =
-            FuturesClientHoldingPbSerde.INSTANCE;
+    private static final FromPbConverter<QluaStructures.FuturesClientHolding, FuturesClientHolding> FUTURES_CLIENT_HOLDING_PB_CONVERTER =
+            FuturesClientHoldingPbDeserializer.INSTANCE;
 
-    private static final PbConverter<QluaStructures.FuturesLimit, FuturesLimit> FUTURES_LIMIT_PB_CONVERTER =
-            FuturesLimitPbSerde.INSTANCE;
+    private static final FromPbConverter<QluaStructures.FuturesLimit, FuturesLimit> FUTURES_LIMIT_PB_CONVERTER =
+            FuturesLimitPbDeserializer.INSTANCE;
 
-    private static final PbConverter<qlua.rpc.GetMoney.Money, Money> MONEY_PB_CONVERTER = MoneyPbSerde.INSTANCE;
+    private static final FromPbConverter<GetMoney.Money, Money> MONEY_PB_CONVERTER = MoneyPbDeserializer.INSTANCE;
 
-    private static final PbConverter<QluaStructures.MoneyLimit, MoneyLimit> MONEY_LIMIT_PB_CONVERTER =
-            MoneyLimitPbSerde.INSTANCE;
+    private static final FromPbConverter<QluaStructures.MoneyLimit, MoneyLimit> MONEY_LIMIT_PB_CONVERTER =
+            MoneyLimitPbDeserializer.INSTANCE;
 
-    private static final PbConverter<QluaStructures.Order, Order> ORDER_PB_CONVERTER = OrderPbSerde.INSTANCE;
+    private static final FromPbConverter<QluaStructures.Order, Order> ORDER_PB_CONVERTER = OrderPbDeserializer.INSTANCE;
 
-    private static final PbConverter<qlua.rpc.GetPortfolioInfo.PortfolioInfo, PortfolioInfo> PORTFOLIO_INFO_PB_CONVERTER =
-            PortfolioInfoPbSerde.INSTANCE;
+    private static final FromPbConverter<GetPortfolioInfo.PortfolioInfo, PortfolioInfo> PORTFOLIO_INFO_PB_CONVERTER =
+            PortfolioInfoPbDeserializer.INSTANCE;
 
-    private static final PbConverter<qlua.rpc.GetQuoteLevel2.QuoteEntry, GetQuoteLevel2.QuoteEntry> QUOTE_ENTRY_PB_CONVERTER =
-            QuoteEntryPbSerde.INSTANCE;
+    private static final FromPbConverter<qlua.rpc.GetQuoteLevel2.QuoteEntry, GetQuoteLevel2.QuoteEntry> QUOTE_ENTRY_PB_CONVERTER =
+            QuoteEntryPbDeserializer.INSTANCE;
 
-    private static final PbConverter<QluaStructures.Security, Security> SECURITY_PB_CONVERTER = SecurityPbSerde.INSTANCE;
+    private static final FromPbConverter<QluaStructures.Security, Security> SECURITY_PB_CONVERTER = SecurityPbDeserializer.INSTANCE;
 
     @Contract(" -> fail")
     private ProtobufSerdeUtils() {
@@ -79,159 +78,76 @@ final class ProtobufSerdeUtils {
 
     @NotNull
     static DateTimeEntry convertFromPbDateTimeEntry(@NotNull final QluaStructures.DateTimeEntry dateTimeEntry) {
-        return DATE_TIME_ENTRY_PB_CONVERTER.convertFromPb(dateTimeEntry);
-    }
-
-    static QluaStructures.DateTimeEntry convertToPbDateTimeEntry(@NotNull final DateTimeEntry dateTimeEntry) {
-        return DATE_TIME_ENTRY_PB_CONVERTER.convertToPb(dateTimeEntry);
+        return DATE_TIME_ENTRY_PB_CONVERTER.convert(dateTimeEntry);
     }
 
     @NotNull
     static GetBuySellInfo.BuySellInfo convertFromPbBuySellInfo(@NotNull final qlua.rpc.GetBuySellInfo.BuySellInfo buySellInfo) {
-        return BUY_SELL_INFO_PB_CONVERTER.convertFromPb(buySellInfo);
-    }
-
-    @NotNull
-    static qlua.rpc.GetBuySellInfo.BuySellInfo convertToPbBuySellInfo(@NotNull final GetBuySellInfo.BuySellInfo buySellInfo) {
-        return BUY_SELL_INFO_PB_CONVERTER.convertToPb(buySellInfo);
+        return BUY_SELL_INFO_PB_CONVERTER.convert(buySellInfo);
     }
 
     @NotNull
     static GetBuySellInfoEx.BuySellInfoEx convertFromPbBuySellInfoEx(@NotNull final qlua.rpc.GetBuySellInfoEx.BuySellInfoEx buySellInfoEx) {
-        return BUY_SELL_INFO_EX_PB_CONVERTER.convertFromPb(buySellInfoEx);
-    }
-
-    @NotNull
-    static qlua.rpc.GetBuySellInfoEx.BuySellInfoEx convertToPbBuySellInfoEx(@NotNull final GetBuySellInfoEx.BuySellInfoEx buySellInfoEx) {
-        return BUY_SELL_INFO_EX_PB_CONVERTER.convertToPb(buySellInfoEx);
-    }
-
-    @NotNull
-    static QluaStructures.CandleEntry convertToPbCandleEntry(@NotNull final CandleEntry candleEntry) {
-        return CANDLE_ENTRY_PB_CONVERTER.convertToPb(candleEntry);
+        return BUY_SELL_INFO_EX_PB_CONVERTER.convert(buySellInfoEx);
     }
 
     @NotNull
     static CandleEntry convertFromPbCandleEntry(@NotNull final QluaStructures.CandleEntry candleEntry) {
-        return CANDLE_ENTRY_PB_CONVERTER.convertFromPb(candleEntry);
-    }
-
-    @NotNull
-    static QluaStructures.Klass convertToPbClassInfo(@NotNull final ClassInfo classInfo) {
-        return CLASS_INFO_PB_CONVERTER.convertToPb(classInfo);
+        return CANDLE_ENTRY_PB_CONVERTER.convert(candleEntry);
     }
 
     @NotNull
     static ClassInfo convertFromPbClassInfo(@NotNull final QluaStructures.Klass classInfo) {
-        return CLASS_INFO_PB_CONVERTER.convertFromPb(classInfo);
-    }
-
-    @NotNull
-    static qlua.rpc.GetDepo.Depo convertToPbDepo(@NotNull final Depo depo) {
-        return DEPO_PB_CONVERTER.convertToPb(depo);
+        return CLASS_INFO_PB_CONVERTER.convert(classInfo);
     }
 
     @NotNull
     static Depo convertFromPbDepo(@NotNull final qlua.rpc.GetDepo.Depo depo) {
-        return DEPO_PB_CONVERTER.convertFromPb(depo);
-    }
-
-    @NotNull
-    static QluaStructures.DepoLimit convertToPbDepoLimit(@NotNull final DepoLimit depoLimit) {
-        return DEPO_LIMIT_PB_CONVERTER.convertToPb(depoLimit);
+        return DEPO_PB_CONVERTER.convert(depo);
     }
 
     @NotNull
     static DepoLimit convertFromPbDepoLimit(@NotNull final QluaStructures.DepoLimit depoLimit) {
-        return DEPO_LIMIT_PB_CONVERTER.convertFromPb(depoLimit);
-    }
-
-    @NotNull
-    static QluaStructures.FuturesClientHolding convertToPbFuturesClientHolding(@NotNull final FuturesClientHolding futuresClientHolding) {
-        return FUTURES_CLIENT_HOLDING_PB_CONVERTER.convertToPb(futuresClientHolding);
+        return DEPO_LIMIT_PB_CONVERTER.convert(depoLimit);
     }
 
     @NotNull
     static FuturesClientHolding convertFromPbFuturesClientHolding(@NotNull final QluaStructures.FuturesClientHolding futuresClientHolding) {
-        return FUTURES_CLIENT_HOLDING_PB_CONVERTER.convertFromPb(futuresClientHolding);
-    }
-
-    @NotNull
-    static QluaStructures.FuturesLimit convertToPbFuturesLimit(@NotNull final FuturesLimit futuresLimit) {
-        return FUTURES_LIMIT_PB_CONVERTER.convertToPb(futuresLimit);
+        return FUTURES_CLIENT_HOLDING_PB_CONVERTER.convert(futuresClientHolding);
     }
 
     @NotNull
     static FuturesLimit convertFromPbFuturesLimit(@NotNull final QluaStructures.FuturesLimit futuresLimit) {
-        return FUTURES_LIMIT_PB_CONVERTER.convertFromPb(futuresLimit);
-    }
-
-    @NotNull
-    static qlua.rpc.GetMoney.Money convertToPbMoney(@NotNull final Money money) {
-        return MONEY_PB_CONVERTER.convertToPb(money);
+        return FUTURES_LIMIT_PB_CONVERTER.convert(futuresLimit);
     }
 
     @NotNull
     static Money convertFromPbMoney(@NotNull final qlua.rpc.GetMoney.Money money) {
-        return MONEY_PB_CONVERTER.convertFromPb(money);
-    }
-
-    @NotNull
-    static QluaStructures.MoneyLimit convertToPbMoneyLimit(@NotNull final MoneyLimit moneyLimit) {
-        return MONEY_LIMIT_PB_CONVERTER.convertToPb(moneyLimit);
+        return MONEY_PB_CONVERTER.convert(money);
     }
 
     @NotNull
     static MoneyLimit convertFromPbMoneyLimit(@NotNull final QluaStructures.MoneyLimit moneyLimit) {
-        return MONEY_LIMIT_PB_CONVERTER.convertFromPb(moneyLimit);
-    }
-
-    @NotNull
-    static QluaStructures.Order convertToPbOrder(@NotNull final Order order) {
-        return ORDER_PB_CONVERTER.convertToPb(order);
+        return MONEY_LIMIT_PB_CONVERTER.convert(moneyLimit);
     }
 
     @NotNull
     static Order convertFromPbOrder(@NotNull final QluaStructures.Order order) {
-        return ORDER_PB_CONVERTER.convertFromPb(order);
-    }
-
-    @NotNull
-    static qlua.rpc.GetPortfolioInfo.PortfolioInfo convertToPbPortfolioInfo(@NotNull final PortfolioInfo portfolioInfo) {
-        return PORTFOLIO_INFO_PB_CONVERTER.convertToPb(portfolioInfo);
+        return ORDER_PB_CONVERTER.convert(order);
     }
 
     @NotNull
     static PortfolioInfo convertFromPbPortfolioInfo(@NotNull final qlua.rpc.GetPortfolioInfo.PortfolioInfo portfolioInfo) {
-        return PORTFOLIO_INFO_PB_CONVERTER.convertFromPb(portfolioInfo);
-    }
-
-    @NotNull
-    static qlua.rpc.GetQuoteLevel2.QuoteEntry convertToPbQuoteEntry(@NotNull final GetQuoteLevel2.QuoteEntry quoteEntry) {
-        return QUOTE_ENTRY_PB_CONVERTER.convertToPb(quoteEntry);
+        return PORTFOLIO_INFO_PB_CONVERTER.convert(portfolioInfo);
     }
 
     @NotNull
     static GetQuoteLevel2.QuoteEntry convertFromPbQuoteEntry(@NotNull final qlua.rpc.GetQuoteLevel2.QuoteEntry quoteEntry) {
-        return QUOTE_ENTRY_PB_CONVERTER.convertFromPb(quoteEntry);
-    }
-
-    @NotNull
-    static QluaStructures.Security convertToPbSecurity(@NotNull final Security security) {
-        return SECURITY_PB_CONVERTER.convertToPb(security);
+        return QUOTE_ENTRY_PB_CONVERTER.convert(quoteEntry);
     }
 
     @NotNull
     static Security convertFromPbSecurity(@NotNull final QluaStructures.Security security) {
-        return SECURITY_PB_CONVERTER.convertFromPb(security);
-    }
-
-    static void assertEquals(@NotNull final RPC.ProcedureType actual, @NotNull final RPC.ProcedureType expected) {
-
-        if (actual != expected) {
-            throw new SerdeException(
-                    String.format("Неожиданный тип процедуры. Получено: %s, ожидалось: %s.", actual, expected)
-            );
-        }
+        return SECURITY_PB_CONVERTER.convert(security);
     }
 }

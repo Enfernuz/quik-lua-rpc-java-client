@@ -6,22 +6,26 @@ import com.google.common.base.MoreObjects;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Value;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 @Value
 public class ConnectedEventInfo {
 
-    @JsonProperty("flag")
+    private static final String FLAG = "flag";
+
+    @JsonProperty(FLAG)
     @Getter(AccessLevel.NONE)
     boolean flag;
 
     @JsonCreator
-    public ConnectedEventInfo(@JsonProperty(value = "flag", required = true) final boolean flag) {
+    public static ConnectedEventInfo getInstance(@JsonProperty(value = FLAG, required = true) final boolean result) {
+        return result ? InstanceHolder.TRUE : InstanceHolder.FALSE;
+    }
+
+    private ConnectedEventInfo(final boolean flag) {
         this.flag = flag;
     }
 
-    @Contract(pure = true)
     public boolean getFlag() {
         return flag;
     }
@@ -30,7 +34,19 @@ public class ConnectedEventInfo {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .add("flag", flag)
+                .add(FLAG, flag)
                 .toString();
+    }
+
+    private static final class InstanceHolder {
+
+        private static final ConnectedEventInfo TRUE = new ConnectedEventInfo(true);
+        private static final ConnectedEventInfo FALSE = new ConnectedEventInfo(false);
+
+        // sanity check
+        static {
+            assert TRUE.flag;
+            assert !FALSE.flag;
+        }
     }
 }

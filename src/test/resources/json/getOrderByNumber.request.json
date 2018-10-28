@@ -1,7 +1,0 @@
-{
-  "method" : "getOrderByNumber",
-  "args" : {
-    "class_code" : "1",
-    "order_id" : 12345678909876577
-  }
-}

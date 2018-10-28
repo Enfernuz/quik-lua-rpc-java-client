@@ -1,9 +1,15 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
+import com.enfernuz.quik.lua.rpc.api.RpcResult;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableMap;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.Value;
 import org.jetbrains.annotations.Contract;
@@ -11,40 +17,59 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
-public final class GetItem {
+public final class GetItem implements RemoteProcedure {
 
     private GetItem() {}
 
-    @Value
-    public static class Request {
+    @JsonPropertyOrder({Args.TABLE_NAME, Args.INDEX})
+    @EqualsAndHashCode
+    public static final class Args implements RpcArgs<GetItem> {
 
-        String tableName;
-        int index;
+        private static final String TABLE_NAME = "table_name";
+        private static final String INDEX = "index";
 
-        public Request(@NonNull final String tableName, final int index) {
+        @JsonProperty(TABLE_NAME)
+        private final String tableName;
+
+        @JsonProperty(INDEX)
+        private final int index;
+
+        public Args(@NonNull final String tableName, final int index) {
             this.tableName = tableName;
             this.index = index;
+        }
+
+        @JsonIgnore
+        public String getTableName() {
+            return tableName;
+        }
+
+        @JsonIgnore
+        public int getIndex() {
+            return index;
         }
 
         @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("table_name", tableName)
-                    .add("index", index)
+                    .add(TABLE_NAME, tableName)
+                    .add(INDEX, index)
                     .toString();
         }
     }
 
     @Value
-    public static class Result {
+    public static class Result implements RpcResult<GetItem> {
+
+        private static final String TABLE_ROW = "table_row";
 
         Map<String, String> tableRow;
 
         @JsonCreator
-        public static Result getInstance(@JsonProperty("table_row") final Map<String, String> tableRow) {
+        public static Result getInstance(@JsonProperty(value = TABLE_ROW, required = true) final Map<String, String> tableRow) {
 
-            if (tableRow == null || tableRow.isEmpty()) {
+            if (tableRow == null) {
                 return InstanceHolder.ERROR;
             }
 
@@ -52,10 +77,9 @@ public final class GetItem {
         }
 
         private Result(final Map<String, String> tableRow) {
-            this.tableRow = (tableRow == null || tableRow.isEmpty()) ? null : ImmutableMap.copyOf(tableRow);
+            this.tableRow = (tableRow == null) ? null : ImmutableMap.copyOf(tableRow);
         }
 
-        @Contract(pure = true)
         public boolean isError() {
             return tableRow == null;
         }
@@ -64,7 +88,7 @@ public final class GetItem {
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("table_row", tableRow)
+                    .add(TABLE_ROW, tableRow)
                     .toString();
         }
 

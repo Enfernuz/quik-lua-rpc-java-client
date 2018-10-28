@@ -5,7 +5,10 @@ import com.enfernuz.quik.lua.rpc.api.messages.bit.*;
 import com.enfernuz.quik.lua.rpc.api.messages.datasource.*;
 import com.enfernuz.quik.lua.rpc.api.security.Securable;
 import com.enfernuz.quik.lua.rpc.api.messages.GetCandlesByIndex;
+import com.enfernuz.quik.lua.rpc.api.structures.*;
 import com.enfernuz.quik.lua.rpc.io.Gateway;
+
+import java.util.Map;
 
 /**
  * Компонент, представляющий собой Java-обёртку над API QLua терминала QUIK.
@@ -16,558 +19,165 @@ import com.enfernuz.quik.lua.rpc.io.Gateway;
  */
 public interface QluaRpcClient extends Gateway, Securable {
 
-    /**
-     *
-     * @param request
-     * @return
-     */
-    int qlua_AddColumn(AddColumn.Request request);
+    int qlua_AddColumn(AddColumn.Args args);
 
-    /**
-     *
-     * @param request
-     * @return
-     */
-    int qlua_AddLabel(AddLabel.Request request);
+    Integer qlua_AddLabel(String chartTag, Map<String, String> labelParams);
 
-    /**
-     *
-     * @return
-     */
     int qlua_AllocTable();
 
-    /**
-     *
-     * @param request
-     * @return
-     */
-    CalcBuySell.Result qlua_CalcBuySell(CalcBuySell.Request request);
+    CalcBuySell.Result qlua_CalcBuySell(CalcBuySell.Args args);
 
-    /**
-     *
-     * @param request
-     * @return
-     */
-    boolean qlua_CancelParamRequest(CancelParamRequest.Request request);
+    boolean qlua_CancelParamRequest(CancelParamRequest.Args args);
 
-    /**
-     *
-     * @param request
-     * @return
-     */
-    boolean qlua_Clear(Clear.Request request);
+    boolean qlua_Clear(int tId);
 
-    /**
-     *
-     * @param request
-     * @return
-     */
-    int qlua_CreateWindow(CreateWindow.Request request);
+    int qlua_CreateWindow(int tId);
 
-    /**
-     *
-     * @param request
-     * @return
-     */
-    boolean qlua_DelAllLabels(DelAllLabels.Request request);
+    boolean qlua_DelAllLabels(String chartTag);
 
-    /**
-     *
-     * @param request
-     * @return
-     */
-    boolean qlua_DeleteRow(DeleteRow.Request request);
+    boolean qlua_DeleteRow(DeleteRow.Args args);
 
-    /**
-     *
-     * @param request
-     * @return
-     */
-    boolean qlua_DelLabel(DelLabel.Request request);
+    boolean qlua_DelLabel(String chartTag, int labelId);
 
-    /**
-     *
-     * @param request
-     * @return
-     */
-    boolean qlua_DestroyTable(DestroyTable.Request request);
+    boolean qlua_DestroyTable(int tId);
 
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetBuySellInfo.BuySellInfo qlua_getBuySellInfo(GetBuySellInfo.Request request);
+    GetBuySellInfo.BuySellInfo qlua_getBuySellInfo(GetBuySellInfo.Args args);
 
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetBuySellInfoEx.BuySellInfoEx qlua_getBuySellInfoEx(GetBuySellInfoEx.Request request);
+    GetBuySellInfoEx.BuySellInfoEx qlua_getBuySellInfoEx(GetBuySellInfoEx.Args args);
 
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetCandlesByIndex.Result qlua_getCandlesByIndex(GetCandlesByIndex.Request request);
+    GetCandlesByIndex.Result qlua_getCandlesByIndex(GetCandlesByIndex.Args args);
 
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetCell.Result qlua_GetCell(GetCell.Result request);
+    GetCell.Result qlua_GetCell(GetCell.Args args);
 
-    /**
-     *
-     * @return
-     */
     String qlua_getClassesList();
 
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetClassInfo.Result qlua_getClassInfo(GetClassInfo.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetClassSecurities.Result qlua_getClassSecurities(GetClassSecurities.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetDepo.Result qlua_getDepo(GetDepo.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetDepoEx.Result qlua_getDepoEx(GetDepoEx.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetFuturesHolding.Result qlua_getFuturesHolding(GetFuturesHolding.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetFuturesLimit.Result qlua_getFuturesLimit(GetFuturesLimit.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-
-     */
-    GetInfoParam.Result qlua_getInfoParam(GetInfoParam.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetItem.Result qlua_getItem(GetItem.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetLabelParams.Result qlua_GetLabelParams(GetLabelParams.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetLinesCount.Result qlua_getLinesCount(GetLinesCount.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetMoney.Result qlua_getMoney(GetMoney.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetMoneyEx.Result qlua_getMoneyEx(GetMoneyEx.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetNumberOf.Result qlua_getNumberOf(GetNumberOf.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetNumCandles.Result qlua_getNumCandles(GetNumCandles.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetOrderByNumber.Result qlua_getOrderByNumber(GetOrderByNumber.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetParamEx.Result qlua_getParamEx(GetParamEx.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetParamEx2.Result qlua_getParamEx2(GetParamEx2.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetPortfolioInfo.Result qlua_getPortfolioInfo(GetPortfolioInfo.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetPortfolioInfoEx.Result qlua_getPortfolioInfoEx(GetPortfolioInfoEx.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetQuoteLevel2.Result qlua_getQuoteLevel2(GetQuoteLevel2.Request request);
-
-    /**
-     *
-     * @return
-     */
-    GetScriptPath.Result qlua_getScriptPath();
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetSecurityInfo.Result qlua_getSecurityInfo(GetSecurityInfo.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetTableSize.Result qlua_GetTableSize(GetTableSize.Request request);
-
-    /**
-     *
-     * @return
-     */
-    GetTradeDate.Result qlua_getTradeDate();
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetWindowCaption.Result qlua_GetWindowCaption(GetWindowCaption.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    GetWindowRect.Result qlua_GetWindowRect(GetWindowRect.Request request);
-
-    /**
-     *
-     * @return
-     */
-    GetWorkingFolder.Result qlua_getWorkingFolder();
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    Highlight.Result qlua_Highlight(Highlight.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    InsertRow.Result qlua_InsertRow(InsertRow.Request request);
-
-    /**
-     *
-     * @return
-     */
-    IsConnected.Result qlua_isConnected();
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    IsSubscribedLevel2Quotes.Result qlua_IsSubscribedLevelIIQuotes(IsSubscribedLevel2Quotes.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    IsWindowClosed.Result qlua_IsWindowClosed(IsWindowClosed.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    Message.Result qlua_message(Message.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    ParamRequest.Result qlua_ParamRequest(ParamRequest.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    PrintDbgStr.Result qlua_PrintDbgStr(PrintDbgStr.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    RGB.Result qlua_RGB(RGB.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    SearchItems.Result qlua_SearchItems(SearchItems.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    SendTransaction.Result qlua_sendTransaction(SendTransaction.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    SetCell.Result qlua_SetCell(SetCell.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    SetColor.Result qlua_SetColor(SetColor.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    SetLabelParams.Result qlua_SetLabelParams(SetLabelParams.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    SetSelectedRow.Result qlua_SetSelectedRow(SetSelectedRow.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    SetTableNotificationCallback.Result qlua_SetTableNotificationCallback(SetTableNotificationCallback.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    SetWindowCaption.Result qlua_SetWindowCaption(SetWindowCaption.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    SetWindowPos.Result qlua_SetWindowPos(SetWindowPos.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    Sleep.Result qlua_sleep(Sleep.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    SubscribeLevel2Quotes.Result qlua_SubscribeLevelIIQuotes(SubscribeLevel2Quotes.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    UnsubscribeLevel2Quotes.Result qlua_UnsubscribeLevelIIQuotes(UnsubscribeLevel2Quotes.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    BAnd.Result bit_band(BAnd.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    BNot.Result bit_bnot(BNot.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    BOr.Result bit_bor(BOr.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    BXor.Result bit_bxor(BXor.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    ToHex.Result bit_tohex(ToHex.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    C.Result datasource_C(C.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    Close.Result datasource_Close(Close.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    CreateDataSource.Result datasource_CreateDataSource(CreateDataSource.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    H.Result datasource_H(H.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    L.Result datasource_L(L.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    O.Result datasource_O(O.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    SetEmptyCallback.Result datasource_SetEmptyCallback(SetEmptyCallback.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    SetUpdateCallback.Result datasource_SetUpdateCallback(SetUpdateCallback.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    Size.Result datasource_Size(Size.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    T.Result datasource_T(T.Request request);
-
-    /**
-     *
-     * @param request
-     * @return
-     */
-    V.Result datasource_V(V.Request request);
+    ClassInfo qlua_getClassInfo(String classCode);
+
+    String qlua_getClassSecurities(String classCode);
+
+    Depo qlua_getDepo(GetDepo.Args args);
+
+    DepoLimit qlua_getDepoEx(GetDepoEx.Args args);
+
+    FuturesClientHolding qlua_getFuturesHolding(GetFuturesHolding.Args args);
+
+    FuturesLimit qlua_getFuturesLimit(GetFuturesLimit.Args args);
+
+    String qlua_getInfoParam(String paramName);
+
+    Map<String, String> qlua_getItem(String tableName, int index);
+
+    Map<String, String> qlua_GetLabelParams(String chartTag, int labelId);
+
+    int qlua_getLinesCount(String tag);
+
+    Money qlua_getMoney(GetMoney.Args args);
+
+    MoneyLimit qlua_getMoneyEx(GetMoneyEx.Args args);
+
+    int qlua_getNumberOf(String tableName);
+
+    int qlua_getNumCandles(String tag);
+
+    GetOrderByNumber.Result qlua_getOrderByNumber(String classCode, long orderId);
+
+    GetParamEx.ParamEx qlua_getParamEx(GetParamEx.Args args);
+
+    GetParamEx2.ParamEx2 qlua_getParamEx2(GetParamEx2.Args args);
+
+    PortfolioInfo qlua_getPortfolioInfo(GetPortfolioInfo.Args args);
+
+    GetPortfolioInfoEx.Result qlua_getPortfolioInfoEx(GetPortfolioInfoEx.Args args);
+
+    GetQuoteLevel2.Result qlua_getQuoteLevel2(GetQuoteLevel2.Args args);
+
+    String qlua_getScriptPath();
+
+    Security qlua_getSecurityInfo(GetSecurityInfo.Args args);
+
+    GetTableSize.TableSize qlua_GetTableSize(int tId);
+
+    GetTradeDate.TradeDate qlua_getTradeDate();
+
+    String qlua_GetWindowCaption(int tId);
+
+    GetWindowRect.WindowRect qlua_GetWindowRect(int tId);
+
+    String qlua_getWorkingFolder();
+
+    boolean qlua_Highlight(Highlight.Args args);
+
+    int qlua_InsertRow(InsertRow.Args args);
+
+    int qlua_isConnected();
+
+    boolean qlua_IsSubscribedLevelIIQuotes(IsSubscribedLevel2Quotes.Args args);
+
+    Boolean qlua_IsWindowClosed(int tId);
+
+    Integer qlua_message(String message, Message.IconType iconType);
+
+    Integer qlua_message(final String message);
+
+    boolean qlua_ParamRequest(ParamRequest.Args args);
+
+    void qlua_PrintDbgStr(String s);
+
+    int qlua_RGB(RGB.Args args);
+
+    SearchItems.Result qlua_SearchItems(SearchItems.Args args);
+
+    String qlua_sendTransaction(SendTransaction.Args args);
+
+    boolean qlua_SetCell(SetCell.Args args);
+
+    boolean qlua_SetColor(SetColor.Args args);
+
+    boolean qlua_SetLabelParams(String chartTag, int labelId, Map<String, String> labelParams);
+
+    SetSelectedRow.Result qlua_SetSelectedRow(SetSelectedRow.Args args);
+
+    SetTableNotificationCallback.Result qlua_SetTableNotificationCallback(int tId, String fCbDef);
+
+    boolean qlua_SetWindowCaption(int tId, String str);
+
+    boolean qlua_SetWindowPos(SetWindowPos.Args args);
+
+    Integer qlua_sleep(int time);
+
+    boolean qlua_SubscribeLevelIIQuotes(SubscribeLevel2Quotes.Args args);
+
+    boolean qlua_UnsubscribeLevelIIQuotes(UnsubscribeLevel2Quotes.Args args);
+
+    int bit_band(int x1, int x2, int... xi);
+
+    int bit_bnot(int x);
+
+    int bit_bor(int x1, int x2, int... xi);
+
+    int bit_bxor(int x1, int x2, int... xi);
+
+    String bit_tohex(ToHex.Args args);
+
+    String datasource_C(C.Args args);
+
+    boolean datasource_Close(String datasourceUUID);
+
+    CreateDataSource.Result datasource_CreateDataSource(CreateDataSource.Args args);
+
+    String datasource_H(H.Args args);
+
+    String datasource_L(L.Args args);
+
+    String datasource_O(O.Args args);
+
+    boolean datasource_SetEmptyCallback(String datasourceUUID);
+
+    boolean datasource_SetUpdateCallback(SetUpdateCallback.Args args);
+
+    int datasource_Size(Size.Args args);
+
+    T.Result datasource_T(T.Args args);
+
+    String datasource_V(V.Args args);
 }

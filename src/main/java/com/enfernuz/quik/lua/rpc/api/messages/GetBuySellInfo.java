@@ -1,31 +1,55 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
+import com.enfernuz.quik.lua.rpc.api.RpcResult;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.common.base.MoreObjects;
 import lombok.*;
 import lombok.experimental.NonFinal;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public final class GetBuySellInfo {
+public final class GetBuySellInfo implements RemoteProcedure {
 
     private GetBuySellInfo() {}
 
-    @Value
-    public static class Request {
+    @JsonPropertyOrder({Args.FIRM_ID, Args.CLIENT_CODE, Args.CLASS_CODE, Args.SEC_CODE, Args.PRICE})
+    @EqualsAndHashCode
+    public static final class Args implements RpcArgs<GetBuySellInfo> {
 
-        String firmId;
-        String clientCode;
-        String classCode;
-        String secCode;
-        String price;
+        private static final String FIRM_ID = "firm_id";
+        private static final String CLIENT_CODE = "client_code";
+        private static final String CLASS_CODE = "class_code";
+        private static final String SEC_CODE = "sec_code";
+        private static final String PRICE = "price";
+
+        @JsonProperty(FIRM_ID)
+        private final String firmId;
+
+        @JsonProperty(CLIENT_CODE)
+        private final String clientCode;
+
+        @JsonProperty(CLASS_CODE)
+        private final String classCode;
+
+        @JsonProperty(SEC_CODE)
+        private final String secCode;
+
+        @JsonProperty(PRICE)
+        private final String price;
 
         @Builder
-        private Request(
-                final @NonNull String firmId,
-                final @NonNull String clientCode,
-                final @NonNull String classCode,
-                final @NonNull String secCode,
-                final @NonNull String price) {
+        private Args(
+                @NonNull final String firmId,
+                @NonNull final String clientCode,
+                @NonNull final String classCode,
+                @NonNull final String secCode,
+                @NonNull final String price) {
 
             this.firmId = firmId;
             this.clientCode = clientCode;
@@ -34,33 +58,89 @@ public final class GetBuySellInfo {
             this.price = price;
         }
 
+        @JsonIgnore
+        public String getFirmId() {
+            return firmId;
+        }
+
+        @JsonIgnore
+        public String getClientCode() {
+            return clientCode;
+        }
+
+        @JsonIgnore
+        public String getClassCode() {
+            return classCode;
+        }
+
+        @JsonIgnore
+        public String getSecCode() {
+            return secCode;
+        }
+
+        @JsonIgnore
+        public String getPrice() {
+            return price;
+        }
+
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("firm_id", firmId)
-                    .add("client_code", clientCode)
-                    .add("class_code", classCode)
-                    .add("sec_code", secCode)
-                    .add("price", price)
+                    .add(FIRM_ID, firmId)
+                    .add(CLIENT_CODE, clientCode)
+                    .add(CLASS_CODE, classCode)
+                    .add(SEC_CODE, secCode)
+                    .add(PRICE, price)
                     .toString();
         }
     }
 
     @Value
-    public static class Result {
+    public static class Result implements RpcResult<GetBuySellInfo> {
 
-        @NonNull BuySellInfo buySellInfo;
+        private static final String BUY_SELL_INFO = "buy_sell_info";
 
+        BuySellInfo buySellInfo;
+
+        @JsonCreator
+        public Result(@JsonProperty(value = BUY_SELL_INFO, required = true) @NonNull final BuySellInfo buySellInfo) {
+            this.buySellInfo = buySellInfo;
+        }
+
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("buy_sell_info", buySellInfo)
+                    .add(BUY_SELL_INFO, buySellInfo)
                     .toString();
         }
     }
 
     @Value
     public static class BuySellInfo {
+
+        private static final String IS_MARGIN_SEC = "is_margin_sec";
+        private static final String IS_ASSET_SEC = "is_asset_sec";
+        private static final String BALANCE = "balance";
+        private static final String CAN_BUY = "can_buy";
+        private static final String CAN_SELL = "can_sell";
+        private static final String POSITION_VALUATION = "position_valuation";
+        private static final String VALUE = "value";
+        private static final String OPEN_VALUE = "open_value";
+        private static final String LIM_LONG = "lim_long";
+        private static final String LONG_COEF = "long_coef";
+        private static final String LIM_SHORT = "lim_short";
+        private static final String SHORT_COEF = "short_coef";
+        private static final String VALUE_COEF = "value_coef";
+        private static final String OPEN_VALUE_COEF = "open_value_coef";
+        private static final String SHARE = "share";
+        private static final String SHORT_WA_PRICE = "short_wa_price";
+        private static final String LONG_WA_PRICE = "long_wa_price";
+        private static final String PROFIT_LOSS = "profit_loss";
+        private static final String SPREAD_HC = "spread_hc";
+        private static final String CAN_BUY_OWN = "can_buy_own";
+        private static final String CAN_SELL_OWN = "can_sell_own";
 
         String isMarginSec;
         String isAssetSec;
@@ -84,32 +164,38 @@ public final class GetBuySellInfo {
         String canBuyOwn;
         String canSellOwn;
 
-        private @NonFinal @Getter(AccessLevel.NONE) transient int hashCode;
-        private @NonFinal @Getter(AccessLevel.NONE) transient String asString;
+        @Getter(AccessLevel.NONE)
+        @NonFinal
+        private transient int hashCode;
 
+        @Getter(AccessLevel.NONE)
+        @NonFinal
+        private transient String asString;
+
+        @JsonCreator
         @Builder
         private BuySellInfo(
-                final String isMarginSec,
-                final String isAssetSec,
-                final String balance,
-                final String canBuy,
-                final String canSell,
-                final String positionValuation,
-                final String value,
-                final String openValue,
-                final String limLong,
-                final String longCoef,
-                final String limShort,
-                final String shortCoef,
-                final String valueCoef,
-                final String openValueCoef,
-                final String share,
-                final String shortWaPrice,
-                final String longWaPrice,
-                final String profitLoss,
-                final String spreadHc,
-                final String canBuyOwn,
-                final String canSellOwn) {
+                @JsonProperty(IS_MARGIN_SEC) final String isMarginSec,
+                @JsonProperty(IS_ASSET_SEC) final String isAssetSec,
+                @JsonProperty(BALANCE) final String balance,
+                @JsonProperty(CAN_BUY) final String canBuy,
+                @JsonProperty(CAN_SELL) final String canSell,
+                @JsonProperty(POSITION_VALUATION) final String positionValuation,
+                @JsonProperty(VALUE) final String value,
+                @JsonProperty(OPEN_VALUE) final String openValue,
+                @JsonProperty(LIM_LONG) final String limLong,
+                @JsonProperty(LONG_COEF) final String longCoef,
+                @JsonProperty(LIM_SHORT) final String limShort,
+                @JsonProperty(SHORT_COEF) final String shortCoef,
+                @JsonProperty(VALUE_COEF) final String valueCoef,
+                @JsonProperty(OPEN_VALUE_COEF) final String openValueCoef,
+                @JsonProperty(SHARE) final String share,
+                @JsonProperty(SHORT_WA_PRICE) final String shortWaPrice,
+                @JsonProperty(LONG_WA_PRICE) final String longWaPrice,
+                @JsonProperty(PROFIT_LOSS) final String profitLoss,
+                @JsonProperty(SPREAD_HC) final String spreadHc,
+                @JsonProperty(CAN_BUY_OWN) final String canBuyOwn,
+                @JsonProperty(CAN_SELL_OWN) final String canSellOwn) {
 
             this.isMarginSec = isMarginSec;
             this.isAssetSec = isAssetSec;
@@ -199,32 +285,33 @@ public final class GetBuySellInfo {
             return hashCode;
         }
 
+        @NotNull
         @Override
         public String toString() {
 
             if (asString == null) {
                 asString = MoreObjects.toStringHelper(this)
-                        .add("is_margin_sec", isMarginSec)
-                        .add("is_asset_sec", isAssetSec)
-                        .add("balance", balance)
-                        .add("can_buy", canBuy)
-                        .add("can_sell", canSell)
-                        .add("position_valuation", positionValuation)
-                        .add("value", value)
-                        .add("open_value", openValue)
-                        .add("lim_long", limLong)
-                        .add("long_coef", longCoef)
-                        .add("lim_short", limShort)
-                        .add("short_coef", shortCoef)
-                        .add("value_coef", valueCoef)
-                        .add("open_value_coef", openValueCoef)
-                        .add("share", share)
-                        .add("short_wa_price", shortWaPrice)
-                        .add("long_wa_price", longWaPrice)
-                        .add("profit_loss", profitLoss)
-                        .add("spread_hc", spreadHc)
-                        .add("can_buy_own", canBuyOwn)
-                        .add("can_sell_own", canSellOwn)
+                        .add(IS_MARGIN_SEC, isMarginSec)
+                        .add(IS_ASSET_SEC, isAssetSec)
+                        .add(BALANCE, balance)
+                        .add(CAN_BUY, canBuy)
+                        .add(CAN_SELL, canSell)
+                        .add(POSITION_VALUATION, positionValuation)
+                        .add(VALUE, value)
+                        .add(OPEN_VALUE, openValue)
+                        .add(LIM_LONG, limLong)
+                        .add(LONG_COEF, longCoef)
+                        .add(LIM_SHORT, limShort)
+                        .add(SHORT_COEF, shortCoef)
+                        .add(VALUE_COEF, valueCoef)
+                        .add(OPEN_VALUE_COEF, openValueCoef)
+                        .add(SHARE, share)
+                        .add(SHORT_WA_PRICE, shortWaPrice)
+                        .add(LONG_WA_PRICE, longWaPrice)
+                        .add(PROFIT_LOSS, profitLoss)
+                        .add(SPREAD_HC, spreadHc)
+                        .add(CAN_BUY_OWN, canBuyOwn)
+                        .add(CAN_SELL_OWN, canSellOwn)
                         .toString();
             }
 

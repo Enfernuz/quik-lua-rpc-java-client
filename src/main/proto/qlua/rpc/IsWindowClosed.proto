@@ -7,15 +7,14 @@ package qlua.rpc.IsWindowClosed;
 option optimize_for = SPEED;
 option java_package = "qlua.rpc";
 
-message WindowClosed {
-    bool result = 1;
-}
-
 message Request {
     int32 t_id = 1;
 }
 
 message Result {
 
-    WindowClosed window_closed = 1;
+    oneof window_closed {
+        bool null_window_closed = 1;
+        bool value_window_closed = 2;
+    }
 }

@@ -26,14 +26,14 @@ public class PrintDbgStrJsonSerdeTest {
         sut = new ObjectMapper();
         sut.registerModule(new QluaJsonModule());
 
-        requestObj = PrintDbgStr.Request.INSTANCE;
+        requestObj = new PrintDbgStr.Request("1");
 
-        resultObj = new PrintDbgStr.Result("1");
+        resultObj = PrintDbgStr.Result.INSTANCE;
 
         requestJson =
-                Resources.toString(Resources.getResource("json/PrintDbgStr.request.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/PrintDbgStr/request.json"), Charsets.UTF_8);
         resultJson =
-                Resources.toString(Resources.getResource("json/PrintDbgStr.result.json"), Charsets.UTF_8);
+                Resources.toString(Resources.getResource("json/PrintDbgStr/result.json"), Charsets.UTF_8);
     }
 
     @Test

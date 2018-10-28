@@ -1,29 +1,48 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
+import com.enfernuz.quik.lua.rpc.api.RpcResult;
 import com.enfernuz.quik.lua.rpc.api.structures.FuturesLimit;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.common.base.MoreObjects;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.Value;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-public final class GetFuturesLimit {
+public final class GetFuturesLimit implements RemoteProcedure {
 
     private GetFuturesLimit() {}
 
-    @Value
-    public static class Request {
+    @JsonPropertyOrder({Args.FIRM_ID, Args.TRD_ACC_ID, Args.LIMIT_TYPE, Args.CURR_CODE})
+    @EqualsAndHashCode
+    public static final class Args implements RpcArgs<GetFuturesLimit> {
 
-        String firmId;
-        String trdAccId;
-        int limitType;
-        String currCode;
+        private static final String FIRM_ID = "firmid";
+        private static final String TRD_ACC_ID = "trdaccid";
+        private static final String LIMIT_TYPE = "limit_type";
+        private static final String CURR_CODE = "currcode";
+
+        @JsonProperty(FIRM_ID)
+        private final String firmId;
+
+        @JsonProperty(TRD_ACC_ID)
+        private final String trdAccId;
+
+        @JsonProperty(LIMIT_TYPE)
+        private final int limitType;
+
+        @JsonProperty(CURR_CODE)
+        private final String currCode;
 
         @Builder
-        private Request(
+        private Args(
                 @NonNull final String firmId,
                 @NonNull final String trdAccId,
                 final int limitType,
@@ -35,25 +54,47 @@ public final class GetFuturesLimit {
             this.currCode = currCode;
         }
 
+        @JsonIgnore
+        public String getFirmId() {
+            return firmId;
+        }
+
+        @JsonIgnore
+        public String getTrdAccId() {
+            return trdAccId;
+        }
+
+        @JsonIgnore
+        public int getLimitType() {
+            return limitType;
+        }
+
+        @JsonIgnore
+        public String getCurrCode() {
+            return currCode;
+        }
+
         @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("firmid", firmId)
-                    .add("trdaccid", trdAccId)
-                    .add("limit_type", limitType)
-                    .add("currcode", currCode)
+                    .add(FIRM_ID, firmId)
+                    .add(TRD_ACC_ID, trdAccId)
+                    .add(LIMIT_TYPE, limitType)
+                    .add(CURR_CODE, currCode)
                     .toString();
         }
     }
 
     @Value
-    public static class Result {
+    public static class Result implements RpcResult<GetFuturesLimit> {
+
+        private static final String FUTURES_LIMIT = "futures_limit";
 
         FuturesLimit futuresLimit;
 
         @JsonCreator
-        public static Result getInstance(@JsonProperty("futures_limit") final FuturesLimit futuresLimit) {
+        public static Result getInstance(@JsonProperty(value = FUTURES_LIMIT, required = true) final FuturesLimit futuresLimit) {
             return futuresLimit == null ? InstanceHolder.ERROR : new Result(futuresLimit);
         }
 
@@ -61,7 +102,6 @@ public final class GetFuturesLimit {
             this.futuresLimit = futuresLimit;
         }
 
-        @Contract(pure = true)
         public boolean isError() {
             return futuresLimit == null;
         }
@@ -70,7 +110,7 @@ public final class GetFuturesLimit {
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("futures_limit", futuresLimit)
+                    .add(FUTURES_LIMIT, futuresLimit)
                     .toString();
         }
 
@@ -78,7 +118,7 @@ public final class GetFuturesLimit {
 
             private static final Result ERROR = new Result(null);
 
-            // just in case
+            // sanity check
             static {
                 assert ERROR.isError();
             }

@@ -1,33 +1,61 @@
 package com.enfernuz.quik.lua.rpc.api.messages.datasource;
 
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
+import com.enfernuz.quik.lua.rpc.api.RpcResult;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.common.base.MoreObjects;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Value;
 import lombok.experimental.NonFinal;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public final class O {
+public final class O implements RemoteProcedure {
 
     private O() {}
 
-    @Value
-    public static class Request {
+    @JsonPropertyOrder({Args.DATASOURCE_UUID, Args.CANDLE_INDEX})
+    public static final class Args implements RpcArgs<O> {
 
-        @NonNull
-        String datasourceUUID;
-        int candleIndex;
+        private static final String DATASOURCE_UUID = "datasource_uuid";
+        private static final String CANDLE_INDEX = "candle_index";
 
-        private @NonFinal @Getter(AccessLevel.NONE) transient int hashCode;
-        private @NonFinal @Getter(AccessLevel.NONE) transient String asString;
+        @JsonProperty(DATASOURCE_UUID)
+        private final String datasourceUUID;
 
-        public Request(final String datasourceUUID, final int candleIndex) {
+        @JsonProperty(CANDLE_INDEX)
+        private final int candleIndex;
+
+        @JsonIgnore
+        @Getter(AccessLevel.NONE)
+        @NonFinal
+        private transient int hashCode;
+
+        @JsonIgnore
+        @Getter(AccessLevel.NONE)
+        @NonFinal
+        private transient String asString;
+
+        public Args(@NonNull final String datasourceUUID, final int candleIndex) {
             this.datasourceUUID = datasourceUUID;
             this.candleIndex = candleIndex;
+        }
+
+        @JsonIgnore
+        public String getDatasourceUUID() {
+            return datasourceUUID;
+        }
+
+        @JsonIgnore
+        public int getCandleIndex() {
+            return candleIndex;
         }
 
         @Override
@@ -35,10 +63,10 @@ public final class O {
 
             if (o == this) {
                 return true;
-            } else if (!(o instanceof Request)) {
+            } else if (!(o instanceof Args)) {
                 return false;
             } else {
-                final Request request = (Request) o;
+                final Args request = (Args) o;
                 return candleIndex == request.candleIndex &&
                         Objects.equals(datasourceUUID, request.datasourceUUID);
             }
@@ -54,13 +82,14 @@ public final class O {
             return hashCode;
         }
 
+        @NotNull
         @Override
         public String toString() {
 
             if (asString == null) {
                 asString = MoreObjects.toStringHelper(this)
-                        .add("datasource_uuid", datasourceUUID)
-                        .add("candle_index", candleIndex)
+                        .add(DATASOURCE_UUID, datasourceUUID)
+                        .add(CANDLE_INDEX, candleIndex)
                         .toString();
             }
 
@@ -69,51 +98,23 @@ public final class O {
     }
 
     @Value
-    public static class Result {
+    public static class Result implements RpcResult<O> {
+
+        private static final String VALUE = "value";
 
         String value;
 
-        private @NonFinal @Getter(AccessLevel.NONE) transient int hashCode;
-        private @NonFinal @Getter(AccessLevel.NONE) transient String asString;
-
         @JsonCreator
-        public Result(final @JsonProperty("value") String value) {
+        public Result(@JsonProperty(value = VALUE, required = true) @NonNull final String value) {
             this.value = value;
         }
 
-        @Override
-        public boolean equals(final Object o) {
-
-            if (o == this) {
-                return true;
-            } else if ( !(o instanceof Result) ) {
-                return false;
-            } else {
-                final Result result = (Result) o;
-                return Objects.equals(value, result.value);
-            }
-        }
-
-        @Override
-        public int hashCode() {
-
-            if (hashCode == 0) {
-                hashCode = Objects.hash(value);
-            }
-
-            return hashCode;
-        }
-
+        @NotNull
         @Override
         public String toString() {
-
-            if (asString == null) {
-                asString = MoreObjects.toStringHelper(this)
-                        .add("value", value)
-                        .toString();
-            }
-
-            return asString;
+            return MoreObjects.toStringHelper(this)
+                    .add(VALUE, value)
+                    .toString();
         }
     }
 }

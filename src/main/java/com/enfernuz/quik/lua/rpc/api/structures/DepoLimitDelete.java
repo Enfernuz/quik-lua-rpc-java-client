@@ -1,16 +1,23 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Value;
 import lombok.experimental.NonFinal;
-
-import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @Value
 public class DepoLimitDelete {
+
+    private static final String SECURITY_CODE = "sec_code";
+    private static final String TRADING_ACCOUNT_ID = "trdaccid";
+    private static final String FIRM_ID = "firmid";
+    private static final String CLIENT_CODE = "client_code";
+    private static final String LIMIT_KIND = "limit_kind";
 
     String secCode;
     String trdAccId;
@@ -18,16 +25,18 @@ public class DepoLimitDelete {
     String clientCode;
     int limitKind;
 
-    private transient @NonFinal @Getter(AccessLevel.NONE) int hashCode;
-    private transient @NonFinal @Getter(AccessLevel.NONE) String asString;
+    @Getter(AccessLevel.NONE)
+    @NonFinal
+    private transient String asString;
 
+    @JsonCreator
     @Builder
     private DepoLimitDelete(
-            final String secCode,
-            final String trdAccId,
-            final String firmId,
-            final String clientCode,
-            final int limitKind) {
+            @JsonProperty(SECURITY_CODE) final String secCode,
+            @JsonProperty(TRADING_ACCOUNT_ID) final String trdAccId,
+            @JsonProperty(FIRM_ID) final String firmId,
+            @JsonProperty(CLIENT_CODE) final String clientCode,
+            @JsonProperty(value = LIMIT_KIND, required = true) final int limitKind) {
 
         this.secCode = secCode;
         this.trdAccId = trdAccId;
@@ -36,43 +45,17 @@ public class DepoLimitDelete {
         this.limitKind = limitKind;
     }
 
-    @Override
-    public boolean equals(final Object o) {
-
-        if (o == this) {
-            return true;
-        } else if ( !(o instanceof DepoLimitDelete) ) {
-            return false;
-        } else {
-            final DepoLimitDelete that = (DepoLimitDelete) o;
-            return limitKind == that.limitKind &&
-                    Objects.equals(secCode, that.secCode) &&
-                    Objects.equals(trdAccId, that.trdAccId) &&
-                    Objects.equals(firmId, that.firmId) &&
-                    Objects.equals(clientCode, that.clientCode);
-        }
-    }
-
-    @Override
-    public int hashCode() {
-
-        if (hashCode == 0) {
-            hashCode = Objects.hash(secCode, trdAccId, firmId, clientCode, limitKind);
-        }
-
-        return hashCode;
-    }
-
+    @NotNull
     @Override
     public String toString() {
 
         if (asString == null) {
             asString = MoreObjects.toStringHelper(this)
-                    .add("sec_code", secCode)
-                    .add("trdaccid", trdAccId)
-                    .add("firmid", firmId)
-                    .add("client_code", clientCode)
-                    .add("limit_kind", limitKind)
+                    .add(SECURITY_CODE, secCode)
+                    .add(TRADING_ACCOUNT_ID, trdAccId)
+                    .add(FIRM_ID, firmId)
+                    .add(CLIENT_CODE, clientCode)
+                    .add(LIMIT_KIND, limitKind)
                     .toString();
         }
 

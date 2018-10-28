@@ -1,8 +1,13 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
+import com.enfernuz.quik.lua.rpc.api.RpcResult;
 import com.enfernuz.quik.lua.rpc.api.structures.PortfolioInfo;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.common.base.MoreObjects;
 import lombok.*;
 import lombok.experimental.NonFinal;
@@ -10,37 +15,87 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public final class GetPortfolioInfoEx {
+public final class GetPortfolioInfoEx implements RemoteProcedure {
 
     private GetPortfolioInfoEx() {}
 
-    @Value
-    public static class Request {
+    @JsonPropertyOrder({Args.FIRM_ID, Args.CLIENT_CODE, Args.LIMIT_KIND})
+    @EqualsAndHashCode
+    public static final class Args implements RpcArgs<GetPortfolioInfoEx> {
 
-        String firmId;
-        String clientCode;
-        int limitKind;
+        private static final String FIRM_ID = "firm_id";
+        private static final String CLIENT_CODE = "client_code";
+        private static final String LIMIT_KIND = "limit_kind";
+
+        @JsonProperty(FIRM_ID)
+        private final String firmId;
+
+        @JsonProperty(CLIENT_CODE)
+        private final String clientCode;
+
+        @JsonProperty(LIMIT_KIND)
+        private final int limitKind;
 
         @Builder
-        private Request(@NonNull final String firmId, @NonNull final String clientCode, final int limitKind) {
+        private Args(@NonNull final String firmId, @NonNull final String clientCode, final int limitKind) {
+
             this.firmId = firmId;
             this.clientCode = clientCode;
             this.limitKind = limitKind;
+        }
+
+        @JsonIgnore
+        public String getFirmId() {
+            return firmId;
+        }
+
+        @JsonIgnore
+        public String getClientCode() {
+            return clientCode;
+        }
+
+        @JsonIgnore
+        public int getLimitKind() {
+            return limitKind;
         }
 
         @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("firm_id", firmId)
-                    .add("client_code", clientCode)
-                    .add("limit_kind", limitKind)
+                    .add(FIRM_ID, firmId)
+                    .add(CLIENT_CODE, clientCode)
+                    .add(LIMIT_KIND, limitKind)
                     .toString();
         }
     }
 
     @Value
-    public static class Result {
+    public static class Result implements RpcResult<GetPortfolioInfoEx> {
+
+        private static final String PORTFOLIO_INFO = "portfolio_info";
+        private static final String INIT_MARGIN = "init_margin";
+        private static final String MIN_MARGIN = "min_margin";
+        private static final String CORRECTED_MARGIN = "corrected_margin";
+        private static final String CLIENT_TYPE = "client_type";
+        private static final String PORTFOLIO_VALUE = "portfolio_value";
+        private static final String START_LIMIT_OPEN_POS = "start_limit_open_pos";
+        private static final String TOTAL_LIMIT_OPEN_POS = "total_limit_open_pos";
+        private static final String LIMIT_OPEN_POS = "limit_open_pos";
+        private static final String USED_LIM_OPEN_POS = "used_lim_open_pos";
+        private static final String ACC_VAR_MARGIN = "acc_var_margin";
+        private static final String CL_VAR_MARGIN = "cl_var_margin";
+        private static final String OPT_LIQUID_COST = "opt_liquid_cost";
+        private static final String FUT_ASSET = "fut_asset";
+        private static final String FUT_TOTAL_ASSET = "fut_total_asset";
+        private static final String FUT_DEBT = "fut_debt";
+        private static final String FUT_RATE_ASSET = "fut_rate_asset";
+        private static final String FUT_RATE_ASSET_OPEN = "fut_rate_asset_open";
+        private static final String FUT_RATE_GO = "fut_rate_go";
+        private static final String PLANED_RATE_GO = "planed_rate_go";
+        private static final String CASH_LEVERAGE = "cash_leverage";
+        private static final String FUT_POSITION_TYPE = "fut_position_type";
+        private static final String FUT_ACCRUED_INT = "fut_accured_int";
 
         PortfolioInfo portfolioInfo;
         String initMargin;
@@ -66,34 +121,39 @@ public final class GetPortfolioInfoEx {
         String futPositionType;
         String futAccruedInt;
 
-        private @NonFinal @Getter(AccessLevel.NONE) transient int hashCode;
-        private @NonFinal @Getter(AccessLevel.NONE) transient String asString;
+        @Getter(AccessLevel.NONE)
+        @NonFinal
+        private transient int hashCode;
+
+        @Getter(AccessLevel.NONE)
+        @NonFinal
+        private transient String asString;
 
         @JsonCreator
         @Builder
-        private Result(final @JsonProperty(value = "portfolio_info", required = true) @NonNull PortfolioInfo portfolioInfo,
-                       final @JsonProperty(value = "init_margin") String initMargin,
-                       final @JsonProperty(value = "min_margin") String minMargin,
-                       final @JsonProperty(value = "corrected_margin") String correctedMargin,
-                       final @JsonProperty(value = "client_type") String clientType,
-                       final @JsonProperty(value = "portfolio_value") String portfolioValue,
-                       final @JsonProperty(value = "start_limit_open_pos") String startLimitOpenPos,
-                       final @JsonProperty(value = "total_limit_open_pos") String totalLimitOpenPos,
-                       final @JsonProperty(value = "limit_open_pos") String limitOpenPos,
-                       final @JsonProperty(value = "used_lim_open_pos") String usedLimOpenPos,
-                       final @JsonProperty(value = "acc_var_margin") String accVarMargin,
-                       final @JsonProperty(value = "cl_var_margin") String clVarMargin,
-                       final @JsonProperty(value = "opt_liquid_cost") String optLiquidCost,
-                       final @JsonProperty(value = "fut_asset") String futAsset,
-                       final @JsonProperty(value = "fut_total_asset") String futTotalAsset,
-                       final @JsonProperty(value = "fut_debt") String futDebt,
-                       final @JsonProperty(value = "fut_rate_asset") String futRateAsset,
-                       final @JsonProperty(value = "fut_rate_asset_open") String futRateAssetOpen,
-                       final @JsonProperty(value = "fut_rate_go") String futRateGo,
-                       final @JsonProperty(value = "planed_rate_go") String planedRateGo,
-                       final @JsonProperty(value = "cash_leverage") String cashLeverage,
-                       final @JsonProperty(value = "fut_position_type") String futPositionType,
-                       final @JsonProperty(value = "fut_accured_int") String futAccruedInt) {
+        private Result(@JsonProperty(value = PORTFOLIO_INFO, required = true) final @NonNull PortfolioInfo portfolioInfo,
+                       @JsonProperty(INIT_MARGIN) final String initMargin,
+                       @JsonProperty(MIN_MARGIN) final String minMargin,
+                       @JsonProperty(CORRECTED_MARGIN) final String correctedMargin,
+                       @JsonProperty(CLIENT_TYPE) final String clientType,
+                       @JsonProperty(PORTFOLIO_VALUE) final String portfolioValue,
+                       @JsonProperty(START_LIMIT_OPEN_POS) final String startLimitOpenPos,
+                       @JsonProperty(TOTAL_LIMIT_OPEN_POS) final String totalLimitOpenPos,
+                       @JsonProperty(LIMIT_OPEN_POS) final String limitOpenPos,
+                       @JsonProperty(USED_LIM_OPEN_POS) final String usedLimOpenPos,
+                       @JsonProperty(ACC_VAR_MARGIN) final String accVarMargin,
+                       @JsonProperty(CL_VAR_MARGIN) final String clVarMargin,
+                       @JsonProperty(OPT_LIQUID_COST) final String optLiquidCost,
+                       @JsonProperty(FUT_ASSET) final String futAsset,
+                       @JsonProperty(FUT_TOTAL_ASSET) final String futTotalAsset,
+                       @JsonProperty(FUT_DEBT) final String futDebt,
+                       @JsonProperty(FUT_RATE_ASSET) final String futRateAsset,
+                       @JsonProperty(FUT_RATE_ASSET_OPEN) final String futRateAssetOpen,
+                       @JsonProperty(FUT_RATE_GO) final String futRateGo,
+                       @JsonProperty(PLANED_RATE_GO) final String planedRateGo,
+                       @JsonProperty(CASH_LEVERAGE) final String cashLeverage,
+                       @JsonProperty(FUT_POSITION_TYPE) final String futPositionType,
+                       @JsonProperty(FUT_ACCRUED_INT) final String futAccruedInt) {
 
             this.portfolioInfo = portfolioInfo;
             this.initMargin = initMargin;
@@ -194,29 +254,29 @@ public final class GetPortfolioInfoEx {
 
             if (asString == null) {
                 asString = MoreObjects.toStringHelper(this)
-                        .add("portfolio_info", portfolioInfo)
-                        .add("init_margin", initMargin)
-                        .add("min_margin", minMargin)
-                        .add("corrected_margin", correctedMargin)
-                        .add("client_type", clientType)
-                        .add("portfolio_value", portfolioValue)
-                        .add("start_limit_open_pos", startLimitOpenPos)
-                        .add("total_limit_open_pos", totalLimitOpenPos)
-                        .add("limit_open_pos", limitOpenPos)
-                        .add("used_lim_open_pos", usedLimOpenPos)
-                        .add("acc_var_margin", accVarMargin)
-                        .add("cl_var_margin", clVarMargin)
-                        .add("opt_liquid_cost", optLiquidCost)
-                        .add("fut_asset", futAsset)
-                        .add("fut_total_asset", futTotalAsset)
-                        .add("fut_debt", futDebt)
-                        .add("fut_rate_asset", futRateAsset)
-                        .add("fut_rate_asset_open", futRateAssetOpen)
-                        .add("fut_rate_go", futRateGo)
-                        .add("planed_rate_go", planedRateGo)
-                        .add("cash_leverage", cashLeverage)
-                        .add("fut_position_type", futPositionType)
-                        .add("fut_accured_int", futAccruedInt)
+                        .add(PORTFOLIO_INFO, portfolioInfo)
+                        .add(INIT_MARGIN, initMargin)
+                        .add(MIN_MARGIN, minMargin)
+                        .add(CORRECTED_MARGIN, correctedMargin)
+                        .add(CLIENT_TYPE, clientType)
+                        .add(PORTFOLIO_VALUE, portfolioValue)
+                        .add(START_LIMIT_OPEN_POS, startLimitOpenPos)
+                        .add(TOTAL_LIMIT_OPEN_POS, totalLimitOpenPos)
+                        .add(LIMIT_OPEN_POS, limitOpenPos)
+                        .add(USED_LIM_OPEN_POS, usedLimOpenPos)
+                        .add(ACC_VAR_MARGIN, accVarMargin)
+                        .add(CL_VAR_MARGIN, clVarMargin)
+                        .add(OPT_LIQUID_COST, optLiquidCost)
+                        .add(FUT_ASSET, futAsset)
+                        .add(FUT_TOTAL_ASSET, futTotalAsset)
+                        .add(FUT_DEBT, futDebt)
+                        .add(FUT_RATE_ASSET, futRateAsset)
+                        .add(FUT_RATE_ASSET_OPEN, futRateAssetOpen)
+                        .add(FUT_RATE_GO, futRateGo)
+                        .add(PLANED_RATE_GO, planedRateGo)
+                        .add(CASH_LEVERAGE, cashLeverage)
+                        .add(FUT_POSITION_TYPE, futPositionType)
+                        .add(FUT_ACCRUED_INT, futAccruedInt)
                         .toString();
             }
 

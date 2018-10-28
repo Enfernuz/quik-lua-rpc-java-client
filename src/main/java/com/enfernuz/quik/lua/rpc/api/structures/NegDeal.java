@@ -1,16 +1,79 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Value;
 import lombok.experimental.NonFinal;
-
-import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @Value
 public class NegDeal {
+
+    private static final String NEG_DEAL_NUM = "neg_deal_num";
+    private static final String NEG_DEAL_TIME = "neg_deal_time";
+    private static final String FLAGS = "flags";
+    private static final String BROKER_REF = "brokerref";
+    private static final String USER_ID = "userid";
+    private static final String FIRM_ID = "firmid";
+    private static final String COUNTERPARTY_USER_ID = "cpuserid";
+    private static final String COUNTERPARTY_FIRM_ID = "cpfirmid";
+    private static final String ACCOUNT = "account";
+    private static final String PRICE = "price";
+    private static final String QUANTITY = "qty";
+    private static final String MATCH_REF = "matchref";
+    private static final String SETTLE_CODE = "settlecode";
+    private static final String YIELD = "yield";
+    private static final String ACCRUED_INTEREST = "accruedint";
+    private static final String VALUE = "value";
+    private static final String PRICE_2 = "price2";
+    private static final String REPO_RATE = "reporate";
+    private static final String REFUND_RATE = "refundrate";
+    private static final String TRANSACTION_ID = "trans_id";
+    private static final String CLIENT_CODE = "client_code";
+    private static final String REPO_ENTRY = "repoentry";
+    private static final String REPO_VALUE = "repovalue";
+    private static final String REPO_2_VALUE = "repo2value";
+    private static final String REPO_TERM = "repoterm";
+    private static final String START_DISCOUNT = "start_discount";
+    private static final String LOWER_DISCOUNT = "lower_discount";
+    private static final String UPPER_DISCOUNT = "upper_discount";
+    private static final String BLOCK_SECURITIES = "block_securities";
+    private static final String UID = "uid";
+    private static final String WITHDRAW_TIME = "withdraw_time";
+    private static final String NEG_DEAL_DATE = "neg_deal_date";
+    private static final String BALANCE = "balance";
+    private static final String ORIGIN_REPO_VALUE = "origin_repovalue";
+    private static final String ORIGIN_QUANTITY = "origin_qty";
+    private static final String ORIGIN_DISCOUNT = "origin_discount";
+    private static final String NEG_DEAL_ACTIVATION_DATE = "neg_deal_activation_date";
+    private static final String NEG_DEAL_ACTIVATION_TIME = "neg_deal_activation_time";
+    private static final String QUOTE_N_O = "quoteno";
+    private static final String SETTLE_CURRENCY = "settle_currency";
+    private static final String SECURITY_CODE = "sec_code";
+    private static final String CLASS_CODE = "class_code";
+    private static final String BANK_ACCOUNT_ID = "bank_acc_id";
+    private static final String WITHDRAW_DATE = "withdraw_date";
+    private static final String LINKED_ORDER = "linkedorder";
+    private static final String ACTIVATION_DATE_TIME = "activation_date_time";
+    private static final String WITHDRAW_DATE_TIME = "withdraw_date_time";
+    private static final String DATE_TIME = "date_time";
+    private static final String L_SECURITY_CODE = "lseccode";
+    private static final String CANCELED_UID = "canceled_uid";
+    private static final String SYSTEM_REF = "system_ref";
+    private static final String PRICE_CURRENCY = "price_currency";
+    private static final String ORDER_EXCHANGE_CODE = "order_exchange_code";
+    private static final String EXT_REF = "extref";
+    private static final String PERIOD = "period";
+    private static final String CLIENT_QUALIFIER = "client_qualifier";
+    private static final String CLIENT_SHORT_CODE = "client_short_code";
+    private static final String INVESTMENT_DECISION_MAKER_QUALIFIER = "investment_decision_maker_qualifier";
+    private static final String INVESTMENT_DECISION_MAKER_SHORT_CODE = "investment_decision_maker_short_code";
+    private static final String EXECUTING_TRADER_QUALIFIER = "executing_trader_qualifier";
+    private static final String EXECUTING_TRADER_SHORT_CODE = "executing_trader_short_code";
 
     long negDealNum;
     String negDealTime;
@@ -60,60 +123,88 @@ public class NegDeal {
     DateTimeEntry activationDateTime;
     DateTimeEntry withdrawDateTime;
     DateTimeEntry dateTime;
+    String lSecCode;
+    String canceledUid;
+    String systemRef;
+    String priceCurrency;
+    String orderExchangeCode;
+    String extRef;
+    String period;
+    int clientQualifier;
+    String clientShortCode;
+    int investmentDecisionMakerQualifier;
+    String investmentDecisionMakerShortCode;
+    int executingTraderQualifier;
+    String executingTraderShortCode;
 
-    private transient @NonFinal @Getter(AccessLevel.NONE) int hashCode;
-    private transient @NonFinal @Getter(AccessLevel.NONE) String asString;
+    @Getter(AccessLevel.NONE)
+    @NonFinal
+    private transient String asString;
 
+    @JsonCreator
     @Builder
     private NegDeal(
-            final long negDealNum,
-            final String negDealTime,
-            final int flags,
-            final String brokerRef,
-            final String userId,
-            final String firmId,
-            final String cpUserId,
-            final String cpFirmId,
-            final String account,
-            final String price,
-            final int qty,
-            final String matchRef,
-            final String settleCode,
-            final String yield,
-            final String accruedInt,
-            final String value,
-            final String price2,
-            final String repoRate,
-            final String refundRate,
-            final String transId,
-            final String clientCode,
-            final int repoEntry,
-            final String repoValue,
-            final String repo2Value,
-            final String repoTerm,
-            final String startDiscount,
-            final String lowerDiscount,
-            final String upperDiscount,
-            final String blockSecurities,
-            final String uid,
-            final String withdrawTime,
-            final String negDealDate,
-            final String balance,
-            final String originRepoValue,
-            final String originQty,
-            final String originDiscount,
-            final String negDealActivationDate,
-            final String negDealActivationTime,
-            final String quoteNo,
-            final String settleCurrency,
-            final String secCode,
-            final String classCode,
-            final String bankAccId,
-            final String withdrawDate,
-            final String linkedOrder,
-            final DateTimeEntry activationDateTime,
-            final DateTimeEntry withdrawDateTime,
-            final DateTimeEntry dateTime) {
+            @JsonProperty(value = NEG_DEAL_NUM, required = true) final long negDealNum,
+            @JsonProperty(NEG_DEAL_TIME) final String negDealTime,
+            @JsonProperty(value = FLAGS, required = true) final int flags,
+            @JsonProperty(BROKER_REF) final String brokerRef,
+            @JsonProperty(USER_ID) final String userId,
+            @JsonProperty(FIRM_ID) final String firmId,
+            @JsonProperty(COUNTERPARTY_USER_ID) final String cpUserId,
+            @JsonProperty(COUNTERPARTY_FIRM_ID) final String cpFirmId,
+            @JsonProperty(ACCOUNT) final String account,
+            @JsonProperty(value = PRICE, required = true) final String price,
+            @JsonProperty(value = QUANTITY, required = true) final int qty,
+            @JsonProperty(MATCH_REF) final String matchRef,
+            @JsonProperty(SETTLE_CODE) final String settleCode,
+            @JsonProperty(YIELD) final String yield,
+            @JsonProperty(ACCRUED_INTEREST) final String accruedInt,
+            @JsonProperty(VALUE) final String value,
+            @JsonProperty(PRICE_2) final String price2,
+            @JsonProperty(REPO_RATE) final String repoRate,
+            @JsonProperty(REFUND_RATE) final String refundRate,
+            @JsonProperty(TRANSACTION_ID) final String transId,
+            @JsonProperty(CLIENT_CODE) final String clientCode,
+            @JsonProperty(REPO_ENTRY) final int repoEntry,
+            @JsonProperty(REPO_VALUE) final String repoValue,
+            @JsonProperty(REPO_2_VALUE) final String repo2Value,
+            @JsonProperty(REPO_TERM) final String repoTerm,
+            @JsonProperty(START_DISCOUNT) final String startDiscount,
+            @JsonProperty(LOWER_DISCOUNT) final String lowerDiscount,
+            @JsonProperty(UPPER_DISCOUNT) final String upperDiscount,
+            @JsonProperty(BLOCK_SECURITIES) final String blockSecurities,
+            @JsonProperty(UID) final String uid,
+            @JsonProperty(WITHDRAW_TIME) final String withdrawTime,
+            @JsonProperty(NEG_DEAL_DATE) final String negDealDate,
+            @JsonProperty(BALANCE) final String balance,
+            @JsonProperty(ORIGIN_REPO_VALUE) final String originRepoValue,
+            @JsonProperty(ORIGIN_QUANTITY) final String originQty,
+            @JsonProperty(ORIGIN_DISCOUNT) final String originDiscount,
+            @JsonProperty(NEG_DEAL_ACTIVATION_DATE) final String negDealActivationDate,
+            @JsonProperty(NEG_DEAL_ACTIVATION_TIME) final String negDealActivationTime,
+            @JsonProperty(QUOTE_N_O) final String quoteNo,
+            @JsonProperty(SETTLE_CURRENCY) final String settleCurrency,
+            @JsonProperty(SECURITY_CODE) final String secCode,
+            @JsonProperty(CLASS_CODE) final String classCode,
+            @JsonProperty(BANK_ACCOUNT_ID) final String bankAccId,
+            @JsonProperty(WITHDRAW_DATE) final String withdrawDate,
+            @JsonProperty(LINKED_ORDER) final String linkedOrder,
+            @JsonProperty(ACTIVATION_DATE_TIME) final DateTimeEntry activationDateTime,
+            @JsonProperty(WITHDRAW_DATE_TIME) final DateTimeEntry withdrawDateTime,
+            @JsonProperty(DATE_TIME) final DateTimeEntry dateTime,
+            @JsonProperty(L_SECURITY_CODE) final String lSecCode,
+            @JsonProperty(CANCELED_UID) final String canceledUid,
+            @JsonProperty(SYSTEM_REF) final String systemRef,
+            @JsonProperty(PRICE_CURRENCY) final String priceCurrency,
+            @JsonProperty(ORDER_EXCHANGE_CODE) final String orderExchangeCode,
+            @JsonProperty(EXT_REF) final String extRef,
+            @JsonProperty(PERIOD) final String period,
+            @JsonProperty(value = CLIENT_QUALIFIER, required = true) final int clientQualifier,
+            @JsonProperty(CLIENT_SHORT_CODE) final String clientShortCode,
+            @JsonProperty(value = INVESTMENT_DECISION_MAKER_QUALIFIER, required = true) final int investmentDecisionMakerQualifier,
+            @JsonProperty(INVESTMENT_DECISION_MAKER_SHORT_CODE) final String investmentDecisionMakerShortCode,
+            @JsonProperty(value = EXECUTING_TRADER_QUALIFIER, required = true) final int executingTraderQualifier,
+            @JsonProperty(EXECUTING_TRADER_SHORT_CODE) final String executingTraderShortCode) {
 
         this.negDealNum = negDealNum;
         this.negDealTime = negDealTime;
@@ -163,180 +254,88 @@ public class NegDeal {
         this.activationDateTime = activationDateTime;
         this.withdrawDateTime = withdrawDateTime;
         this.dateTime = dateTime;
+        this.lSecCode = lSecCode;
+        this.canceledUid = canceledUid;
+        this.systemRef = systemRef;
+        this.priceCurrency = priceCurrency;
+        this.orderExchangeCode = orderExchangeCode;
+        this.extRef = extRef;
+        this.period = period;
+        this.clientQualifier = clientQualifier;
+        this.clientShortCode = clientShortCode;
+        this.investmentDecisionMakerQualifier = investmentDecisionMakerQualifier;
+        this.investmentDecisionMakerShortCode = investmentDecisionMakerShortCode;
+        this.executingTraderQualifier = executingTraderQualifier;
+        this.executingTraderShortCode = executingTraderShortCode;
     }
 
-    @Override
-    public boolean equals(final Object o) {
-
-        if (o == this) {
-            return true;
-        } else if ( !(o instanceof NegDeal) ) {
-            return false;
-        } else {
-            final NegDeal negDeal = (NegDeal) o;
-            return negDealNum == negDeal.negDealNum &&
-                    flags == negDeal.flags &&
-                    qty == negDeal.qty &&
-                    repoEntry == negDeal.repoEntry &&
-                    Objects.equals(negDealTime, negDeal.negDealTime) &&
-                    Objects.equals(brokerRef, negDeal.brokerRef) &&
-                    Objects.equals(userId, negDeal.userId) &&
-                    Objects.equals(firmId, negDeal.firmId) &&
-                    Objects.equals(cpUserId, negDeal.cpUserId) &&
-                    Objects.equals(cpFirmId, negDeal.cpFirmId) &&
-                    Objects.equals(account, negDeal.account) &&
-                    Objects.equals(price, negDeal.price) &&
-                    Objects.equals(matchRef, negDeal.matchRef) &&
-                    Objects.equals(settleCode, negDeal.settleCode) &&
-                    Objects.equals(yield, negDeal.yield) &&
-                    Objects.equals(accruedInt, negDeal.accruedInt) &&
-                    Objects.equals(value, negDeal.value) &&
-                    Objects.equals(price2, negDeal.price2) &&
-                    Objects.equals(repoRate, negDeal.repoRate) &&
-                    Objects.equals(refundRate, negDeal.refundRate) &&
-                    Objects.equals(transId, negDeal.transId) &&
-                    Objects.equals(clientCode, negDeal.clientCode) &&
-                    Objects.equals(repoValue, negDeal.repoValue) &&
-                    Objects.equals(repo2Value, negDeal.repo2Value) &&
-                    Objects.equals(repoTerm, negDeal.repoTerm) &&
-                    Objects.equals(startDiscount, negDeal.startDiscount) &&
-                    Objects.equals(lowerDiscount, negDeal.lowerDiscount) &&
-                    Objects.equals(upperDiscount, negDeal.upperDiscount) &&
-                    Objects.equals(blockSecurities, negDeal.blockSecurities) &&
-                    Objects.equals(uid, negDeal.uid) &&
-                    Objects.equals(withdrawTime, negDeal.withdrawTime) &&
-                    Objects.equals(negDealDate, negDeal.negDealDate) &&
-                    Objects.equals(balance, negDeal.balance) &&
-                    Objects.equals(originRepoValue, negDeal.originRepoValue) &&
-                    Objects.equals(originQty, negDeal.originQty) &&
-                    Objects.equals(originDiscount, negDeal.originDiscount) &&
-                    Objects.equals(negDealActivationDate, negDeal.negDealActivationDate) &&
-                    Objects.equals(negDealActivationTime, negDeal.negDealActivationTime) &&
-                    Objects.equals(quoteNo, negDeal.quoteNo) &&
-                    Objects.equals(settleCurrency, negDeal.settleCurrency) &&
-                    Objects.equals(secCode, negDeal.secCode) &&
-                    Objects.equals(classCode, negDeal.classCode) &&
-                    Objects.equals(bankAccId, negDeal.bankAccId) &&
-                    Objects.equals(withdrawDate, negDeal.withdrawDate) &&
-                    Objects.equals(linkedOrder, negDeal.linkedOrder) &&
-                    Objects.equals(activationDateTime, negDeal.activationDateTime) &&
-                    Objects.equals(withdrawDateTime, negDeal.withdrawDateTime) &&
-                    Objects.equals(dateTime, negDeal.dateTime);
-        }
-    }
-
-    @Override
-    public int hashCode() {
-
-        if (hashCode == 0) {
-            hashCode = Objects.hash(
-                    negDealNum,
-                    negDealTime,
-                    flags,
-                    brokerRef,
-                    userId,
-                    firmId,
-                    cpUserId,
-                    cpFirmId,
-                    account,
-                    price,
-                    qty,
-                    matchRef,
-                    settleCode,
-                    yield,
-                    accruedInt,
-                    value,
-                    price2,
-                    repoRate,
-                    refundRate,
-                    transId,
-                    clientCode,
-                    repoEntry,
-                    repoValue,
-                    repo2Value,
-                    repoTerm,
-                    startDiscount,
-                    lowerDiscount,
-                    upperDiscount,
-                    blockSecurities,
-                    uid,
-                    withdrawTime,
-                    negDealDate,
-                    balance,
-                    originRepoValue,
-                    originQty,
-                    originDiscount,
-                    negDealActivationDate,
-                    negDealActivationTime,
-                    quoteNo,
-                    settleCurrency,
-                    secCode,
-                    classCode,
-                    bankAccId,
-                    withdrawDate,
-                    linkedOrder,
-                    activationDateTime,
-                    withdrawDateTime,
-                    dateTime
-            );
-        }
-
-        return hashCode;
-    }
-
+    @NotNull
     @Override
     public String toString() {
 
         if (asString == null) {
             asString = MoreObjects.toStringHelper(this)
-                    .add("neg_deal_num", negDealNum)
-                    .add("neg_deal_time", negDealTime)
-                    .add("flags", flags)
-                    .add("brokerref", brokerRef)
-                    .add("userid", userId)
-                    .add("firmid", firmId)
-                    .add("cpuserid", cpUserId)
-                    .add("cpfirmid", cpFirmId)
-                    .add("account", account)
-                    .add("price", price)
-                    .add("qty", qty)
-                    .add("matchref", matchRef)
-                    .add("settlecode", settleCode)
-                    .add("yield", yield)
-                    .add("accruedint", accruedInt)
-                    .add("value", value)
-                    .add("price2", price2)
-                    .add("reporate", repoRate)
-                    .add("refundrate", refundRate)
-                    .add("trans_id", transId)
-                    .add("client_code", clientCode)
-                    .add("repoentry", repoEntry)
-                    .add("repovalue", repoValue)
-                    .add("repo2value", repo2Value)
-                    .add("repoterm", repoTerm)
-                    .add("start_discount", startDiscount)
-                    .add("lower_discount", lowerDiscount)
-                    .add("upper_discount", upperDiscount)
-                    .add("block_securities", blockSecurities)
-                    .add("uid", uid)
-                    .add("withdraw_time", withdrawTime)
-                    .add("neg_deal_date", negDealDate)
-                    .add("balance", balance)
-                    .add("origin_repovalue", originRepoValue)
-                    .add("origin_qty", originQty)
-                    .add("origin_discount", originDiscount)
-                    .add("neg_deal_activation_date", negDealActivationDate)
-                    .add("neg_deal_activation_time", negDealActivationTime)
-                    .add("quoteno", quoteNo)
-                    .add("settle_currency", settleCurrency)
-                    .add("sec_code", secCode)
-                    .add("class_code", classCode)
-                    .add("bank_acc_id", bankAccId)
-                    .add("withdraw_date", withdrawDate)
-                    .add("linkedorder", linkedOrder)
-                    .add("activation_date_time", activationDateTime)
-                    .add("withdraw_date_time", withdrawDateTime)
-                    .add("date_time", dateTime)
+                    .add(NEG_DEAL_NUM, negDealNum)
+                    .add(NEG_DEAL_TIME, negDealTime)
+                    .add(FLAGS, flags)
+                    .add(BROKER_REF, brokerRef)
+                    .add(USER_ID, userId)
+                    .add(FIRM_ID, firmId)
+                    .add(COUNTERPARTY_USER_ID, cpUserId)
+                    .add(COUNTERPARTY_FIRM_ID, cpFirmId)
+                    .add(ACCOUNT, account)
+                    .add(PRICE, price)
+                    .add(QUANTITY, qty)
+                    .add(MATCH_REF, matchRef)
+                    .add(SETTLE_CODE, settleCode)
+                    .add(YIELD, yield)
+                    .add(ACCRUED_INTEREST, accruedInt)
+                    .add(VALUE, value)
+                    .add(PRICE_2, price2)
+                    .add(REPO_RATE, repoRate)
+                    .add(REFUND_RATE, refundRate)
+                    .add(TRANSACTION_ID, transId)
+                    .add(CLIENT_CODE, clientCode)
+                    .add(REPO_ENTRY, repoEntry)
+                    .add(REPO_VALUE, repoValue)
+                    .add(REPO_2_VALUE, repo2Value)
+                    .add(REPO_TERM, repoTerm)
+                    .add(START_DISCOUNT, startDiscount)
+                    .add(LOWER_DISCOUNT, lowerDiscount)
+                    .add(UPPER_DISCOUNT, upperDiscount)
+                    .add(BLOCK_SECURITIES, blockSecurities)
+                    .add(UID, uid)
+                    .add(WITHDRAW_TIME, withdrawTime)
+                    .add(NEG_DEAL_DATE, negDealDate)
+                    .add(BALANCE, balance)
+                    .add(ORIGIN_REPO_VALUE, originRepoValue)
+                    .add(ORIGIN_QUANTITY, originQty)
+                    .add(ORIGIN_DISCOUNT, originDiscount)
+                    .add(NEG_DEAL_ACTIVATION_DATE, negDealActivationDate)
+                    .add(NEG_DEAL_ACTIVATION_TIME, negDealActivationTime)
+                    .add(QUOTE_N_O, quoteNo)
+                    .add(SETTLE_CURRENCY, settleCurrency)
+                    .add(SECURITY_CODE, secCode)
+                    .add(CLASS_CODE, classCode)
+                    .add(BANK_ACCOUNT_ID, bankAccId)
+                    .add(WITHDRAW_DATE, withdrawDate)
+                    .add(LINKED_ORDER, linkedOrder)
+                    .add(ACTIVATION_DATE_TIME, activationDateTime)
+                    .add(WITHDRAW_DATE_TIME, withdrawDateTime)
+                    .add(DATE_TIME, dateTime)
+                    .add(L_SECURITY_CODE, lSecCode)
+                    .add(CANCELED_UID, canceledUid)
+                    .add(SYSTEM_REF, systemRef)
+                    .add(PRICE_CURRENCY, priceCurrency)
+                    .add(ORDER_EXCHANGE_CODE, orderExchangeCode)
+                    .add(EXT_REF, extRef)
+                    .add(PERIOD, period)
+                    .add(CLIENT_QUALIFIER, clientQualifier)
+                    .add(CLIENT_SHORT_CODE, clientShortCode)
+                    .add(INVESTMENT_DECISION_MAKER_QUALIFIER, investmentDecisionMakerQualifier)
+                    .add(INVESTMENT_DECISION_MAKER_SHORT_CODE, investmentDecisionMakerShortCode)
+                    .add(EXECUTING_TRADER_QUALIFIER, executingTraderQualifier)
+                    .add(EXECUTING_TRADER_SHORT_CODE, executingTraderShortCode)
                     .toString();
         }
 

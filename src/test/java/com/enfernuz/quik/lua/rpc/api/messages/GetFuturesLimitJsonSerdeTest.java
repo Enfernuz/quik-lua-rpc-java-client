@@ -16,7 +16,7 @@ public class GetFuturesLimitJsonSerdeTest {
 
     private static ObjectMapper sut;
 
-    private static GetFuturesLimit.Request requestObj;
+    private static GetFuturesLimit.Args requestObj;
     private static String requestJson;
 
     private static GetFuturesLimit.Result resultObj;
@@ -31,7 +31,7 @@ public class GetFuturesLimitJsonSerdeTest {
         sut = new ObjectMapper();
         sut.registerModule(new QluaJsonModule());
 
-        requestObj = GetFuturesLimit.Request.builder()
+        requestObj = GetFuturesLimit.Args.builder()
                 .firmId("1")
                 .trdAccId("2")
                 .limitType(3)

@@ -8,8 +8,6 @@ option optimize_for = SPEED;
 option java_package = "qlua.rpc";
 
 message Request {
-
-    // TODO: consider changing the type to enum
     string param_name = 1;  
 }
 

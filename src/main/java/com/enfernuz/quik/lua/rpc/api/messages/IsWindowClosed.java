@@ -1,101 +1,78 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
+import com.enfernuz.quik.lua.rpc.api.RpcResult;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
+import lombok.EqualsAndHashCode;
 import lombok.Value;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-public final class IsWindowClosed {
+public final class IsWindowClosed implements RemoteProcedure {
 
     private IsWindowClosed() {}
 
-    @Value
-    public static class Request {
+    @EqualsAndHashCode
+    public static final class Args implements RpcArgs<IsWindowClosed> {
 
-        private static final String T_ID_FIELD = "t_id";
+        private static final String T_ID = "t_id";
 
-        int tId;
+        @JsonProperty(T_ID)
+        private final int tId;
 
-        @NotNull
-        @Override
-        public String toString() {
-            return MoreObjects.toStringHelper(this)
-                    .add(T_ID_FIELD, tId)
-                    .toString();
-        }
-    }
-
-    @Value
-    public static class WindowClosed {
-
-        private static final String RESULT_FIELD = "result";
-
-        boolean result;
-
-        @JsonCreator
-        public static WindowClosed getInstance(@JsonProperty(value = RESULT_FIELD, required = true) final boolean result) {
-            return result ? InstanceHolder.TRUE : InstanceHolder.FALSE;
+        public Args(final int tId) {
+            this.tId = tId;
         }
 
-        private WindowClosed(final boolean result) {
-            this.result = result;
+        @JsonIgnore
+        public int getTId() {
+            return tId;
         }
 
         @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add(RESULT_FIELD, result)
+                    .add(T_ID, tId)
                     .toString();
-        }
-
-        private static final class InstanceHolder {
-
-            private static final WindowClosed TRUE = new WindowClosed(true);
-            private static final WindowClosed FALSE = new WindowClosed(false);
-
-            // sanity check
-            static {
-                assert TRUE.result;
-                assert !FALSE.result;
-            }
         }
     }
 
     @Value
-    public static class Result {
+    public static class Result implements RpcResult<IsWindowClosed> {
 
-        private static final String WINDOW_CLOSED_FIELD = "window_closed";
+        private static final String WINDOW_CLOSED = "window_closed";
 
-        WindowClosed windowClosed;
+        Boolean windowClosed;
 
         @JsonCreator
-        public static Result getInstance(@JsonProperty(value = WINDOW_CLOSED_FIELD, required = true) final WindowClosed windowClosed) {
+        public static Result getInstance(@JsonProperty(WINDOW_CLOSED) final Boolean windowClosed) {
 
             if (isError(windowClosed)) {
                 return InstanceHolder.ERROR;
             }
 
-            return windowClosed.result ? InstanceHolder.TRUE : InstanceHolder.FALSE;
+            return windowClosed ? InstanceHolder.TRUE : InstanceHolder.FALSE;
         }
 
         public static Result getErrorInstance() {
             return InstanceHolder.ERROR;
         }
 
-        private Result(final WindowClosed windowClosed) {
+        private Result(final Boolean windowClosed) {
             this.windowClosed = windowClosed;
         }
 
-        @Contract(pure = true)
         public boolean isError() {
             return isError(windowClosed);
         }
 
         @Contract(value = "null -> true; !null -> false", pure = true)
-        private static boolean isError(final WindowClosed windowClosed) {
+        private static boolean isError(final Boolean windowClosed) {
             return windowClosed == null;
         }
 
@@ -103,20 +80,20 @@ public final class IsWindowClosed {
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add(WINDOW_CLOSED_FIELD, windowClosed)
+                    .add(WINDOW_CLOSED, windowClosed)
                     .toString();
         }
 
         private static final class InstanceHolder {
 
-            private static final Result TRUE = new Result(WindowClosed.getInstance(true));
-            private static final Result FALSE = new Result(WindowClosed.getInstance(false));
+            private static final Result TRUE = new Result(Boolean.TRUE);
+            private static final Result FALSE = new Result(Boolean.FALSE);
             private static final Result ERROR = new Result(null);
 
             // sanity check
             static {
-                assert !TRUE.isError() && TRUE.windowClosed.result;
-                assert !FALSE.isError() && !FALSE.windowClosed.result;
+                assert !TRUE.isError() && TRUE.windowClosed;
+                assert !FALSE.isError() && !FALSE.windowClosed;
                 assert ERROR.isError();
             }
         }

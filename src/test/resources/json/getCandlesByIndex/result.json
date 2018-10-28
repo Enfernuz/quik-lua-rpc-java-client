@@ -1,0 +1,44 @@
+{
+  "t" : [
+    {
+      "open" : "1",
+      "close" : "2",
+      "high" : "3",
+      "low" : "4",
+      "volume" : "5",
+      "datetime" : {
+        "mcs" : 1,
+        "ms" : 2,
+        "sec" : 3,
+        "min" : 4,
+        "hour" : 5,
+        "day" : 6,
+        "week_day" : 7,
+        "month" : 8,
+        "year" : 2009
+      },
+      "does_exist" : 1
+    },
+    {
+      "open" : "21",
+      "close" : "22",
+      "high" : "23",
+      "low" : "24",
+      "volume" : "25",
+      "datetime" : {
+        "mcs" : 31,
+        "ms" : 32,
+        "sec" : 33,
+        "min" : 34,
+        "hour" : 12,
+        "day" : 26,
+        "week_day" : 5,
+        "month" : 3,
+        "year" : 2015
+      },
+      "does_exist" : 0
+    }
+  ],
+  "n" : 2,
+  "l" : "3"
+}

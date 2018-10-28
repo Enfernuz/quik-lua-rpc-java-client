@@ -1,33 +1,60 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
+import com.enfernuz.quik.lua.rpc.api.RpcResult;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.common.base.MoreObjects;
-import lombok.Builder;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Value;
+import lombok.*;
+import org.jetbrains.annotations.NotNull;
 
-public final class CalcBuySell {
+public final class CalcBuySell implements RemoteProcedure {
 
     private CalcBuySell() {}
 
-    @Value
-    public static class Request {
+    @JsonPropertyOrder({Args.CLASS_CODE, Args.SEC_CODE, Args.CLIENT_CODE, Args.ACCOUNT, Args.PRICE, Args.IS_BUY, Args.IS_MARKET})
+    @EqualsAndHashCode
+    public static final class Args implements RpcArgs<CalcBuySell> {
 
-        String classCode;
-        String secCode;
-        String clientCode;
-        String account;
-        String price;
-        boolean isBuy;
-        boolean isMarket;
+        private static final String CLASS_CODE = "class_code";
+        private static final String SEC_CODE = "sec_code";
+        private static final String CLIENT_CODE = "client_code";
+        private static final String ACCOUNT = "account";
+        private static final String PRICE = "price";
+        private static final String IS_BUY = "is_buy";
+        private static final String IS_MARKET = "is_market";
+
+        @JsonProperty(CLASS_CODE)
+        private final String classCode;
+
+        @JsonProperty(SEC_CODE)
+        private final String secCode;
+
+        @JsonProperty(CLIENT_CODE)
+        private final String clientCode;
+
+        @JsonProperty(ACCOUNT)
+        private final String account;
+
+        @JsonProperty(PRICE)
+        private final String price;
+
+        @JsonProperty(IS_BUY)
+        private final boolean isBuy;
+
+        @JsonProperty(IS_MARKET)
+        private final boolean isMarket;
 
         @Builder
-        private Request(
-                final @NonNull String classCode,
-                final @NonNull String secCode,
-                final @NonNull String clientCode,
-                final @NonNull String account,
-                final @NonNull String price,
+        private Args(
+                @NonNull final String classCode,
+                @NonNull final String secCode,
+                @NonNull final String clientCode,
+                @NonNull final String account,
+                @NonNull final String price,
                 final boolean isBuy,
                 final boolean isMarket) {
 
@@ -40,32 +67,80 @@ public final class CalcBuySell {
             this.isMarket = isMarket;
         }
 
+        @JsonIgnore
+        public String getClassCode() {
+            return classCode;
+        }
+
+        @JsonIgnore
+        public String getSecCode() {
+            return secCode;
+        }
+
+        @JsonIgnore
+        public String getClientCode() {
+            return clientCode;
+        }
+
+        @JsonIgnore
+        public String getAccount() {
+            return account;
+        }
+
+        @JsonIgnore
+        public String getPrice() {
+            return price;
+        }
+
+        @JsonIgnore
+        public boolean isBuy() {
+            return isBuy;
+        }
+
+        @JsonIgnore
+        public boolean isMarket() {
+            return isMarket;
+        }
+
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("class_code", classCode)
-                    .add("sec_code", secCode)
-                    .add("client_code", clientCode)
-                    .add("account", account)
-                    .add("price", price)
-                    .add("is_buy", isBuy)
-                    .add("is_market", isMarket)
+                    .add(CLASS_CODE, classCode)
+                    .add(SEC_CODE, secCode)
+                    .add(CLIENT_CODE, clientCode)
+                    .add(ACCOUNT, account)
+                    .add(PRICE, price)
+                    .add(IS_BUY, isBuy)
+                    .add(IS_MARKET, isMarket)
                     .toString();
         }
     }
 
     @Value
-    @RequiredArgsConstructor
-    public static class Result {
+    public static class Result implements RpcResult<CalcBuySell> {
+
+        private static final String QTY = "qty";
+        private static final String COMISSION = "comission";
 
         int qty;
         String comission;
 
+        @JsonCreator
+        public Result(
+                @JsonProperty(value = QTY, required = true) final int qty,
+                @JsonProperty(value = COMISSION, required = true) @NonNull final String comission) {
+
+            this.qty = qty;
+            this.comission = comission;
+        }
+
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("qty", qty)
-                    .add("comission", comission)
+                    .add(QTY, qty)
+                    .add(COMISSION, comission)
                     .toString();
         }
     }

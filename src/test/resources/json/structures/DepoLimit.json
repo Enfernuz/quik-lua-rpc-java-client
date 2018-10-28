@@ -1,0 +1,16 @@
+{
+  "sec_code": "1",
+  "trdaccid": "2",
+  "firmid": "3",
+  "client_code": "4",
+  "openbal": 5,
+  "openlimit": 6,
+  "currentbal": 7,
+  "currentlimit": 8,
+  "locked_sell": 9,
+  "locked_buy": 10,
+  "locked_buy_value": "11",
+  "locked_sell_value": "12",
+  "wa_position_price": "13",
+  "limit_kind": 14
+}

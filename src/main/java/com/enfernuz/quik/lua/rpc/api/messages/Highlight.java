@@ -1,35 +1,53 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
+import com.enfernuz.quik.lua.rpc.api.RpcResult;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.common.base.MoreObjects;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Value;
 import org.jetbrains.annotations.NotNull;
 
-public final class Highlight {
+public final class Highlight implements RemoteProcedure {
 
     private Highlight() {}
 
-    private static final String T_ID_FIELD = "t_id";
-    private static final String ROW_FIELD = "row";
-    private static final String COL_FIELD = "col";
-    private static final String B_COLOR_FIELD = "b_color";
-    private static final String F_COLOR_FIELD = "f_color";
-    private static final String TIMEOUT_FIELD = "timeout";
+    @JsonPropertyOrder({Args.T_ID, Args.ROW, Args.COL, Args.B_COLOR, Args.F_COLOR, Args.TIMEOUT})
+    @EqualsAndHashCode
+    public static class Args implements RpcArgs<Highlight> {
 
-    @Value
-    public static class Request {
+        private static final String T_ID = "t_id";
+        private static final String ROW = "row";
+        private static final String COL = "col";
+        private static final String B_COLOR = "b_color";
+        private static final String F_COLOR = "f_color";
+        private static final String TIMEOUT = "timeout";
 
-        int tId;
-        int row;
-        int col;
-        int bColor;
-        int fColor;
-        int timeout;
+        @JsonProperty(T_ID)
+        private final int tId;
+
+        @JsonProperty(ROW)
+        private final int row;
+
+        @JsonProperty(COL)
+        private final int col;
+
+        @JsonProperty(B_COLOR)
+        private final int bColor;
+
+        @JsonProperty(F_COLOR)
+        private final int fColor;
+
+        @JsonProperty(TIMEOUT)
+        private final int timeout;
 
         @Builder
-        private Request(
+        private Args(
                 final int tId,
                 final int row,
                 final int col,
@@ -45,29 +63,59 @@ public final class Highlight {
             this.timeout = timeout;
         }
 
+        @JsonIgnore
+        public int getTId() {
+            return tId;
+        }
+
+        @JsonIgnore
+        public int getRow() {
+            return row;
+        }
+
+        @JsonIgnore
+        public int getCol() {
+            return col;
+        }
+
+        @JsonIgnore
+        public int getBColor() {
+            return bColor;
+        }
+
+        @JsonIgnore
+        public int getFColor() {
+            return fColor;
+        }
+
+        @JsonIgnore
+        public int getTimeout() {
+            return timeout;
+        }
+
         @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add(T_ID_FIELD, tId)
-                    .add(ROW_FIELD, row)
-                    .add(COL_FIELD, col)
-                    .add(B_COLOR_FIELD, bColor)
-                    .add(F_COLOR_FIELD, fColor)
-                    .add(TIMEOUT_FIELD, timeout)
+                    .add(T_ID, tId)
+                    .add(ROW, row)
+                    .add(COL, col)
+                    .add(B_COLOR, bColor)
+                    .add(F_COLOR, fColor)
+                    .add(TIMEOUT, timeout)
                     .toString();
         }
     }
 
     @Value
-    public static class Result {
+    public static class Result implements RpcResult<Highlight> {
 
-        private static final String RESULT_FIELD = "result";
+        private static final String RESULT = "result";
 
         boolean result;
 
         @JsonCreator
-        public static Result getInstance(@JsonProperty(value = RESULT_FIELD, required = true) final boolean result) {
+        public static Result getInstance(@JsonProperty(value = RESULT, required = true) final boolean result) {
             return result ? InstanceHolder.TRUE : InstanceHolder.FALSE;
         }
 
@@ -79,7 +127,7 @@ public final class Highlight {
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add(RESULT_FIELD, result)
+                    .add(RESULT, result)
                     .toString();
         }
 

@@ -1,147 +1,131 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonView;
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
+import com.enfernuz.quik.lua.rpc.api.RpcResult;
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.base.MoreObjects;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.Value;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-public final class Message {
+public final class Message implements RemoteProcedure {
 
     private Message() {}
 
-    @Value
-    public static class Request {
+    @JsonPropertyOrder({Args.MESSAGE, Args.ICON_TYPE})
+    @EqualsAndHashCode
+    public static final class Args implements RpcArgs<Message> {
 
-        @NonNull String message;
-        IconType iconType;
+        private static final String MESSAGE = "message";
+        private static final String ICON_TYPE = "icon_type";
 
-        public Request(final String message) {
+        @JsonProperty(MESSAGE)
+        private final String message;
+
+        @JsonProperty(ICON_TYPE)
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        private final IconType iconType;
+
+        public Args(@NonNull final String message) {
             this(message, null);
         }
 
-        public Request(final String message, final IconType iconType) {
+        public Args(@NonNull final String message, final IconType iconType) {
             this.message = message;
             this.iconType = iconType;
         }
 
-        @Override
-        public String toString() {
-            return MoreObjects.toStringHelper(this)
-                    .add("message", message)
-                    .add("icon_type", iconType)
-                    .toString();
-        }
-    }
-
-    @Value
-    public static class MessageResult {
-
-        private static final String RESULT_FIELD = "result";
-
-        int result;
-
-        @JsonCreator
-        public static MessageResult getInstance(@JsonProperty(value = RESULT_FIELD, required = true) final int result) {
-            return isOk(result) ? InstanceHolder.OK : new MessageResult(result);
+        @JsonIgnore
+        public String getMessage() {
+            return message;
         }
 
-        public static MessageResult getOkInstance() {
-            return InstanceHolder.OK;
-        }
-
-        @Contract(pure = true)
-        public boolean isOk() {
-            return isOk(result);
-        }
-
-        @Contract(pure = true)
-        private static boolean isOk(final int result) {
-            return result == 1;
-        }
-
-        private MessageResult(final int result) {
-            this.result = result;
+        @JsonIgnore
+        @JsonSerialize
+        public IconType getIconType() {
+            return iconType;
         }
 
         @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add(RESULT_FIELD, result)
+                    .add(MESSAGE, message)
+                    .add(ICON_TYPE, iconType)
                     .toString();
-        }
-
-        private static final class InstanceHolder {
-
-            private static final MessageResult OK = new MessageResult(1);
-
-            // sanity check
-            static {
-                assert OK.isOk();
-            }
         }
     }
 
     @Value
-    public static class Result {
+    public static class Result implements RpcResult<Message> {
 
-        private static final String MESSAGE_RESULT_FIELD = "message_result";
+        private static final String RESULT = "result";
 
-        MessageResult messageResult;
+        Integer result;
 
         @JsonCreator
-        public static Result getInstance(@JsonProperty(value = MESSAGE_RESULT_FIELD, required = true) final MessageResult messageResult) {
+        public static Result getInstance(@JsonProperty(RESULT) final Integer result) {
 
-            if (isError(messageResult)) {
+            if ( isOk(result) ) {
+                return InstanceHolder.OK;
+            } else if ( isError(result) ) {
                 return InstanceHolder.ERROR;
             }
 
-            if (messageResult.isOk()) {
-                return InstanceHolder.OK;
-            }
-
-            return new Result(messageResult);
+            return new Result(result);
         }
 
         public static Result getErrorInstance() {
             return InstanceHolder.ERROR;
         }
 
-        private Result(final MessageResult messageResult) {
-            this.messageResult = messageResult;
+        public static Result getOkInstance() {
+            return InstanceHolder.OK;
         }
 
-        @Contract(pure = true)
+        private Result(final Integer result) {
+            this.result = result;
+        }
+
         public boolean isError() {
-            return isError(messageResult);
+            return isError(result);
+        }
+
+        public boolean isOk() {
+            return isOk(result);
+        }
+
+        @Contract("null -> false")
+        private static boolean isOk(final Integer result) {
+            return Integer.valueOf(1).equals(result);
         }
 
         @Contract(value = "null -> true; !null -> false", pure = true)
-        private static boolean isError(final MessageResult messageResult) {
-            return messageResult == null;
+        private static boolean isError(final Integer result) {
+            return result == null;
         }
 
         @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add(MESSAGE_RESULT_FIELD, messageResult)
+                    .add(RESULT, result)
                     .toString();
         }
 
         private static final class InstanceHolder {
 
-            private static final Result OK = new Result(MessageResult.getOkInstance());
+            private static final Result OK = new Result(1);
             private static final Result ERROR = new Result(null);
 
             // sanity check
             static {
-                assert !OK.isError() && OK.messageResult.isOk();
-                assert ERROR.isError();
+                assert !OK.isError() && OK.isOk();
+                assert ERROR.isError() && !ERROR.isOk();
             }
         }
     }
@@ -152,6 +136,7 @@ public final class Message {
         WARNING(2),
         ERROR(3);
 
+        @JsonValue
         public final int value;
 
         IconType(final int value) {

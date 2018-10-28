@@ -1,6 +1,0 @@
-{
-  "method" : "bit.bnot",
-  "args" : {
-    "x" : 1
-  }
-}

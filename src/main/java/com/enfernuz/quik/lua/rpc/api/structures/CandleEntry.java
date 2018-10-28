@@ -1,13 +1,24 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.*;
 import lombok.experimental.NonFinal;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 @Value
 public class CandleEntry implements Comparable<CandleEntry> {
+
+    private static final String OPEN = "open";
+    private static final String CLOSE = "close";
+    private static final String HIGH = "high";
+    private static final String LOW = "low";
+    private static final String VOLUME = "volume";
+    private static final String DATETIME = "datetime";
+    private static final String DOES_EXIST = "does_exist";
 
     String open;
     String close;
@@ -17,18 +28,24 @@ public class CandleEntry implements Comparable<CandleEntry> {
     DateTimeEntry dateTimeEntry;
     int doesExist;
 
-    private @NonFinal @Getter(AccessLevel.NONE) transient int hashCode;
-    private @NonFinal @Getter(AccessLevel.NONE) transient String asString;
+    @Getter(AccessLevel.NONE)
+    @NonFinal
+    private transient int hashCode;
 
+    @Getter(AccessLevel.NONE)
+    @NonFinal
+    private transient String asString;
+
+    @JsonCreator
     @Builder
     private CandleEntry(
-            final String open,
-            final String close,
-            final String high,
-            final String low,
-            final String volume,
-            final DateTimeEntry dateTimeEntry,
-            final int doesExist) {
+            @JsonProperty(value = OPEN, required = true) final String open,
+            @JsonProperty(value = CLOSE, required = true) final String close,
+            @JsonProperty(value = HIGH, required = true) final String high,
+            @JsonProperty(value = LOW, required = true) final String low,
+            @JsonProperty(value = VOLUME, required = true) final String volume,
+            @JsonProperty(value = DATETIME, required = true) final DateTimeEntry dateTimeEntry,
+            @JsonProperty(value = DOES_EXIST, required = true) final int doesExist) {
 
         this.open = open;
         this.close = close;
@@ -73,18 +90,19 @@ public class CandleEntry implements Comparable<CandleEntry> {
         return hashCode;
     }
 
+    @NotNull
     @Override
     public String toString() {
 
         if (asString == null) {
             asString = MoreObjects.toStringHelper(this)
-                    .add("open", open)
-                    .add("close", close)
-                    .add("high", high)
-                    .add("low", low)
-                    .add("volume", volume)
-                    .add("datetime", dateTimeEntry)
-                    .add("does_exist", doesExist)
+                    .add(OPEN, open)
+                    .add(CLOSE, close)
+                    .add(HIGH, high)
+                    .add(LOW, low)
+                    .add(VOLUME, volume)
+                    .add(DATETIME, dateTimeEntry)
+                    .add(DOES_EXIST, doesExist)
                     .toString();
         }
 

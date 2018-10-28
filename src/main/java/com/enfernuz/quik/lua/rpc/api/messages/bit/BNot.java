@@ -1,41 +1,63 @@
 package com.enfernuz.quik.lua.rpc.api.messages.bit;
 
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
+import com.enfernuz.quik.lua.rpc.api.RpcResult;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
+import lombok.EqualsAndHashCode;
 import lombok.Value;
+import org.jetbrains.annotations.NotNull;
 
-public final class BNot {
+public final class BNot implements RemoteProcedure {
 
     private BNot() {}
 
-    @Value
-    public static class Request {
+    @EqualsAndHashCode
+    public static final class Args implements RpcArgs<BNot> {
 
-        int x;
+        private static final String X = "x";
 
+        @JsonProperty(X)
+        private final int x;
+
+        public Args(final int x) {
+            this.x = x;
+        }
+
+        @JsonIgnore
+        public int getX() {
+            return x;
+        }
+
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("x", x)
+                    .add(X, x)
                     .toString();
         }
     }
 
     @Value
-    public static class Result {
+    public static class Result implements RpcResult<BNot> {
+
+        private static final String RESULT = "result";
 
         int result;
 
         @JsonCreator
-        public Result(final @JsonProperty(value = "result", required = true) int result) {
+        public Result(final @JsonProperty(value = RESULT, required = true) int result) {
             this.result = result;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("result", result)
+                    .add(RESULT, result)
                     .toString();
         }
     }

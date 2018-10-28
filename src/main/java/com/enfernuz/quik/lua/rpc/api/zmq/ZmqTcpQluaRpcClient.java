@@ -1,15 +1,12 @@
 package com.enfernuz.quik.lua.rpc.api.zmq;
 
-import com.enfernuz.quik.lua.rpc.api.ClientRpcException;
-import com.enfernuz.quik.lua.rpc.api.ServiceError;
-import com.enfernuz.quik.lua.rpc.api.ServiceRpcException;
+import com.enfernuz.quik.lua.rpc.api.*;
 import com.enfernuz.quik.lua.rpc.api.messages.*;
 import com.enfernuz.quik.lua.rpc.api.messages.bit.*;
 import com.enfernuz.quik.lua.rpc.api.messages.datasource.*;
 import com.enfernuz.quik.lua.rpc.api.security.zmq.AuthContext;
 import com.enfernuz.quik.lua.rpc.api.security.zmq.ZmqSecurable;
-import com.enfernuz.quik.lua.rpc.api.structures.ResponseEnvelope;
-import com.enfernuz.quik.lua.rpc.api.messages.GetCandlesByIndex;
+import com.enfernuz.quik.lua.rpc.api.structures.*;
 import com.enfernuz.quik.lua.rpc.config.ClientConfiguration;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
@@ -20,13 +17,15 @@ import org.jetbrains.annotations.Nullable;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMsg;
 
+import java.util.Map;
+
 import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
 
 /**
  * Реализация компонента <b>Java-обёртка над API QLua терминала QUIK на базе ZeroMQ</b>.
  */
-public final class ZmqTcpQluaRpcClient extends AbstractTcpZmqClient implements TcpQluaRpcClient, ZmqSecurable {
+public final class ZmqTcpQluaRpcClient extends AbstractTcpZmqClient implements RemoteProcedureCaller, TcpQluaRpcClient, ZmqSecurable {
 
     private ZMQ.Context zmqContext;
     private ZMQ.Socket reqSocket;
@@ -94,419 +93,433 @@ public final class ZmqTcpQluaRpcClient extends AbstractTcpZmqClient implements T
     }
 
     @Override
-    public int qlua_AddColumn(final AddColumn.Request request) {
-        return makeRPC(request, AddColumn.Result.class).getResult();
+    public int qlua_AddColumn(@NotNull final AddColumn.Args args) {
+        return makeRPC(AddColumn.class, requireNonNull(args), AddColumn.Result.class).getResult();
     }
 
     @Override
-    public int qlua_AddLabel(final AddLabel.Request request) {
-        return makeRPC(request, AddLabel.Result.class).getLabelId();
+    public @Nullable Integer qlua_AddLabel(@NotNull final String chartTag, final Map<String, String> labelParams) {
+
+        final AddLabel.Args args = AddLabel.Args.builder()
+                .chartTag(chartTag)
+                .labelParams(labelParams)
+                .build();
+
+        return makeRPC(AddLabel.class, args, AddLabel.Result.class).getLabelId();
     }
 
     @Override
     public int qlua_AllocTable() {
-        return makeRPC(AllocTable.Request.INSTANCE, AllocTable.Result.class).getTId();
+        return makeRPC(AllocTable.class, null, AllocTable.Result.class).getTId();
     }
 
-    @NotNull
     @Override
-    public CalcBuySell.Result qlua_CalcBuySell(final CalcBuySell.Request request) {
-        return makeRPC(request, CalcBuySell.Result.class);
+    public @NotNull CalcBuySell.Result qlua_CalcBuySell(@NotNull final CalcBuySell.Args args) {
+        return makeRPC(CalcBuySell.class, requireNonNull(args), CalcBuySell.Result.class);
     }
 
     @Override
-    public boolean qlua_CancelParamRequest(final CancelParamRequest.Request request) {
-        return makeRPC(request, CancelParamRequest.Result.class).isResult();
+    public boolean qlua_CancelParamRequest(@NotNull final CancelParamRequest.Args args) {
+        return makeRPC(CancelParamRequest.class, requireNonNull(args), CancelParamRequest.Result.class).isResult();
     }
 
     @Override
-    public boolean qlua_Clear(final Clear.Request request) {
-        return makeRPC(request, Clear.Result.class).isResult();
+    public boolean qlua_Clear(final int tId) {
+        return makeRPC(Clear.class, new Clear.Args(tId), Clear.Result.class).isResult();
     }
 
     @Override
-    public int qlua_CreateWindow(final CreateWindow.Request request) {
-        return makeRPC(request, CreateWindow.Result.class).getResult();
+    public int qlua_CreateWindow(final int tId) {
+        return makeRPC(CreateWindow.class, new CreateWindow.Args(tId), CreateWindow.Result.class).getResult();
     }
 
     @Override
-    public boolean qlua_DelAllLabels(final DelAllLabels.Request request) {
-        return makeRPC(request, DelAllLabels.Result.class).isResult();
+    public boolean qlua_DelAllLabels(@NotNull final String chartTag) {
+        return makeRPC(DelAllLabels.class, new DelAllLabels.Args(chartTag), DelAllLabels.Result.class).isResult();
     }
 
     @Override
-    public boolean qlua_DeleteRow(final DeleteRow.Request request) {
-        return makeRPC(request, DeleteRow.Result.class).isResult();
+    public boolean qlua_DeleteRow(@NotNull final DeleteRow.Args args) {
+        return makeRPC(DeleteRow.class, requireNonNull(args), DeleteRow.Result.class).isResult();
     }
 
     @Override
-    public boolean qlua_DelLabel(final DelLabel.Request request) {
-        return makeRPC(request, DelLabel.Result.class).isResult();
+    public boolean qlua_DelLabel(@NotNull final String chartTag, final int labelId) {
+        return makeRPC(DelLabel.class, new DelLabel.Args(chartTag, labelId), DelLabel.Result.class).isResult();
     }
 
     @Override
-    public boolean qlua_DestroyTable(final DestroyTable.Request request) {
-        return makeRPC(request, DestroyTable.Result.class).isResult();
+    public boolean qlua_DestroyTable(final int tId) {
+        return makeRPC(DestroyTable.class, new DestroyTable.Args(tId), DestroyTable.Result.class).isResult();
     }
 
-    @NotNull
     @Override
-    public GetBuySellInfo.BuySellInfo qlua_getBuySellInfo(final GetBuySellInfo.Request request) {
-        return makeRPC(request, GetBuySellInfo.Result.class).getBuySellInfo();
+    public @NotNull GetBuySellInfo.BuySellInfo qlua_getBuySellInfo(@NotNull final GetBuySellInfo.Args args) {
+        return makeRPC(GetBuySellInfo.class, requireNonNull(args), GetBuySellInfo.Result.class).getBuySellInfo();
     }
 
-    @NotNull
     @Override
-    public GetBuySellInfoEx.BuySellInfoEx qlua_getBuySellInfoEx(final GetBuySellInfoEx.Request request) {
-        return makeRPC(request, GetBuySellInfoEx.Result.class).getBuySellInfoEx();
+    public @NotNull GetBuySellInfoEx.BuySellInfoEx qlua_getBuySellInfoEx(@NotNull final GetBuySellInfoEx.Args args) {
+        return makeRPC(GetBuySellInfoEx.class, requireNonNull(args), GetBuySellInfoEx.Result.class).getBuySellInfoEx();
     }
 
-    @NotNull
     @Override
-    public GetCandlesByIndex.Result qlua_getCandlesByIndex(final GetCandlesByIndex.Request request) {
-        return makeRPC(request, GetCandlesByIndex.Result.class);
+    public @NotNull GetCandlesByIndex.Result qlua_getCandlesByIndex(@NotNull final GetCandlesByIndex.Args args) {
+        return makeRPC(GetCandlesByIndex.class, requireNonNull(args), GetCandlesByIndex.Result.class);
     }
 
-    @NotNull
     @Override
-    public GetCell.Result qlua_GetCell(final GetCell.Result request) {
-        return makeRPC(request, GetCell.Result.class);
+    public @NotNull GetCell.Result qlua_GetCell(@NotNull final GetCell.Args args) {
+        return makeRPC(GetCell.class, requireNonNull(args), GetCell.Result.class);
     }
 
-    @Nullable
     @Override
-    public String qlua_getClassesList() {
-        return makeRPC(GetClassesList.Request.INSTANCE, GetClassesList.Result.class).getClassesList();
+    public @NotNull String qlua_getClassesList() {
+        return makeRPC(GetClassesList.class, null, GetClassesList.Result.class).getClassesList();
     }
 
     @Override
-    public GetClassInfo.Result qlua_getClassInfo(final GetClassInfo.Request request) {
-        return makeRPC(request, GetClassInfo.Result.class);
+    public @NotNull ClassInfo qlua_getClassInfo(@NotNull final String classCode) {
+        return makeRPC(GetClassInfo.class, new GetClassInfo.Args(classCode), GetClassInfo.Result.class).getClassInfo();
     }
 
     @Override
-    public GetClassSecurities.Result qlua_getClassSecurities(final GetClassSecurities.Request request) {
-        return makeRPC(request, GetClassSecurities.Result.class);
+    public @NotNull String qlua_getClassSecurities(@NotNull final String classCode) {
+        return makeRPC(GetClassSecurities.class, new GetClassSecurities.Args(classCode), GetClassSecurities.Result.class).getClassSecurities();
     }
 
     @Override
-    public GetDepo.Result qlua_getDepo(final GetDepo.Request request) {
-        return makeRPC(request, GetDepo.Result.class);
+    public @NotNull Depo qlua_getDepo(@NotNull final GetDepo.Args args) {
+        return makeRPC(GetDepo.class, requireNonNull(args), GetDepo.Result.class).getDepo();
     }
 
     @Override
-    public GetDepoEx.Result qlua_getDepoEx(final GetDepoEx.Request request) {
-        return makeRPC(request, GetDepoEx.Result.class);
+    public @Nullable DepoLimit qlua_getDepoEx(@NotNull final GetDepoEx.Args args) {
+        return makeRPC(GetDepoEx.class, requireNonNull(args), GetDepoEx.Result.class).getDepoEx();
     }
 
     @Override
-    public GetFuturesHolding.Result qlua_getFuturesHolding(final GetFuturesHolding.Request request) {
-        return makeRPC(request, GetFuturesHolding.Result.class);
+    public @Nullable FuturesClientHolding qlua_getFuturesHolding(@NotNull final GetFuturesHolding.Args args) {
+        return makeRPC(GetFuturesHolding.class, requireNonNull(args), GetFuturesHolding.Result.class).getFuturesHolding();
     }
 
     @Override
-    public GetFuturesLimit.Result qlua_getFuturesLimit(final GetFuturesLimit.Request request) {
-        return makeRPC(request, GetFuturesLimit.Result.class);
+    public @Nullable FuturesLimit qlua_getFuturesLimit(@NotNull final GetFuturesLimit.Args args) {
+        return makeRPC(GetFuturesLimit.class, requireNonNull(args), GetFuturesLimit.Result.class).getFuturesLimit();
     }
 
     @Override
-    public GetInfoParam.Result qlua_getInfoParam(final GetInfoParam.Request request) {
-        return makeRPC(request, GetInfoParam.Result.class);
+    public @NotNull String qlua_getInfoParam(@NotNull final String paramName) {
+        return makeRPC(GetInfoParam.class, new GetInfoParam.Args(paramName), GetInfoParam.Result.class).getInfoParam();
     }
 
     @Override
-    public GetItem.Result qlua_getItem(final GetItem.Request request) {
-        return makeRPC(request, GetItem.Result.class);
+    public @Nullable Map<String, String> qlua_getItem(@NotNull final String tableName, final int index) {
+        return makeRPC(GetItem.class, new GetItem.Args(tableName, index), GetItem.Result.class).getTableRow();
     }
 
     @Override
-    public GetLabelParams.Result qlua_GetLabelParams(final GetLabelParams.Request request) {
-        return makeRPC(request, GetLabelParams.Result.class);
+    public @Nullable Map<String, String> qlua_GetLabelParams(@NotNull final String chartTag, final int labelId) {
+        return makeRPC(GetLabelParams.class, new GetLabelParams.Args(chartTag, labelId), GetLabelParams.Result.class).getLabelParams();
     }
 
     @Override
-    public GetLinesCount.Result qlua_getLinesCount(final GetLinesCount.Request request) {
-        return makeRPC(request, GetLinesCount.Result.class);
+    public int qlua_getLinesCount(@NotNull final String tag) {
+        return makeRPC(GetLinesCount.class, new GetLinesCount.Args(tag), GetLinesCount.Result.class).getLinesCount();
     }
 
     @Override
-    public GetMoney.Result qlua_getMoney(final GetMoney.Request request) {
-        return makeRPC(request, GetMoney.Result.class);
+    public @NotNull Money qlua_getMoney(@NotNull final GetMoney.Args args) {
+        return makeRPC(GetMoney.class, requireNonNull(args), GetMoney.Result.class).getMoney();
     }
 
     @Override
-    public GetMoneyEx.Result qlua_getMoneyEx(final GetMoneyEx.Request request) {
-        return makeRPC(request, GetMoneyEx.Result.class);
+    public @Nullable MoneyLimit qlua_getMoneyEx(@NotNull final GetMoneyEx.Args args) {
+        return makeRPC(GetMoneyEx.class, requireNonNull(args), GetMoneyEx.Result.class).getMoneyEx();
     }
 
     @Override
-    public GetNumberOf.Result qlua_getNumberOf(final GetNumberOf.Request request) {
-        return makeRPC(request, GetNumberOf.Result.class);
+    public int qlua_getNumberOf(@NotNull final String tableName) {
+        return makeRPC(GetNumberOf.class, new GetNumberOf.Args(tableName), GetNumberOf.Result.class).getResult();
     }
 
     @Override
-    public GetNumCandles.Result qlua_getNumCandles(final GetNumCandles.Request request) {
-        return makeRPC(request, GetNumCandles.Result.class);
+    public int qlua_getNumCandles(@NotNull final String tag) {
+        return makeRPC(GetNumCandles.class, new GetNumCandles.Args(tag), GetNumCandles.Result.class).getNumCandles();
     }
 
     @Override
-    public GetOrderByNumber.Result qlua_getOrderByNumber(final GetOrderByNumber.Request request) {
-        return makeRPC(request, GetOrderByNumber.Result.class);
+    public @NotNull GetOrderByNumber.Result qlua_getOrderByNumber(@NotNull final String classCode, final long orderId) {
+        return makeRPC(GetOrderByNumber.class, new GetOrderByNumber.Args(classCode, orderId), GetOrderByNumber.Result.class);
     }
 
     @Override
-    public GetParamEx.Result qlua_getParamEx(final GetParamEx.Request request) {
-        return makeRPC(request, GetParamEx.Result.class);
+    public @NotNull GetParamEx.ParamEx qlua_getParamEx(@NotNull final GetParamEx.Args args) {
+        return makeRPC(GetParamEx.class, requireNonNull(args), GetParamEx.Result.class).getParamEx();
     }
 
     @Override
-    public GetParamEx2.Result qlua_getParamEx2(final GetParamEx2.Request request) {
-        return makeRPC(request, GetParamEx2.Result.class);
+    public @NotNull GetParamEx2.ParamEx2 qlua_getParamEx2(@NotNull final GetParamEx2.Args args) {
+        return makeRPC(GetParamEx2.class, requireNonNull(args), GetParamEx2.Result.class).getParamEx();
     }
 
     @Override
-    public GetPortfolioInfo.Result qlua_getPortfolioInfo(final GetPortfolioInfo.Request request) {
-        return makeRPC(request, GetPortfolioInfo.Result.class);
+    public @NotNull PortfolioInfo qlua_getPortfolioInfo(@NotNull final GetPortfolioInfo.Args args) {
+        return makeRPC(GetPortfolioInfo.class, requireNonNull(args), GetPortfolioInfo.Result.class).getPortfolioInfo();
     }
 
     @Override
-    public GetPortfolioInfoEx.Result qlua_getPortfolioInfoEx(final GetPortfolioInfoEx.Request request) {
-        return makeRPC(request, GetPortfolioInfoEx.Result.class);
+    public @NotNull GetPortfolioInfoEx.Result qlua_getPortfolioInfoEx(@NotNull final GetPortfolioInfoEx.Args args) {
+        return makeRPC(GetPortfolioInfoEx.class, requireNonNull(args), GetPortfolioInfoEx.Result.class);
     }
 
     @Override
-    public GetQuoteLevel2.Result qlua_getQuoteLevel2(final GetQuoteLevel2.Request request) {
-        return makeRPC(request, GetQuoteLevel2.Result.class);
+    public @NotNull GetQuoteLevel2.Result qlua_getQuoteLevel2(@NotNull final GetQuoteLevel2.Args args) {
+        return makeRPC(GetQuoteLevel2.class, requireNonNull(args), GetQuoteLevel2.Result.class);
     }
 
     @Override
-    public GetScriptPath.Result qlua_getScriptPath() {
-        return makeRPC(GetScriptPath.Request.INSTANCE, GetScriptPath.Result.class);
+    public @NotNull String qlua_getScriptPath() {
+        return makeRPC(GetScriptPath.class, null, GetScriptPath.Result.class).getScriptPath();
     }
 
     @Override
-    public GetSecurityInfo.Result qlua_getSecurityInfo(final GetSecurityInfo.Request request) {
-        return makeRPC(request, GetSecurityInfo.Result.class);
+    public @Nullable Security qlua_getSecurityInfo(@NotNull final GetSecurityInfo.Args args) {
+        return makeRPC(GetSecurityInfo.class, requireNonNull(args), GetSecurityInfo.Result.class).getSecurityInfo();
     }
 
     @Override
-    public GetTableSize.Result qlua_GetTableSize(final GetTableSize.Request request) {
-        return makeRPC(request, GetTableSize.Result.class);
+    public @Nullable GetTableSize.TableSize qlua_GetTableSize(final int tId) {
+        return makeRPC(GetTableSize.class, new GetTableSize.Args(tId), GetTableSize.Result.class).getTableSize();
     }
 
     @Override
-    public GetTradeDate.Result qlua_getTradeDate() {
-        return makeRPC(GetTradeDate.Request.INSTANCE, GetTradeDate.Result.class);
+    public @NotNull GetTradeDate.TradeDate qlua_getTradeDate() {
+        return makeRPC(GetTradeDate.class, null, GetTradeDate.Result.class).getTradeDate();
     }
 
     @Override
-    public GetWindowCaption.Result qlua_GetWindowCaption(final GetWindowCaption.Request request) {
-        return makeRPC(request, GetWindowCaption.Result.class);
+    public @Nullable String qlua_GetWindowCaption(final int tId) {
+        return makeRPC(GetWindowCaption.class, new GetWindowCaption.Args(tId), GetWindowCaption.Result.class).getCaption();
     }
 
     @Override
-    public GetWindowRect.Result qlua_GetWindowRect(final GetWindowRect.Request request) {
-        return makeRPC(request, GetWindowRect.Result.class);
+    public @NotNull GetWindowRect.WindowRect qlua_GetWindowRect(final int tId) {
+        return makeRPC(GetWindowRect.class, new GetWindowRect.Args(tId), GetWindowRect.Result.class).getWindowRect();
     }
 
     @Override
-    public GetWorkingFolder.Result qlua_getWorkingFolder() {
-        return makeRPC(GetWorkingFolder.Request.INSTANCE, GetWorkingFolder.Result.class);
+    public @NotNull String qlua_getWorkingFolder() {
+        return makeRPC(GetWorkingFolder.class, null, GetWorkingFolder.Result.class).getWorkingFolder();
     }
 
     @Override
-    public Highlight.Result qlua_Highlight(final Highlight.Request request) {
-        return makeRPC(request, Highlight.Result.class);
+    public boolean qlua_Highlight(@NotNull final Highlight.Args args) {
+        return makeRPC(Highlight.class, requireNonNull(args), Highlight.Result.class).isResult();
     }
 
     @Override
-    public InsertRow.Result qlua_InsertRow(final InsertRow.Request request) {
-        return makeRPC(request, InsertRow.Result.class);
+    public int qlua_InsertRow(@NotNull final InsertRow.Args args) {
+        return makeRPC(InsertRow.class, requireNonNull(args), InsertRow.Result.class).getResult();
     }
 
     @Override
-    public IsConnected.Result qlua_isConnected() {
-        return makeRPC(IsConnected.Request.INSTANCE, IsConnected.Result.class);
+    public int qlua_isConnected() {
+        return makeRPC(IsConnected.class, null, IsConnected.Result.class).getIsConnected();
     }
 
     @Override
-    public IsSubscribedLevel2Quotes.Result qlua_IsSubscribedLevelIIQuotes(final IsSubscribedLevel2Quotes.Request request) {
-        return makeRPC(request, IsSubscribedLevel2Quotes.Result.class);
+    public boolean qlua_IsSubscribedLevelIIQuotes(@NotNull final IsSubscribedLevel2Quotes.Args args) {
+        return makeRPC(IsSubscribedLevel2Quotes.class, requireNonNull(args), IsSubscribedLevel2Quotes.Result.class).isResult();
     }
 
     @Override
-    public IsWindowClosed.Result qlua_IsWindowClosed(final IsWindowClosed.Request request) {
-        return makeRPC(request, IsWindowClosed.Result.class);
+    public Boolean qlua_IsWindowClosed(final int tId) {
+        return makeRPC(IsWindowClosed.class, new IsWindowClosed.Args(tId), IsWindowClosed.Result.class).getWindowClosed();
     }
 
     @Override
-    public Message.Result qlua_message(final Message.Request request) {
-        return makeRPC(request, Message.Result.class);
+    public @Nullable Integer qlua_message(@NotNull final String message, final Message.IconType iconType) {
+        return makeRPC(Message.class, new Message.Args(message, iconType), Message.Result.class).getResult();
     }
 
     @Override
-    public ParamRequest.Result qlua_ParamRequest(final ParamRequest.Request request) {
-        return makeRPC(request, ParamRequest.Result.class);
+    public Integer qlua_message(@NotNull final String message) {
+        return makeRPC(Message.class, new Message.Args(message), Message.Result.class).getResult();
     }
 
     @Override
-    public PrintDbgStr.Result qlua_PrintDbgStr(final PrintDbgStr.Request request) {
-        return makeRPC(request, PrintDbgStr.Result.class);
+    public boolean qlua_ParamRequest(@NotNull final ParamRequest.Args args) {
+        return makeRPC(ParamRequest.class, args, ParamRequest.Result.class).isResult();
     }
 
     @Override
-    public RGB.Result qlua_RGB(final RGB.Request request) {
-        return makeRPC(request, RGB.Result.class);
+    public void qlua_PrintDbgStr(@NotNull final String s) {
+        makeRPC(PrintDbgStr.class, new PrintDbgStr.Args(s));
     }
 
     @Override
-    public SearchItems.Result qlua_SearchItems(final SearchItems.Request request) {
-        return makeRPC(request, SearchItems.Result.class);
+    public int qlua_RGB(@NotNull final RGB.Args args) {
+        return makeRPC(RGB.class, args, RGB.Result.class).getResult();
     }
 
     @Override
-    public SendTransaction.Result qlua_sendTransaction(final SendTransaction.Request request) {
-        return makeRPC(request, SendTransaction.Result.class);
+    public @NotNull SearchItems.Result qlua_SearchItems(@NotNull final SearchItems.Args args) {
+        return makeRPC(SearchItems.class, args, SearchItems.Result.class);
     }
 
     @Override
-    public SetCell.Result qlua_SetCell(final SetCell.Request request) {
-        return makeRPC(request, SetCell.Result.class);
+    public @NotNull String qlua_sendTransaction(@NotNull final SendTransaction.Args args) {
+        return makeRPC(SendTransaction.class, args, SendTransaction.Result.class).getResult();
     }
 
     @Override
-    public SetColor.Result qlua_SetColor(final SetColor.Request request) {
-        return makeRPC(request, SetColor.Result.class);
+    public boolean qlua_SetCell(@NotNull final SetCell.Args args) {
+        return makeRPC(SetCell.class, args, SetCell.Result.class).isResult();
     }
 
     @Override
-    public SetLabelParams.Result qlua_SetLabelParams(final SetLabelParams.Request request) {
-        return makeRPC(request, SetLabelParams.Result.class);
+    public boolean qlua_SetColor(@NotNull final SetColor.Args args) {
+        return makeRPC(SetColor.class, args, SetColor.Result.class).isResult();
     }
 
     @Override
-    public SetSelectedRow.Result qlua_SetSelectedRow(final SetSelectedRow.Request request) {
-        return makeRPC(request, SetSelectedRow.Result.class);
+    public boolean qlua_SetLabelParams(@NotNull final String chartTag, final int labelId, @NotNull final Map<String, String> labelParams) {
+        return makeRPC(SetLabelParams.class, new SetLabelParams.Args(chartTag, labelId, labelParams), SetLabelParams.Result.class).isResult();
     }
 
     @Override
-    public SetTableNotificationCallback.Result qlua_SetTableNotificationCallback(final SetTableNotificationCallback.Request request) {
-        return makeRPC(request, SetTableNotificationCallback.Result.class);
+    public @NotNull SetSelectedRow.Result qlua_SetSelectedRow(@NotNull final SetSelectedRow.Args args) {
+        return makeRPC(SetSelectedRow.class, args, SetSelectedRow.Result.class);
     }
 
     @Override
-    public SetWindowCaption.Result qlua_SetWindowCaption(final SetWindowCaption.Request request) {
-        return makeRPC(request, SetWindowCaption.Result.class);
+    public @NotNull SetTableNotificationCallback.Result qlua_SetTableNotificationCallback(final int tId, @NotNull final String fCbDef) {
+        return makeRPC(SetTableNotificationCallback.class, new SetTableNotificationCallback.Args(tId, fCbDef), SetTableNotificationCallback.Result.class);
     }
 
     @Override
-    public SetWindowPos.Result qlua_SetWindowPos(final SetWindowPos.Request request) {
-        return makeRPC(request, SetWindowPos.Result.class);
+    public boolean qlua_SetWindowCaption(final int tId, @NotNull final String str) {
+        return makeRPC(SetWindowCaption.class, new SetWindowCaption.Args(tId, str), SetWindowCaption.Result.class).isResult();
     }
 
     @Override
-    public Sleep.Result qlua_sleep(final Sleep.Request request) {
-        return makeRPC(request, Sleep.Result.class);
+    public boolean qlua_SetWindowPos(@NotNull final SetWindowPos.Args args) {
+        return makeRPC(SetWindowPos.class, args, SetWindowPos.Result.class).isResult();
     }
 
     @Override
-    public SubscribeLevel2Quotes.Result qlua_SubscribeLevelIIQuotes(final SubscribeLevel2Quotes.Request request) {
-        return makeRPC(request, SubscribeLevel2Quotes.Result.class);
+    public @Nullable Integer qlua_sleep(final int time) {
+        return makeRPC(Sleep.class, new Sleep.Args(time), Sleep.Result.class).getResult();
     }
 
     @Override
-    public UnsubscribeLevel2Quotes.Result qlua_UnsubscribeLevelIIQuotes(final UnsubscribeLevel2Quotes.Request request) {
-        return makeRPC(request, UnsubscribeLevel2Quotes.Result.class);
+    public boolean qlua_SubscribeLevelIIQuotes(@NotNull final SubscribeLevel2Quotes.Args args) {
+        return makeRPC(SubscribeLevel2Quotes.class, args, SubscribeLevel2Quotes.Result.class).isResult();
     }
 
     @Override
-    public BAnd.Result bit_band(final BAnd.Request request) {
-        return makeRPC(request, BAnd.Result.class);
+    public boolean qlua_UnsubscribeLevelIIQuotes(@NotNull final UnsubscribeLevel2Quotes.Args args) {
+        return makeRPC(UnsubscribeLevel2Quotes.class, args, UnsubscribeLevel2Quotes.Result.class).isResult();
     }
 
     @Override
-    public BNot.Result bit_bnot(final BNot.Request request) {
-        return makeRPC(request, BNot.Result.class);
+    public int bit_band(final int x1, final int x2, final int... xi) {
+        return makeRPC(BAnd.class, BAnd.Args.builder().x1(x1).x2(x2).xi(xi).build(), BAnd.Result.class).getResult();
     }
 
     @Override
-    public BOr.Result bit_bor(final BOr.Request request) {
-        return makeRPC(request, BOr.Result.class);
+    public int bit_bnot(final int x) {
+        return makeRPC(BNot.class, new BNot.Args(x), BNot.Result.class).getResult();
     }
 
     @Override
-    public BXor.Result bit_bxor(final BXor.Request request) {
-        return makeRPC(request, BXor.Result.class);
+    public int bit_bor(final int x1, final int x2, final int... xi) {
+        return makeRPC(BOr.class, BOr.Args.builder().x1(x1).x2(x2).xi(xi).build(), BOr.Result.class).getResult();
     }
 
     @Override
-    public ToHex.Result bit_tohex(final ToHex.Request request) {
-        return makeRPC(request, ToHex.Result.class);
+    public int bit_bxor(final int x1, final int x2, final int... xi) {
+        return makeRPC(BXor.class, BXor.Args.builder().x1(x1).x2(x2).xi(xi).build(), BXor.Result.class).getResult();
     }
 
     @Override
-    public C.Result datasource_C(final C.Request request) {
-        return makeRPC(request, C.Result.class);
+    public @NotNull String bit_tohex(@NotNull final ToHex.Args args) {
+        return makeRPC(ToHex.class, args, ToHex.Result.class).getResult();
     }
 
     @Override
-    public Close.Result datasource_Close(final Close.Request request) {
-        return makeRPC(request, Close.Result.class);
+    public @NotNull String datasource_C(@NotNull final C.Args args) {
+        return makeRPC(C.class, args, C.Result.class).getValue();
     }
 
     @Override
-    public CreateDataSource.Result datasource_CreateDataSource(final CreateDataSource.Request request) {
-        return makeRPC(request, CreateDataSource.Result.class);
+    public boolean datasource_Close(@NotNull final String datasourceUUID) {
+        return makeRPC(Close.class, new Close.Args(datasourceUUID), Close.Result.class).isResult();
     }
 
     @Override
-    public H.Result datasource_H(final H.Request request) {
-        return makeRPC(request, H.Result.class);
+    public @NotNull CreateDataSource.Result datasource_CreateDataSource(@NotNull final CreateDataSource.Args args) {
+        return makeRPC(CreateDataSource.class, args, CreateDataSource.Result.class);
     }
 
     @Override
-    public L.Result datasource_L(final L.Request request) {
-        return makeRPC(request, L.Result.class);
+    public @NotNull String datasource_H(@NotNull final H.Args args) {
+        return makeRPC(H.class, args, H.Result.class).getValue();
     }
 
     @Override
-    public O.Result datasource_O(final O.Request request) {
-        return makeRPC(request, O.Result.class);
+    public @NotNull String datasource_L(@NotNull final L.Args args) {
+        return makeRPC(L.class, args, L.Result.class).getValue();
     }
 
     @Override
-    public SetEmptyCallback.Result datasource_SetEmptyCallback(final SetEmptyCallback.Request request) {
-        return makeRPC(request, SetEmptyCallback.Result.class);
+    public @NotNull String datasource_O(@NotNull final O.Args args) {
+        return makeRPC(O.class, args, O.Result.class).getValue();
     }
 
     @Override
-    public SetUpdateCallback.Result datasource_SetUpdateCallback(final SetUpdateCallback.Request request) {
-        return makeRPC(request, SetUpdateCallback.Result.class);
+    public boolean datasource_SetEmptyCallback(@NotNull final String datasourceUUID) {
+        return makeRPC(SetEmptyCallback.class, new SetEmptyCallback.Args(datasourceUUID), SetEmptyCallback.Result.class).isResult();
     }
 
     @Override
-    public Size.Result datasource_Size(final Size.Request request) {
-        return makeRPC(request, Size.Result.class);
+    public boolean datasource_SetUpdateCallback(@NotNull final SetUpdateCallback.Args args) {
+        return makeRPC(SetUpdateCallback.class, args, SetUpdateCallback.Result.class).isResult();
     }
 
     @Override
-    public T.Result datasource_T(final T.Request request) {
-        return makeRPC(request, T.Result.class);
+    public int datasource_Size(@NotNull final Size.Args args) {
+        return makeRPC(Size.class, args, Size.Result.class).getValue();
     }
 
     @Override
-    public V.Result datasource_V(final V.Request request) {
-        return makeRPC(request, V.Result.class);
+    public @NotNull T.Result datasource_T(@NotNull final T.Args args) {
+        return makeRPC(T.class, args, T.Result.class);
     }
 
-    private <T, U> U makeRPC(final T request, final Class<U> resultClass) {
+    @Override
+    public @NotNull String datasource_V(@NotNull final V.Args args) {
+        return makeRPC(V.class, args, V.Result.class).getValue();
+    }
+
+    private <T extends RemoteProcedure> void makeRPC(@NotNull final Class<T> remoteProcedureClass, final RpcArgs<T> args) {
+        makeRPC(remoteProcedureClass, args, null);
+    }
+
+    @Contract("_, _, null -> null; _, _, !null -> !null")
+    @Override
+    public <T extends RemoteProcedure, U extends RpcResult<T>> U makeRPC(
+            @NotNull final Class<T> remoteProcedureClass,
+            final RpcArgs<T> args,
+            @Nullable final Class<U> resultClass) throws RpcException {
 
         try {
 
             checkState(isOpened(), "Соединение должно быть открыто.");
 
             final ZMsg zRequest = new ZMsg();
-            zRequest.add( serdeModule.serialize(request) );
+            zRequest.add( serdeModule.serialize(new RequestEnvelope<>(remoteProcedureClass, args)) );
             zRequest.send(reqSocket);
             zRequest.destroy();
 
@@ -517,11 +530,20 @@ public final class ZmqTcpQluaRpcClient extends AbstractTcpZmqClient implements T
             final ResponseEnvelope responseEnvelope = serdeModule.deserialize(ResponseEnvelope.class, response);
             final ServiceError error = responseEnvelope.getError();
             if (error == null) {
-                return serdeModule.deserialize(resultClass, responseEnvelope.getResult());
+                if (resultClass == null) {
+                    return null;
+                } else {
+                    final byte[] result = responseEnvelope.getResult();
+                    if (result == null) {
+                        throw new RpcException("В ответе на вызов удалённой процедуры отсутствует результат.");
+                    } else {
+                        return serdeModule.deserialize(resultClass, result);
+                    }
+                }
             } else {
                 throw new ServiceRpcException(error);
             }
-        } catch (final ServiceRpcException ex) {
+        } catch (final RpcException  ex) {
             throw ex;
         } catch (final Exception ex) {
             throw new ClientRpcException(ex);

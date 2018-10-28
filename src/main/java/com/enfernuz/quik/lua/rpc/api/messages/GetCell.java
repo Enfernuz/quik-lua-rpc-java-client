@@ -1,44 +1,78 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
+import com.enfernuz.quik.lua.rpc.api.RpcResult;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.common.base.MoreObjects;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Value;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-public final class GetCell {
+public final class GetCell implements RemoteProcedure {
 
     private GetCell() {}
 
-    @Value
-    public static class Request {
+    @JsonPropertyOrder({Args.T_ID, Args.KEY, Args.CODE})
+    @EqualsAndHashCode
+    public static final class Args implements RpcArgs<GetCell> {
 
-        int tId;
-        int key;
-        int code;
+        private static final String T_ID = "t_id";
+        private static final String KEY = "key";
+        private static final String CODE = "code";
+
+        @JsonProperty(T_ID)
+        private final int tId;
+
+        @JsonProperty(KEY)
+        private final int key;
+
+        @JsonProperty(CODE)
+        private final int code;
 
         @Builder
-        private Request(final int tId, final int key, final int code) {
+        private Args(final int tId, final int key, final int code) {
             this.tId = tId;
             this.key = key;
             this.code = code;
+        }
+
+        @JsonIgnore
+        public int getTId() {
+            return tId;
+        }
+
+        @JsonIgnore
+        public int getKey() {
+            return key;
+        }
+
+        @JsonIgnore
+        public int getCode() {
+            return code;
         }
 
         @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("t_id", tId)
-                    .add("key", key)
-                    .add("code", code)
+                    .add(T_ID, tId)
+                    .add(KEY, key)
+                    .add(CODE, code)
                     .toString();
         }
     }
 
     @Value
-    public static class Result {
+    public static class Result implements RpcResult<GetCell> {
+
+        private static final String IMAGE = "image";
+        private static final String VALUE = "value";
 
         String image;
         String value;
@@ -46,8 +80,8 @@ public final class GetCell {
         @JsonCreator
         @Builder
         private static Result getInstance(
-                @JsonProperty("image") final String image,
-                @JsonProperty("value") final String value) {
+                @JsonProperty(value = IMAGE, required = true) final String image,
+                @JsonProperty(value = VALUE, required = true) final String value) {
 
             return image == null && value == null ? InstanceHolder.ERROR : new Result(image, value);
         }
@@ -66,8 +100,8 @@ public final class GetCell {
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("image", image)
-                    .add("value", value)
+                    .add(IMAGE, image)
+                    .add(VALUE, value)
                     .toString();
         }
 

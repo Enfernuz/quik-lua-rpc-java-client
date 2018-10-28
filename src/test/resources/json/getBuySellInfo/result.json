@@ -1,0 +1,25 @@
+{
+  "buy_sell_info" : {
+    "is_margin_sec": "1",
+    "is_asset_sec" : "2",
+    "balance" : "3",
+    "can_buy" : "4",
+    "can_sell" : "5",
+    "position_valuation" : "6",
+    "value" : "7",
+    "open_value" : "8",
+    "lim_long" : "9",
+    "long_coef" : "10",
+    "lim_short" : "11",
+    "short_coef" : "12",
+    "value_coef" : "13",
+    "open_value_coef" : "14",
+    "share" : "15",
+    "short_wa_price" : "16",
+    "long_wa_price" : "17",
+    "profit_loss" : "18",
+    "spread_hc" : "19",
+    "can_buy_own" : "20",
+    "can_sell_own" : "21"
+  }
+}

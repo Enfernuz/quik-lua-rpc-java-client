@@ -3,57 +3,76 @@ package com.enfernuz.quik.lua.rpc.api.structures;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
-import lombok.*;
-import lombok.experimental.NonFinal;
-
-import java.util.Objects;
+import lombok.Builder;
+import lombok.NonNull;
+import lombok.Value;
+import org.jetbrains.annotations.NotNull;
 
 @Value
 public class AllTrade {
 
-    @JsonProperty("trade_num") long tradeNum;
-    @JsonProperty("flags") int flags;
-    @JsonProperty("price") String price;
-    @JsonProperty("qty") int qty;
-    @JsonProperty("value") String value;
-    @JsonProperty("accruedint") String accruedInt;
-    @JsonProperty("yield") String yield;
-    @JsonProperty("settlecode") String settleCode;
-    @JsonProperty("reporate") String repoRate;
-    @JsonProperty("repovalue") String repoValue;
-    @JsonProperty("repo2value") String repo2Value;
-    @JsonProperty("repoterm") String repoTerm;
-    @JsonProperty("sec_code") String secCode;
-    @JsonProperty("class_code") String classCode;
-    @JsonProperty("datetime") DateTimeEntry datetime;
-    @JsonProperty("period") int period;
-    @JsonProperty("open_interest") String openInterest;
-    @JsonProperty("exchange_code") String exchangeCode;
+    private static final String TRADE_NUM = "trade_num";
+    private static final String FLAGS = "flags";
+    private static final String PRICE = "price";
+    private static final String QUANTITY = "qty";
+    private static final String VALUE = "value";
+    private static final String ACCRUED_INTEREST = "accruedint";
+    private static final String YIELD = "yield";
+    private static final String SETTLE_CODE = "settlecode";
+    private static final String REPO_RATE = "reporate";
+    private static final String REPO_VALUE = "repovalue";
+    private static final String REPO_2_VALUE = "repo2value";
+    private static final String REPO_TERM = "repoterm";
+    private static final String SECURITY_CODE = "sec_code";
+    private static final String CLASS_CODE = "class_code";
+    private static final String DATETIME = "datetime";
+    private static final String PERIOD = "period";
+    private static final String OPEN_INTEREST = "open_interest";
+    private static final String EXCHANGE_CODE = "exchange_code";
+    private static final String EXEC_MARKET = "exec_market";
 
-    private @NonFinal @Getter(AccessLevel.NONE) transient int hashCode;
-    private @NonFinal @Getter(AccessLevel.NONE) transient String asString;
+    Long tradeNum;
+    Integer flags;
+    String price;
+    Integer qty;
+    String value;
+    String accruedInt;
+    String yield;
+    String settleCode;
+    String repoRate;
+    String repoValue;
+    String repo2Value;
+    String repoTerm;
+    String secCode;
+    String classCode;
+    DateTimeEntry datetime;
+    int period;
+    String openInterest;
+    String exchangeCode;
+    String execMarket;
 
-    @Builder
     @JsonCreator
+    @Builder
     private AllTrade(
-            @JsonProperty(value = "trade_num", required = true) final long tradeNum,
-            @JsonProperty(value = "flags", required = true) final int flags,
-            @JsonProperty(value = "price", required = true) @NonNull final String price,
-            @JsonProperty(value = "qty", required = true) final int qty,
-            @JsonProperty("value") final String value,
-            @JsonProperty("accruedint") final String accruedInt,
-            @JsonProperty("yield") final String yield,
-            @JsonProperty("settlecode") final String settleCode,
-            @JsonProperty("reporate") final String repoRate,
-            @JsonProperty("repovalue") final String repoValue,
-            @JsonProperty("repo2value") final String repo2Value,
-            @JsonProperty("repoterm") final String repoTerm,
-            @JsonProperty("sec_code") final String secCode,
-            @JsonProperty("class_code") final String classCode,
-            @JsonProperty(value = "datetime", required = true) @NonNull final DateTimeEntry datetime,
-            @JsonProperty(value = "period", required = true) final int period,
-            @JsonProperty("open_interest") final String openInterest,
-            @JsonProperty("exchange_code") final String exchangeCode) {
+            @JsonProperty(TRADE_NUM) final Long tradeNum,
+            @JsonProperty(FLAGS) final Integer flags,
+            @JsonProperty(value = PRICE, required = true) final String price,
+            @JsonProperty(QUANTITY) final Integer qty,
+            @JsonProperty(VALUE) final String value,
+            @JsonProperty(ACCRUED_INTEREST) final String accruedInt,
+            @JsonProperty(YIELD) final String yield,
+            @JsonProperty(SETTLE_CODE) final String settleCode,
+            @JsonProperty(REPO_RATE) final String repoRate,
+            @JsonProperty(REPO_VALUE) final String repoValue,
+            @JsonProperty(REPO_2_VALUE) final String repo2Value,
+            @JsonProperty(REPO_TERM) final String repoTerm,
+            @JsonProperty(SECURITY_CODE) final String secCode,
+            @JsonProperty(CLASS_CODE) final String classCode,
+            @JsonProperty(value = DATETIME, required = true) final DateTimeEntry datetime,
+            @JsonProperty(value = PERIOD, required = true) final int period,
+            @JsonProperty(OPEN_INTEREST) final String openInterest,
+            @JsonProperty(EXCHANGE_CODE) final String exchangeCode,
+            @JsonProperty(EXEC_MARKET) final String execMarket) {
 
         this.tradeNum = tradeNum;
         this.flags = flags;
@@ -73,94 +92,33 @@ public class AllTrade {
         this.period = period;
         this.openInterest = openInterest;
         this.exchangeCode = exchangeCode;
+        this.execMarket = execMarket;
     }
 
-    @Override
-    public boolean equals(final Object o) {
-
-        if (o == this) {
-            return true;
-        } else if ( !(o instanceof AllTrade) ) {
-            return false;
-        } else {
-            final AllTrade allTrade = (AllTrade) o;
-            return tradeNum == allTrade.tradeNum &&
-                    flags == allTrade.flags &&
-                    qty == allTrade.qty &&
-                    period == allTrade.period &&
-                    Objects.equals(price, allTrade.price) &&
-                    Objects.equals(value, allTrade.value) &&
-                    Objects.equals(accruedInt, allTrade.accruedInt) &&
-                    Objects.equals(yield, allTrade.yield) &&
-                    Objects.equals(settleCode, allTrade.settleCode) &&
-                    Objects.equals(repoRate, allTrade.repoRate) &&
-                    Objects.equals(repoValue, allTrade.repoValue) &&
-                    Objects.equals(repo2Value, allTrade.repo2Value) &&
-                    Objects.equals(repoTerm, allTrade.repoTerm) &&
-                    Objects.equals(secCode, allTrade.secCode) &&
-                    Objects.equals(classCode, allTrade.classCode) &&
-                    Objects.equals(datetime, allTrade.datetime) &&
-                    Objects.equals(openInterest, allTrade.openInterest) &&
-                    Objects.equals(exchangeCode, allTrade.exchangeCode);
-        }
-    }
-
-    @Override
-    public int hashCode() {
-
-        if (hashCode == 0) {
-            hashCode =
-                    Objects.hash(
-                            tradeNum,
-                            flags,
-                            price,
-                            qty,
-                            value,
-                            accruedInt,
-                            yield,
-                            settleCode,
-                            repoRate,
-                            repoValue,
-                            repo2Value,
-                            repoTerm,
-                            secCode,
-                            classCode,
-                            datetime,
-                            period,
-                            openInterest,
-                            exchangeCode
-                    );
-        }
-
-        return hashCode;
-    }
-
+    @NotNull
     @Override
     public String toString() {
 
-        if (asString == null) {
-            asString = MoreObjects.toStringHelper(this)
-                    .add("trade_num", tradeNum)
-                    .add("flags", flags)
-                    .add("price", price)
-                    .add("qty", qty)
-                    .add("value", value)
-                    .add("accruedint", accruedInt)
-                    .add("yield", yield)
-                    .add("settlecode", settleCode)
-                    .add("reporate", repoRate)
-                    .add("repovalue", repoValue)
-                    .add("repo2value", repo2Value)
-                    .add("repoterm", repoTerm)
-                    .add("sec_code", secCode)
-                    .add("class_code", classCode)
-                    .add("datetime", datetime)
-                    .add("period", period)
-                    .add("open_interest", openInterest)
-                    .add("exchange_code", exchangeCode)
-                    .toString();
-        }
-
-        return asString;
+        return MoreObjects.toStringHelper(this)
+                .add(TRADE_NUM, tradeNum)
+                .add(FLAGS, flags)
+                .add(PRICE, price)
+                .add(QUANTITY, qty)
+                .add(VALUE, value)
+                .add(ACCRUED_INTEREST, accruedInt)
+                .add(YIELD, yield)
+                .add(SETTLE_CODE, settleCode)
+                .add(REPO_RATE, repoRate)
+                .add(REPO_VALUE, repoValue)
+                .add(REPO_2_VALUE, repo2Value)
+                .add(REPO_TERM, repoTerm)
+                .add(SECURITY_CODE, secCode)
+                .add(CLASS_CODE, classCode)
+                .add(DATETIME, datetime)
+                .add(PERIOD, period)
+                .add(OPEN_INTEREST, openInterest)
+                .add(EXCHANGE_CODE, exchangeCode)
+                .add(EXEC_MARKET, execMarket)
+                .toString();
     }
 }

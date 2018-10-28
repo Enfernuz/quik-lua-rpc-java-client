@@ -1,34 +1,56 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
+import com.enfernuz.quik.lua.rpc.api.RpcResult;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.Value;
-import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
-public final class DelAllLabels {
+public final class DelAllLabels implements RemoteProcedure {
 
     private DelAllLabels() {}
 
-    @Value
-    public static class Request {
+    @EqualsAndHashCode
+    public static final class Args implements RpcArgs<DelAllLabels> {
 
-        @NonNull String chartTag;
+        private static final String CHART_TAG = "chart_tag";
 
+        @JsonProperty(CHART_TAG)
+        private final String chartTag;
+
+        public Args(@NonNull final String chartTag) {
+            this.chartTag = chartTag;
+        }
+
+        @JsonIgnore
+        public String getChartTag() {
+            return chartTag;
+        }
+
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("chart_tag", chartTag)
+                    .add(CHART_TAG, chartTag)
                     .toString();
         }
     }
 
     @Value
-    public static class Result {
+    public static class Result implements RpcResult<DelAllLabels> {
+
+        private static final String RESULT = "result";
 
         boolean result;
 
-        @Contract(pure = true)
-        public static Result getInstance(final boolean result) {
+        @JsonCreator
+        public static Result getInstance(@JsonProperty(value = RESULT, required = true) final boolean result) {
             return result ? InstanceHolder.TRUE : InstanceHolder.FALSE;
         }
 
@@ -36,10 +58,11 @@ public final class DelAllLabels {
             this.result = result;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("result", result)
+                    .add(RESULT, result)
                     .toString();
         }
 
@@ -48,9 +71,10 @@ public final class DelAllLabels {
             private static final Result TRUE = new Result(true);
             private static final Result FALSE = new Result(false);
 
+            // sanity check
             static {
-                assert TRUE.result == true;
-                assert FALSE.result == false;
+                assert TRUE.result;
+                assert !FALSE.result;
             }
         }
     }

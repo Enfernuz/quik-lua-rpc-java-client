@@ -1,6 +1,0 @@
-{
-  "method" : "datasource.Size",
-  "args" : {
-    "datasource_uuid" : "1"
-  }
-}

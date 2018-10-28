@@ -12,10 +12,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-final class ResponseEnvelopeJsonDeserializer extends JsonDeserializer<ResponseEnvelope> {
+public final class ResponseEnvelopeJsonDeserializer extends JsonDeserializer<ResponseEnvelope> {
 
     @Override
-    public ResponseEnvelope deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+    public ResponseEnvelope deserialize(final JsonParser p, final DeserializationContext ctxt) throws IOException {
 
         final ObjectCodec objectCodec = p.getCodec();
         final JsonNode rootNode = objectCodec.readTree(p);

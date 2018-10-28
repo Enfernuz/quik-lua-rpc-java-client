@@ -1,16 +1,32 @@
 package com.enfernuz.quik.lua.rpc.api.structures;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Value;
 import lombok.experimental.NonFinal;
-
-import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @Value
 public class DepoLimit {
+
+    private static final String SECURITY_CODE = "sec_code";
+    private static final String TRADING_ACCOUNT_ID = "trdaccid";
+    private static final String FIRM_ID = "firmid";
+    private static final String CLIENT_CODE = "client_code";
+    private static final String OPEN_BALANCE = "openbal";
+    private static final String OPEN_LIMIT = "openlimit";
+    private static final String CURRENT_BALANCE = "currentbal";
+    private static final String CURRENT_LIMIT = "currentlimit";
+    private static final String LOCKED_SELL = "locked_sell";
+    private static final String LOCKED_BUY = "locked_buy";
+    private static final String LOCKED_BUY_VALUE = "locked_buy_value";
+    private static final String LOCKED_SELL_VALUE = "locked_sell_value";
+    private static final String WEIGHTED_AVERAGE_POSITION_PRICE = "wa_position_price";
+    private static final String LIMIT_KIND = "limit_kind";
 
     String secCode;
     String trdAccId;
@@ -24,28 +40,30 @@ public class DepoLimit {
     int lockedBuy;
     String lockedBuyValue;
     String lockedSellValue;
-    String awgPositionPrice;
+    String waPositionPrice;
     int limitKind;
 
-    private transient @NonFinal @Getter(AccessLevel.NONE) int hashCode;
-    private transient @NonFinal @Getter(AccessLevel.NONE) String asString;
+    @Getter(AccessLevel.NONE)
+    @NonFinal
+    private transient String asString;
 
+    @JsonCreator
     @Builder
     private DepoLimit(
-            final String secCode,
-            final String trdAccId,
-            final String firmId,
-            final String clientCode,
-            final int openBal,
-            final int openLimit,
-            final int currentBal,
-            final int currentLimit,
-            final int lockedSell,
-            final int lockedBuy,
-            final String lockedBuyValue,
-            final String lockedSellValue,
-            final String awgPositionPrice,
-            final int limitKind) {
+            @JsonProperty(SECURITY_CODE) final String secCode,
+            @JsonProperty(TRADING_ACCOUNT_ID) final String trdAccId,
+            @JsonProperty(FIRM_ID) final String firmId,
+            @JsonProperty(CLIENT_CODE) final String clientCode,
+            @JsonProperty(OPEN_BALANCE) final int openBal,
+            @JsonProperty(OPEN_LIMIT) final int openLimit,
+            @JsonProperty(CURRENT_BALANCE) final int currentBal,
+            @JsonProperty(CURRENT_LIMIT) final int currentLimit,
+            @JsonProperty(LOCKED_SELL) final int lockedSell,
+            @JsonProperty(LOCKED_BUY) final int lockedBuy,
+            @JsonProperty(LOCKED_BUY_VALUE) final String lockedBuyValue,
+            @JsonProperty(LOCKED_SELL_VALUE) final String lockedSellValue,
+            @JsonProperty(WEIGHTED_AVERAGE_POSITION_PRICE) final String waPositionPrice,
+            @JsonProperty(LIMIT_KIND) final int limitKind) {
 
         this.secCode = secCode;
         this.trdAccId = trdAccId;
@@ -59,80 +77,30 @@ public class DepoLimit {
         this.lockedBuy = lockedBuy;
         this.lockedBuyValue = lockedBuyValue;
         this.lockedSellValue = lockedSellValue;
-        this.awgPositionPrice = awgPositionPrice;
+        this.waPositionPrice = waPositionPrice;
         this.limitKind = limitKind;
     }
 
-    @Override
-    public boolean equals(final Object o) {
-
-        if (o == this) {
-            return true;
-        } else if ( !(o instanceof DepoLimit) ) {
-            return false;
-        } else {
-            final DepoLimit depoLimit = (DepoLimit) o;
-            return openBal == depoLimit.openBal &&
-                    openLimit == depoLimit.openLimit &&
-                    currentBal == depoLimit.currentBal &&
-                    currentLimit == depoLimit.currentLimit &&
-                    lockedSell == depoLimit.lockedSell &&
-                    lockedBuy == depoLimit.lockedBuy &&
-                    limitKind == depoLimit.limitKind &&
-                    Objects.equals(secCode, depoLimit.secCode) &&
-                    Objects.equals(trdAccId, depoLimit.trdAccId) &&
-                    Objects.equals(firmId, depoLimit.firmId) &&
-                    Objects.equals(clientCode, depoLimit.clientCode) &&
-                    Objects.equals(lockedBuyValue, depoLimit.lockedBuyValue) &&
-                    Objects.equals(lockedSellValue, depoLimit.lockedSellValue) &&
-                    Objects.equals(awgPositionPrice, depoLimit.awgPositionPrice);
-        }
-    }
-
-    @Override
-    public int hashCode() {
-
-        if (hashCode == 0) {
-            hashCode = Objects.hash(
-                    secCode,
-                    trdAccId,
-                    firmId,
-                    clientCode,
-                    openBal,
-                    openLimit,
-                    currentBal,
-                    currentLimit,
-                    lockedSell,
-                    lockedBuy,
-                    lockedBuyValue,
-                    lockedSellValue,
-                    awgPositionPrice,
-                    limitKind
-            );
-        }
-
-        return hashCode;
-    }
-
+    @NotNull
     @Override
     public String toString() {
 
         if (asString == null) {
             asString = MoreObjects.toStringHelper(this)
-                    .add("sec_code", secCode)
-                    .add("trdaccid", trdAccId)
-                    .add("firmid", firmId)
-                    .add("client_code", clientCode)
-                    .add("openbal", openBal)
-                    .add("openlimit", openLimit)
-                    .add("currentbal", currentBal)
-                    .add("currentlimit", currentLimit)
-                    .add("locked_sell", lockedSell)
-                    .add("locked_buy", lockedBuy)
-                    .add("locked_buy_value", lockedBuyValue)
-                    .add("locked_sell_value", lockedSellValue)
-                    .add("awg_position_price", awgPositionPrice)
-                    .add("limit_kind", limitKind)
+                    .add(SECURITY_CODE, secCode)
+                    .add(TRADING_ACCOUNT_ID, trdAccId)
+                    .add(FIRM_ID, firmId)
+                    .add(CLIENT_CODE, clientCode)
+                    .add(OPEN_BALANCE, openBal)
+                    .add(OPEN_LIMIT, openLimit)
+                    .add(CURRENT_BALANCE, currentBal)
+                    .add(CURRENT_LIMIT, currentLimit)
+                    .add(LOCKED_SELL, lockedSell)
+                    .add(LOCKED_BUY, lockedBuy)
+                    .add(LOCKED_BUY_VALUE, lockedBuyValue)
+                    .add(LOCKED_SELL_VALUE, lockedSellValue)
+                    .add(WEIGHTED_AVERAGE_POSITION_PRICE, waPositionPrice)
+                    .add(LIMIT_KIND, limitKind)
                     .toString();
         }
 

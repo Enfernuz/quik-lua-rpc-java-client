@@ -1,76 +1,60 @@
 package com.enfernuz.quik.lua.rpc.api.messages;
 
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
+import com.enfernuz.quik.lua.rpc.api.RpcResult;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import lombok.Builder;
-import lombok.NonNull;
+import lombok.EqualsAndHashCode;
 import lombok.Value;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-public final class GetTableSize {
+public final class GetTableSize implements RemoteProcedure {
 
     private GetTableSize() {}
 
-    private static final String T_ID_FIELD = "t_id";
+    @EqualsAndHashCode
+    public static final class Args implements RpcArgs<GetTableSize> {
 
-    @Value
-    public static class Request {
+        private static final String T_ID = "t_id";
 
-       int tId;
+        @JsonProperty(T_ID)
+        private final int tId;
 
-        @NotNull
-        @Override
-        public String toString() {
-            return MoreObjects.toStringHelper(this)
-                    .add(T_ID_FIELD, tId)
-                    .toString();
+        public Args(final int tId) {
+            this.tId = tId;
         }
-    }
 
-    @Value
-    public static class TableSize {
-
-        private static final String ROWS_FIELD = "rows";
-        private static final String COL_FIELD = "col";
-
-        int rows;
-        int col;
-
-        @Builder
-        @JsonCreator
-        private TableSize(
-                @JsonProperty(value = ROWS_FIELD, required = true) final int rows,
-                @JsonProperty(value = COL_FIELD, required = true) final int col) {
-
-            this.rows = rows;
-            this.col = col;
+        @JsonIgnore
+        public int getTId() {
+            return tId;
         }
 
         @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add(ROWS_FIELD, rows)
-                    .add(COL_FIELD, col)
+                    .add(T_ID, tId)
                     .toString();
         }
     }
 
     @Value
-    public static class Result {
+    public static class Result implements RpcResult<GetTableSize> {
 
-        private static final String TABLE_SIZE_FIELD = "table_size";
+        private static final String TABLE_SIZE = "table_size";
 
         TableSize tableSize;
 
         @JsonCreator
-        public static Result getInstance(@JsonProperty(TABLE_SIZE_FIELD) final TableSize tableSize) {
+        public static Result getInstance(@JsonProperty(value = TABLE_SIZE, required = true) final TableSize tableSize) {
             return isError(tableSize) ? InstanceHolder.ERROR : new Result(tableSize);
         }
 
-        @Contract(pure = true)
         public static Result getErrorInstance() {
             return InstanceHolder.ERROR;
         }
@@ -79,7 +63,6 @@ public final class GetTableSize {
             this.tableSize = tableSize;
         }
 
-        @Contract(pure = true)
         public boolean isError() {
             return isError(tableSize);
         }
@@ -93,7 +76,7 @@ public final class GetTableSize {
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add(TABLE_SIZE_FIELD, tableSize)
+                    .add(TABLE_SIZE, tableSize)
                     .toString();
         }
 
@@ -105,6 +88,35 @@ public final class GetTableSize {
             static {
                 assert ERROR.isError();
             }
+        }
+    }
+
+    @Value
+    public static class TableSize {
+
+        private static final String ROWS = "rows";
+        private static final String COL = "col";
+
+        int rows;
+        int col;
+
+        @JsonCreator
+        @Builder
+        private TableSize(
+                @JsonProperty(value = ROWS, required = true) final int rows,
+                @JsonProperty(value = COL, required = true) final int col) {
+
+            this.rows = rows;
+            this.col = col;
+        }
+
+        @NotNull
+        @Override
+        public String toString() {
+            return MoreObjects.toStringHelper(this)
+                    .add(ROWS, rows)
+                    .add(COL, col)
+                    .toString();
         }
     }
 }
