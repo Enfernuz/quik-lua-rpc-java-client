@@ -25,23 +25,30 @@ public enum ProtobufSerdeModule implements SerdeModule {
     @Override
     public <T> byte[] serialize(@NonNull final T t) {
 
-        // This cast is safe because we use the registerSerializer method to fill the map.
-        @SuppressWarnings("unchecked")
-        final Serializer<T> serializer = (Serializer<T>) CLASS_TO_SERIALIZER_MAP.get(t.getClass());
-        if (serializer == null) {
-            throw new SerdeException(
-                    String.format("Неподдерживаемый класс для сериализации в protobuf-представление: %s.", t.getClass().getName())
-            );
+        final byte[] result;
+        if (t instanceof QluaEvent.EventType) {
+            result = ProtobufQluaEventTypeSerde.INSTANCE.serialize((QluaEvent.EventType) t);
         } else {
-            try {
-                return serializer.serialize(t);
-            } catch (final Exception ex) {
+            // This cast is safe because we use the registerSerializer method to fill the map.
+            @SuppressWarnings("unchecked")
+            final Serializer<T> serializer = (Serializer<T>) CLASS_TO_SERIALIZER_MAP.get(t.getClass());
+            if (serializer == null) {
                 throw new SerdeException(
-                        String.format("Ошибка при сериализации экземпляра класса '%s' в protobuf-представление.", t.getClass().getName()),
-                        ex
+                        String.format("Неподдерживаемый класс для сериализации в protobuf-представление: %s.", t.getClass().getName())
                 );
+            } else {
+                try {
+                    result = serializer.serialize(t);
+                } catch (final Exception ex) {
+                    throw new SerdeException(
+                            String.format("Ошибка при сериализации экземпляра класса '%s' в protobuf-представление.", t.getClass().getName()),
+                            ex
+                    );
+                }
             }
         }
+
+        return result;
     }
 
     @Override
@@ -157,7 +164,7 @@ public enum ProtobufSerdeModule implements SerdeModule {
 
         final ImmutableMap.Builder<Class<?>, Deserializer<?>> result = ImmutableMap.builder();
 
-        registerDeserializer(result, QluaEvent.EventType.class, ProtobufQluaEventTypeDeserializer.INSTANCE);
+        registerDeserializer(result, QluaEvent.EventType.class, ProtobufQluaEventTypeSerde.INSTANCE);
         registerDeserializer(result, StopEventInfo.class, StopEventInfoPbDeserializer.INSTANCE);
         registerDeserializer(result, ConnectedEventInfo.class, ConnectedEventInfoPbDeserializer.INSTANCE);
         registerDeserializer(result, Trade.class, TradePbDeserializer.INSTANCE);
