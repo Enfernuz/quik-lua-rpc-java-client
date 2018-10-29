@@ -3,6 +3,7 @@ package com.enfernuz.quik.lua.rpc.serde.protobuf;
 import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
 import com.enfernuz.quik.lua.rpc.api.RpcArgs;
 import com.enfernuz.quik.lua.rpc.api.messages.*;
+import com.enfernuz.quik.lua.rpc.api.messages.bit.*;
 import com.enfernuz.quik.lua.rpc.api.structures.*;
 import com.enfernuz.quik.lua.rpc.events.api.QluaEvent;
 import com.enfernuz.quik.lua.rpc.serde.Deserializer;
@@ -155,6 +156,13 @@ public enum ProtobufSerdeModule implements SerdeModule {
         registerSerializer(result, SubscribeLevel2Quotes.Args.class, SubscribeLevel2QuotesArgsPbSerializer.INSTANCE);
         registerSerializer(result, UnsubscribeLevel2Quotes.Args.class, UnsubscribeLevel2QuotesArgsPbSerializer.INSTANCE);
 
+        registerSerializer(result, BAnd.Args.class, BAndArgsPbSerializer.INSTANCE);
+        registerSerializer(result, BNot.Args.class, BNotArgsPbSerializer.INSTANCE);
+        registerSerializer(result, BOr.Args.class, BOrArgsPbSerializer.INSTANCE);
+        registerSerializer(result, BXor.Args.class, BXorArgsPbSerializer.INSTANCE);
+        registerSerializer(result, Test.Args.class, BitTestArgsPbSerializer.INSTANCE);
+        registerSerializer(result, ToHex.Args.class, BitToHexArgsPbSerializer.INSTANCE);
+
         // FIXME: add the rest of the serializers
 
         return result.build();
@@ -257,6 +265,13 @@ public enum ProtobufSerdeModule implements SerdeModule {
         registerDeserializer(result, Sleep.Result.class, SleepResultPbDeserializer.INSTANCE);
         registerDeserializer(result, SubscribeLevel2Quotes.Result.class, SubscribeLevel2QuotesResultPbDeserializer.INSTANCE);
         registerDeserializer(result, UnsubscribeLevel2Quotes.Result.class, UnsubscribeLevel2QuotesResultPbDeserializer.INSTANCE);
+
+        registerDeserializer(result, BAnd.Result.class, BAndResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, BNot.Result.class, BNotResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, BOr.Result.class, BOrResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, BXor.Result.class, BXorResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, Test.Result.class, BitTestResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, ToHex.Result.class, BitToHexResultPbDeserializer.INSTANCE);
 
         // FIXME: add the rest of the deserializers
 
