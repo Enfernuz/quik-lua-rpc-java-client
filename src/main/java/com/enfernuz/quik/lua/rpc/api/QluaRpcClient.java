@@ -177,7 +177,7 @@ public interface QluaRpcClient extends Gateway, Securable {
 
     int datasource_Size(Size.Args args);
 
-    T.Result datasource_T(T.Args args);
+    DataSourceTime datasource_T(T.Args args);
 
     String datasource_V(V.Args args);
 }

@@ -1,6 +1,7 @@
 package wip;
 
 import com.enfernuz.quik.lua.rpc.api.messages.datasource.T;
+import com.enfernuz.quik.lua.rpc.api.structures.DataSourceTime;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
@@ -30,7 +31,7 @@ public class DatasourceTJsonSerdeTests {
         @Override
         public T.Result getExpectedObject() {
 
-            return T.Result.builder()
+            final DataSourceTime time = DataSourceTime.builder()
                     .year(1)
                     .month(2)
                     .day(3)
@@ -40,6 +41,10 @@ public class DatasourceTJsonSerdeTests {
                     .sec(7)
                     .ms(8)
                     .count(9)
+                    .build();
+
+            return T.Result.builder()
+                    .time(time)
                     .build();
         }
     }

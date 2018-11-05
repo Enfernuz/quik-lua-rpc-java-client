@@ -496,8 +496,8 @@ public final class ZmqTcpQluaRpcClient extends AbstractTcpZmqClient implements R
     }
 
     @Override
-    public @NotNull T.Result datasource_T(@NotNull final T.Args args) {
-        return makeRPC(T.class, args, T.Result.class);
+    public @NotNull DataSourceTime datasource_T(@NotNull final T.Args args) {
+        return makeRPC(T.class, args, T.Result.class).getTime();
     }
 
     @Override

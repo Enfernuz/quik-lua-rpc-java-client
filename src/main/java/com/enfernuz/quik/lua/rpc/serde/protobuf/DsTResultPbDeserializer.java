@@ -6,6 +6,8 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 
+import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.convertFromDataSourceTime;
+
 enum DsTResultPbDeserializer implements Deserializer<T.Result>, FromPbConverter<qlua.rpc.datasource.T.Result, T.Result> {
 
     INSTANCE;
@@ -22,15 +24,7 @@ enum DsTResultPbDeserializer implements Deserializer<T.Result>, FromPbConverter<
     public T.Result convert(@NotNull final qlua.rpc.datasource.T.Result result) {
 
         return T.Result.builder()
-                .year( result.getYear() )
-                .month( result.getMonth() )
-                .day( result.getDay() )
-                .weekDay( result.getWeekDay() )
-                .hour( result.getHour() )
-                .min( result.getMin() )
-                .sec( result.getSec() )
-                .ms( result.getMs() )
-                .count( result.getCount() )
+                .time( convertFromDataSourceTime(result.getTime()) )
                 .build();
 
     }

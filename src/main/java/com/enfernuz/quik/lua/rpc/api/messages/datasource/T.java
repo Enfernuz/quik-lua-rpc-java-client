@@ -3,6 +3,7 @@ package com.enfernuz.quik.lua.rpc.api.messages.datasource;
 import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
 import com.enfernuz.quik.lua.rpc.api.RpcArgs;
 import com.enfernuz.quik.lua.rpc.api.RpcResult;
+import com.enfernuz.quik.lua.rpc.api.structures.DataSourceTime;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -97,62 +98,21 @@ public final class T implements RemoteProcedure {
     @Value
     public static class Result implements RpcResult<T> {
 
-        private static final String YEAR = "year";
-        private static final String MONTH = "month";
-        private static final String DAY = "day";
-        private static final String WEEK_DAY = "week_day";
-        private static final String HOUR = "hour";
-        private static final String MIN = "min";
-        private static final String SEC = "sec";
-        private static final String MS = "ms";
-        private static final String COUNT = "count";
+        private static final String TIME = "time";
 
-        int year;
-        int month;
-        int day;
-        int weekDay;
-        int hour;
-        int min;
-        int sec;
-        int ms;
-        int count;
+        DataSourceTime time;
 
         @JsonCreator
         @Builder
-        private Result(@JsonProperty(value = YEAR, required = true) final int year,
-                       @JsonProperty(value = MONTH, required = true) final int month,
-                       @JsonProperty(value = DAY, required = true) final int day,
-                       @JsonProperty(value = WEEK_DAY, required = true) final int weekDay,
-                       @JsonProperty(value = HOUR, required = true) final int hour,
-                       @JsonProperty(value = MIN, required = true) final int min,
-                       @JsonProperty(value = SEC, required = true) final int sec,
-                       @JsonProperty(value = MS, required = true) final int ms,
-                       @JsonProperty(value = COUNT, required = true) final int count) {
-
-            this.year = year;
-            this.month = month;
-            this.day = day;
-            this.weekDay = weekDay;
-            this.hour = hour;
-            this.min = min;
-            this.sec = sec;
-            this.ms = ms;
-            this.count = count;
+        private Result(@JsonProperty(value = TIME, required = true) @NonNull @NotNull final DataSourceTime time) {
+            this.time = time;
         }
 
         @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add(YEAR, year)
-                    .add(MONTH, month)
-                    .add(DAY, day)
-                    .add(WEEK_DAY, weekDay)
-                    .add(HOUR, hour)
-                    .add(MIN, min)
-                    .add(SEC, sec)
-                    .add(MS, ms)
-                    .add(COUNT, count)
+                    .add(TIME, time)
                     .toString();
         }
     }
