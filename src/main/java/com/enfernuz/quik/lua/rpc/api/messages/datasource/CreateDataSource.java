@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.Value;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public final class CreateDataSource implements RemoteProcedure {
 
@@ -72,21 +73,25 @@ public final class CreateDataSource implements RemoteProcedure {
         }
 
         @JsonIgnore
+        @NotNull
         public String getClassCode() {
             return classCode;
         }
 
         @JsonIgnore
+        @NotNull
         public String getSecCode() {
             return secCode;
         }
 
         @JsonIgnore
+        @NotNull
         public Interval getInterval() {
             return interval;
         }
 
         @JsonIgnore
+        @Nullable
         public String getParam() {
             return param;
         }
