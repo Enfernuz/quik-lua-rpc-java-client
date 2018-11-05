@@ -13,4 +13,9 @@ public class ServiceRpcException extends RpcException {
     public ServiceRpcException(final ServiceError error) {
         this.error = error;
     }
+
+    @Override
+    public String getMessage() {
+        return error.getMessage();
+    }
 }
