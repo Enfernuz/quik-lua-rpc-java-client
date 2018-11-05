@@ -60,6 +60,9 @@ final class ProtobufSerdeUtils {
 
     private static final FromPbConverter<QluaStructures.Security, Security> SECURITY_PB_CONVERTER = SecurityPbDeserializer.INSTANCE;
 
+    private static final FromPbConverter<QluaStructures.DataSourceTime, DataSourceTime> DATA_SOURCE_TIME_PB_CONVERTER =
+            DataSourceTimePbDeserializer.INSTANCE;
+
     @Contract(" -> fail")
     private ProtobufSerdeUtils() {
         throw new AssertionError("This should never be invoked.");
@@ -149,5 +152,10 @@ final class ProtobufSerdeUtils {
     @NotNull
     static Security convertFromPbSecurity(@NotNull final QluaStructures.Security security) {
         return SECURITY_PB_CONVERTER.convert(security);
+    }
+
+    @NotNull
+    static DataSourceTime convertFromDataSourceTime(@NotNull final QluaStructures.DataSourceTime time) {
+        return DATA_SOURCE_TIME_PB_CONVERTER.convert(time);
     }
 }
