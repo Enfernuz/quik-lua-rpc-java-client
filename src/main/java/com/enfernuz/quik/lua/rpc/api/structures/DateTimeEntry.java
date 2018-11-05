@@ -105,7 +105,6 @@ public class DateTimeEntry implements Comparable<DateTimeEntry> {
                 .start()
                 .compare(year, other.year)
                 .compare(month, other.month)
-                .compare(weekDay, other.weekDay)
                 .compare(day, other.day)
                 .compare(hour, other.hour)
                 .compare(min, other.min)
