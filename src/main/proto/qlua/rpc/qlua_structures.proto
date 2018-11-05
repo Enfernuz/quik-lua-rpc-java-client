@@ -624,3 +624,32 @@ message ConnectedEventInfo {
 message StopEventInfo {
     int32 flag = 1;
 }
+
+message DataSourceTime {
+
+    int32 year = 1;
+    int32 month = 2;
+    int32 day = 3;
+    int32 week_day = 4;
+    int32 hour = 5;
+    int32 min = 6;
+    int32 sec = 7;
+    int32 ms = 8;
+    int32 count = 9;
+}
+
+message DataSourceUpdateInfo {
+
+    string uuid = 1;
+    int32 index = 2;
+    string open = 3;
+    string high = 4;
+    string low = 5;
+    string close = 6;
+    string volume = 7;
+    DataSourceTime time = 8;
+    oneof size {
+        bool null_size = 9;
+        int32 value_size = 10;
+    }
+}

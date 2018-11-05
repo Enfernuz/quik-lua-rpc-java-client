@@ -15,6 +15,13 @@ public class DatasourceSetUpdateCallbackJsonSerdeTests {
             return SetUpdateCallback.Args.builder()
                     .datasourceUUID("1")
                     .fCbDef("2")
+                    .watchingO(true)
+                    .watchingH(true)
+                    .watchingL(true)
+                    .watchingC(true)
+                    .watchingV(true)
+                    .watchingT(true)
+                    .watchingSize(true)
                     .build();
         }
 
