@@ -1,24 +1,23 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.messages.ParamRequest;
-import com.google.protobuf.MessageLite;
+import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import qlua.rpc.RPC;
 
-public class ParamRequestRequestPbSerdeTest extends AbstractRequestPbSerdeTest<ParamRequest.Request> {
+public class ParamRequestArgsPbSerdeTest extends AbstractPbSerializationTest<ParamRequest.Args, qlua.rpc.ParamRequest.Request> {
 
     private static final String CLASS_CODE = "1";
     private static final String SEC_CODE = "2";
     private static final String DB_NAME = "3";
 
     @Override
-    public RPC.@NotNull ProcedureType getProcedureType() {
-        return RPC.ProcedureType.PARAM_REQUEST;
+    public @NotNull Serializer<ParamRequest.Args> getSerializerUnderTest() {
+        return ParamRequestArgsPbSerializer.INSTANCE;
     }
 
+    @NotNull
     @Override
-    public @Nullable MessageLite getPbRequestArgs() {
+    public qlua.rpc.ParamRequest.Request getTargetObjectAsPbMessage() {
 
         return qlua.rpc.ParamRequest.Request.newBuilder()
                 .setClassCode(CLASS_CODE)
@@ -27,16 +26,11 @@ public class ParamRequestRequestPbSerdeTest extends AbstractRequestPbSerdeTest<P
                 .build();
     }
 
-    @Override
-    public @NotNull Class<ParamRequest.Request> getTargetObjectClass() {
-        return ParamRequest.Request.class;
-    }
-
     @NotNull
     @Override
-    public ParamRequest.Request getTargetObject() {
+    public ParamRequest.Args getTargetObject() {
 
-        return ParamRequest.Request.builder()
+        return ParamRequest.Args.builder()
                 .classCode(CLASS_CODE)
                 .secCode(SEC_CODE)
                 .dbName(DB_NAME)
