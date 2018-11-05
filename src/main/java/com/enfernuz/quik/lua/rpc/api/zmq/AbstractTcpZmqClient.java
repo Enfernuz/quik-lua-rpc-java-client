@@ -2,22 +2,20 @@ package com.enfernuz.quik.lua.rpc.api.zmq;
 
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.enfernuz.quik.lua.rpc.io.transport.TcpGateway;
-import org.jetbrains.annotations.Contract;
+import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.zeromq.ZMQ;
 
 import java.io.IOException;
 
-import static java.util.Objects.requireNonNull;
-
 abstract class AbstractTcpZmqClient implements TcpGateway {
 
     private final NetworkAddress networkAddress;
     private final String uri;
-    private boolean isOpened;
+    private boolean opened;
 
-    AbstractTcpZmqClient(final @NotNull NetworkAddress networkAddress) {
-        this.networkAddress = requireNonNull(networkAddress, "Аргумент 'networkAddress' не должен быть null.");
+    AbstractTcpZmqClient(@NonNull @NotNull final NetworkAddress networkAddress) {
+        this.networkAddress = networkAddress;
         this.uri = String.format("tcp://%s:%d", networkAddress.getHost(), networkAddress.getPort());
     }
 
@@ -27,7 +25,6 @@ abstract class AbstractTcpZmqClient implements TcpGateway {
 
     abstract void deinitializeIO();
 
-    @Contract(pure = true)
     @Override
     public final NetworkAddress getNetworkAddress() {
         return networkAddress;
@@ -36,13 +33,13 @@ abstract class AbstractTcpZmqClient implements TcpGateway {
     @Override
     public final void open() throws IOException {
 
-        if (!isOpened) {
+        if (!opened) {
 
             initializeIO();
 
             final ZMQ.Socket socket = getSocket();
             if ( socket.connect(uri) ) {
-                isOpened = true;
+                opened = true;
             } else {
 
                 final String errorMessage = String.format(
@@ -51,27 +48,35 @@ abstract class AbstractTcpZmqClient implements TcpGateway {
                         socket.errno()
                 );
 
-                deinitializeIO();
-
-                throw new IOException(errorMessage);
+                Throwable suppressed = null;
+                try {
+                    deinitializeIO();
+                } catch (final Throwable t) {
+                    suppressed = t;
+                } finally {
+                    final IOException ex = new IOException(errorMessage);
+                    if (suppressed != null) {
+                        ex.addSuppressed(suppressed);
+                    }
+                    throw ex;
+                }
             }
         }
     }
 
-    @Contract(pure = true)
     @Override
     public final boolean isOpened() {
-        return isOpened;
+        return opened;
     }
 
     @Override
     public final void close() throws IOException {
 
-        if (isOpened) {
+        if (opened) {
 
             final ZMQ.Socket socket = getSocket();
             if ( socket.disconnect(uri) ) {
-                isOpened = false;
+                opened = false;
                 deinitializeIO();
             } else {
                 throw new IOException(
