@@ -1,7 +1,9 @@
 package com.enfernuz.quik.lua.rpc.events.api;
 
 import com.enfernuz.quik.lua.rpc.api.structures.*;
-import org.slf4j.*;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Обработчик событий API QLua терминала QUIK, журналирующий (логгирующий) события и их данные.
@@ -21,12 +23,12 @@ public enum LoggingEventHandler implements QluaEventHandler {
     }
 
     @Override
-    public void onStop(final StopEventInfo stopEventInfo) {
+    public void onStop(@NotNull final StopEventInfo stopEventInfo) {
         LOGGER.info("onStop:\n{}", stopEventInfo);
     }
 
     @Override
-    public void onConnected(final ConnectedEventInfo connectedEventInfo) {
+    public void onConnected(@NotNull final ConnectedEventInfo connectedEventInfo) {
         LOGGER.info("onConnected:\n{}", connectedEventInfo);
     }
 
@@ -41,102 +43,107 @@ public enum LoggingEventHandler implements QluaEventHandler {
     }
 
     @Override
-    public void onFirm(final Firm firm) {
+    public void onFirm(@NotNull final Firm firm) {
         LOGGER.info("onFirm:\n{}", firm);
     }
 
     @Override
-    public void onAllTrade(final AllTrade allTrade) {
+    public void onAllTrade(@NotNull final AllTrade allTrade) {
         LOGGER.info("onAllTrade:\n{}", allTrade);
     }
 
     @Override
-    public void onTrade(final Trade trade) {
+    public void onTrade(@NotNull final Trade trade) {
         LOGGER.info("onTrade:\n{}", trade);
     }
 
     @Override
-    public void onOrder(final Order order) {
+    public void onOrder(@NotNull final Order order) {
         LOGGER.info("onOrder:\n{}", order);
     }
 
     @Override
-    public void onAccountBalance(final AccountBalance accountBalance) {
+    public void onAccountBalance(@NotNull final AccountBalance accountBalance) {
         LOGGER.info("onAccountBalance:\n{}", accountBalance);
     }
 
     @Override
-    public void onFuturesLimitChange(final FuturesLimit futuresLimit) {
+    public void onFuturesLimitChange(@NotNull final FuturesLimit futuresLimit) {
         LOGGER.info("onFuturesLimitChange:\n{}", futuresLimit);
     }
 
     @Override
-    public void onFuturesLimitDelete(final FuturesLimitDelete futuresLimitDelete) {
+    public void onFuturesLimitDelete(@NotNull final FuturesLimitDelete futuresLimitDelete) {
         LOGGER.info("onFuturesLimitDelete:\n{}", futuresLimitDelete);
     }
 
     @Override
-    public void onFuturesClientHolding(final FuturesClientHolding futuresClientHolding) {
+    public void onFuturesClientHolding(@NotNull final FuturesClientHolding futuresClientHolding) {
         LOGGER.info("onFuturesClientHolding:\n{}", futuresClientHolding);
     }
 
     @Override
-    public void onMoneyLimit(final MoneyLimit moneyLimit) {
+    public void onMoneyLimit(@NotNull final MoneyLimit moneyLimit) {
         LOGGER.info("onMoneyLimit:\n{}", moneyLimit);
     }
 
     @Override
-    public void onMoneyLimitDelete(final MoneyLimitDelete moneyLimitDelete) {
+    public void onMoneyLimitDelete(@NotNull final MoneyLimitDelete moneyLimitDelete) {
         LOGGER.info("onMoneyLimitDelete:\n{}", moneyLimitDelete);
     }
 
     @Override
-    public void onDepoLimit(final DepoLimit depoLimit) {
+    public void onDepoLimit(@NotNull final DepoLimit depoLimit) {
         LOGGER.info("onDepoLimit:\n{}", depoLimit);
     }
 
     @Override
-    public void onDepoLimitDelete(final DepoLimitDelete depoLimitDelete) {
+    public void onDepoLimitDelete(@NotNull final DepoLimitDelete depoLimitDelete) {
         LOGGER.info("onDepoLimitDelete:\n{}", depoLimitDelete);
     }
 
     @Override
-    public void onAccountPosition(final AccountPosition accountPosition) {
+    public void onAccountPosition(@NotNull final AccountPosition accountPosition) {
         LOGGER.info("onAccountPosition:\n{}", accountPosition);
     }
 
     @Override
-    public void onNegDeal(final NegDeal negDeal) {
+    public void onNegDeal(@NotNull final NegDeal negDeal) {
         LOGGER.info("onNegDeal:\n{}", negDeal);
     }
 
     @Override
-    public void onNegTrade(final NegTrade negTrade) {
+    public void onNegTrade(@NotNull final NegTrade negTrade) {
         LOGGER.info("onNegTrade:\n{}", negTrade);
     }
 
     @Override
-    public void onStopOrder(final StopOrder stopOrder) {
+    public void onStopOrder(@NotNull final StopOrder stopOrder) {
         LOGGER.info("onStopOrder:\n{}", stopOrder);
     }
 
     @Override
-    public void onTransReply(final TransReply transReply) {
+    public void onTransReply(@NotNull final TransReply transReply) {
         LOGGER.info("onTransReply:\n{}", transReply);
     }
 
     @Override
-    public void onParam(final ParamEventInfo param) {
+    public void onParam(@NotNull final ParamEventInfo param) {
         LOGGER.info("onParam:\n{}", param);
     }
 
     @Override
-    public void onQuote(final QuoteEventInfo quote) {
+    public void onQuote(@NotNull final QuoteEventInfo quote) {
         LOGGER.info("onQuote:\n{}", quote);
     }
 
     @Override
     public void onCleanUp() {
         LOGGER.info("onCleanUp");
+    }
+
+    @Override
+    public void onDataSourceUpdate(@NotNull final DataSourceUpdateInfo dataSourceUpdate) {
+        LOGGER.info("onDataSourceUpdate:\n{}", dataSourceUpdate);
     }
 }

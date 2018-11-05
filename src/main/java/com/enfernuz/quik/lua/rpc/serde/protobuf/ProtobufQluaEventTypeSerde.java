@@ -85,6 +85,7 @@ enum ProtobufQluaEventTypeSerde implements Serde<QluaEvent.EventType> {
         result.put(hash(QluaEvents.EventType.ON_DISCONNECTED.getNumber()), QluaEvent.EventType.ON_DISCONNECTED);
         result.put(hash(QluaEvents.EventType.ON_CONNECTED.getNumber()), QluaEvent.EventType.ON_CONNECTED);
         result.put(hash(QluaEvents.EventType.ON_CLEAN_UP.getNumber()), QluaEvent.EventType.ON_CLEAN_UP);
+        result.put(hash(QluaEvents.EventType.ON_DATA_SOURCE_UPDATE.getNumber()), QluaEvent.EventType.ON_DATA_SOURCE_UPDATE);
 
         assert (result.size() == QluaEvent.EventType.values().length);
 
@@ -119,6 +120,7 @@ enum ProtobufQluaEventTypeSerde implements Serde<QluaEvent.EventType> {
         result.put(QluaEvent.EventType.ON_DISCONNECTED, asStringBytes(QluaEvents.EventType.ON_DISCONNECTED.getNumber()));
         result.put(QluaEvent.EventType.ON_CONNECTED, asStringBytes(QluaEvents.EventType.ON_CONNECTED.getNumber()));
         result.put(QluaEvent.EventType.ON_CLEAN_UP, asStringBytes(QluaEvents.EventType.ON_CLEAN_UP.getNumber()));
+        result.put(QluaEvent.EventType.ON_DATA_SOURCE_UPDATE, asStringBytes(QluaEvents.EventType.ON_DATA_SOURCE_UPDATE.getNumber()));
 
         assert (result.size() == QluaEvent.EventType.values().length);
 

@@ -1,11 +1,10 @@
 package com.enfernuz.quik.lua.rpc.events.api;
 
 import com.google.common.base.MoreObjects;
+import lombok.NonNull;
 
 import java.util.Arrays;
 import java.util.Objects;
-
-import static java.util.Objects.requireNonNull;
 
 public final class QluaEvent {
 
@@ -20,9 +19,7 @@ public final class QluaEvent {
      * @return экземпляр события API QLua терминала QUIK с заданным типом и данными
      * @throws NullPointerException если заданный тип события является null
      */
-    public static QluaEvent create(final EventType type, final byte[] data) {
-
-        requireNonNull(type, "The argument 'type' must not be null.");
+    public static QluaEvent create(@NonNull final EventType type, final byte[] data) {
         return new QluaEvent(type, data == null ? null : data.clone());
     }
 
@@ -86,7 +83,7 @@ public final class QluaEvent {
                 .toString();
     }
 
-    public static enum EventType {
+    public enum EventType {
 
         ON_CLOSE,
         ON_STOP,
@@ -111,6 +108,7 @@ public final class QluaEvent {
         ON_QUOTE,
         ON_DISCONNECTED,
         ON_CONNECTED,
-        ON_CLEAN_UP;
+        ON_CLEAN_UP,
+        ON_DATA_SOURCE_UPDATE;
     }
 }

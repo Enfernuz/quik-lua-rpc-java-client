@@ -1,6 +1,7 @@
 package com.enfernuz.quik.lua.rpc.events.api;
 
 import com.enfernuz.quik.lua.rpc.api.structures.*;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Обработчик событий API QLua терминала QUIK.
@@ -21,7 +22,7 @@ public interface QluaEventHandler {
      *
      * @param stopEventInfo  аргументы функции обратного вызова OnStop
      */
-    default void onStop(StopEventInfo stopEventInfo) {}
+    default void onStop(@NotNull final StopEventInfo stopEventInfo) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnConnected</b>.
@@ -31,7 +32,7 @@ public interface QluaEventHandler {
      * Если в течение торгового дня терминал получает новый класс, то функция вызывается еще раз, при этом параметр
      * вызова flag принимает значение «false».
      */
-    default void onConnected(ConnectedEventInfo connectedEventInfo) {}
+    default void onConnected(@NotNull final ConnectedEventInfo connectedEventInfo) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnDisconnected</b>.
@@ -54,7 +55,7 @@ public interface QluaEventHandler {
      *
      * @param firm  новая фирма
      */
-    default void onFirm(final Firm firm) {}
+    default void onFirm(@NotNull final Firm firm) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnAllTrade</b>.
@@ -63,7 +64,7 @@ public interface QluaEventHandler {
      *
      * @param allTrade  обезличенная сделка
      */
-    default void onAllTrade(final AllTrade allTrade) {}
+    default void onAllTrade(@NotNull final AllTrade allTrade) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnTrade</b>.
@@ -72,7 +73,7 @@ public interface QluaEventHandler {
      *
      * @param trade  сделка
      */
-    default void onTrade(final Trade trade) {}
+    default void onTrade(@NotNull final Trade trade) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnOrder</b>.
@@ -81,7 +82,7 @@ public interface QluaEventHandler {
      *
      * @param order  заявка
      */
-    default void onOrder(final Order order) {}
+    default void onOrder(@NotNull final Order order) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnAccountBalance</b>.
@@ -90,7 +91,7 @@ public interface QluaEventHandler {
      *
      * @param accountBalance  текущие позиции по счетам
      */
-    default void onAccountBalance(final AccountBalance accountBalance) {}
+    default void onAccountBalance(@NotNull final AccountBalance accountBalance) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnFuturesLimitChange</b>.
@@ -99,7 +100,7 @@ public interface QluaEventHandler {
      *
      * @param futuresLimit  текущие значения лимита по срочному рынку
      */
-    default void onFuturesLimitChange(final FuturesLimit futuresLimit) {}
+    default void onFuturesLimitChange(@NotNull final FuturesLimit futuresLimit) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnFuturesLimitDelete</b>.
@@ -108,7 +109,7 @@ public interface QluaEventHandler {
      *
      * @param futuresLimitDelete  удаляемый лимит по срочному рынку
      */
-    default void onFuturesLimitDelete(final FuturesLimitDelete futuresLimitDelete) {}
+    default void onFuturesLimitDelete(@NotNull final FuturesLimitDelete futuresLimitDelete) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnFuturesClientHolding</b>.
@@ -117,7 +118,7 @@ public interface QluaEventHandler {
      *
      * @param futuresClientHolding  описание позиции по срочному рынку
      */
-    default void onFuturesClientHolding(final FuturesClientHolding futuresClientHolding) {}
+    default void onFuturesClientHolding(@NotNull final FuturesClientHolding futuresClientHolding) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnMoneyLimit</b>.
@@ -126,7 +127,7 @@ public interface QluaEventHandler {
      *
      * @param moneyLimit  текущие значения денежного лимита
      */
-    default void onMoneyLimit(final MoneyLimit moneyLimit) {}
+    default void onMoneyLimit(@NotNull final MoneyLimit moneyLimit) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnMoneyLimitDelete</b>.
@@ -135,7 +136,7 @@ public interface QluaEventHandler {
      *
      * @param moneyLimitDelete  удаляемый денежный лимит
      */
-    default void onMoneyLimitDelete(final MoneyLimitDelete moneyLimitDelete) {}
+    default void onMoneyLimitDelete(@NotNull final MoneyLimitDelete moneyLimitDelete) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnDepoLimit</b>.
@@ -144,7 +145,7 @@ public interface QluaEventHandler {
      *
      * @param depoLimit  текущие значения лимитов по бумагам
      */
-    default void onDepoLimit(final DepoLimit depoLimit) {}
+    default void onDepoLimit(@NotNull final DepoLimit depoLimit) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnDepoLimitDelete</b>.
@@ -153,7 +154,7 @@ public interface QluaEventHandler {
      *
      * @param depoLimitDelete  удаляемый лимит по бумагам
      */
-    default void onDepoLimitDelete(final DepoLimitDelete depoLimitDelete) {}
+    default void onDepoLimitDelete(@NotNull final DepoLimitDelete depoLimitDelete) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnAccountPosition</b>.
@@ -162,7 +163,7 @@ public interface QluaEventHandler {
      *
      * @param accountPosition  текущие значения денежной позиции по счету
      */
-    default void onAccountPosition(final AccountPosition accountPosition) {}
+    default void onAccountPosition(@NotNull final AccountPosition accountPosition) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnNegDeal</b>.
@@ -171,7 +172,7 @@ public interface QluaEventHandler {
      *
      * @param negDeal  заявка на внебиржевые сделки
      */
-    default void onNegDeal(final NegDeal negDeal) {}
+    default void onNegDeal(@NotNull final NegDeal negDeal) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnNegTrade</b>.
@@ -181,7 +182,7 @@ public interface QluaEventHandler {
      *
      * @param negTrade  сделка для исполнения
      */
-    default void onNegTrade(final NegTrade negTrade) {}
+    default void onNegTrade(@NotNull final NegTrade negTrade) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnStopOrder</b>.
@@ -190,7 +191,7 @@ public interface QluaEventHandler {
      *
      * @param stopOrder  стоп-заявка
      */
-    default void onStopOrder(final StopOrder stopOrder) {}
+    default void onStopOrder(@NotNull final StopOrder stopOrder) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnTransReply</b>.
@@ -202,7 +203,7 @@ public interface QluaEventHandler {
      *
      * @param transReply  описание транзакции
      */
-    default void onTransReply(final TransReply transReply) {}
+    default void onTransReply(@NotNull final TransReply transReply) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnParam</b>.
@@ -211,7 +212,7 @@ public interface QluaEventHandler {
      *
      * @param param  объект, содержащий код бумаги и код класса инструмента, по которому изменились текущие параметры
      */
-    default void onParam(final ParamEventInfo param) {}
+    default void onParam(@NotNull final ParamEventInfo param) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnQuote</b>.
@@ -220,7 +221,7 @@ public interface QluaEventHandler {
      *
      * @param quote  объект, содержащий код бумаги и код класса инструмента, по которому изменился стакан котировок
      */
-    default void onQuote(final QuoteEventInfo quote) {}
+    default void onQuote(@NotNull final QuoteEventInfo quote) {}
 
     /**
      * Функция обратного вызова для события терминала <b>OnCleanUp</b>.
@@ -233,4 +234,7 @@ public interface QluaEventHandler {
      * </ul>
      */
     default void onCleanUp() {}
+
+    //FIXME: javadoc
+    default void onDataSourceUpdate(@NotNull final DataSourceUpdateInfo dataSourceUpdate) {};
 }

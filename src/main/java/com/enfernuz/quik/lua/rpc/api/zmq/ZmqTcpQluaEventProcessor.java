@@ -47,9 +47,10 @@ public final class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor, Zm
      * @return  новый экземпляр компонента {@link ZmqTcpQluaEventProcessor}
      * @throws NullPointerException если какой-либо из аргументов является null
      */
-    public static @NotNull ZmqTcpQluaEventProcessor newInstance(
-            @NotNull @NonNull final ClientConfiguration config,
-            @NotNull @NonNull final PollingMode pollingMode) {
+    @NotNull
+    public static ZmqTcpQluaEventProcessor newInstance(
+            @NonNull @NotNull final ClientConfiguration config,
+            @NonNull @NotNull final PollingMode pollingMode) {
 
         final SerdeModule serdeModule = SerdeUtils.getSerdeModule( config.getSerdeProtocol() );
         final ZmqTcpQluaEventPoller eventPoller;
@@ -61,7 +62,7 @@ public final class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor, Zm
                 eventPoller = new NonBlockingZmqTcpQluaEventPoller(config.getNetworkAddress(), config.getAuthContext(), serdeModule);
                 break;
             default:
-                throw new IllegalArgumentException(String.format("Неподдерживаемый режим чтения очереди событий: '%s'.", pollingMode));
+                throw new IllegalArgumentException(String.format("Неподдерживаемый режим чтения очереди событий: %s.", pollingMode));
         }
 
 
@@ -92,80 +93,83 @@ public final class ZmqTcpQluaEventProcessor implements TcpQluaEventProcessor, Zm
                 for (final QluaEventHandler eventHandler : eventHandlers) {
                     switch (event.getType()) {
                         case ON_STOP:
-                            eventHandler.onStop( serdeModule.deserialize(StopEventInfo.class, eventData) );
+                            eventHandler.onStop( serdeModule.deserialize(StopEventInfo.class, requireNonNull(eventData)) );
                             break;
                         case ON_CLOSE:
                             eventHandler.onClose();
                             break;
                         case ON_CONNECTED:
-                            eventHandler.onConnected( serdeModule.deserialize(ConnectedEventInfo.class, eventData) );
+                            eventHandler.onConnected( serdeModule.deserialize(ConnectedEventInfo.class, requireNonNull(eventData)) );
                             break;
                         case ON_DISCONNECTED:
                             eventHandler.onDisconnected();
                             break;
                         case ON_FIRM:
-                            eventHandler.onFirm( serdeModule.deserialize(Firm.class, eventData) );
+                            eventHandler.onFirm( serdeModule.deserialize(Firm.class, requireNonNull(eventData)) );
                             break;
                         case ON_ALL_TRADE:
-                            eventHandler.onAllTrade( serdeModule.deserialize(AllTrade.class, eventData) );
+                            eventHandler.onAllTrade( serdeModule.deserialize(AllTrade.class, requireNonNull(eventData)) );
                             break;
                         case ON_TRADE:
-                            eventHandler.onTrade( serdeModule.deserialize(Trade.class, eventData) );
+                            eventHandler.onTrade( serdeModule.deserialize(Trade.class, requireNonNull(eventData)) );
                             break;
                         case ON_ORDER:
-                            eventHandler.onOrder( serdeModule.deserialize(Order.class, eventData) );
+                            eventHandler.onOrder( serdeModule.deserialize(Order.class, requireNonNull(eventData)) );
                             break;
                         case ON_ACCOUNT_BALANCE:
-                            eventHandler.onAccountBalance( serdeModule.deserialize(AccountBalance.class, eventData) );
+                            eventHandler.onAccountBalance( serdeModule.deserialize(AccountBalance.class, requireNonNull(eventData)) );
                             break;
                         case ON_FUTURES_LIMIT_CHANGE:
-                            eventHandler.onFuturesLimitChange( serdeModule.deserialize(FuturesLimit.class, eventData) );
+                            eventHandler.onFuturesLimitChange( serdeModule.deserialize(FuturesLimit.class, requireNonNull(eventData)) );
                             break;
                         case ON_FUTURES_LIMIT_DELETE:
-                            eventHandler.onFuturesLimitDelete( serdeModule.deserialize(FuturesLimitDelete.class, eventData) );
+                            eventHandler.onFuturesLimitDelete( serdeModule.deserialize(FuturesLimitDelete.class, requireNonNull(eventData)) );
                             break;
                         case ON_FUTURES_CLIENT_HOLDING:
-                            eventHandler.onFuturesClientHolding( serdeModule.deserialize(FuturesClientHolding.class, eventData) );
+                            eventHandler.onFuturesClientHolding( serdeModule.deserialize(FuturesClientHolding.class, requireNonNull(eventData)) );
                             break;
                         case ON_MONEY_LIMIT:
-                            eventHandler.onMoneyLimit( serdeModule.deserialize(MoneyLimit.class, eventData) );
+                            eventHandler.onMoneyLimit( serdeModule.deserialize(MoneyLimit.class, requireNonNull(eventData)) );
                             break;
                         case ON_MONEY_LIMIT_DELETE:
-                            eventHandler.onMoneyLimitDelete( serdeModule.deserialize(MoneyLimitDelete.class, eventData) );
+                            eventHandler.onMoneyLimitDelete( serdeModule.deserialize(MoneyLimitDelete.class, requireNonNull(eventData)) );
                             break;
                         case ON_DEPO_LIMIT:
-                            eventHandler.onDepoLimit( serdeModule.deserialize(DepoLimit.class, eventData) );
+                            eventHandler.onDepoLimit( serdeModule.deserialize(DepoLimit.class, requireNonNull(eventData)) );
                             break;
                         case ON_DEPO_LIMIT_DELETE:
-                            eventHandler.onDepoLimitDelete( serdeModule.deserialize(DepoLimitDelete.class, eventData) );
+                            eventHandler.onDepoLimitDelete( serdeModule.deserialize(DepoLimitDelete.class, requireNonNull(eventData)) );
                             break;
                         case ON_ACCOUNT_POSITION:
-                            eventHandler.onAccountPosition( serdeModule.deserialize(AccountPosition.class, eventData) );
+                            eventHandler.onAccountPosition( serdeModule.deserialize(AccountPosition.class, requireNonNull(eventData)) );
                             break;
                         case ON_NEG_DEAL:
-                            eventHandler.onNegDeal( serdeModule.deserialize(NegDeal.class, eventData) );
+                            eventHandler.onNegDeal( serdeModule.deserialize(NegDeal.class, requireNonNull(eventData)) );
                             break;
                         case ON_NEG_TRADE:
-                            eventHandler.onNegTrade( serdeModule.deserialize(NegTrade.class, eventData) );
+                            eventHandler.onNegTrade( serdeModule.deserialize(NegTrade.class, requireNonNull(eventData)) );
                             break;
                         case ON_STOP_ORDER:
-                            eventHandler.onStopOrder( serdeModule.deserialize(StopOrder.class, eventData) );
+                            eventHandler.onStopOrder( serdeModule.deserialize(StopOrder.class, requireNonNull(eventData)) );
                             break;
                         case ON_TRANS_REPLY:
-                            eventHandler.onTransReply( serdeModule.deserialize(TransReply.class, eventData) );
+                            eventHandler.onTransReply( serdeModule.deserialize(TransReply.class, requireNonNull(eventData)) );
                             break;
                         case ON_PARAM:
-                            eventHandler.onParam( serdeModule.deserialize(ParamEventInfo.class, eventData) );
+                            eventHandler.onParam( serdeModule.deserialize(ParamEventInfo.class, requireNonNull(eventData)) );
                             break;
                         case ON_QUOTE:
-                            eventHandler.onQuote( serdeModule.deserialize(QuoteEventInfo.class, eventData) );
+                            eventHandler.onQuote( serdeModule.deserialize(QuoteEventInfo.class, requireNonNull(eventData)) );
                             break;
                         case ON_CLEAN_UP:
                             eventHandler.onCleanUp();
                             break;
+                        case ON_DATA_SOURCE_UPDATE:
+                            eventHandler.onDataSourceUpdate( serdeModule.deserialize(DataSourceUpdateInfo.class, requireNonNull(eventData)) );
+                            break;
                         default:
                             throw new QluaEventProcessingException(
-                                    String.format("Неподдерживаемый тип QLua-события: \"%s\".", event.getType())
+                                    String.format("Неподдерживаемый тип QLua-события: %s.", event.getType())
                             );
                     }
                 }
