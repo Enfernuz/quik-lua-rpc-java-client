@@ -5,6 +5,7 @@ import com.enfernuz.quik.lua.rpc.api.RpcArgs;
 import com.enfernuz.quik.lua.rpc.api.messages.*;
 import com.enfernuz.quik.lua.rpc.api.messages.bit.*;
 import com.enfernuz.quik.lua.rpc.api.messages.datasource.*;
+import com.enfernuz.quik.lua.rpc.api.messages.os.SysDate;
 import com.enfernuz.quik.lua.rpc.api.structures.*;
 import com.enfernuz.quik.lua.rpc.events.api.QluaEvent;
 import com.enfernuz.quik.lua.rpc.serde.Deserializer;
@@ -97,6 +98,8 @@ public enum ProtobufSerdeModule implements SerdeModule {
 
         final ImmutableMap.Builder<Class<?>, Serializer<?>> result = ImmutableMap.builder();
 
+        result.put(RequestEnvelope.class, new RequestEnvelopePbSerializer(ProtobufSerdeModule.INSTANCE));
+
         registerSerializer(result, AddColumn.Args.class, AddColumnArgsPbSerializer.INSTANCE);
         registerSerializer(result, AddLabel.Args.class, AddLabelArgsPbSerializer.INSTANCE);
         registerSerializer(result, CalcBuySell.Args.class, CalcBuySellArgsPbSerializer.INSTANCE);
@@ -141,7 +144,6 @@ public enum ProtobufSerdeModule implements SerdeModule {
         registerSerializer(result, IsWindowClosed.Args.class, IsWindowClosedArgsPbSerializer.INSTANCE);
         registerSerializer(result, ParamRequest.Args.class, ParamRequestArgsPbSerializer.INSTANCE);
         registerSerializer(result, Message.Args.class, MessageArgsPbSerializer.INSTANCE);
-        registerSerializer(result, ParamRequest.Args.class, ParamRequestArgsPbSerializer.INSTANCE);
         registerSerializer(result, PrintDbgStr.Args.class, PrintDbgStrArgsPbSerializer.INSTANCE);
         registerSerializer(result, RGB.Args.class, RGBArgsPbSerializer.INSTANCE);
         registerSerializer(result, SearchItems.Args.class, SearchItemsArgsPbSerializer.INSTANCE);
@@ -171,8 +173,10 @@ public enum ProtobufSerdeModule implements SerdeModule {
         registerSerializer(result, V.Args.class, DsVArgsPbSerializer.INSTANCE);
         registerSerializer(result, T.Args.class, DsTArgsPbSerializer.INSTANCE);
         registerSerializer(result, Size.Args.class, DsSizePbArgsSerializer.INSTANCE);
-
-        // FIXME: add the rest of the serializers
+        registerSerializer(result, Close.Args.class, DsClosePbArgsSerializer.INSTANCE);
+        registerSerializer(result, SetEmptyCallback.Args.class, DsSetEmptyCallbackPbArgsSerializer.INSTANCE);
+        registerSerializer(result, SetUpdateCallback.Args.class, DsSetUpdateCallbackPbArgsSerializer.INSTANCE);
+        registerSerializer(result, CreateDataSource.Args.class, DsCreateDataSourcePbArgsSerializer.INSTANCE);
 
         return result.build();
     }
@@ -180,6 +184,8 @@ public enum ProtobufSerdeModule implements SerdeModule {
     private static Map<Class<?>, Deserializer<?>> createClassToDeserializerMap() {
 
         final ImmutableMap.Builder<Class<?>, Deserializer<?>> result = ImmutableMap.builder();
+
+        registerDeserializer(result, ResponseEnvelope.class, ResponseEnvelopePbDeserializer.INSTANCE);
 
         registerDeserializer(result, QluaEvent.EventType.class, ProtobufQluaEventTypeSerde.INSTANCE);
         registerDeserializer(result, StopEventInfo.class, StopEventInfoPbDeserializer.INSTANCE);
@@ -210,6 +216,8 @@ public enum ProtobufSerdeModule implements SerdeModule {
         registerDeserializer(result, Money.class, MoneyPbDeserializer.INSTANCE);
         registerDeserializer(result, PortfolioInfo.class, PortfolioInfoPbDeserializer.INSTANCE);
         registerDeserializer(result, Security.class, SecurityPbDeserializer.INSTANCE);
+        registerDeserializer(result, DataSourceTime.class, DataSourceTimePbDeserializer.INSTANCE);
+        registerDeserializer(result, DataSourceUpdateInfo.class, DataSourceUpdateInfoPbDeserializer.INSTANCE);
 
         registerDeserializer(result, AddColumn.Result.class, AddColumnResultPbDeserializer.INSTANCE);
         registerDeserializer(result, AddLabel.Result.class, AddLabelResultPbDeserializer.INSTANCE);
@@ -289,8 +297,12 @@ public enum ProtobufSerdeModule implements SerdeModule {
         registerDeserializer(result, V.Result.class, DsVResultPbDeserializer.INSTANCE);
         registerDeserializer(result, T.Result.class, DsTResultPbDeserializer.INSTANCE);
         registerDeserializer(result, Size.Result.class, DsSizeResultPbDeserializer.INSTANCE);
+        registerDeserializer(result, Close.Result.class, DsClosePbResultDeserializer.INSTANCE);
+        registerDeserializer(result, SetEmptyCallback.Result.class, DsSetEmptyCallbackPbResultDeserializer.INSTANCE);
+        registerDeserializer(result, SetUpdateCallback.Result.class, DsSetUpdateCallbackPbResultDeserializer.INSTANCE);
+        registerDeserializer(result, CreateDataSource.Result.class, DsCreateDataSourcePbResultDeserializer.INSTANCE);
 
-        // FIXME: add the rest of the deserializers
+        registerDeserializer(result, SysDate.Result.class, SysDateResultPbDeserializer.INSTANCE);
 
         return result.build();
     }
