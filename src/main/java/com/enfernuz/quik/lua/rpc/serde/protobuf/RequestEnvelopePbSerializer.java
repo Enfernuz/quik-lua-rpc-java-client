@@ -24,7 +24,8 @@ public class RequestEnvelopePbSerializer implements Serializer<RequestEnvelope<?
             createRemoteProcedureClassToPbProcedureTypeMap();
 
     static {
-        assert RPC.ProcedureType.values().length == REMOTE_PROCEDURE_CLASS_TO_PB_PROCEDURE_TYPE_MAP.size();
+        // PROCEDURE_TYPE_UNKNOWN + UNRECOGNIZED = 2
+        assert RPC.ProcedureType.values().length - 2 == REMOTE_PROCEDURE_CLASS_TO_PB_PROCEDURE_TYPE_MAP.size();
     }
 
     @NonNull ProtobufSerdeModule protobufSerdeModule;
