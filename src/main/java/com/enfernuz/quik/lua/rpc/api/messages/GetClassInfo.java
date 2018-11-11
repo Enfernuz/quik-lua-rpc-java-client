@@ -22,16 +22,17 @@ public final class GetClassInfo implements RemoteProcedure {
 
         private static final String CLASS_CODE = "class_code";
 
-        @JsonProperty(CLASS_CODE)
+        @JsonProperty(value = CLASS_CODE, required = true)
         private final String classCode;
 
         public Args(@NonNull final String classCode) {
             this.classCode = classCode;
         }
 
+        @NotNull
         @JsonIgnore
-        public static String getClassCode() {
-            return CLASS_CODE;
+        public String getClassCode() {
+            return classCode;
         }
 
         @NotNull
