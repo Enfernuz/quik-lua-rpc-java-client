@@ -1,24 +1,24 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.messages.GetPortfolioInfoEx;
-import com.google.protobuf.MessageLite;
+import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import qlua.rpc.RPC;
 
-public class GetPortfolioInfoExRequestPbSerdeTest extends AbstractRequestPbSerdeTest<GetPortfolioInfoEx.Request> {
+public class GetPortfolioInfoExArgsPbSerdeTest extends AbstractPbSerializationTest<GetPortfolioInfoEx.Args, qlua.rpc.GetPortfolioInfoEx.Request> {
 
     private static final String FIRM_ID = "1";
     private static final String CLIENT_CODE = "2";
     private static final int LIMIT_KIND = 3;
 
     @Override
-    public RPC.@NotNull ProcedureType getProcedureType() {
-        return RPC.ProcedureType.GET_PORTFOLIO_INFO_EX;
+    public @NotNull Serializer<GetPortfolioInfoEx.Args> getSerializerUnderTest() {
+        return GetPortfolioInfoExArgsPbSerializer.INSTANCE;
     }
 
+    @NotNull
     @Override
-    public @Nullable MessageLite getPbRequestArgs() {
+    public qlua.rpc.GetPortfolioInfoEx.Request getTargetObjectAsPbMessage() {
+
         return qlua.rpc.GetPortfolioInfoEx.Request.newBuilder()
                 .setFirmId(FIRM_ID)
                 .setClientCode(CLIENT_CODE)
@@ -26,15 +26,11 @@ public class GetPortfolioInfoExRequestPbSerdeTest extends AbstractRequestPbSerde
                 .build();
     }
 
-    @Override
-    public @NotNull Class<GetPortfolioInfoEx.Request> getTargetObjectClass() {
-        return GetPortfolioInfoEx.Request.class;
-    }
-
     @NotNull
     @Override
-    public GetPortfolioInfoEx.Request getTargetObject() {
-        return GetPortfolioInfoEx.Request.builder()
+    public GetPortfolioInfoEx.Args getTargetObject() {
+
+        return GetPortfolioInfoEx.Args.builder()
                 .firmId(FIRM_ID)
                 .clientCode(CLIENT_CODE)
                 .limitKind(LIMIT_KIND)
