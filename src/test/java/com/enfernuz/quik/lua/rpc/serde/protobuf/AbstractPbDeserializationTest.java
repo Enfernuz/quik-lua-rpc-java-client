@@ -1,7 +1,6 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.serde.Deserializer;
-import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
 import com.google.protobuf.MessageLite;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
