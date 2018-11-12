@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetQuoteLevel2;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class GetQuoteLevel2RequestPbSerdeTest extends AbstractPbSerializationTest<GetQuoteLevel2.Args, qlua.rpc.GetQuoteLevel2.Request> {
+public class GetQuoteLevel2ArgsPbSerdeTest extends AbstractPbSerializationTest<GetQuoteLevel2.Args, qlua.rpc.GetQuoteLevel2.Request> {
 
     private static final String CLASS_CODE = "1";
     private static final String SEC_CODE = "2";
