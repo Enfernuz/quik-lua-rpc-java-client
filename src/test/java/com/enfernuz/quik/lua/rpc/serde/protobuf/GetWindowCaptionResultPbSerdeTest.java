@@ -1,57 +1,56 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.messages.GetWindowCaption;
+import com.enfernuz.quik.lua.rpc.serde.Deserializer;
 import org.jetbrains.annotations.NotNull;
-import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 
-public class GetWindowCaptionResultPbSerdeTest extends AbstractResultPbSerdeTest<GetWindowCaption.Result, qlua.rpc.GetWindowCaption.Result> {
+@RunWith(Enclosed.class)
+public class GetWindowCaptionResultPbSerdeTest {
 
-    @Override
-    public @NotNull Class<GetWindowCaption.Result> getTargetObjectClass() {
-        return GetWindowCaption.Result.class;
+    private static final String CAPTION = "1";
+
+    public static class NormalGetWindowCaptionResultPbSerdeTest extends AbstractPbDeserializationTest<qlua.rpc.GetWindowCaption.Result, GetWindowCaption.Result> {
+
+        @Override
+        public @NotNull Deserializer<GetWindowCaption.Result> getDeserializerUnderTest() {
+            return GetWindowCaptionResultPbDeserializer.INSTANCE;
+        }
+
+        @NotNull
+        @Override
+        public GetWindowCaption.Result getTargetObject() {
+            return GetWindowCaption.Result.getInstance(CAPTION);
+        }
+
+        @NotNull
+        @Override
+        public qlua.rpc.GetWindowCaption.Result getTargetObjectAsPbMessage() {
+
+            return qlua.rpc.GetWindowCaption.Result.newBuilder()
+                    .setCaption(CAPTION)
+                    .build();
+        }
     }
 
-    @NotNull
-    @Override
-    public qlua.rpc.GetWindowCaption.Result getTargetObjectAsPbMessage() {
+    public static class ErrorGetWindowCaptionResultPbSerdeTest extends AbstractPbDeserializationTest<qlua.rpc.GetWindowCaption.Result, GetWindowCaption.Result> {
 
-        return qlua.rpc.GetWindowCaption.Result.newBuilder()
-                .setCaption(WindowCaptionParameters.CAPTION)
-                .build();
-    }
+        @Override
+        public @NotNull Deserializer<GetWindowCaption.Result> getDeserializerUnderTest() {
+            return GetWindowCaptionResultPbDeserializer.INSTANCE;
+        }
 
-    @NotNull
-    @Override
-    public GetWindowCaption.Result getTargetObject() {
-        return GetWindowCaption.Result.getInstance(WindowCaptionParameters.CAPTION);
-    }
+        @NotNull
+        @Override
+        public GetWindowCaption.Result getTargetObject() {
+            return GetWindowCaption.Result.getErrorInstance();
+        }
 
-    @Test
-    @Override
-    public void shouldSerialize_ErrorObject_To_ByteArrayOf_PbErrorObject() {
-        super.shouldSerialize_ErrorObject_To_ByteArrayOf_PbErrorObject();
-    }
-
-    @Test
-    @Override
-    public void shouldDeserialize_ByteArrayOf_PbErrorObject_To_ErrorObject() {
-        super.shouldDeserialize_ByteArrayOf_PbErrorObject_To_ErrorObject();
-    }
-
-    @NotNull
-    @Override
-    public qlua.rpc.GetWindowCaption.Result getErrorObject_AsPbMessage() {
-        return qlua.rpc.GetWindowCaption.Result.newBuilder().build();
-    }
-
-    @NotNull
-    @Override
-    public GetWindowCaption.Result getErrorObject() {
-        return GetWindowCaption.Result.getErrorInstance();
-    }
-
-    private static final class WindowCaptionParameters {
-
-        private static final String CAPTION = "1";
+        @NotNull
+        @Override
+        public qlua.rpc.GetWindowCaption.Result getTargetObjectAsPbMessage() {
+            return qlua.rpc.GetWindowCaption.Result.newBuilder().build();
+        }
     }
 }
