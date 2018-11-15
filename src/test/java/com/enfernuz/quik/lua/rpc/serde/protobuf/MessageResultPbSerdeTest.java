@@ -1,70 +1,88 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.messages.Message;
+import com.enfernuz.quik.lua.rpc.serde.Deserializer;
 import org.jetbrains.annotations.NotNull;
-import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 
-import java.util.Arrays;
+@RunWith(Enclosed.class)
+public class MessageResultPbSerdeTest {
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+    private static final int OK = 1;
+    private static final int NOT_OK = 42; // any number that does not equal to 1, actually
 
-public class MessageResultPbSerdeTest extends AbstractResultPbSerdeTest<Message.Result, qlua.rpc.Message.Result> {
-
-    private static final Message.Result OK_RESULT = getResult(1);
-    private static final qlua.rpc.Message.Result OK_PB_RESUlT = getPbResult(1);
-
-    private static final Message.Result NOT_OK_RESULT = getResult(42);
-    private static final qlua.rpc.Message.Result NOT_OK_PB_RESUlT = getPbResult(42);
-
-    private static final Message.Result ERROR_RESULT = Message.Result.getErrorInstance();
-    private static final qlua.rpc.Message.Result ERROR_PB_RESULT = qlua.rpc.Message.Result.newBuilder()
-            .setNullResult(true)
-            .build();
-
-
-    @Override
-    public @NotNull Class<Message.Result> getTargetObjectClass() {
-        return Message.Result.class;
+    // sanity check
+    static {
+        assert NOT_OK != OK;
     }
 
-    @NotNull
-    @Override
-    public qlua.rpc.Message.Result getTargetObjectAsPbMessage() {
-        return OK_PB_RESUlT;
+    public static class OkMessageResultPbSerdeTest extends AbstractPbDeserializationTest<qlua.rpc.Message.Result, Message.Result> {
+
+        @Override
+        public @NotNull Deserializer<Message.Result> getDeserializerUnderTest() {
+            return MessageResultPbDeserializer.INSTANCE;
+        }
+
+        @NotNull
+        @Override
+        public Message.Result getTargetObject() {
+            return Message.Result.getOkInstance();
+        }
+
+        @NotNull
+        @Override
+        public qlua.rpc.Message.Result getTargetObjectAsPbMessage() {
+
+            return qlua.rpc.Message.Result.newBuilder()
+                    .setValueResult(OK)
+                    .build();
+        }
     }
 
-    @NotNull
-    @Override
-    public Message.Result getTargetObject() {
-        return OK_RESULT;
+    public static class NotOkMessageResultPbSerdeTest extends AbstractPbDeserializationTest<qlua.rpc.Message.Result, Message.Result> {
+
+        @Override
+        public @NotNull Deserializer<Message.Result> getDeserializerUnderTest() {
+            return MessageResultPbDeserializer.INSTANCE;
+        }
+
+        @NotNull
+        @Override
+        public Message.Result getTargetObject() {
+            return Message.Result.getInstance(NOT_OK);
+        }
+
+        @NotNull
+        @Override
+        public qlua.rpc.Message.Result getTargetObjectAsPbMessage() {
+
+            return qlua.rpc.Message.Result.newBuilder()
+                    .setValueResult(NOT_OK)
+                    .build();
+        }
     }
 
-    @Test
-    public void shouldSerialize_ObjectOf_NotOkResult_To_ByteArrayOf_PbObjectOf_NotOkResult() {
+    public static class ErrorMessageResultPbSerdeTest extends AbstractPbDeserializationTest<qlua.rpc.Message.Result, Message.Result> {
 
-        assertTrue(
-                Arrays.equals(NOT_OK_PB_RESUlT.toByteArray(), getSerdeModuleUnderTest().serialize(NOT_OK_RESULT))
-        );
-    }
+        @Override
+        public @NotNull Deserializer<Message.Result> getDeserializerUnderTest() {
+            return MessageResultPbDeserializer.INSTANCE;
+        }
 
-    @Test
-    public void shouldDeserialize_ByteArrayOf_PbObjectOf_NotOkResult_To_ObjectOf_NotOkResult() {
-        assertEquals(NOT_OK_RESULT, getSerdeModuleUnderTest().deserialize(getTargetObjectClass(), NOT_OK_PB_RESUlT.toByteArray()));
-    }
+        @NotNull
+        @Override
+        public Message.Result getTargetObject() {
+            return Message.Result.getErrorInstance();
+        }
 
-    @Test
-    public void shouldDeserialize_ByteArrayOf_PbObjectOf_ErrorResult_To_ObjectOf_ErrorResult() {
-        assertEquals(ERROR_RESULT, getSerdeModuleUnderTest().deserialize(getTargetObjectClass(), ERROR_PB_RESULT.toByteArray()));
-    }
+        @NotNull
+        @Override
+        public qlua.rpc.Message.Result getTargetObjectAsPbMessage() {
 
-    private static Message.Result getResult(final int result) {
-        return Message.Result.getInstance(Message.MessageResult.getInstance(result));
-    }
-
-    private static qlua.rpc.Message.Result getPbResult(int result) {
-        return qlua.rpc.Message.Result.newBuilder()
-                .setValueResult(result)
-                .build();
+            return qlua.rpc.Message.Result.newBuilder()
+                    .setNullResult(true)
+                    .build();
+        }
     }
 }
