@@ -1,78 +1,63 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.messages.GetItem;
-import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
+import com.enfernuz.quik.lua.rpc.serde.Deserializer;
 import com.google.common.collect.ImmutableMap;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.jetbrains.annotations.NotNull;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 
-import java.util.Arrays;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+@RunWith(Enclosed.class)
+public class GetItemResultPbSerdeTest  {
 
-public class GetItemResultPbSerdeTest {
+    public static class NormalGetItemResultPbSerdeTest extends AbstractPbDeserializationTest<qlua.rpc.GetItem.Result, GetItem.Result> {
 
-    private static SerdeModule sut;
-
-    private static GetItem.Result expectedObject;
-    private static byte[] expectedPbInput;
-
-    private static GetItem.Result expectedObjectWithOnlyRequiredFields;
-    private static byte[] expectedPbInputWithOnlyRequiredFields;
-
-    @BeforeClass
-    public static void globalSetup() {
-
-        sut = ProtobufSerdeModule.INSTANCE;
-
-        final Map<String, String> tableRow = ImmutableMap.of(
+        private static final Map<String, String> TABLE_ROW = ImmutableMap.of(
                 "key1", "value1",
                 "key2", "value2",
                 "key3", "value3"
         );
 
-        expectedObject = GetItem.Result.getInstance(tableRow);
-        expectedPbInput = qlua.rpc.GetItem.Result.newBuilder()
-                .putAllTableRow(tableRow)
-                .build()
-                .toByteArray();
+        @Override
+        public @NotNull Deserializer<GetItem.Result> getDeserializerUnderTest() {
+            return GetItemResultPbDeserializer.INSTANCE;
+        }
 
-        expectedObjectWithOnlyRequiredFields = GetItem.Result.getInstance(null);
-        expectedPbInputWithOnlyRequiredFields = qlua.rpc.GetItem.Result.newBuilder().build().toByteArray();
+        @NotNull
+        @Override
+        public GetItem.Result getTargetObject() {
+            return GetItem.Result.getInstance(TABLE_ROW);
+        }
+
+        @NotNull
+        @Override
+        public qlua.rpc.GetItem.Result getTargetObjectAsPbMessage() {
+
+            return qlua.rpc.GetItem.Result.newBuilder()
+                    .putAllTableRow(TABLE_ROW)
+                    .build();
+        }
     }
 
-    @Test
-    public void testSerialize() {
+    public static class ErrorGetItemResultPbSerdeTest extends AbstractPbDeserializationTest<qlua.rpc.GetItem.Result, GetItem.Result> {
 
-        assertTrue(
-                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
-        );
-    }
+        @Override
+        public @NotNull Deserializer<GetItem.Result> getDeserializerUnderTest() {
+            return GetItemResultPbDeserializer.INSTANCE;
+        }
 
-    @Test
-    public void testDeserialize() {
-        assertEquals(expectedObject, sut.deserialize(GetItem.Result.class, expectedPbInput));
-    }
+        @NotNull
+        @Override
+        public GetItem.Result getTargetObject() {
+            return GetItem.Result.getInstance(null);
+        }
 
-    @Test
-    public void testSerialize_WithOnlyRequiredFields() {
-
-        assertTrue(
-                Arrays.equals(
-                        expectedPbInputWithOnlyRequiredFields,
-                        sut.serialize(expectedObjectWithOnlyRequiredFields)
-                )
-        );
-    }
-
-    @Test
-    public void testDeserialize_WithOnlyRequiredFields() {
-
-        assertEquals(
-                expectedObjectWithOnlyRequiredFields,
-                sut.deserialize(GetItem.Result.class, expectedPbInputWithOnlyRequiredFields)
-        );
+        @NotNull
+        @Override
+        public qlua.rpc.GetItem.Result getTargetObjectAsPbMessage() {
+            return qlua.rpc.GetItem.Result.newBuilder().build();
+        }
     }
 }
