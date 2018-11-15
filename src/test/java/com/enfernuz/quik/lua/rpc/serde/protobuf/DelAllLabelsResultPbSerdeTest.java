@@ -1,47 +1,67 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.messages.DelAllLabels;
-import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import com.enfernuz.quik.lua.rpc.serde.Deserializer;
+import org.jetbrains.annotations.NotNull;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 
-import java.util.Arrays;
+@RunWith(Enclosed.class)
+public class DelAllLabelsResultPbSerdeTest  {
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+    public static class TrueDelAllLabelsResultPbDeserializationTest
+            extends AbstractPbDeserializationTest<qlua.rpc.DelAllLabels.Result, DelAllLabels.Result> {
 
-public class DelAllLabelsResultPbSerdeTest {
+        private static final boolean TRUE = true;
+        // sanity check
+        static { assert TRUE; }
 
-    private static SerdeModule sut;
+        @Override
+        public @NotNull Deserializer<DelAllLabels.Result> getDeserializerUnderTest() {
+            return DelAllLabelsResultPbDeserializer.INSTANCE;
+        }
 
-    private static DelAllLabels.Result expectedObject;
-    private static byte[] expectedPbInput;
+        @NotNull
+        @Override
+        public DelAllLabels.Result getTargetObject() {
+            return DelAllLabels.Result.getInstance(TRUE);
+        }
 
-    @BeforeClass
-    public static void globalSetup() {
+        @NotNull
+        @Override
+        public qlua.rpc.DelAllLabels.Result getTargetObjectAsPbMessage() {
 
-        sut = ProtobufSerdeModule.INSTANCE;
-
-        expectedObject = DelAllLabels.Result.getInstance(true);
-        expectedPbInput = qlua.rpc.DelAllLabels.Result.newBuilder()
-                .setResult(true)
-                .build()
-                .toByteArray();
+            return qlua.rpc.DelAllLabels.Result.newBuilder()
+                    .setResult(TRUE)
+                    .build();
+        }
     }
 
-    @Test
-    public void testSerialize() {
+    public static class FalseDelAllLabelsResultPbDeserializationTest
+            extends AbstractPbDeserializationTest<qlua.rpc.DelAllLabels.Result, DelAllLabels.Result> {
 
-        final byte[] actual = sut.serialize(expectedObject);
+        private static final boolean FALSE = false;
+        // sanity check
+        static { assert !FALSE; }
 
-        assertTrue( Arrays.equals(expectedPbInput, actual) );
-    }
+        @Override
+        public @NotNull Deserializer<DelAllLabels.Result> getDeserializerUnderTest() {
+            return DelAllLabelsResultPbDeserializer.INSTANCE;
+        }
 
-    @Test
-    public void testDeserialize() {
+        @NotNull
+        @Override
+        public DelAllLabels.Result getTargetObject() {
+            return DelAllLabels.Result.getInstance(FALSE);
+        }
 
-        final DelAllLabels.Result actualObject = sut.deserialize(DelAllLabels.Result.class, expectedPbInput);
+        @NotNull
+        @Override
+        public qlua.rpc.DelAllLabels.Result getTargetObjectAsPbMessage() {
 
-        assertEquals(actualObject, expectedObject);
+            return qlua.rpc.DelAllLabels.Result.newBuilder()
+                    .setResult(FALSE)
+                    .build();
+        }
     }
 }
