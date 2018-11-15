@@ -3,52 +3,49 @@ package com.enfernuz.quik.lua.rpc.serde.protobuf;
 import com.enfernuz.quik.lua.rpc.api.messages.GetCandlesByIndex;
 import com.enfernuz.quik.lua.rpc.api.structures.CandleEntry;
 import com.enfernuz.quik.lua.rpc.api.structures.DateTimeEntry;
-import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
+import com.enfernuz.quik.lua.rpc.serde.Deserializer;
 import com.google.common.collect.ImmutableList;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.jetbrains.annotations.NotNull;
 import qlua.structs.QluaStructures;
 
-import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+public class GetCandlesByIndexResultPbSerdeTest extends AbstractPbDeserializationTest<qlua.rpc.GetCandlesByIndex.Result, GetCandlesByIndex.Result> {
 
-public class GetCandlesByIndexResultPbSerdeTest {
+    private static final int N = 2;
+    private static final String L = "3";
 
-    private static SerdeModule sut;
+    @Override
+    public @NotNull Deserializer<GetCandlesByIndex.Result> getDeserializerUnderTest() {
+        return GetCandlesByIndexResultPbDeserializer.INSTANCE;
+    }
 
-    private static GetCandlesByIndex.Result expectedObject;
-    private static byte[] expectedPbInput;
-
-    @BeforeClass
-    public static void globalSetup() {
-
-        sut = ProtobufSerdeModule.INSTANCE;
+    @NotNull
+    @Override
+    public GetCandlesByIndex.Result getTargetObject() {
 
         final List<CandleEntry> candles = ImmutableList.of(
                 CandleEntry.builder()
-                    .open("50")
-                    .close("100")
-                    .high("150")
-                    .low("1")
-                    .volume("555")
-                    .dateTimeEntry(
-                            DateTimeEntry.builder()
-                                .mcs(1)
-                                .ms(2)
-                                .sec(3)
-                                .min(4)
-                                .hour(5)
-                                .day(6)
-                                .weekDay(3)
-                                .month(8)
-                                .year(9)
-                                .build()
-                    )
-                    .doesExist(1)
-                    .build(),
+                        .open("50")
+                        .close("100")
+                        .high("150")
+                        .low("1")
+                        .volume("555")
+                        .dateTimeEntry(
+                                DateTimeEntry.builder()
+                                        .mcs(1)
+                                        .ms(2)
+                                        .sec(3)
+                                        .min(4)
+                                        .hour(5)
+                                        .day(6)
+                                        .weekDay(3)
+                                        .month(8)
+                                        .year(9)
+                                        .build()
+                        )
+                        .doesExist(1)
+                        .build(),
                 CandleEntry.builder()
                         .open("51")
                         .close("102")
@@ -72,6 +69,14 @@ public class GetCandlesByIndexResultPbSerdeTest {
                         .build()
 
         );
+
+        return new GetCandlesByIndex.Result(candles, N, L);
+    }
+
+    @NotNull
+    @Override
+    public qlua.rpc.GetCandlesByIndex.Result getTargetObjectAsPbMessage() {
+
         final List<QluaStructures.CandleEntry> pbCandles = ImmutableList.of(
                 QluaStructures.CandleEntry.newBuilder()
                         .setOpen("50")
@@ -117,29 +122,10 @@ public class GetCandlesByIndexResultPbSerdeTest {
                         .build()
         );
 
-        expectedObject = new GetCandlesByIndex.Result(candles, 2, "3");
-
-        expectedPbInput = qlua.rpc.GetCandlesByIndex.Result.newBuilder()
+        return qlua.rpc.GetCandlesByIndex.Result.newBuilder()
                 .addAllT(pbCandles)
-                .setN(2)
-                .setL("3")
-                .build()
-                .toByteArray();
-    }
-
-    @Test
-    public void testSerialize() {
-
-        final byte[] actual = sut.serialize(expectedObject);
-
-        assertTrue( Arrays.equals(expectedPbInput, actual) );
-    }
-
-    @Test
-    public void testDeserialize() {
-
-        final GetCandlesByIndex.Result actualObject = sut.deserialize(GetCandlesByIndex.Result.class, expectedPbInput);
-
-        assertEquals(actualObject, expectedObject);
+                .setN(N)
+                .setL(L)
+                .build();
     }
 }
