@@ -1,106 +1,76 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.AccountBalance;
-import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import com.enfernuz.quik.lua.rpc.serde.Deserializer;
+import org.jetbrains.annotations.NotNull;
 import qlua.structs.QluaStructures;
 
-import java.util.Arrays;
+public class AccountBalancePbSerdeTest extends AbstractPbDeserializationTest<QluaStructures.AccountBalance, AccountBalance> {
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+    private static final String FIRM_ID = "1";
+    private static final String SEC_CODE = "2";
+    private static final String TRD_ACC_ID = "3";
+    private static final String DEP_ACC_ID = "4";
+    private static final String OPEN_BAL = "5";
+    private static final String CURRENT_POS = "6";
+    private static final String PLANNED_POS_SELL = "7";
+    private static final String PLANNED_POS_BUY = "8";
+    private static final String PLAN_BAL = "9";
+    private static final String USQTYB = "10";
+    private static final String USQTYS = "11";
+    private static final String PLANNED = "12";
+    private static final String SETTLE_BAL = "13";
+    private static final String BANK_ACC_ID = "14";
+    private static final int FIRM_USE = 15;
 
-public class AccountBalancePbSerdeTest {
+    @Override
+    public @NotNull Deserializer<AccountBalance> getDeserializerUnderTest() {
+        return AccountBalancePbDeserializer.INSTANCE;
+    }
 
-    private static SerdeModule sut;
+    @NotNull
+    @Override
+    public AccountBalance getTargetObject() {
 
-    private static AccountBalance expectedObject;
-    private static byte[] expectedPbInput;
-
-    private static AccountBalance expectedObjectWithOnlyRequiredFields;
-    private static byte[] expectedPbInputWithOnlyRequiredFields;
-
-    @BeforeClass
-    public static void globalSetup() {
-
-        sut = ProtobufSerdeModule.INSTANCE;
-
-        expectedObject = AccountBalance.builder()
-                .firmId("1")
-                .secCode("2")
-                .trdAccId("3")
-                .depAccId("4")
-                .openBal("5")
-                .currentPos("6")
-                .plannedPosSell("7")
-                .plannedPosBuy("8")
-                .planBal("9")
-                .usqtyb("10")
-                .usqtys("11")
-                .planned("12")
-                .settleBal("13")
-                .bankAccId("14")
-                .firmUse(15)
+        return AccountBalance.builder()
+                .firmId(FIRM_ID)
+                .secCode(SEC_CODE)
+                .trdAccId(TRD_ACC_ID)
+                .depAccId(DEP_ACC_ID)
+                .openBal(OPEN_BAL)
+                .currentPos(CURRENT_POS)
+                .plannedPosSell(PLANNED_POS_SELL)
+                .plannedPosBuy(PLANNED_POS_BUY)
+                .planBal(PLAN_BAL)
+                .usqtyb(USQTYB)
+                .usqtys(USQTYS)
+                .planned(PLANNED)
+                .settleBal(SETTLE_BAL)
+                .bankAccId(BANK_ACC_ID)
+                .firmUse(FIRM_USE)
                 .build();
-        expectedPbInput = QluaStructures.AccountBalance.newBuilder()
-                .setFirmid("1")
-                .setSecCode("2")
-                .setTrdaccid("3")
-                .setDepaccid("4")
-                .setOpenbal("5")
-                .setCurrentpos("6")
-                .setPlannedpossell("7")
-                .setPlannedposbuy("8")
-                .setPlanbal("9")
-                .setUsqtyb("10")
-                .setUsqtys("11")
-                .setPlanned("12")
-                .setSettlebal("13")
-                .setBankAccId("14")
-                .setFirmuse(15)
-                .build()
-                .toByteArray();
+    }
 
-        expectedObjectWithOnlyRequiredFields = AccountBalance.builder()
-                .firmUse(1)
+    @NotNull
+    @Override
+    public QluaStructures.AccountBalance getTargetObjectAsPbMessage() {
+
+        return QluaStructures.AccountBalance.newBuilder()
+                .setFirmid(FIRM_ID)
+                .setSecCode(SEC_CODE)
+                .setTrdaccid(TRD_ACC_ID)
+                .setDepaccid(DEP_ACC_ID)
+                .setOpenbal(OPEN_BAL)
+                .setCurrentpos(CURRENT_POS)
+                .setPlannedpossell(PLANNED_POS_SELL)
+                .setPlannedposbuy(PLANNED_POS_BUY)
+                .setPlanbal(PLAN_BAL)
+                .setUsqtyb(USQTYB)
+                .setUsqtys(USQTYS)
+                .setPlanned(PLANNED)
+                .setSettlebal(SETTLE_BAL)
+                .setBankAccId(BANK_ACC_ID)
+                .setFirmuse(FIRM_USE)
                 .build();
-        expectedPbInputWithOnlyRequiredFields = QluaStructures.AccountBalance.newBuilder()
-                .setFirmuse(1)
-                .build()
-                .toByteArray();
-    }
-
-    @Test
-    public void testSerialize() {
-
-        assertTrue(
-                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
-        );
-    }
-
-    @Test
-    public void testDeserialize() {
-        assertEquals(expectedObject, sut.deserialize(AccountBalance.class, expectedPbInput));
-    }
-
-    @Test
-    public void testSerialize_WithOnlyRequiredFields() {
-
-        assertTrue(
-                Arrays.equals(
-                        expectedPbInputWithOnlyRequiredFields,
-                        sut.serialize(expectedObjectWithOnlyRequiredFields)
-                )
-        );
-    }
-
-    @Test
-    public void testDeserialize_WithOnlyRequiredFields() {
-
-        assertEquals(
-                expectedObjectWithOnlyRequiredFields,
-                sut.deserialize(AccountBalance.class, expectedPbInputWithOnlyRequiredFields)
-        );
     }
 }
