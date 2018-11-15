@@ -3,11 +3,14 @@ package com.enfernuz.quik.lua.rpc.serde.protobuf;
 import com.enfernuz.quik.lua.rpc.api.messages.GetOrderByNumber;
 import com.enfernuz.quik.lua.rpc.api.structures.DateTimeEntry;
 import com.enfernuz.quik.lua.rpc.api.structures.Order;
+import com.enfernuz.quik.lua.rpc.serde.Deserializer;
 import org.jetbrains.annotations.NotNull;
-import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 import qlua.structs.QluaStructures;
 
-public class GetOrderByNumberResultPbSerdeTest extends AbstractResultPbSerdeTest<GetOrderByNumber.Result, qlua.rpc.GetOrderByNumber.Result> {
+@RunWith(Enclosed.class)
+public class GetOrderByNumberResultPbSerdeTest {
 
     private static final int DATETIME_MCS = 1;
     private static final int DATETIME_MS = 2;
@@ -62,163 +65,164 @@ public class GetOrderByNumberResultPbSerdeTest extends AbstractResultPbSerdeTest
 
     private static final int INDX = 2;
 
-    @Test
-    @Override
-    public void shouldSerialize_ErrorObject_To_ByteArrayOf_PbErrorObject() {
-        super.shouldSerialize_ErrorObject_To_ByteArrayOf_PbErrorObject();
+    public static class NormalGetOrderByNumberResultPbSerdeTest extends AbstractPbDeserializationTest<qlua.rpc.GetOrderByNumber.Result, GetOrderByNumber.Result> {
+
+        @Override
+        public @NotNull Deserializer<GetOrderByNumber.Result> getDeserializerUnderTest() {
+            return GetOrderByNumberResultPbDeserializer.INSTANCE;
+        }
+
+        @NotNull
+        @Override
+        public GetOrderByNumber.Result getTargetObject() {
+
+            final DateTimeEntry dateTimeEntry = DateTimeEntry.builder()
+                    .mcs(DATETIME_MCS)
+                    .ms(DATETIME_MS)
+                    .sec(DATETIME_SEC)
+                    .min(DATETIME_MIN)
+                    .hour(DATETIME_HOUR)
+                    .day(DATETIME_DAY)
+                    .weekDay(DATETIME_WEEK_DAY)
+                    .month(DATETIME_MONTH)
+                    .year(DATETIME_YEAR)
+                    .build();
+
+            final Order order = Order.builder()
+                    .orderNum(ORDER_NUM)
+                    .flags(FLAGS)
+                    .brokerRef(BROKER_REF)
+                    .userId(USER_ID)
+                    .firmId(FIRM_ID)
+                    .account(ACCOUNT)
+                    .price(PRICE)
+                    .qty(QTY)
+                    .balance(BALANCE)
+                    .value(VALUE)
+                    .accruedInt(ACCRUED_INT)
+                    .yield(YIELD)
+                    .transId(TRANS_ID)
+                    .clientCode(CLIENT_CODE)
+                    .price2(PRICE2)
+                    .settleCode(SETTLE_CODE)
+                    .uid(UID)
+                    .canceledUid(CANCELED_UID)
+                    .exchangeCode(EXCHANGE_CODE)
+                    .activationTime(ACTIVATION_TIME)
+                    .linkedOrder(LINKED_ORDER)
+                    .expiry(EXPIRY)
+                    .secCode(SEC_CODE)
+                    .classCode(CLASS_CODE)
+                    .datetime(dateTimeEntry)
+                    .withdrawDatetime(dateTimeEntry)
+                    .bankAccId(BANK_ACC_ID)
+                    .valueEntryType(VALUE_ENTRY_TYPE)
+                    .repoTerm(REPO_TERM)
+                    .repoValue(REPO_VALUE)
+                    .repo2Value(REPO2_VALUE)
+                    .repoValueBalance(REPO_VALUE_BALANCE)
+                    .startDiscount(START_DISCOUNT)
+                    .rejectReason(REJECT_REASON)
+                    .extOrderFlags(EXT_ORDER_FLAGS)
+                    .minQty(MIN_QTY)
+                    .execType(EXEC_TYPE)
+                    .sideQualifier(SIDE_QUALIFIER)
+                    .acntType(ACNT_TYPE)
+                    .capacity(CAPACITY)
+                    .passiveOnlyOrder(PASSIVE_ONLY_ORDER)
+                    .visible(VISIBLE)
+                    .build();
+
+            return GetOrderByNumber.Result.getInstance(order, INDX);
+        }
+
+        @NotNull
+        @Override
+        public qlua.rpc.GetOrderByNumber.Result getTargetObjectAsPbMessage() {
+
+            final QluaStructures.DateTimeEntry pbDateTimeEntry = QluaStructures.DateTimeEntry.newBuilder()
+                    .setMcs(DATETIME_MCS)
+                    .setMs(DATETIME_MS)
+                    .setSec(DATETIME_SEC)
+                    .setMin(DATETIME_MIN)
+                    .setHour(DATETIME_HOUR)
+                    .setDay(DATETIME_DAY)
+                    .setWeekDay(DATETIME_WEEK_DAY)
+                    .setMonth(DATETIME_MONTH)
+                    .setYear(DATETIME_YEAR)
+                    .build();
+
+            final QluaStructures.Order order = QluaStructures.Order.newBuilder()
+                    .setOrderNum(ORDER_NUM)
+                    .setFlags(FLAGS)
+                    .setBrokerref(BROKER_REF)
+                    .setUserid(USER_ID)
+                    .setFirmid(FIRM_ID)
+                    .setAccount(ACCOUNT)
+                    .setPrice(PRICE)
+                    .setQty(QTY)
+                    .setBalance(BALANCE)
+                    .setValue(VALUE)
+                    .setAccruedint(ACCRUED_INT)
+                    .setYield(YIELD)
+                    .setTransId(TRANS_ID)
+                    .setClientCode(CLIENT_CODE)
+                    .setPrice2(PRICE2)
+                    .setSettlecode(SETTLE_CODE)
+                    .setUid(UID)
+                    .setCanceledUid(CANCELED_UID)
+                    .setExchangeCode(EXCHANGE_CODE)
+                    .setActivationTime(ACTIVATION_TIME)
+                    .setLinkedorder(LINKED_ORDER)
+                    .setExpiry(EXPIRY)
+                    .setSecCode(SEC_CODE)
+                    .setClassCode(CLASS_CODE)
+                    .setDatetime(pbDateTimeEntry)
+                    .setWithdrawDatetime(pbDateTimeEntry)
+                    .setBankAccId(BANK_ACC_ID)
+                    .setValueEntryType(VALUE_ENTRY_TYPE)
+                    .setRepoterm(REPO_TERM)
+                    .setRepovalue(REPO_VALUE)
+                    .setRepo2Value(REPO2_VALUE)
+                    .setRepoValueBalance(REPO_VALUE_BALANCE)
+                    .setStartDiscount(START_DISCOUNT)
+                    .setRejectReason(REJECT_REASON)
+                    .setExtOrderFlags(EXT_ORDER_FLAGS)
+                    .setMinQty(MIN_QTY)
+                    .setExecType(EXEC_TYPE)
+                    .setSideQualifier(SIDE_QUALIFIER)
+                    .setAcntType(ACNT_TYPE)
+                    .setCapacity(CAPACITY)
+                    .setPassiveOnlyOrder(PASSIVE_ONLY_ORDER)
+                    .setVisible(VISIBLE)
+                    .build();
+
+            return qlua.rpc.GetOrderByNumber.Result.newBuilder()
+                    .setOrder(order)
+                    .setValueIndx(INDX)
+                    .build();
+        }
     }
 
-    @Test
-    @Override
-    public void shouldDeserialize_ByteArrayOf_PbErrorObject_To_ErrorObject() {
-        super.shouldDeserialize_ByteArrayOf_PbErrorObject_To_ErrorObject();
-    }
+    public static class ErrorGetOrderByNumberResultPbSerdeTest extends AbstractPbDeserializationTest<qlua.rpc.GetOrderByNumber.Result, GetOrderByNumber.Result> {
 
-    @Override
-    public @NotNull Class<GetOrderByNumber.Result> getTargetObjectClass() {
-        return GetOrderByNumber.Result.class;
-    }
+        @Override
+        public @NotNull Deserializer<GetOrderByNumber.Result> getDeserializerUnderTest() {
+            return GetOrderByNumberResultPbDeserializer.INSTANCE;
+        }
 
-    @NotNull
-    @Override
-    public qlua.rpc.GetOrderByNumber.Result getTargetObjectAsPbMessage() {
+        @NotNull
+        @Override
+        public GetOrderByNumber.Result getTargetObject() {
+            return GetOrderByNumber.Result.getInstance(null, null);
+        }
 
-        final QluaStructures.DateTimeEntry pbDateTimeEntry = QluaStructures.DateTimeEntry.newBuilder()
-                .setMcs(DATETIME_MCS)
-                .setMs(DATETIME_MS)
-                .setSec(DATETIME_SEC)
-                .setMin(DATETIME_MIN)
-                .setHour(DATETIME_HOUR)
-                .setDay(DATETIME_DAY)
-                .setWeekDay(DATETIME_WEEK_DAY)
-                .setMonth(DATETIME_MONTH)
-                .setYear(DATETIME_YEAR)
-                .build();
-
-        final QluaStructures.Order order = QluaStructures.Order.newBuilder()
-                .setOrderNum(ORDER_NUM)
-                .setFlags(FLAGS)
-                .setBrokerref(BROKER_REF)
-                .setUserid(USER_ID)
-                .setFirmid(FIRM_ID)
-                .setAccount(ACCOUNT)
-                .setPrice(PRICE)
-                .setQty(QTY)
-                .setBalance(BALANCE)
-                .setValue(VALUE)
-                .setAccruedint(ACCRUED_INT)
-                .setYield(YIELD)
-                .setTransId(TRANS_ID)
-                .setClientCode(CLIENT_CODE)
-                .setPrice2(PRICE2)
-                .setSettlecode(SETTLE_CODE)
-                .setUid(UID)
-                .setCanceledUid(CANCELED_UID)
-                .setExchangeCode(EXCHANGE_CODE)
-                .setActivationTime(ACTIVATION_TIME)
-                .setLinkedorder(LINKED_ORDER)
-                .setExpiry(EXPIRY)
-                .setSecCode(SEC_CODE)
-                .setClassCode(CLASS_CODE)
-                .setDatetime(pbDateTimeEntry)
-                .setWithdrawDatetime(pbDateTimeEntry)
-                .setBankAccId(BANK_ACC_ID)
-                .setValueEntryType(VALUE_ENTRY_TYPE)
-                .setRepoterm(REPO_TERM)
-                .setRepovalue(REPO_VALUE)
-                .setRepo2Value(REPO2_VALUE)
-                .setRepoValueBalance(REPO_VALUE_BALANCE)
-                .setStartDiscount(START_DISCOUNT)
-                .setRejectReason(REJECT_REASON)
-                .setExtOrderFlags(EXT_ORDER_FLAGS)
-                .setMinQty(MIN_QTY)
-                .setExecType(EXEC_TYPE)
-                .setSideQualifier(SIDE_QUALIFIER)
-                .setAcntType(ACNT_TYPE)
-                .setCapacity(CAPACITY)
-                .setPassiveOnlyOrder(PASSIVE_ONLY_ORDER)
-                .setVisible(VISIBLE)
-                .build();
-
-        return qlua.rpc.GetOrderByNumber.Result.newBuilder()
-                .setOrder(order)
-                .setIndx(INDX)
-                .build();
-    }
-
-    @NotNull
-    @Override
-    public GetOrderByNumber.Result getTargetObject() {
-
-        final DateTimeEntry dateTimeEntry = DateTimeEntry.builder()
-                .mcs(DATETIME_MCS)
-                .ms(DATETIME_MS)
-                .sec(DATETIME_SEC)
-                .min(DATETIME_MIN)
-                .hour(DATETIME_HOUR)
-                .day(DATETIME_DAY)
-                .weekDay(DATETIME_WEEK_DAY)
-                .month(DATETIME_MONTH)
-                .year(DATETIME_YEAR)
-                .build();
-
-        final Order order = Order.builder()
-                .orderNum(ORDER_NUM)
-                .flags(FLAGS)
-                .brokerRef(BROKER_REF)
-                .userId(USER_ID)
-                .firmId(FIRM_ID)
-                .account(ACCOUNT)
-                .price(PRICE)
-                .qty(QTY)
-                .balance(BALANCE)
-                .value(VALUE)
-                .accruedInt(ACCRUED_INT)
-                .yield(YIELD)
-                .transId(TRANS_ID)
-                .clientCode(CLIENT_CODE)
-                .price2(PRICE2)
-                .settleCode(SETTLE_CODE)
-                .uid(UID)
-                .canceledUid(CANCELED_UID)
-                .exchangeCode(EXCHANGE_CODE)
-                .activationTime(ACTIVATION_TIME)
-                .linkedOrder(LINKED_ORDER)
-                .expiry(EXPIRY)
-                .secCode(SEC_CODE)
-                .classCode(CLASS_CODE)
-                .datetime(dateTimeEntry)
-                .withdrawDatetime(dateTimeEntry)
-                .bankAccId(BANK_ACC_ID)
-                .valueEntryType(VALUE_ENTRY_TYPE)
-                .repoTerm(REPO_TERM)
-                .repoValue(REPO_VALUE)
-                .repo2Value(REPO2_VALUE)
-                .repoValueBalance(REPO_VALUE_BALANCE)
-                .startDiscount(START_DISCOUNT)
-                .rejectReason(REJECT_REASON)
-                .extOrderFlags(EXT_ORDER_FLAGS)
-                .minQty(MIN_QTY)
-                .execType(EXEC_TYPE)
-                .sideQualifier(SIDE_QUALIFIER)
-                .acntType(ACNT_TYPE)
-                .capacity(CAPACITY)
-                .passiveOnlyOrder(PASSIVE_ONLY_ORDER)
-                .visible(VISIBLE)
-                .build();
-
-        return GetOrderByNumber.Result.getInstance(order, INDX);
-    }
-
-    @NotNull
-    @Override
-    public qlua.rpc.GetOrderByNumber.Result getErrorObject_AsPbMessage() {
-        return qlua.rpc.GetOrderByNumber.Result.newBuilder().build();
-    }
-
-    @NotNull
-    @Override
-    public GetOrderByNumber.Result getErrorObject() {
-        return GetOrderByNumber.Result.getInstance(null, 0);
+        @NotNull
+        @Override
+        public qlua.rpc.GetOrderByNumber.Result getTargetObjectAsPbMessage() {
+            return qlua.rpc.GetOrderByNumber.Result.newBuilder()
+                    .setNullIndx(true)
+                    .build();
+        }
     }
 }
