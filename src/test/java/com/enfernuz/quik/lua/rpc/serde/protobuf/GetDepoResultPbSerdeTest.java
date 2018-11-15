@@ -2,9 +2,10 @@ package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.messages.GetDepo;
 import com.enfernuz.quik.lua.rpc.api.structures.Depo;
+import com.enfernuz.quik.lua.rpc.serde.Deserializer;
 import org.jetbrains.annotations.NotNull;
 
-public class GetDepoResultPbSerdeTest extends AbstractResultPbSerdeTest<GetDepo.Result, qlua.rpc.GetDepo.Result> {
+public class GetDepoResultPbSerdeTest extends AbstractPbDeserializationTest<qlua.rpc.GetDepo.Result, GetDepo.Result> {
 
     private static final String DEPO_LIMIT_LOCKED_BUY_VALUE = "1";
     private static final String DEPO_CURRENT_BALANCE = "2";
@@ -16,8 +17,26 @@ public class GetDepoResultPbSerdeTest extends AbstractResultPbSerdeTest<GetDepo.
     private static final String DEPO_OPEN_LIMIT = "8";
 
     @Override
-    public @NotNull Class<GetDepo.Result> getTargetObjectClass() {
-        return GetDepo.Result.class;
+    public @NotNull Deserializer<GetDepo.Result> getDeserializerUnderTest() {
+        return GetDepoResultPbDeserializer.INSTANCE;
+    }
+
+    @NotNull
+    @Override
+    public GetDepo.Result getTargetObject() {
+
+        final Depo depo = Depo.builder()
+                .depoLimitLockedBuyValue(DEPO_LIMIT_LOCKED_BUY_VALUE)
+                .depoCurrentBalance(DEPO_CURRENT_BALANCE)
+                .depoLimitLockedBuy(DEPO_LIMIT_LOCKED_BUY)
+                .depoLimitLocked(DEPO_LIMIT_LOCKED)
+                .depoLimitAvailable(DEPO_LIMIT_AVAILABLE)
+                .depoCurrentLimit(DEPO_CURRENT_LIMIT)
+                .depoOpenBalance(DEPO_OPEN_BALANCE)
+                .depoOpenLimit(DEPO_OPEN_LIMIT)
+                .build();
+
+        return new GetDepo.Result(depo);
     }
 
     @NotNull
@@ -38,23 +57,5 @@ public class GetDepoResultPbSerdeTest extends AbstractResultPbSerdeTest<GetDepo.
         return qlua.rpc.GetDepo.Result.newBuilder()
                 .setDepo(depo)
                 .build();
-    }
-
-    @NotNull
-    @Override
-    public GetDepo.Result getTargetObject() {
-
-        final Depo depo = Depo.builder()
-                .depoLimitLockedBuyValue(DEPO_LIMIT_LOCKED_BUY_VALUE)
-                .depoCurrentBalance(DEPO_CURRENT_BALANCE)
-                .depoLimitLockedBuy(DEPO_LIMIT_LOCKED_BUY)
-                .depoLimitLocked(DEPO_LIMIT_LOCKED)
-                .depoLimitAvailable(DEPO_LIMIT_AVAILABLE)
-                .depoCurrentLimit(DEPO_CURRENT_LIMIT)
-                .depoOpenBalance(DEPO_OPEN_BALANCE)
-                .depoOpenLimit(DEPO_OPEN_LIMIT)
-                .build();
-
-        return new GetDepo.Result(depo);
     }
 }
