@@ -1,51 +1,62 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.messages.GetCell;
-import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import com.enfernuz.quik.lua.rpc.serde.Deserializer;
+import org.jetbrains.annotations.NotNull;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 
-import java.util.Arrays;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+@RunWith(Enclosed.class)
 public class GetCellResultPbSerdeTest {
 
-    private static SerdeModule sut;
+    public static class NormalGetCellResultPbSerdeTest extends AbstractPbDeserializationTest<qlua.rpc.GetCell.Result, GetCell.Result> {
 
-    private static GetCell.Result expectedObject;
-    private static byte[] expectedPbInput;
+        private static final String IMAGE = "1";
+        private static final String VALUE = "2";
 
-    @BeforeClass
-    public static void globalSetup() {
+        @Override
+        public @NotNull Deserializer<GetCell.Result> getDeserializerUnderTest() {
+            return GetCellResultPbDeserializer.INSTANCE;
+        }
 
-        sut = ProtobufSerdeModule.INSTANCE;
+        @NotNull
+        @Override
+        public GetCell.Result getTargetObject() {
 
-        expectedObject = GetCell.Result.builder()
-                .image("1")
-                .value("2")
-                .build();
-        expectedPbInput = qlua.rpc.GetCell.Result.newBuilder()
-                .setImage("1")
-                .setValue("2")
-                .build()
-                .toByteArray();
+            return GetCell.Result.builder()
+                    .image(IMAGE)
+                    .value(VALUE)
+                    .build();
+        }
+
+        @NotNull
+        @Override
+        public qlua.rpc.GetCell.Result getTargetObjectAsPbMessage() {
+
+            return qlua.rpc.GetCell.Result.newBuilder()
+                    .setImage(IMAGE)
+                    .setValue(VALUE)
+                    .build();
+        }
     }
 
-    @Test
-    public void testSerialize() {
+    public static class ErrorGetCellResultPbSerdeTest extends AbstractPbDeserializationTest<qlua.rpc.GetCell.Result, GetCell.Result> {
 
-        final byte[] actual = sut.serialize(expectedObject);
+        @Override
+        public @NotNull Deserializer<GetCell.Result> getDeserializerUnderTest() {
+            return GetCellResultPbDeserializer.INSTANCE;
+        }
 
-        assertTrue( Arrays.equals(expectedPbInput, actual) );
-    }
+        @NotNull
+        @Override
+        public GetCell.Result getTargetObject() {
+            return GetCell.Result.builder().build();
+        }
 
-    @Test
-    public void testDeserialize() {
-
-        final GetCell.Result actualObject = sut.deserialize(GetCell.Result.class, expectedPbInput);
-
-        assertEquals(actualObject, expectedObject);
+        @NotNull
+        @Override
+        public qlua.rpc.GetCell.Result getTargetObjectAsPbMessage() {
+            return qlua.rpc.GetCell.Result.newBuilder().build();
+        }
     }
 }

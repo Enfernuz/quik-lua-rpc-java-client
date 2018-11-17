@@ -6,6 +6,8 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 
+import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.convertFromPbString;
+
 enum GetCellResultPbDeserializer implements Deserializer<GetCell.Result>, FromPbConverter<qlua.rpc.GetCell.Result, GetCell.Result> {
 
     INSTANCE;
@@ -20,8 +22,8 @@ enum GetCellResultPbDeserializer implements Deserializer<GetCell.Result>, FromPb
     @Override
     public GetCell.Result convert(@NotNull final qlua.rpc.GetCell.Result result) {
         return GetCell.Result.builder()
-                .image( result.getImage() )
-                .value( result.getValue() )
+                .image( convertFromPbString(result.getImage()) )
+                .value( convertFromPbString(result.getValue()) )
                 .build();
     }
 }
