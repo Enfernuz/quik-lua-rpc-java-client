@@ -3,10 +3,7 @@ package com.enfernuz.quik.lua.rpc.api.structures;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Value;
+import lombok.*;
 import lombok.experimental.NonFinal;
 import org.jetbrains.annotations.NotNull;
 
@@ -32,10 +29,10 @@ public class DepoLimitDelete {
     @JsonCreator
     @Builder
     private DepoLimitDelete(
-            @JsonProperty(SECURITY_CODE) final String secCode,
-            @JsonProperty(TRADING_ACCOUNT_ID) final String trdAccId,
-            @JsonProperty(FIRM_ID) final String firmId,
-            @JsonProperty(CLIENT_CODE) final String clientCode,
+            @JsonProperty(value = SECURITY_CODE, required = true) @NonNull final String secCode,
+            @JsonProperty(value = TRADING_ACCOUNT_ID, required = true) @NonNull final String trdAccId,
+            @JsonProperty(value = FIRM_ID, required = true) @NonNull final String firmId,
+            @JsonProperty(value = CLIENT_CODE, required = true) @NonNull final String clientCode,
             @JsonProperty(value = LIMIT_KIND, required = true) final int limitKind) {
 
         this.secCode = secCode;
