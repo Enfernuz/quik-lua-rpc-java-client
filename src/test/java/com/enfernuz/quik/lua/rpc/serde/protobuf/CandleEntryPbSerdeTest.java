@@ -2,108 +2,85 @@ package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.CandleEntry;
 import com.enfernuz.quik.lua.rpc.api.structures.DateTimeEntry;
-import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import com.enfernuz.quik.lua.rpc.serde.Deserializer;
+import org.jetbrains.annotations.NotNull;
 import qlua.structs.QluaStructures;
 
-import java.util.Arrays;
+public class CandleEntryPbSerdeTest extends AbstractPbDeserializationTest<QluaStructures.CandleEntry, CandleEntry> {
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+    private static final String OPEN = "1";
+    private static final String CLOSE = "2";
+    private static final String HIGH = "3";
+    private static final String LOW = "4";
+    private static final String VOLUME = "5";
+    private static final int DOES_EXIST = 7;
 
-public class CandleEntryPbSerdeTest {
+    private static final int MCS = 1;
+    private static final int MS = 2;
+    private static final int SEC = 3;
+    private static final int MIN = 4;
+    private static final int HOUR = 5;
+    private static final int DAY = 6;
+    private static final int WEEK_DAY = 7;
+    private static final int MONTH = 8;
+    private static final int YEAR = 9;
 
-    private static SerdeModule sut;
+    @Override
+    public @NotNull Deserializer<CandleEntry> getDeserializerUnderTest() {
+        return CandleEntryPbDeserializer.INSTANCE;
+    }
 
-    private static CandleEntry expectedObject;
-    private static byte[] expectedPbInput;
-
-    private static CandleEntry expectedObjectWithOnlyRequiredFields;
-    private static byte[] expectedPbInputWithOnlyRequiredFields;
-
-    @BeforeClass
-    public static void globalSetup() {
-
-        sut = ProtobufSerdeModule.INSTANCE;
+    @NotNull
+    @Override
+    public CandleEntry getTargetObject() {
 
         final DateTimeEntry dateTimeEntry = DateTimeEntry.builder()
-                .mcs(1)
-                .ms(2)
-                .sec(3)
-                .min(4)
-                .hour(5)
-                .day(6)
-                .weekDay(7)
-                .month(8)
-                .year(9)
-                .build();
-        final QluaStructures.DateTimeEntry pbDateTimeEntry = QluaStructures.DateTimeEntry.newBuilder()
-                .setMcs(1)
-                .setMs(2)
-                .setSec(3)
-                .setMin(4)
-                .setHour(5)
-                .setDay(6)
-                .setWeekDay(7)
-                .setMonth(8)
-                .setYear(9)
+                .mcs(MCS)
+                .ms(MS)
+                .sec(SEC)
+                .min(MIN)
+                .hour(HOUR)
+                .day(DAY)
+                .weekDay(WEEK_DAY)
+                .month(MONTH)
+                .year(YEAR)
                 .build();
 
-        expectedObject = CandleEntry.builder()
-                .open("1")
-                .close("2")
-                .high("3")
-                .low("4")
-                .volume("5")
+        return CandleEntry.builder()
+                .open(OPEN)
+                .close(CLOSE)
+                .high(HIGH)
+                .low(LOW)
+                .volume(VOLUME)
                 .dateTimeEntry(dateTimeEntry)
-                .doesExist(7)
+                .doesExist(DOES_EXIST)
                 .build();
-        expectedPbInput = QluaStructures.CandleEntry.newBuilder()
-                .setOpen("1")
-                .setClose("2")
-                .setHigh("3")
-                .setLow("4")
-                .setVolume("5")
+    }
+
+    @NotNull
+    @Override
+    public QluaStructures.CandleEntry getTargetObjectAsPbMessage() {
+
+        final QluaStructures.DateTimeEntry pbDateTimeEntry = QluaStructures.DateTimeEntry.newBuilder()
+                .setMcs(MCS)
+                .setMs(MS)
+                .setSec(SEC)
+                .setMin(MIN)
+                .setHour(HOUR)
+                .setDay(DAY)
+                .setWeekDay(WEEK_DAY)
+                .setMonth(MONTH)
+                .setYear(YEAR)
+                .build();
+
+        return QluaStructures.CandleEntry.newBuilder()
+                .setOpen(OPEN)
+                .setClose(CLOSE)
+                .setHigh(HIGH)
+                .setLow(LOW)
+                .setVolume(VOLUME)
                 .setDatetime(pbDateTimeEntry)
-                .setDoesExist(7)
-                .build()
-                .toByteArray();
-
-        expectedObjectWithOnlyRequiredFields = CandleEntry.builder().build();
-        expectedPbInputWithOnlyRequiredFields = QluaStructures.CandleEntry.newBuilder().build().toByteArray();
-    }
-
-    @Test
-    public void testSerialize() {
-
-        assertTrue(
-                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
-        );
-    }
-
-    @Test
-    public void testDeserialize() {
-        assertEquals(expectedObject, sut.deserialize(CandleEntry.class, expectedPbInput));
-    }
-
-    @Test
-    public void testSerialize_WithOnlyRequiredFields() {
-
-        assertTrue(
-                Arrays.equals(
-                        expectedPbInputWithOnlyRequiredFields,
-                        sut.serialize(expectedObjectWithOnlyRequiredFields)
-                )
-        );
-    }
-
-    @Test
-    public void testDeserialize_WithOnlyRequiredFields() {
-
-        assertEquals(
-                expectedObjectWithOnlyRequiredFields,
-                sut.deserialize(CandleEntry.class, expectedPbInputWithOnlyRequiredFields)
-        );
+                .setDoesExist(DOES_EXIST)
+                .build();
     }
 }
