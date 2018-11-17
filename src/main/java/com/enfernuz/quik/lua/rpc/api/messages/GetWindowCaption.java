@@ -11,6 +11,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Value;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public final class GetWindowCaption implements RemoteProcedure {
 
@@ -50,7 +51,7 @@ public final class GetWindowCaption implements RemoteProcedure {
         String caption;
 
         @JsonCreator
-        public static Result getInstance(@JsonProperty(value = CAPTION, required = true) final String caption) {
+        public static Result getInstance(@JsonProperty(value = CAPTION, required = true) @Nullable final String caption) {
             return isError(caption) ? InstanceHolder.ERROR : new Result(caption);
         }
 
