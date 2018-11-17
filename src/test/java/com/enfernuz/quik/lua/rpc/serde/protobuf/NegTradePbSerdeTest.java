@@ -174,7 +174,7 @@ public class NegTradePbSerdeTest {
                     .setRepotradeno(REPO_TRADE_NUMBER)
                     .setPrice1(PRICE_1)
                     .setReporate(REPO_RATE)
-                    .setPrice2(PRICE_1)
+                    .setPrice2(PRICE_2)
                     .setClientCode(CLIENT_CODE)
                     .setTsComission(TS_COMMISSION)
                     .setBalance(BALANCE)

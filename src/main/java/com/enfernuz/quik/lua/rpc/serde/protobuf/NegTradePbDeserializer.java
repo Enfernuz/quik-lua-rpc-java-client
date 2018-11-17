@@ -84,6 +84,7 @@ enum NegTradePbDeserializer implements Deserializer<NegTrade>, FromPbConverter<Q
                 .confirmTime( convertFromPbString(negTrade.getConfirmtime()) )
                 .exFlags( negTrade.getExFlags() )
                 .confirmReport( convertFromPbString(negTrade.getConfirmreport()) )
+                .extRef( convertFromPbString(negTrade.getExtref()) )
                 .build();
     }
 }
