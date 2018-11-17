@@ -12,6 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Value;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public final class GetTableSize implements RemoteProcedure {
 
@@ -51,7 +52,7 @@ public final class GetTableSize implements RemoteProcedure {
         TableSize tableSize;
 
         @JsonCreator
-        public static Result getInstance(@JsonProperty(value = TABLE_SIZE, required = true) final TableSize tableSize) {
+        public static Result getInstance(@JsonProperty(value = TABLE_SIZE, required = true) @Nullable final TableSize tableSize) {
             return isError(tableSize) ? InstanceHolder.ERROR : new Result(tableSize);
         }
 
