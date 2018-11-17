@@ -3,10 +3,7 @@ package com.enfernuz.quik.lua.rpc.api.structures;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Value;
+import lombok.*;
 import lombok.experimental.NonFinal;
 import org.jetbrains.annotations.NotNull;
 
@@ -40,6 +37,7 @@ public class FuturesClientHolding {
     int type;
     String startBuy;
     String startSell;
+    String startNet;
     String todayBuy;
     String todaySell;
     String totalNet;
@@ -61,12 +59,13 @@ public class FuturesClientHolding {
     @JsonCreator
     @Builder
     private FuturesClientHolding(
-            @JsonProperty(FIRM_ID) String firmId,
-            @JsonProperty(TRADING_ACCOUNT_ID) String trdAccId,
-            @JsonProperty(SECURITY_CODE) String secCode,
+            @JsonProperty(value = FIRM_ID, required = true) @NonNull String firmId,
+            @JsonProperty(value = TRADING_ACCOUNT_ID, required = true) @NonNull String trdAccId,
+            @JsonProperty(value = SECURITY_CODE, required = true) @NonNull String secCode,
             @JsonProperty(value = TYPE, required = true) int type,
             @JsonProperty(START_BUY) String startBuy,
             @JsonProperty(START_SELL) String startSell,
+            @JsonProperty(START_NET) String startNet,
             @JsonProperty(TODAY_BUY) String todayBuy,
             @JsonProperty(TODAY_SELL) String todaySell,
             @JsonProperty(TOTAL_NET) String totalNet,
@@ -87,6 +86,7 @@ public class FuturesClientHolding {
         this.type = type;
         this.startBuy = startBuy;
         this.startSell = startSell;
+        this.startNet = startNet;
         this.todayBuy = todayBuy;
         this.todaySell = todaySell;
         this.totalNet = totalNet;
@@ -114,6 +114,7 @@ public class FuturesClientHolding {
                     .add(TYPE, type)
                     .add(START_BUY, startBuy)
                     .add(START_SELL, startSell)
+                    .add(START_NET, startNet)
                     .add(TODAY_BUY, todayBuy)
                     .add(TODAY_SELL, todaySell)
                     .add(TOTAL_NET, totalNet)

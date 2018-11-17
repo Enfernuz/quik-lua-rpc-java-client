@@ -291,19 +291,20 @@ message FuturesClientHolding {
     int32 type = 4; // NUMBER in QLUA
     string startbuy = 5; // NUMBER in QLUA
     string startsell = 6; // NUMBER in QLUA
-    string todaybuy = 7; // NUMBER in QLUA
-    string todaysell = 8; // NUMBER in QLUA
-    string totalnet = 9; // NUMBER in QLUA
-    uint32 openbuys = 10; // NUMBER in QLUA
-    uint32 opensells = 11; // NUMBER in QLUA
-    string cbplused = 12; // NUMBER in QLUA
-    string cbplplanned = 13; // NUMBER in QLUA
-    string varmargin = 14; // NUMBER in QLUA
-    string avrposnprice = 15; // NUMBER in QLUA
-    string positionvalue = 16; // NUMBER in QLUA
-    string real_varmargin = 17; // NUMBER in QLUA
-    string total_varmargin = 18; // NUMBER in QLUA
-    int32 session_status = 19; // NUMBER in QLUA
+    string startnet = 7; // NUMBER in QLUA
+    string todaybuy = 8; // NUMBER in QLUA
+    string todaysell = 9; // NUMBER in QLUA
+    string totalnet = 10; // NUMBER in QLUA
+    uint32 openbuys = 11; // NUMBER in QLUA
+    uint32 opensells = 12; // NUMBER in QLUA
+    string cbplused = 13; // NUMBER in QLUA
+    string cbplplanned = 14; // NUMBER in QLUA
+    string varmargin = 15; // NUMBER in QLUA
+    string avrposnprice = 16; // NUMBER in QLUA
+    string positionvalue = 17; // NUMBER in QLUA
+    string real_varmargin = 18; // NUMBER in QLUA
+    string total_varmargin = 19; // NUMBER in QLUA
+    int32 session_status = 20; // NUMBER in QLUA
 }
 
 // Лимиты по денежным средствам
