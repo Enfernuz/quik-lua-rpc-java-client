@@ -138,6 +138,8 @@ public class AllTradePbSerdeTest {
                     .tradeNum(TRADE_NUM)
                     .price(PRICE)
                     .qty(QTY)
+                    .secCode(SEC_CODE)
+                    .classCode(CLASS_CODE)
                     .datetime(DATETIME)
                     .period(PERIOD)
                     .build();
@@ -149,9 +151,11 @@ public class AllTradePbSerdeTest {
 
             return QluaStructures.AllTrade.newBuilder()
                     .setTradeNum(TRADE_NUM)
+                    .setNullFlags(true)
                     .setPrice(PRICE)
                     .setQty(QTY)
-                    .setValue(VALUE)
+                    .setSecCode(SEC_CODE)
+                    .setClassCode(CLASS_CODE)
                     .setDatetime(PB_DATETIME)
                     .setPeriod(PERIOD)
                     .build();
