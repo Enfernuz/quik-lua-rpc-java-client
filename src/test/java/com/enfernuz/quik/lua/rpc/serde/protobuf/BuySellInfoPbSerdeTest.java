@@ -1,112 +1,93 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.messages.GetBuySellInfo.BuySellInfo;
-import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import com.enfernuz.quik.lua.rpc.serde.Deserializer;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
+public class BuySellInfoPbSerdeTest extends AbstractPbDeserializationTest<qlua.rpc.GetBuySellInfo.BuySellInfo, BuySellInfo> {
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+    private static final String IS_MARGIN_SEC = "1";
+    private static final String IS_ASSET_SEC = "2";
+    private static final String BALANCE = "3";
+    private static final String CAN_BUY = "4";
+    private static final String CAN_SELL = "5";
+    private static final String POSITION_VALUATION = "6";
+    private static final String VALUE = "7";
+    private static final String OPEN_VALUE = "8";
+    private static final String LIM_LONG = "9";
+    private static final String LONG_COEF = "10";
+    private static final String LIM_SHORT = "11";
+    private static final String SHORT_COEF = "12";
+    private static final String VALUE_COEF = "13";
+    private static final String OPEN_VALUE_COEF = "14";
+    private static final String SHARE = "15";
+    private static final String SHORT_WA_PRICE = "16";
+    private static final String LONG_WA_PRICE = "17";
+    private static final String PROFIT_LOSS = "18";
+    private static final String SPREAD_HC = "19";
+    private static final String CAN_BUY_OWN = "20";
+    private static final String CAN_SELL_OWN = "21";
 
-public class BuySellInfoPbSerdeTest {
+    @Override
+    public @NotNull Deserializer<BuySellInfo> getDeserializerUnderTest() {
+        return BuySellInfoPbDeserializer.INSTANCE;
+    }
 
-    private static SerdeModule sut;
+    @NotNull
+    @Override
+    public BuySellInfo getTargetObject() {
 
-    private static BuySellInfo expectedObject;
-    private static byte[] expectedPbInput;
-
-    private static BuySellInfo expectedObjectWithOnlyRequiredFields;
-    private static byte[] expectedPbInputWithOnlyRequiredFields;
-
-    @BeforeClass
-    public static void globalSetup() {
-
-        sut = ProtobufSerdeModule.INSTANCE;
-
-        expectedObject = BuySellInfo.builder()
-                .isMarginSec("1")
-                .isAssetSec("2")
-                .balance("3")
-                .canBuy("4")
-                .canSell("5")
-                .positionValuation("6")
-                .value("7")
-                .openValue("8")
-                .limLong("9")
-                .longCoef("10")
-                .limShort("11")
-                .shortCoef("12")
-                .valueCoef("13")
-                .openValueCoef("14")
-                .share("15")
-                .shortWaPrice("16")
-                .longWaPrice("17")
-                .profitLoss("18")
-                .spreadHc("19")
-                .canBuyOwn("20")
-                .canSellOwn("12")
+        return BuySellInfo.builder()
+                .isMarginSec(IS_MARGIN_SEC)
+                .isAssetSec(IS_ASSET_SEC)
+                .balance(BALANCE)
+                .canBuy(CAN_BUY)
+                .canSell(CAN_SELL)
+                .positionValuation(POSITION_VALUATION)
+                .value(VALUE)
+                .openValue(OPEN_VALUE)
+                .limLong(LIM_LONG)
+                .longCoef(LONG_COEF)
+                .limShort(LIM_SHORT)
+                .shortCoef(SHORT_COEF)
+                .valueCoef(VALUE_COEF)
+                .openValueCoef(OPEN_VALUE_COEF)
+                .share(SHARE)
+                .shortWaPrice(SHORT_WA_PRICE)
+                .longWaPrice(LONG_WA_PRICE)
+                .profitLoss(PROFIT_LOSS)
+                .spreadHc(SPREAD_HC)
+                .canBuyOwn(CAN_BUY_OWN)
+                .canSellOwn(CAN_SELL_OWN)
                 .build();
-        expectedPbInput = qlua.rpc.GetBuySellInfo.BuySellInfo.newBuilder()
-                .setIsMarginSec("1")
-                .setIsAssetSec("2")
-                .setBalance("3")
-                .setCanBuy("4")
-                .setCanSell("5")
-                .setPositionValuation("6")
-                .setValue("7")
-                .setOpenValue("8")
-                .setLimLong("9")
-                .setLongCoef("10")
-                .setLimShort("11")
-                .setShortCoef("12")
-                .setValueCoef("13")
-                .setOpenValueCoef("14")
-                .setShare("15")
-                .setShortWaPrice("16")
-                .setLongWaPrice("17")
-                .setProfitLoss("18")
-                .setSpreadHc("19")
-                .setCanBuyOwn("20")
-                .setCanSellOwn("12")
-                .build()
-                .toByteArray();
-
-        expectedObjectWithOnlyRequiredFields = BuySellInfo.builder().build();
-        expectedPbInputWithOnlyRequiredFields = qlua.rpc.GetBuySellInfo.BuySellInfo.newBuilder().build().toByteArray();
     }
 
-    @Test
-    public void testSerialize() {
+    @NotNull
+    @Override
+    public qlua.rpc.GetBuySellInfo.BuySellInfo getTargetObjectAsPbMessage() {
 
-        assertTrue(
-                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
-        );
-    }
-
-    @Test
-    public void testDeserialize() {
-        assertEquals(expectedObject, sut.deserialize(BuySellInfo.class, expectedPbInput));
-    }
-
-    @Test
-    public void testSerialize_WithOnlyRequiredFields() {
-
-        assertTrue(
-                Arrays.equals(
-                        expectedPbInputWithOnlyRequiredFields,
-                        sut.serialize(expectedObjectWithOnlyRequiredFields)
-                )
-        );
-    }
-
-    @Test
-    public void testDeserialize_WithOnlyRequiredFields() {
-
-        assertEquals(
-                expectedObjectWithOnlyRequiredFields,
-                sut.deserialize(BuySellInfo.class, expectedPbInputWithOnlyRequiredFields)
-        );
+        return qlua.rpc.GetBuySellInfo.BuySellInfo.newBuilder()
+                .setIsMarginSec(IS_MARGIN_SEC)
+                .setIsAssetSec(IS_ASSET_SEC)
+                .setBalance(BALANCE)
+                .setCanBuy(CAN_BUY)
+                .setCanSell(CAN_SELL)
+                .setPositionValuation(POSITION_VALUATION)
+                .setValue(VALUE)
+                .setOpenValue(OPEN_VALUE)
+                .setLimLong(LIM_LONG)
+                .setLongCoef(LONG_COEF)
+                .setLimShort(LIM_SHORT)
+                .setShortCoef(SHORT_COEF)
+                .setValueCoef(VALUE_COEF)
+                .setOpenValueCoef(OPEN_VALUE_COEF)
+                .setShare(SHARE)
+                .setShortWaPrice(SHORT_WA_PRICE)
+                .setLongWaPrice(LONG_WA_PRICE)
+                .setProfitLoss(PROFIT_LOSS)
+                .setSpreadHc(SPREAD_HC)
+                .setCanBuyOwn(CAN_BUY_OWN)
+                .setCanSellOwn(CAN_SELL_OWN)
+                .build();
     }
 }
