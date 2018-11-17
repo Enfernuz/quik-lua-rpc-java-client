@@ -3,10 +3,7 @@ package com.enfernuz.quik.lua.rpc.api.structures;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Value;
+import lombok.*;
 import lombok.experimental.NonFinal;
 
 @Value
@@ -25,7 +22,7 @@ public class FuturesLimitDelete {
     @JsonCreator
     @Builder
     private FuturesLimitDelete(
-            @JsonProperty(value = FIRM_ID, required = true) final String firmId,
+            @JsonProperty(value = FIRM_ID, required = true) @NonNull final String firmId,
             @JsonProperty(value = LIMIT_TYPE, required = true) final int limitType) {
         this.firmId = firmId;
         this.limitType = limitType;

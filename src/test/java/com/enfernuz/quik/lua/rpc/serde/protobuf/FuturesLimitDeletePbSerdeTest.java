@@ -1,75 +1,37 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.FuturesLimitDelete;
-import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import com.enfernuz.quik.lua.rpc.serde.Deserializer;
+import org.jetbrains.annotations.NotNull;
 import qlua.structs.QluaStructures;
 
-import java.util.Arrays;
+public class FuturesLimitDeletePbSerdeTest extends AbstractPbDeserializationTest<QluaStructures.FuturesLimitDelete, FuturesLimitDelete> {
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+    private static final String FIRM_ID = "1";
+    private static final int LIMIT_TYPE = 2;
 
-public class FuturesLimitDeletePbSerdeTest {
+    @Override
+    public @NotNull Deserializer<FuturesLimitDelete> getDeserializerUnderTest() {
+        return FuturesLimitDeletePbDeserializer.INSTANCE;
+    }
 
-    private static SerdeModule sut;
+    @NotNull
+    @Override
+    public FuturesLimitDelete getTargetObject() {
 
-    private static FuturesLimitDelete expectedObject;
-    private static byte[] expectedPbInput;
-
-    private static FuturesLimitDelete expectedObjectWithOnlyRequiredFields;
-    private static byte[] expectedPbInputWithOnlyRequiredFields;
-
-    @BeforeClass
-    public static void globalSetup() {
-
-        sut = ProtobufSerdeModule.INSTANCE;
-
-        expectedObject = FuturesLimitDelete.builder()
-                .firmId("1")
-                .limitType(2)
+        return FuturesLimitDelete.builder()
+                .firmId(FIRM_ID)
+                .limitType(LIMIT_TYPE)
                 .build();
-        expectedPbInput = QluaStructures.FuturesLimitDelete.newBuilder()
-                .setFirmid("1")
-                .setLimitType(2)
-                .build()
-                .toByteArray();
-
-        expectedObjectWithOnlyRequiredFields = FuturesLimitDelete.builder().build();
-        expectedPbInputWithOnlyRequiredFields = QluaStructures.FuturesLimitDelete.newBuilder().build().toByteArray();
     }
 
-    @Test
-    public void testSerialize() {
+    @NotNull
+    @Override
+    public QluaStructures.FuturesLimitDelete getTargetObjectAsPbMessage() {
 
-        assertTrue(
-                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
-        );
-    }
-
-    @Test
-    public void testDeserialize() {
-        assertEquals(expectedObject, sut.deserialize(FuturesLimitDelete.class, expectedPbInput));
-    }
-
-    @Test
-    public void testSerialize_WithOnlyRequiredFields() {
-
-        assertTrue(
-                Arrays.equals(
-                        expectedPbInputWithOnlyRequiredFields,
-                        sut.serialize(expectedObjectWithOnlyRequiredFields)
-                )
-        );
-    }
-
-    @Test
-    public void testDeserialize_WithOnlyRequiredFields() {
-
-        assertEquals(
-                expectedObjectWithOnlyRequiredFields,
-                sut.deserialize(FuturesLimitDelete.class, expectedPbInputWithOnlyRequiredFields)
-        );
+        return QluaStructures.FuturesLimitDelete.newBuilder()
+                .setFirmid(FIRM_ID)
+                .setLimitType(LIMIT_TYPE)
+                .build();
     }
 }
