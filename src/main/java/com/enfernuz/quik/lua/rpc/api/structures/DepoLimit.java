@@ -3,10 +3,7 @@ package com.enfernuz.quik.lua.rpc.api.structures;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Value;
+import lombok.*;
 import lombok.experimental.NonFinal;
 import org.jetbrains.annotations.NotNull;
 
@@ -50,20 +47,20 @@ public class DepoLimit {
     @JsonCreator
     @Builder
     private DepoLimit(
-            @JsonProperty(SECURITY_CODE) final String secCode,
-            @JsonProperty(TRADING_ACCOUNT_ID) final String trdAccId,
-            @JsonProperty(FIRM_ID) final String firmId,
-            @JsonProperty(CLIENT_CODE) final String clientCode,
-            @JsonProperty(OPEN_BALANCE) final int openBal,
-            @JsonProperty(OPEN_LIMIT) final int openLimit,
-            @JsonProperty(CURRENT_BALANCE) final int currentBal,
-            @JsonProperty(CURRENT_LIMIT) final int currentLimit,
-            @JsonProperty(LOCKED_SELL) final int lockedSell,
-            @JsonProperty(LOCKED_BUY) final int lockedBuy,
-            @JsonProperty(LOCKED_BUY_VALUE) final String lockedBuyValue,
-            @JsonProperty(LOCKED_SELL_VALUE) final String lockedSellValue,
-            @JsonProperty(WEIGHTED_AVERAGE_POSITION_PRICE) final String waPositionPrice,
-            @JsonProperty(LIMIT_KIND) final int limitKind) {
+            @JsonProperty(value = SECURITY_CODE, required = true) @NonNull final String secCode,
+            @JsonProperty(value = TRADING_ACCOUNT_ID, required = true) @NonNull final String trdAccId,
+            @JsonProperty(value = FIRM_ID, required = true) @NonNull final String firmId,
+            @JsonProperty(value = CLIENT_CODE, required = true) @NonNull final String clientCode,
+            @JsonProperty(value = OPEN_BALANCE, required = true) final int openBal,
+            @JsonProperty(value = OPEN_LIMIT, required = true) final int openLimit,
+            @JsonProperty(value = CURRENT_BALANCE, required = true) final int currentBal,
+            @JsonProperty(value = CURRENT_LIMIT, required = true) final int currentLimit,
+            @JsonProperty(value = LOCKED_SELL, required = true) final int lockedSell,
+            @JsonProperty(value = LOCKED_BUY, required = true) final int lockedBuy,
+            @JsonProperty(value = LOCKED_BUY_VALUE, required = true) @NonNull final String lockedBuyValue,
+            @JsonProperty(value = LOCKED_SELL_VALUE, required = true) @NonNull final String lockedSellValue,
+            @JsonProperty(value = WEIGHTED_AVERAGE_POSITION_PRICE, required = true) @NonNull final String waPositionPrice,
+            @JsonProperty(value = LIMIT_KIND, required = true) final int limitKind) {
 
         this.secCode = secCode;
         this.trdAccId = trdAccId;

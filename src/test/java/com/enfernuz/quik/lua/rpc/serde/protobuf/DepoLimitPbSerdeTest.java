@@ -1,99 +1,73 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.DepoLimit;
-import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import com.enfernuz.quik.lua.rpc.serde.Deserializer;
+import org.jetbrains.annotations.NotNull;
 import qlua.structs.QluaStructures;
 
-import java.util.Arrays;
+public class DepoLimitPbSerdeTest extends AbstractPbDeserializationTest<QluaStructures.DepoLimit, DepoLimit> {
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+    private static final String SEC_CODE = "1";
+    private static final String TRD_ACC_ID = "2";
+    private static final String FIRM_ID = "3";
+    private static final String CLIENT_CODE = "4";
+    private static final int OPEN_BAL = 5;
+    private static final int OPEN_LIMIT = 6;
+    private static final int CURRENT_BAL = 7;
+    private static final int CURRENT_LIMIT = 8;
+    private static final int LOCKED_SELL = 9;
+    private static final int LOCKED_BUY = 10;
+    private static final String LOCKED_BUY_VALUE = "11";
+    private static final String LOCKED_SELL_VALUE = "12";
+    private static final String WA_POSITION_PRICE = "13";
+    private static final int LIMIT_KIND = 14;
 
-public class DepoLimitPbSerdeTest {
+    @Override
+    public @NotNull Deserializer<DepoLimit> getDeserializerUnderTest() {
+        return DepoLimitPbDeserializer.INSTANCE;
+    }
 
-    private static SerdeModule sut;
+    @NotNull
+    @Override
+    public DepoLimit getTargetObject() {
 
-    private static DepoLimit expectedObject;
-    private static byte[] expectedPbInput;
-
-    private static DepoLimit expectedObjectWithOnlyRequiredFields;
-    private static byte[] expectedPbInputWithOnlyRequiredFields;
-
-    @BeforeClass
-    public static void globalSetup() {
-
-        sut = ProtobufSerdeModule.INSTANCE;
-
-        expectedObject = DepoLimit.builder()
-                .secCode("1")
-                .trdAccId("2")
-                .firmId("3")
-                .clientCode("4")
-                .openBal(5)
-                .openLimit(6)
-                .currentBal(7)
-                .currentLimit(8)
-                .lockedSell(9)
-                .lockedBuy(10)
-                .lockedBuyValue("11")
-                .lockedSellValue("12")
-                .awgPositionPrice("13")
-                .limitKind(14)
+        return DepoLimit.builder()
+                .secCode(SEC_CODE)
+                .trdAccId(TRD_ACC_ID)
+                .firmId(FIRM_ID)
+                .clientCode(CLIENT_CODE)
+                .openBal(OPEN_BAL)
+                .openLimit(OPEN_LIMIT)
+                .currentBal(CURRENT_BAL)
+                .currentLimit(CURRENT_LIMIT)
+                .lockedSell(LOCKED_SELL)
+                .lockedBuy(LOCKED_BUY)
+                .lockedBuyValue(LOCKED_BUY_VALUE)
+                .lockedSellValue(LOCKED_SELL_VALUE)
+                .waPositionPrice(WA_POSITION_PRICE)
+                .limitKind(LIMIT_KIND)
                 .build();
-        expectedPbInput = QluaStructures.DepoLimit.newBuilder()
-                .setSecCode("1")
-                .setTrdaccid("2")
-                .setFirmid("3")
-                .setClientCode("4")
-                .setOpenbal(5)
-                .setOpenlimit(6)
-                .setCurrentbal(7)
-                .setCurrentlimit(8)
-                .setLockedSell(9)
-                .setLockedBuy(10)
-                .setLockedBuyValue("11")
-                .setLockedSellValue("12")
-                .setAwgPositionPrice("13")
-                .setLimitKind(14)
-                .build()
-                .toByteArray();
-
-        expectedObjectWithOnlyRequiredFields = DepoLimit.builder().build();
-        expectedPbInputWithOnlyRequiredFields = QluaStructures.DepoLimit.newBuilder().build().toByteArray();
     }
 
-    @Test
-    public void testSerialize() {
+    @NotNull
+    @Override
+    public QluaStructures.DepoLimit getTargetObjectAsPbMessage() {
 
-        assertTrue(
-                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
-        );
-    }
-
-    @Test
-    public void testDeserialize() {
-        assertEquals(expectedObject, sut.deserialize(DepoLimit.class, expectedPbInput));
-    }
-
-    @Test
-    public void testSerialize_WithOnlyRequiredFields() {
-
-        assertTrue(
-                Arrays.equals(
-                        expectedPbInputWithOnlyRequiredFields,
-                        sut.serialize(expectedObjectWithOnlyRequiredFields)
-                )
-        );
-    }
-
-    @Test
-    public void testDeserialize_WithOnlyRequiredFields() {
-
-        assertEquals(
-                expectedObjectWithOnlyRequiredFields,
-                sut.deserialize(DepoLimit.class, expectedPbInputWithOnlyRequiredFields)
-        );
+        return QluaStructures.DepoLimit.newBuilder()
+                .setSecCode(SEC_CODE)
+                .setTrdaccid(TRD_ACC_ID)
+                .setFirmid(FIRM_ID)
+                .setClientCode(CLIENT_CODE)
+                .setOpenbal(OPEN_BAL)
+                .setOpenlimit(OPEN_LIMIT)
+                .setCurrentbal(CURRENT_BAL)
+                .setCurrentlimit(CURRENT_LIMIT)
+                .setLockedSell(LOCKED_SELL)
+                .setLockedBuy(LOCKED_BUY)
+                .setLockedBuyValue(LOCKED_BUY_VALUE)
+                .setLockedSellValue(LOCKED_SELL_VALUE)
+                .setWaPositionPrice(WA_POSITION_PRICE)
+                .setLimitKind(LIMIT_KIND)
+                .build();
     }
 }
