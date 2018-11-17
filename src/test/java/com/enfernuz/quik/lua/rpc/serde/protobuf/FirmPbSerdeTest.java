@@ -1,84 +1,76 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.Firm;
-import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import com.enfernuz.quik.lua.rpc.serde.Deserializer;
+import org.jetbrains.annotations.NotNull;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 import qlua.structs.QluaStructures;
 
-import java.util.Arrays;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+@RunWith(Enclosed.class)
 public class FirmPbSerdeTest {
 
-    private static SerdeModule sut;
+    private static final String FIRM_ID = "1";
+    private static final String FIRM_NAME = "2";
+    private static final Integer STATUS = 3;
+    private static final String EXCHANGE = "4";
 
-    private static Firm expectedObject;
-    private static byte[] expectedPbInput;
+    public static class FullArgsFirmPbSerdeTest extends AbstractPbDeserializationTest<QluaStructures.Firm, Firm> {
 
-    private static Firm expectedObjectWithOnlyRequiredFields;
-    private static byte[] expectedPbInputWithOnlyRequiredFields;
+        @Override
+        public @NotNull Deserializer<Firm> getDeserializerUnderTest() {
+            return FirmPbDeserializer.INSTANCE;
+        }
 
-    @BeforeClass
-    public static void globalSetup() {
+        @NotNull
+        @Override
+        public Firm getTargetObject() {
 
-        sut = ProtobufSerdeModule.INSTANCE;
+            return Firm.builder()
+                    .firmId(FIRM_ID)
+                    .firmName(FIRM_NAME)
+                    .status(STATUS)
+                    .exchange(EXCHANGE)
+                    .build();
+        }
 
-        expectedObject = Firm.builder()
-                .firmId("1")
-                .firmName("2")
-                .status(3)
-                .exchange("4")
-                .build();
-        expectedPbInput = QluaStructures.Firm.newBuilder()
-                .setFirmid("1")
-                .setFirmName("2")
-                .setStatus(3)
-                .setExchange("4")
-                .build()
-                .toByteArray();
+        @NotNull
+        @Override
+        public QluaStructures.Firm getTargetObjectAsPbMessage() {
 
-        expectedObjectWithOnlyRequiredFields = Firm.builder()
-                .firmId("1")
-                .build();
-        expectedPbInputWithOnlyRequiredFields = QluaStructures.Firm.newBuilder()
-                .setFirmid("1")
-                .build()
-                .toByteArray();
+            return QluaStructures.Firm.newBuilder()
+                    .setFirmid(FIRM_ID)
+                    .setFirmName(FIRM_NAME)
+                    .setValueStatus(STATUS)
+                    .setExchange(EXCHANGE)
+                    .build();
+        }
     }
 
-    @Test
-    public void testSerialize() {
+    public static class OnlyRequiredArgsFirmPbSerdeTest extends AbstractPbDeserializationTest<QluaStructures.Firm, Firm> {
 
-        assertTrue(
-                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
-        );
-    }
+        @Override
+        public @NotNull Deserializer<Firm> getDeserializerUnderTest() {
+            return FirmPbDeserializer.INSTANCE;
+        }
 
-    @Test
-    public void testDeserialize() {
-        assertEquals(expectedObject, sut.deserialize(Firm.class, expectedPbInput));
-    }
+        @NotNull
+        @Override
+        public Firm getTargetObject() {
 
-    @Test
-    public void testSerialize_WithOnlyRequiredFields() {
+            return Firm.builder()
+                    .firmId(FIRM_ID)
+                    .build();
+        }
 
-        assertTrue(
-                Arrays.equals(
-                        expectedPbInputWithOnlyRequiredFields,
-                        sut.serialize(expectedObjectWithOnlyRequiredFields)
-                )
-        );
-    }
+        @NotNull
+        @Override
+        public QluaStructures.Firm getTargetObjectAsPbMessage() {
 
-    @Test
-    public void testDeserialize_WithOnlyRequiredFields() {
-
-        assertEquals(
-                expectedObjectWithOnlyRequiredFields,
-                sut.deserialize(Firm.class, expectedPbInputWithOnlyRequiredFields)
-        );
+            return QluaStructures.Firm.newBuilder()
+                    .setFirmid(FIRM_ID)
+                    .setNullStatus(true)
+                    .build();
+        }
     }
 }
