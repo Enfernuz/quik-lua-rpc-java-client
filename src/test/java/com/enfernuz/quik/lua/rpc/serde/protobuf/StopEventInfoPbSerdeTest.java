@@ -1,45 +1,31 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.StopEventInfo;
-import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import com.enfernuz.quik.lua.rpc.serde.Deserializer;
+import org.jetbrains.annotations.NotNull;
 import qlua.structs.QluaStructures;
 
-import java.util.Arrays;
+public class StopEventInfoPbSerdeTest extends AbstractPbDeserializationTest<QluaStructures.StopEventInfo, StopEventInfo> {
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+    private static final int FLAG = 123;
 
-public class StopEventInfoPbSerdeTest {
-
-    private static SerdeModule sut;
-
-    private static StopEventInfo expectedObject;
-    private static byte[] expectedPbInput;
-
-    @BeforeClass
-    public static void globalSetup() {
-
-        sut = ProtobufSerdeModule.INSTANCE;
-
-        expectedObject = new StopEventInfo(1);
-        expectedPbInput = QluaStructures.StopEventInfo.newBuilder()
-                .setSignal(1)
-                .build()
-                .toByteArray();
+    @Override
+    public @NotNull Deserializer<StopEventInfo> getDeserializerUnderTest() {
+        return StopEventInfoPbDeserializer.INSTANCE;
     }
 
-    @Test
-    public void testSerialize() {
-
-        assertTrue(
-                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
-        );
+    @NotNull
+    @Override
+    public StopEventInfo getTargetObject() {
+        return StopEventInfo.getInstance(FLAG);
     }
 
-    @Test
-    public void testDeserialize() {
-        assertEquals(expectedObject, sut.deserialize(StopEventInfo.class, expectedPbInput));
+    @NotNull
+    @Override
+    public QluaStructures.StopEventInfo getTargetObjectAsPbMessage() {
+
+        return QluaStructures.StopEventInfo.newBuilder()
+                .setFlag(FLAG)
+                .build();
     }
 }
