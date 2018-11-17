@@ -1,48 +1,58 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.ConnectedEventInfo;
-import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import com.enfernuz.quik.lua.rpc.serde.Deserializer;
+import org.jetbrains.annotations.NotNull;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 import qlua.structs.QluaStructures;
 
-import java.util.Arrays;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+@RunWith(Enclosed.class)
 public class ConnectedEventInfoPbSerdeTest {
 
-    private static SerdeModule sut;
+    public static class TrueResultConnectedEventInfoPbSerdeTest extends AbstractPbDeserializationTest<QluaStructures.ConnectedEventInfo, ConnectedEventInfo> {
 
-    private static ConnectedEventInfo expectedObject;
-    private static byte[] expectedPbInput;
+        @Override
+        public @NotNull Deserializer<ConnectedEventInfo> getDeserializerUnderTest() {
+            return ConnectedEventInfoPbDeserializer.INSTANCE;
+        }
 
-    @BeforeClass
-    public static void globalSetup() {
+        @NotNull
+        @Override
+        public ConnectedEventInfo getTargetObject() {
+            return ConnectedEventInfo.getInstance(true);
+        }
 
-        sut = ProtobufSerdeModule.INSTANCE;
+        @NotNull
+        @Override
+        public QluaStructures.ConnectedEventInfo getTargetObjectAsPbMessage() {
 
-        expectedObject = new ConnectedEventInfo(true);
-        expectedPbInput = QluaStructures.ConnectedEventInfo.newBuilder()
-                .setFlag(true)
-                .build()
-                .toByteArray();
+            return QluaStructures.ConnectedEventInfo.newBuilder()
+                    .setFlag(true)
+                    .build();
+        }
     }
 
-    @Test
-    public void testSerialize() {
+    public static class FalseResultConnectedEventInfoPbSerdeTest extends AbstractPbDeserializationTest<QluaStructures.ConnectedEventInfo, ConnectedEventInfo> {
 
-        final byte[] actual = sut.serialize(expectedObject);
+        @Override
+        public @NotNull Deserializer<ConnectedEventInfo> getDeserializerUnderTest() {
+            return ConnectedEventInfoPbDeserializer.INSTANCE;
+        }
 
-        assertTrue( Arrays.equals(expectedPbInput, actual) );
-    }
+        @NotNull
+        @Override
+        public ConnectedEventInfo getTargetObject() {
+            return ConnectedEventInfo.getInstance(false);
+        }
 
-    @Test
-    public void testDeserialize() {
+        @NotNull
+        @Override
+        public QluaStructures.ConnectedEventInfo getTargetObjectAsPbMessage() {
 
-        final ConnectedEventInfo actualObject = sut.deserialize(ConnectedEventInfo.class, expectedPbInput);
-
-        assertEquals(actualObject, expectedObject);
+            return QluaStructures.ConnectedEventInfo.newBuilder()
+                    .setFlag(false)
+                    .build();
+        }
     }
 }
