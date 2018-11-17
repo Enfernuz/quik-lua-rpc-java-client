@@ -23,12 +23,13 @@ enum FuturesClientHoldingPbDeserializer implements Deserializer<FuturesClientHol
     public FuturesClientHolding convert(@NotNull QluaStructures.FuturesClientHolding futuresClientHolding) {
 
         return FuturesClientHolding.builder()
-                .firmId( convertFromPbString(futuresClientHolding.getFirmid()) )
-                .trdAccId( convertFromPbString(futuresClientHolding.getTrdaccid()) )
-                .secCode( convertFromPbString(futuresClientHolding.getSecCode()) )
+                .firmId( futuresClientHolding.getFirmid() )
+                .trdAccId( futuresClientHolding.getTrdaccid() )
+                .secCode( futuresClientHolding.getSecCode() )
                 .type( futuresClientHolding.getType() )
                 .startBuy( convertFromPbString(futuresClientHolding.getStartbuy()) )
                 .startSell( convertFromPbString(futuresClientHolding.getStartsell()) )
+                .startNet( convertFromPbString(futuresClientHolding.getStartnet()) )
                 .todayBuy( convertFromPbString(futuresClientHolding.getTodaybuy()) )
                 .todaySell( convertFromPbString(futuresClientHolding.getTodaysell()) )
                 .totalNet( convertFromPbString(futuresClientHolding.getTotalnet()) )
