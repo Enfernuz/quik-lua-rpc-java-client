@@ -57,7 +57,9 @@ public class GetItemResultPbSerdeTest  {
         @NotNull
         @Override
         public qlua.rpc.GetItem.Result getTargetObjectAsPbMessage() {
-            return qlua.rpc.GetItem.Result.newBuilder().build();
+            return qlua.rpc.GetItem.Result.newBuilder()
+                    .setNullTableRow(true)
+                    .build();
         }
     }
 }
