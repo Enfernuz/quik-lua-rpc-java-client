@@ -3,10 +3,7 @@ package com.enfernuz.quik.lua.rpc.api.structures;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Value;
+import lombok.*;
 import lombok.experimental.NonFinal;
 import org.jetbrains.annotations.NotNull;
 
@@ -155,7 +152,7 @@ public class NegTrade {
             @JsonProperty(ACCOUNT) final String account,
             @JsonProperty(COUNTERPARTY_FIRM_ID) final String cpFirmId,
             @JsonProperty(COUNTERPARTY_ACCOUNT) final String cpAccount,
-            @JsonProperty(value = PRICE, required = true) final String price,
+            @JsonProperty(value = PRICE, required = true) @NonNull final String price,
             @JsonProperty(value = QUANTITY, required = true) final int qty,
             @JsonProperty(VALUE) final String value,
             @JsonProperty(SETTLE_CODE) final String settleCode,
@@ -197,8 +194,8 @@ public class NegTrade {
             @JsonProperty(PRINCIPAL_PAYMENT_DATE) final String principalPaymentDate,
             @JsonProperty(NEXT_DAY_SETTLE) final String nextDaySettle,
             @JsonProperty(SETTLE_CURRENCY) final String settleCurrency,
-            @JsonProperty(SECURITY_CODE) final String secCode,
-            @JsonProperty(CLASS_CODE) final String classCode,
+            @JsonProperty(value = SECURITY_CODE, required = true) @NonNull final String secCode,
+            @JsonProperty(value = CLASS_CODE, required = true) @NonNull final String classCode,
             @JsonProperty(COMP_VAL) final String compVal,
             @JsonProperty(PARENT_TRADE_NUMBER) final String parentTradeNo,
             @JsonProperty(BANK_ID) final String bankId,
