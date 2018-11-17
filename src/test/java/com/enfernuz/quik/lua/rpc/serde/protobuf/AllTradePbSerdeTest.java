@@ -2,143 +2,159 @@ package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.AllTrade;
 import com.enfernuz.quik.lua.rpc.api.structures.DateTimeEntry;
-import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import com.enfernuz.quik.lua.rpc.serde.Deserializer;
+import org.jetbrains.annotations.NotNull;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 import qlua.structs.QluaStructures;
 
-import java.util.Arrays;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+@RunWith(Enclosed.class)
 public class AllTradePbSerdeTest {
 
-    private static SerdeModule sut;
+    private static final long TRADE_NUM = 1L;
+    private static final int FLAGS = 2;
+    private static final String PRICE = "3";
+    private static final int QTY = 4;
+    private static final String VALUE = "5";
+    private static final String ACCRUED_INT = "6";
+    private static final String YIELD = "7";
+    private static final String SETTLE_CODE = "8";
+    private static final String REPO_RATE = "9";
+    private static final String REPO_VALUE = "10";
+    private static final String REPO2_VALUE = "11";
+    private static final String REPO_TERM = "12";
+    private static final String SEC_CODE = "13";
+    private static final String CLASS_CODE = "14";
+    private static final int PERIOD = 15;
+    private static final String OPEN_INTEREST = "16";
+    private static final String EXCHANGE_CODE = "17";
 
-    private static AllTrade expectedObject;
-    private static byte[] expectedPbInput;
+    private static final int MCS = 1;
+    private static final int MS = 2;
+    private static final int SEC = 3;
+    private static final int MIN = 4;
+    private static final int HOUR = 5;
+    private static final int DAY = 6;
+    private static final int WEEK_DAY = 7;
+    private static final int MONTH = 8;
+    private static final int YEAR = 9;
 
-    private static AllTrade expectedObjectWithOnlyRequiredFields;
-    private static byte[] expectedPbInputWithOnlyRequiredFields;
+    private static final DateTimeEntry DATETIME = DateTimeEntry.builder()
+            .mcs(MCS)
+            .ms(MS)
+            .sec(SEC)
+            .min(MIN)
+            .hour(HOUR)
+            .day(DAY)
+            .weekDay(WEEK_DAY)
+            .month(MONTH)
+            .year(YEAR)
+            .build();
 
-    @BeforeClass
-    public static void globalSetup() {
+    private static final QluaStructures.DateTimeEntry PB_DATETIME = QluaStructures.DateTimeEntry.newBuilder()
+            .setMcs(MCS)
+            .setMs(MS)
+            .setSec(SEC)
+            .setMin(MIN)
+            .setHour(HOUR)
+            .setDay(DAY)
+            .setWeekDay(WEEK_DAY)
+            .setMonth(MONTH)
+            .setYear(YEAR)
+            .build();
 
-        sut = ProtobufSerdeModule.INSTANCE;
+    public static class FullArgsAllTradePbSerdeTest extends AbstractPbDeserializationTest<QluaStructures.AllTrade, AllTrade> {
 
-        final DateTimeEntry dateTimeEntry = DateTimeEntry.builder()
-                .mcs(1)
-                .ms(2)
-                .sec(3)
-                .min(4)
-                .hour(5)
-                .day(6)
-                .weekDay(7)
-                .month(8)
-                .year(9)
-                .build();
-        final QluaStructures.DateTimeEntry pbDateTimeEntry = QluaStructures.DateTimeEntry.newBuilder()
-                .setMcs(1)
-                .setMs(2)
-                .setSec(3)
-                .setMin(4)
-                .setHour(5)
-                .setDay(6)
-                .setWeekDay(7)
-                .setMonth(8)
-                .setYear(9)
-                .build();
+        @Override
+        public @NotNull Deserializer<AllTrade> getDeserializerUnderTest() {
+            return AllTradePbDeserializer.INSTANCE;
+        }
 
-        expectedObject = AllTrade.builder()
-                .tradeNum(1L)
-                .flags(2)
-                .price("3")
-                .qty(4)
-                .value("5")
-                .accruedInt("6")
-                .yield("7")
-                .settleCode("8")
-                .repoRate("9")
-                .repoValue("10")
-                .repo2Value("11")
-                .repoTerm("12")
-                .secCode("13")
-                .classCode("14")
-                .datetime(dateTimeEntry)
-                .period(16)
-                .openInterest("17")
-                .exchangeCode("18")
-                .build();
-        expectedPbInput = QluaStructures.AllTrade.newBuilder()
-                .setTradeNum(1L)
-                .setFlags(2)
-                .setPrice("3")
-                .setQty(4)
-                .setValue("5")
-                .setAccruedint("6")
-                .setYield("7")
-                .setSettlecode("8")
-                .setReporate("9")
-                .setRepovalue("10")
-                .setRepo2Value("11")
-                .setRepoterm("12")
-                .setSecCode("13")
-                .setClassCode("14")
-                .setDatetime(pbDateTimeEntry)
-                .setPeriod(16)
-                .setOpenInterest("17")
-                .setExchangeCode("18")
-                .build()
-                .toByteArray();
+        @NotNull
+        @Override
+        public AllTrade getTargetObject() {
 
-        expectedObjectWithOnlyRequiredFields = AllTrade.builder()
-                .tradeNum(1L)
-                .flags(2)
-                .price("3")
-                .period(4)
-                .datetime(dateTimeEntry)
-                .build();
-        expectedPbInputWithOnlyRequiredFields = QluaStructures.AllTrade.newBuilder()
-                .setTradeNum(1L)
-                .setFlags(2)
-                .setPrice("3")
-                .setPeriod(4)
-                .setDatetime(pbDateTimeEntry)
-                .build()
-                .toByteArray();
+            return AllTrade.builder()
+                    .tradeNum(TRADE_NUM)
+                    .flags(FLAGS)
+                    .price(PRICE)
+                    .qty(QTY)
+                    .value(VALUE)
+                    .accruedInt(ACCRUED_INT)
+                    .yield(YIELD)
+                    .settleCode(SETTLE_CODE)
+                    .repoRate(REPO_RATE)
+                    .repoValue(REPO_VALUE)
+                    .repo2Value(REPO2_VALUE)
+                    .repoTerm(REPO_TERM)
+                    .secCode(SEC_CODE)
+                    .classCode(CLASS_CODE)
+                    .datetime(DATETIME)
+                    .period(PERIOD)
+                    .openInterest(OPEN_INTEREST)
+                    .exchangeCode(EXCHANGE_CODE)
+                    .build();
+        }
+
+        @NotNull
+        @Override
+        public QluaStructures.AllTrade getTargetObjectAsPbMessage() {
+
+            return QluaStructures.AllTrade.newBuilder()
+                    .setTradeNum(TRADE_NUM)
+                    .setValueFlags(FLAGS)
+                    .setPrice(PRICE)
+                    .setQty(QTY)
+                    .setValue(VALUE)
+                    .setAccruedint(ACCRUED_INT)
+                    .setYield(YIELD)
+                    .setSettlecode(SETTLE_CODE)
+                    .setReporate(REPO_RATE)
+                    .setRepovalue(REPO_VALUE)
+                    .setRepo2Value(REPO2_VALUE)
+                    .setRepoterm(REPO_TERM)
+                    .setSecCode(SEC_CODE)
+                    .setClassCode(CLASS_CODE)
+                    .setDatetime(PB_DATETIME)
+                    .setPeriod(PERIOD)
+                    .setOpenInterest(OPEN_INTEREST)
+                    .setExchangeCode(EXCHANGE_CODE)
+                    .build();
+        }
     }
 
-    @Test
-    public void testSerialize() {
+    public static class OnlyRequiredArgsAllTradePbSerdeTest extends AbstractPbDeserializationTest<QluaStructures.AllTrade, AllTrade> {
 
-        assertTrue(
-                Arrays.equals(expectedPbInput, sut.serialize(expectedObject))
-        );
-    }
+        @Override
+        public @NotNull Deserializer<AllTrade> getDeserializerUnderTest() {
+            return AllTradePbDeserializer.INSTANCE;
+        }
 
-    @Test
-    public void testDeserialize() {
-        assertEquals(expectedObject, sut.deserialize(AllTrade.class, expectedPbInput));
-    }
+        @NotNull
+        @Override
+        public AllTrade getTargetObject() {
 
-    @Test
-    public void testSerialize_WithOnlyRequiredFields() {
+            return AllTrade.builder()
+                    .tradeNum(TRADE_NUM)
+                    .price(PRICE)
+                    .qty(QTY)
+                    .datetime(DATETIME)
+                    .period(PERIOD)
+                    .build();
+        }
 
-        assertTrue(
-                Arrays.equals(
-                        expectedPbInputWithOnlyRequiredFields,
-                        sut.serialize(expectedObjectWithOnlyRequiredFields)
-                )
-        );
-    }
+        @NotNull
+        @Override
+        public QluaStructures.AllTrade getTargetObjectAsPbMessage() {
 
-    @Test
-    public void testDeserialize_WithOnlyRequiredFields() {
-
-        assertEquals(
-                expectedObjectWithOnlyRequiredFields,
-                sut.deserialize(AllTrade.class, expectedPbInputWithOnlyRequiredFields)
-        );
+            return QluaStructures.AllTrade.newBuilder()
+                    .setTradeNum(TRADE_NUM)
+                    .setPrice(PRICE)
+                    .setQty(QTY)
+                    .setValue(VALUE)
+                    .setDatetime(PB_DATETIME)
+                    .setPeriod(PERIOD)
+                    .build();
+        }
     }
 }

@@ -24,10 +24,10 @@ enum AllTradePbDeserializer implements Deserializer<AllTrade>, FromPbConverter<Q
 
         return AllTrade
                 .builder()
-                .tradeNum( allTrade.getNullTradeNum() ? null : allTrade.getValueTradeNum() )
+                .tradeNum( allTrade.getTradeNum() )
                 .flags( allTrade.getNullFlags() ? null : allTrade.getValueFlags() )
                 .price( allTrade.getPrice() )
-                .qty( allTrade.getNullQty() ? null : allTrade.getValueQty() )
+                .qty( allTrade.getQty() )
                 .value( convertFromPbString(allTrade.getValue()) )
                 .accruedInt( convertFromPbString(allTrade.getAccruedint()) )
                 .yield( convertFromPbString(allTrade.getYield()) )
@@ -38,7 +38,7 @@ enum AllTradePbDeserializer implements Deserializer<AllTrade>, FromPbConverter<Q
                 .repoTerm( convertFromPbString(allTrade.getRepoterm()) )
                 .secCode( convertFromPbString(allTrade.getSecCode()) )
                 .classCode( convertFromPbString(allTrade.getClassCode()) )
-                .datetime(allTrade.hasDatetime() ? DateTimeEntryPbDeserializer.INSTANCE.convert(allTrade.getDatetime()) : null)
+                .datetime( DateTimeEntryPbDeserializer.INSTANCE.convert(allTrade.getDatetime()) )
                 .period( allTrade.getPeriod() )
                 .openInterest( convertFromPbString(allTrade.getOpenInterest()) )
                 .exchangeCode( convertFromPbString(allTrade.getExchangeCode()) )

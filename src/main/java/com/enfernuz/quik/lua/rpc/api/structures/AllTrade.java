@@ -31,10 +31,10 @@ public class AllTrade {
     private static final String EXCHANGE_CODE = "exchange_code";
     private static final String EXEC_MARKET = "exec_market";
 
-    Long tradeNum;
+    long tradeNum;
     Integer flags;
     String price;
-    Integer qty;
+    int qty;
     String value;
     String accruedInt;
     String yield;
@@ -54,10 +54,10 @@ public class AllTrade {
     @JsonCreator
     @Builder
     private AllTrade(
-            @JsonProperty(TRADE_NUM) final Long tradeNum,
+            @JsonProperty(value = TRADE_NUM, required = true) final long tradeNum,
             @JsonProperty(FLAGS) final Integer flags,
-            @JsonProperty(value = PRICE, required = true) final String price,
-            @JsonProperty(QUANTITY) final Integer qty,
+            @JsonProperty(value = PRICE, required = true) @NonNull final String price,
+            @JsonProperty(QUANTITY) final int qty,
             @JsonProperty(VALUE) final String value,
             @JsonProperty(ACCRUED_INTEREST) final String accruedInt,
             @JsonProperty(YIELD) final String yield,
@@ -68,7 +68,7 @@ public class AllTrade {
             @JsonProperty(REPO_TERM) final String repoTerm,
             @JsonProperty(SECURITY_CODE) final String secCode,
             @JsonProperty(CLASS_CODE) final String classCode,
-            @JsonProperty(value = DATETIME, required = true) final DateTimeEntry datetime,
+            @JsonProperty(value = DATETIME, required = true) @NonNull final DateTimeEntry datetime,
             @JsonProperty(value = PERIOD, required = true) final int period,
             @JsonProperty(OPEN_INTEREST) final String openInterest,
             @JsonProperty(EXCHANGE_CODE) final String exchangeCode,

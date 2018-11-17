@@ -35,34 +35,28 @@ message Firm {
 // Обезличенные сделки
 message AllTrade {
 
-    oneof trade_num {
-        bool null_trade_num = 1;
-        uint64 value_trade_num = 2; // NUMBER in QLUA
-    };
+    int64 trade_num = 1; // NUMBER in QLUA
     oneof flags {
-        bool null_flags = 3;
-        uint32 value_flags = 4; // NUMBER in QLUA
+        bool null_flags = 2;
+        uint32 value_flags = 3; // NUMBER in QLUA
     };
-    string price = 5; // NUMBER in QLUA
-    oneof qty {
-        bool null_qty = 6;
-        uint32 value_qty = 7; // NUMBER in QLUA
-    };
-    string value = 8; // NUMBER in QLUA
-    string accruedint = 9; // NUMBER in QLUA
-    string yield = 10; // NUMBER in QLUA
-    string settlecode = 11;
-    string reporate = 12; // NUMBER in QLUA
-    string repovalue = 13; // NUMBER in QLUA
-    string repo2value = 14; // NUMBER in QLUA
-    string repoterm = 15; // NUMBER in QLUA
-    string sec_code = 16;
-    string class_code = 17;
-    DateTimeEntry datetime = 18; // TABLE in QLUA
-    int32 period = 19; // NUMBER in QLUA
-    string open_interest = 20; // NUMBER in QLUA
-    string exchange_code = 21;
-    string exec_market = 22;
+    string price = 4; // NUMBER in QLUA
+    uint32 qty = 5; // NUMBER in QLUA
+    string value = 6; // NUMBER in QLUA
+    string accruedint = 7; // NUMBER in QLUA
+    string yield = 8; // NUMBER in QLUA
+    string settlecode = 9;
+    string reporate = 10; // NUMBER in QLUA
+    string repovalue = 11; // NUMBER in QLUA
+    string repo2value = 12; // NUMBER in QLUA
+    string repoterm = 13; // NUMBER in QLUA
+    string sec_code = 14;
+    string class_code = 15;
+    DateTimeEntry datetime = 16; // TABLE in QLUA
+    int32 period = 17; // NUMBER in QLUA
+    string open_interest = 18; // NUMBER in QLUA
+    string exchange_code = 19;
+    string exec_market = 20;
 }
 
 // Сделки
