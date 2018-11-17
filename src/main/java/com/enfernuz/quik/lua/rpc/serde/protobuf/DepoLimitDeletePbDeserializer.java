@@ -23,10 +23,10 @@ enum DepoLimitDeletePbDeserializer implements Deserializer<DepoLimitDelete>, Fro
     public DepoLimitDelete convert(@NotNull QluaStructures.DepoLimitDelete depoLimitDelete) {
 
         return DepoLimitDelete.builder()
-                .secCode( convertFromPbString(depoLimitDelete.getSecCode()) )
-                .trdAccId( convertFromPbString(depoLimitDelete.getTrdaccid()) )
-                .firmId( convertFromPbString(depoLimitDelete.getFirmid()) )
-                .clientCode( convertFromPbString(depoLimitDelete.getClientCode()) )
+                .secCode( depoLimitDelete.getSecCode() )
+                .trdAccId( depoLimitDelete.getTrdaccid() )
+                .firmId( depoLimitDelete.getFirmid() )
+                .clientCode( depoLimitDelete.getClientCode() )
                 .limitKind( depoLimitDelete.getLimitKind() )
                 .build();
     }

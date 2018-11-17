@@ -1,85 +1,46 @@
 package com.enfernuz.quik.lua.rpc.serde.protobuf;
 
 import com.enfernuz.quik.lua.rpc.api.structures.DepoLimitDelete;
-import com.enfernuz.quik.lua.rpc.serde.SerdeModule;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import com.enfernuz.quik.lua.rpc.serde.Deserializer;
+import org.jetbrains.annotations.NotNull;
 import qlua.structs.QluaStructures;
 
-import java.util.Arrays;
+public class DepoLimitDeletePbSerdeTest extends AbstractPbDeserializationTest<QluaStructures.DepoLimitDelete, DepoLimitDelete> {
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+    private static final String SEC_CODE = "1";
+    private static final String TRD_ACC_ID = "2";
+    private static final String FIRM_ID = "3";
+    private static final String CLIENT_CODE = "4";
+    private static final int LIMIT_KIND = 5;
 
-public class DepoLimitDeletePbSerdeTest {
+    @Override
+    public @NotNull Deserializer<DepoLimitDelete> getDeserializerUnderTest() {
+        return DepoLimitDeletePbDeserializer.INSTANCE;
+    }
 
-    private static SerdeModule sut;
+    @NotNull
+    @Override
+    public DepoLimitDelete getTargetObject() {
 
-    private static DepoLimitDelete expectedObject;
-    private static byte[] expectedPbInput;
-
-    private static DepoLimitDelete expectedObjectWithNullNonRequiredStringFileds;
-    private static byte[] expectedPbInputWithEmptyNonRequiredStringFields;
-
-    @BeforeClass
-    public static void globalSetup() {
-
-        sut = ProtobufSerdeModule.INSTANCE;
-
-        expectedObject = DepoLimitDelete.builder()
-                .secCode("1")
-                .trdAccId("2")
-                .firmId("3")
-                .clientCode("4")
-                .limitKind(5)
+        return DepoLimitDelete.builder()
+                .secCode(SEC_CODE)
+                .trdAccId(TRD_ACC_ID)
+                .firmId(FIRM_ID)
+                .clientCode(CLIENT_CODE)
+                .limitKind(LIMIT_KIND)
                 .build();
-        expectedPbInput = QluaStructures.DepoLimitDelete.newBuilder()
-                .setSecCode("1")
-                .setTrdaccid("2")
-                .setFirmid("3")
-                .setClientCode("4")
-                .setLimitKind(5)
-                .build()
-                .toByteArray();
+    }
 
-        expectedObjectWithNullNonRequiredStringFileds = DepoLimitDelete.builder()
-                .limitKind(1)
+    @NotNull
+    @Override
+    public QluaStructures.DepoLimitDelete getTargetObjectAsPbMessage() {
+
+        return QluaStructures.DepoLimitDelete.newBuilder()
+                .setSecCode(SEC_CODE)
+                .setTrdaccid(TRD_ACC_ID)
+                .setFirmid(FIRM_ID)
+                .setClientCode(CLIENT_CODE)
+                .setLimitKind(LIMIT_KIND)
                 .build();
-        expectedPbInputWithEmptyNonRequiredStringFields = QluaStructures.DepoLimitDelete.newBuilder()
-                .setLimitKind(1)
-                .build()
-                .toByteArray();
-    }
-
-    @Test
-    public void testSerialize() {
-
-        final byte[] actual = sut.serialize(expectedObject);
-
-        assertTrue( Arrays.equals(expectedPbInput, actual) );
-    }
-
-    @Test
-    public void testSerializePbInputWithEmptyNonRequiredStringFields() {
-
-        final byte[] actual = sut.serialize(expectedObjectWithNullNonRequiredStringFileds);
-
-        assertTrue( Arrays.equals(expectedPbInputWithEmptyNonRequiredStringFields, actual) );
-    }
-
-    @Test
-    public void testDeserialize() {
-
-        final DepoLimitDelete actualObject = sut.deserialize(DepoLimitDelete.class, expectedPbInput);
-
-        assertEquals(actualObject, expectedObject);
-    }
-
-    @Test
-    public void testDeserializePbInputWithEmptyNonRequiredStringFields() {
-
-        final DepoLimitDelete actualObject = sut.deserialize(DepoLimitDelete.class, expectedPbInputWithEmptyNonRequiredStringFields);
-
-        assertEquals(actualObject, expectedObjectWithNullNonRequiredStringFileds);
     }
 }
