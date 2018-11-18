@@ -111,14 +111,14 @@ public interface QluaRpcClient extends Gateway, Securable {
      * @param args
      * @return
      */
-    GetCandlesByIndex.Result qlua_getCandlesByIndex(GetCandlesByIndex.Result args);
+    GetCandlesByIndex.Result qlua_getCandlesByIndex(GetCandlesByIndex.Request args);
 
     /**
      *
      * @param args
      * @return
      */
-    GetCell.Result qlua_GetCell(GetCell.Result args);
+    GetCell.Result qlua_GetCell(GetCell.Request args);
 
     /**
      *

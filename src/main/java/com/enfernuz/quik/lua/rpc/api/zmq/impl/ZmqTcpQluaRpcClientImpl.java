@@ -237,7 +237,7 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
     }
 
     @Override
-    public GetCandlesByIndex.Result qlua_getCandlesByIndex(final GetCandlesByIndex.Result args) {
+    public GetCandlesByIndex.Result qlua_getCandlesByIndex(final GetCandlesByIndex.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_CANDLES_BY_INDEX, args);
@@ -250,7 +250,7 @@ public class ZmqTcpQluaRpcClientImpl implements ZmqTcpQluaRpcClient {
     }
 
     @Override
-    public GetCell.Result qlua_GetCell(final GetCell.Result args) {
+    public GetCell.Result qlua_GetCell(final GetCell.Request args) {
 
         try {
             final ByteString resultAsByteString = makeRPC(RPC.ProcedureType.GET_CELL, args);
