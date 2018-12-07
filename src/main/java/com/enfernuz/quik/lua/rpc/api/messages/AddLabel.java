@@ -14,6 +14,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.Value;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
@@ -67,10 +68,11 @@ public final class AddLabel implements RemoteProcedure {
 
         private static final String LABEL_ID = "label_id";
 
+        @Nullable
         Integer labelId;
 
         @JsonCreator
-        public Result(@JsonProperty(value = LABEL_ID, required = true) final Integer labelId) {
+        public Result(@JsonProperty(value = LABEL_ID) final Integer labelId) {
             this.labelId = labelId;
         }
 
