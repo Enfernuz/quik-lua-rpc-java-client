@@ -65,8 +65,8 @@ public final class GetOrderByNumber implements RemoteProcedure {
 
         @JsonCreator
         public static Result getInstance(
-                @JsonProperty(value = ORDER, required = true) final Order order,
-                @JsonProperty(value = INDX, required = true) final Integer indx) {
+                @JsonProperty(ORDER) final Order order,
+                @JsonProperty(INDX) final Integer indx) {
 
             return (order == null && indx == null) ? InstanceHolder.ERROR : new Result(order, indx);
         }
