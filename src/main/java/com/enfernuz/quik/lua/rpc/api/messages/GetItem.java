@@ -12,7 +12,6 @@ import com.google.common.collect.ImmutableMap;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.Value;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -67,7 +66,7 @@ public final class GetItem implements RemoteProcedure {
         Map<String, String> tableRow;
 
         @JsonCreator
-        public static Result getInstance(@JsonProperty(value = TABLE_ROW, required = true) final Map<String, String> tableRow) {
+        public static Result getInstance(@JsonProperty(TABLE_ROW) final Map<String, String> tableRow) {
 
             if (tableRow == null) {
                 return InstanceHolder.ERROR;
