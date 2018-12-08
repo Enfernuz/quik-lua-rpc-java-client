@@ -80,8 +80,8 @@ public final class GetCell implements RemoteProcedure {
         @JsonCreator
         @Builder
         private static Result getInstance(
-                @JsonProperty(value = IMAGE, required = true) final String image,
-                @JsonProperty(value = VALUE, required = true) final String value) {
+                @JsonProperty(value = IMAGE) final String image,
+                @JsonProperty(value = VALUE) final String value) {
 
             return image == null && value == null ? InstanceHolder.ERROR : new Result(image, value);
         }
