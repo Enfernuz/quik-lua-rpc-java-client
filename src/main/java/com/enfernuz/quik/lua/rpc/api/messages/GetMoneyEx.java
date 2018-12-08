@@ -104,7 +104,7 @@ public final class GetMoneyEx implements RemoteProcedure {
         MoneyLimit moneyEx;
 
         @JsonCreator
-        public static Result getInstance(@JsonProperty(value = MONEY_EX, required = true) final MoneyLimit moneyEx) {
+        public static Result getInstance(@JsonProperty(MONEY_EX) final MoneyLimit moneyEx) {
             return (moneyEx == null) ? InstanceHolder.ERROR : new Result(moneyEx);
         }
 
