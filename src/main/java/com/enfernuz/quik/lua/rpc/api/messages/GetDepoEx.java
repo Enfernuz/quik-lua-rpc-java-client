@@ -105,7 +105,7 @@ public final class GetDepoEx implements RemoteProcedure {
         DepoLimit depoEx;
 
         @JsonCreator
-        public static Result getInstance(@JsonProperty(value = DEPO_EX, required = true) final DepoLimit depoEx) {
+        public static Result getInstance(@JsonProperty(value = DEPO_EX) final DepoLimit depoEx) {
             return depoEx == null ? InstanceHolder.ERROR : new Result(depoEx);
         }
 
