@@ -94,7 +94,7 @@ public final class GetFuturesHolding implements RemoteProcedure {
         FuturesClientHolding futuresHolding;
 
         @JsonCreator
-        public static Result getInstance(@JsonProperty(value = FUTURES_HOLDING, required = true) final FuturesClientHolding futuresHolding) {
+        public static Result getInstance(@JsonProperty(FUTURES_HOLDING) final FuturesClientHolding futuresHolding) {
             return futuresHolding == null ? InstanceHolder.ERROR : new Result(futuresHolding);
         }
 
