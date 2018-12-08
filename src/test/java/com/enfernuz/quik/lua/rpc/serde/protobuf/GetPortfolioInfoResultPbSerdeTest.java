@@ -5,7 +5,7 @@ import com.enfernuz.quik.lua.rpc.api.structures.PortfolioInfo;
 import com.enfernuz.quik.lua.rpc.serde.Deserializer;
 import org.jetbrains.annotations.NotNull;
 
-public class GetPortfolioInfoPbSerdeTest extends AbstractPbDeserializationTest<qlua.rpc.GetPortfolioInfo.Result, GetPortfolioInfo.Result> {
+public class GetPortfolioInfoResultPbSerdeTest extends AbstractPbDeserializationTest<qlua.rpc.GetPortfolioInfo.Result, GetPortfolioInfo.Result> {
 
     private static final String IS_LEVERAGE = "1";
     private static final String IN_ASSETS = "2";
