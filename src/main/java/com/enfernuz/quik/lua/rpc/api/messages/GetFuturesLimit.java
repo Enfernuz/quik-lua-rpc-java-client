@@ -94,7 +94,7 @@ public final class GetFuturesLimit implements RemoteProcedure {
         FuturesLimit futuresLimit;
 
         @JsonCreator
-        public static Result getInstance(@JsonProperty(value = FUTURES_LIMIT, required = true) final FuturesLimit futuresLimit) {
+        public static Result getInstance(@JsonProperty(FUTURES_LIMIT) final FuturesLimit futuresLimit) {
             return futuresLimit == null ? InstanceHolder.ERROR : new Result(futuresLimit);
         }
 
