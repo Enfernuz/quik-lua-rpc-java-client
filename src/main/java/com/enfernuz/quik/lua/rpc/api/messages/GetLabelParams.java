@@ -66,7 +66,7 @@ public final class GetLabelParams implements RemoteProcedure {
         Map<String, String> labelParams;
 
         @JsonCreator
-        public static Result getInstance(@JsonProperty(value = LABEL_PARAMS, required = true) final Map<String, String> labelParams) {
+        public static Result getInstance(@JsonProperty(LABEL_PARAMS) final Map<String, String> labelParams) {
 
             if (labelParams == null) {
                 return InstanceHolder.ERROR;
