@@ -51,7 +51,7 @@ public final class GetWindowCaption implements RemoteProcedure {
         String caption;
 
         @JsonCreator
-        public static Result getInstance(@JsonProperty(value = CAPTION, required = true) @Nullable final String caption) {
+        public static Result getInstance(@JsonProperty(CAPTION) @Nullable final String caption) {
             return isError(caption) ? InstanceHolder.ERROR : new Result(caption);
         }
 
