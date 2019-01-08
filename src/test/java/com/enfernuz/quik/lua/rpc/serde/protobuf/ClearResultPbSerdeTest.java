@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 @RunWith(Enclosed.class)
 public class ClearResultPbSerdeTest {
 
-    public static class TrueParamRequestResultPbDeserializationTest
+    public static class TrueClearResultPbDeserializationTest
             extends AbstractPbDeserializationTest<qlua.rpc.Clear.Result, Clear.Result> {
 
         private static final boolean TRUE = true;
@@ -37,7 +37,7 @@ public class ClearResultPbSerdeTest {
         }
     }
 
-    public static class FalseParamRequestResultPbDeserializationTest
+    public static class FalseClearResultPbDeserializationTest
             extends AbstractPbDeserializationTest<qlua.rpc.Clear.Result, Clear.Result> {
 
         private static final boolean FALSE = false;
