@@ -52,7 +52,7 @@ public final class GetTableSize implements RemoteProcedure {
         TableSize tableSize;
 
         @JsonCreator
-        public static Result getInstance(@JsonProperty(value = TABLE_SIZE, required = true) @Nullable final TableSize tableSize) {
+        public static Result getInstance(@JsonProperty(TABLE_SIZE) @Nullable final TableSize tableSize) {
             return isError(tableSize) ? InstanceHolder.ERROR : new Result(tableSize);
         }
 
