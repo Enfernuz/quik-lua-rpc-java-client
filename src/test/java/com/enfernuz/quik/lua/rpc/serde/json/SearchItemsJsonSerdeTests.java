@@ -87,7 +87,7 @@ public class SearchItemsJsonSerdeTests {
 
         @Override
         public SearchItems.Result getExpectedObject() {
-            return SearchItems.Result.getNullOrEmptyInstance();
+            return SearchItems.Result.getNullInstance();
         }
     }
 
@@ -100,7 +100,7 @@ public class SearchItemsJsonSerdeTests {
 
         @Override
         public SearchItems.Result getExpectedObject() {
-            return SearchItems.Result.getNullOrEmptyInstance();
+            return SearchItems.Result.getEmptyInstance();
         }
     }
 }

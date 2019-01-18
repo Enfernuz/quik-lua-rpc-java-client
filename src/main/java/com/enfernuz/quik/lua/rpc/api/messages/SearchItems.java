@@ -6,7 +6,6 @@ import com.enfernuz.quik.lua.rpc.api.RpcResult;
 import com.fasterxml.jackson.annotation.*;
 import com.google.common.base.MoreObjects;
 import lombok.*;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -106,11 +105,22 @@ public final class SearchItems implements RemoteProcedure {
 
         @JsonCreator
         public static Result getInstance(@JsonProperty(ITEMS_INDICES) final int[] items_indices) {
-            return isNullOrEmpty(items_indices) ? getNullOrEmptyInstance() : new Result(items_indices);
+
+            if (items_indices == null) {
+                return getNullInstance();
+            } else if (items_indices.length == 0) {
+                return getEmptyInstance();
+            }
+
+            return new Result(items_indices);
         }
 
-        public static Result getNullOrEmptyInstance() {
-            return InstanceHolder.NULL_OR_EMPTY;
+        public static Result getNullInstance() {
+            return InstanceHolder.NULL_INSTANCE;
+        }
+
+        public static Result getEmptyInstance() {
+            return InstanceHolder.EMPTY_INSTANCE;
         }
 
         private Result(final int[] items_indices) {
@@ -119,16 +129,22 @@ public final class SearchItems implements RemoteProcedure {
 
         @Nullable
         public int[] getItemsIndices() {
-            return isNullOrEmpty(items_indices) ? null : items_indices.clone();
+
+            if (items_indices == null) {
+                return null;
+            } else if (items_indices.length == 0) {
+                return items_indices;
+            }
+
+            return items_indices.clone();
         }
 
-        public boolean isNullOrEmpty() {
-            return isNullOrEmpty(items_indices);
+        public boolean isNull() {
+            return items_indices == null;
         }
 
-        @Contract(value = "null -> true", pure = true)
-        private static boolean isNullOrEmpty(final int[] items_indices) {
-            return items_indices == null || items_indices.length == 0;
+        public boolean isEmpty() {
+            return items_indices != null && items_indices.length == 0;
         }
 
         @NotNull
@@ -141,11 +157,13 @@ public final class SearchItems implements RemoteProcedure {
 
         private static final class InstanceHolder {
 
-            private static final Result NULL_OR_EMPTY = new Result(null);
+            private static final Result NULL_INSTANCE = new Result(null);
+            private static final Result EMPTY_INSTANCE = new Result(new int[] {});
 
             // sanity check
             static {
-                assert NULL_OR_EMPTY.isNullOrEmpty();
+                assert NULL_INSTANCE.isNull();
+                assert EMPTY_INSTANCE.isEmpty();
             }
         }
     }

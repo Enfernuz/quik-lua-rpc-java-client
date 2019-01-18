@@ -21,10 +21,19 @@ enum SearchItemsResultPbDeserializer implements Deserializer<SearchItems.Result>
     @Override
     public SearchItems.Result convert(@NotNull final qlua.rpc.SearchItems.Result result) {
 
-        return SearchItems.Result.getInstance(
-                result.getItemsIndicesList().stream()
-                        .mapToInt(Integer::intValue)
-                        .toArray()
-        );
+        if (result.getNullItemsIndices()) {
+            return SearchItems.Result.getNullInstance();
+        } else {
+
+            if ( result.getItemsIndicesList().isEmpty() ) {
+                return SearchItems.Result.getEmptyInstance();
+            }
+
+            return SearchItems.Result.getInstance(
+                    result.getItemsIndicesList().stream()
+                            .mapToInt(Integer::intValue)
+                            .toArray()
+            );
+        }
     }
 }
