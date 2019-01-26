@@ -37,7 +37,7 @@ public class SubscribeLevel2QuotesResultPbSerdeTest {
         }
     }
 
-    public static class FalseSetWindowPosResultPbDeserializationTest
+    public static class FalseSubscribeLevel2QuotesResultPbDeserializationTest
             extends AbstractPbDeserializationTest<qlua.rpc.SubscribeLevelIIQuotes.Result, SubscribeLevel2Quotes.Result> {
 
         private static final boolean FALSE = false;
