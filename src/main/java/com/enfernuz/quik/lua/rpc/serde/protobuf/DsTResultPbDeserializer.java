@@ -22,10 +22,6 @@ enum DsTResultPbDeserializer implements Deserializer<T.Result>, FromPbConverter<
     @NotNull
     @Override
     public T.Result convert(@NotNull final qlua.rpc.datasource.T.Result result) {
-
-        return T.Result.builder()
-                .time( convertFromDataSourceTime(result.getTime()) )
-                .build();
-
+        return new T.Result( convertFromDataSourceTime(result.getTime()) );
     }
 }

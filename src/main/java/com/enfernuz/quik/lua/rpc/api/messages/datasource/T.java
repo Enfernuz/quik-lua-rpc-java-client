@@ -103,8 +103,7 @@ public final class T implements RemoteProcedure {
         DataSourceTime time;
 
         @JsonCreator
-        @Builder
-        private Result(@JsonProperty(value = TIME, required = true) @NonNull @NotNull final DataSourceTime time) {
+        public Result(@JsonProperty(value = TIME, required = true) @NonNull @NotNull final DataSourceTime time) {
             this.time = time;
         }
 

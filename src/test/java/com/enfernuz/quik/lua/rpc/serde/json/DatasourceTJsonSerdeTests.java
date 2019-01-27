@@ -43,9 +43,7 @@ public class DatasourceTJsonSerdeTests {
                     .count(9)
                     .build();
 
-            return T.Result.builder()
-                    .time(time)
-                    .build();
+            return new T.Result(time);
         }
     }
 }
