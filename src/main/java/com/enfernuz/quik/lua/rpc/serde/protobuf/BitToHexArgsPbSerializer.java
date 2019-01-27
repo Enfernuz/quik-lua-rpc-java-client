@@ -24,8 +24,10 @@ enum BitToHexArgsPbSerializer implements Serializer<ToHex.Args>, ToPbConverter<T
                     .setX( args.getX() );
 
         final Integer n = args.getN();
-        if (n != null) {
-            result.setN(n);
+        if (n == null) {
+            result.setNullN(true);
+        } else {
+            result.setValueN(n);
         }
 
         return result.build();
