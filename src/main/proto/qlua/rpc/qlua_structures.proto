@@ -26,8 +26,8 @@ message Firm {
     string firmid = 1;
     string firm_name = 2;
     oneof status {
-        bool null_status = 3;
-        int32 value_status = 4; // NUMBER in QLUA
+      bool null_status = 3;
+      int32 value_status = 4; // NUMBER in QLUA
     };
     string exchange = 5;
 }
@@ -648,3 +648,4 @@ message DataSourceUpdateInfo {
         int32 value_size = 10;
     }
 }
+

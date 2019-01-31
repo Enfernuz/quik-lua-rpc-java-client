@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
 
-enum BAndArgsPbSerializer implements Serializer<BAnd.Args>, ToPbConverter<BAnd.Args, qlua.rpc.bit.Band.Request> {
+enum BAndArgsPbSerializer implements Serializer<BAnd.Args>, ToPbConverter<BAnd.Args, qlua.rpc.bit.Band.Args> {
 
     INSTANCE;
 
@@ -21,10 +21,10 @@ enum BAndArgsPbSerializer implements Serializer<BAnd.Args>, ToPbConverter<BAnd.A
 
     @NotNull
     @Override
-    public Band.Request convert(@NotNull final BAnd.Args args) {
+    public Band.Args convert(@NotNull final BAnd.Args args) {
 
-        final Band.Request.Builder result =
-                Band.Request.newBuilder()
+        final Band.Args.Builder result =
+                Band.Args.newBuilder()
                     .setX1( args.getX1() )
                     .setX2( args.getX2() );
 

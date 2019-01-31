@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetFuturesHolding;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum GetFuturesHoldingArgsPbSerializer implements Serializer<GetFuturesHolding.Args>, ToPbConverter<GetFuturesHolding.Args, qlua.rpc.GetFuturesHolding.Request> {
+enum GetFuturesHoldingArgsPbSerializer implements Serializer<GetFuturesHolding.Args>, ToPbConverter<GetFuturesHolding.Args, qlua.rpc.GetFuturesHolding.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum GetFuturesHoldingArgsPbSerializer implements Serializer<GetFuturesHolding.A
     }
 
     @Override
-    public @NotNull qlua.rpc.GetFuturesHolding.Request convert(@NotNull final GetFuturesHolding.Args args) {
+    public @NotNull qlua.rpc.GetFuturesHolding.Args convert(@NotNull final GetFuturesHolding.Args args) {
 
-        return qlua.rpc.GetFuturesHolding.Request.newBuilder()
+        return qlua.rpc.GetFuturesHolding.Args.newBuilder()
                 .setFirmid( args.getFirmId() )
                 .setTrdaccid( args.getTrdAccId() )
                 .setSecCode( args.getSecCode() )

@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.CancelParamRequest;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum CancelParamRequestArgsPbSerializer implements Serializer<CancelParamRequest.Args>, ToPbConverter<CancelParamRequest.Args, qlua.rpc.CancelParamRequest.Request> {
+enum CancelParamRequestArgsPbSerializer implements Serializer<CancelParamRequest.Args>, ToPbConverter<CancelParamRequest.Args, qlua.rpc.CancelParamRequest.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum CancelParamRequestArgsPbSerializer implements Serializer<CancelParamRequest
     }
 
     @Override
-    public @NotNull qlua.rpc.CancelParamRequest.Request convert(@NotNull final CancelParamRequest.Args args) {
+    public @NotNull qlua.rpc.CancelParamRequest.Args convert(@NotNull final CancelParamRequest.Args args) {
 
-        return qlua.rpc.CancelParamRequest.Request.newBuilder()
+        return qlua.rpc.CancelParamRequest.Args.newBuilder()
                 .setClassCode( args.getClassCode() )
                 .setSecCode( args.getSecCode() )
                 .setDbName( args.getDbName() )

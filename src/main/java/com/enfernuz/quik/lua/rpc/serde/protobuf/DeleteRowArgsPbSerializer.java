@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.DeleteRow;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum DeleteRowArgsPbSerializer implements Serializer<DeleteRow.Args>, ToPbConverter<DeleteRow.Args, qlua.rpc.DeleteRow.Request> {
+enum DeleteRowArgsPbSerializer implements Serializer<DeleteRow.Args>, ToPbConverter<DeleteRow.Args, qlua.rpc.DeleteRow.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum DeleteRowArgsPbSerializer implements Serializer<DeleteRow.Args>, ToPbConver
     }
 
     @Override
-    public @NotNull qlua.rpc.DeleteRow.Request convert(@NotNull final DeleteRow.Args args) {
+    public @NotNull qlua.rpc.DeleteRow.Args convert(@NotNull final DeleteRow.Args args) {
 
-        return qlua.rpc.DeleteRow.Request.newBuilder()
+        return qlua.rpc.DeleteRow.Args.newBuilder()
                 .setTId( args.getTId() )
                 .setKey( args.getKey() )
                 .build();

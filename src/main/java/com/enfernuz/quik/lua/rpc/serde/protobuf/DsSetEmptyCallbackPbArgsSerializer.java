@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.datasource.SetEmptyCallback;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum DsSetEmptyCallbackPbArgsSerializer implements Serializer<SetEmptyCallback.Args>, ToPbConverter<SetEmptyCallback.Args, qlua.rpc.datasource.SetEmptyCallback.Request> {
+enum DsSetEmptyCallbackPbArgsSerializer implements Serializer<SetEmptyCallback.Args>, ToPbConverter<SetEmptyCallback.Args, qlua.rpc.datasource.SetEmptyCallback.Args> {
 
     INSTANCE;
 
@@ -16,9 +16,9 @@ enum DsSetEmptyCallbackPbArgsSerializer implements Serializer<SetEmptyCallback.A
 
     @NotNull
     @Override
-    public qlua.rpc.datasource.SetEmptyCallback.Request convert(@NotNull final SetEmptyCallback.Args args) {
+    public qlua.rpc.datasource.SetEmptyCallback.Args convert(@NotNull final SetEmptyCallback.Args args) {
 
-        return qlua.rpc.datasource.SetEmptyCallback.Request.newBuilder()
+        return qlua.rpc.datasource.SetEmptyCallback.Args.newBuilder()
                 .setDatasourceUuid( args.getDatasourceUUID() )
                 .build();
     }

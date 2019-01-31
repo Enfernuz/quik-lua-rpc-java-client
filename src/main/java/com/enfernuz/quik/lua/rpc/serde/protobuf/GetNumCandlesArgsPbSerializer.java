@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetNumCandles;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum GetNumCandlesArgsPbSerializer implements Serializer<GetNumCandles.Args>, ToPbConverter<GetNumCandles.Args, qlua.rpc.GetNumCandles.Request> {
+enum GetNumCandlesArgsPbSerializer implements Serializer<GetNumCandles.Args>, ToPbConverter<GetNumCandles.Args, qlua.rpc.GetNumCandles.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum GetNumCandlesArgsPbSerializer implements Serializer<GetNumCandles.Args>, To
     }
 
     @Override
-    public @NotNull qlua.rpc.GetNumCandles.Request convert(@NotNull final GetNumCandles.Args args) {
+    public @NotNull qlua.rpc.GetNumCandles.Args convert(@NotNull final GetNumCandles.Args args) {
 
-        return qlua.rpc.GetNumCandles.Request.newBuilder()
+        return qlua.rpc.GetNumCandles.Args.newBuilder()
                 .setTag( args.getTag() )
                 .build();
     }

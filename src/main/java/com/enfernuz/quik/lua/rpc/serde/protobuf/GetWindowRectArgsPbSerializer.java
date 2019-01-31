@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetWindowRect;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum GetWindowRectArgsPbSerializer implements Serializer<GetWindowRect.Args>, ToPbConverter<GetWindowRect.Args, qlua.rpc.GetWindowRect.Request> {
+enum GetWindowRectArgsPbSerializer implements Serializer<GetWindowRect.Args>, ToPbConverter<GetWindowRect.Args, qlua.rpc.GetWindowRect.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum GetWindowRectArgsPbSerializer implements Serializer<GetWindowRect.Args>, To
     }
 
     @Override
-    public @NotNull qlua.rpc.GetWindowRect.Request convert(@NotNull final GetWindowRect.Args args) {
+    public @NotNull qlua.rpc.GetWindowRect.Args convert(@NotNull final GetWindowRect.Args args) {
 
-        return qlua.rpc.GetWindowRect.Request.newBuilder()
+        return qlua.rpc.GetWindowRect.Args.newBuilder()
                 .setTId( args.getTId() )
                 .build();
     }

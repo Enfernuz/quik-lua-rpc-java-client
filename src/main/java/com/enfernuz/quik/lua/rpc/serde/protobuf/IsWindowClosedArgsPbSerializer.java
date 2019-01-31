@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.IsWindowClosed;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum IsWindowClosedArgsPbSerializer implements Serializer<IsWindowClosed.Args>, ToPbConverter<IsWindowClosed.Args, qlua.rpc.IsWindowClosed.Request> {
+enum IsWindowClosedArgsPbSerializer implements Serializer<IsWindowClosed.Args>, ToPbConverter<IsWindowClosed.Args, qlua.rpc.IsWindowClosed.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum IsWindowClosedArgsPbSerializer implements Serializer<IsWindowClosed.Args>, 
     }
 
     @Override
-    public @NotNull qlua.rpc.IsWindowClosed.Request convert(@NotNull final IsWindowClosed.Args args) {
+    public @NotNull qlua.rpc.IsWindowClosed.Args convert(@NotNull final IsWindowClosed.Args args) {
 
-        return qlua.rpc.IsWindowClosed.Request.newBuilder()
+        return qlua.rpc.IsWindowClosed.Args.newBuilder()
                 .setTId( args.getTId() )
                 .build();
     }

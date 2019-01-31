@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetBuySellInfo;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum GetBuySellInfoArgsPbSerializer implements Serializer<GetBuySellInfo.Args>, ToPbConverter<GetBuySellInfo.Args, qlua.rpc.GetBuySellInfo.Request> {
+enum GetBuySellInfoArgsPbSerializer implements Serializer<GetBuySellInfo.Args>, ToPbConverter<GetBuySellInfo.Args, qlua.rpc.GetBuySellInfo.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum GetBuySellInfoArgsPbSerializer implements Serializer<GetBuySellInfo.Args>, 
     }
 
     @Override
-    public @NotNull qlua.rpc.GetBuySellInfo.Request convert(@NotNull final GetBuySellInfo.Args args) {
+    public @NotNull qlua.rpc.GetBuySellInfo.Args convert(@NotNull final GetBuySellInfo.Args args) {
 
-        return qlua.rpc.GetBuySellInfo.Request.newBuilder()
+        return qlua.rpc.GetBuySellInfo.Args.newBuilder()
                 .setFirmId( args.getFirmId() )
                 .setClientCode( args.getClientCode() )
                 .setClassCode( args.getClassCode() )

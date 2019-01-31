@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.SendTransaction;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum SendTransactionArgsPbSerializer implements Serializer<SendTransaction.Args>, ToPbConverter<SendTransaction.Args, qlua.rpc.SendTransaction.Request> {
+enum SendTransactionArgsPbSerializer implements Serializer<SendTransaction.Args>, ToPbConverter<SendTransaction.Args, qlua.rpc.SendTransaction.Args> {
 
     INSTANCE;
 
@@ -16,9 +16,9 @@ enum SendTransactionArgsPbSerializer implements Serializer<SendTransaction.Args>
 
     @NotNull
     @Override
-    public qlua.rpc.SendTransaction.Request convert(@NotNull final SendTransaction.Args args) {
+    public qlua.rpc.SendTransaction.Args convert(@NotNull final SendTransaction.Args args) {
 
-        return qlua.rpc.SendTransaction.Request.newBuilder()
+        return qlua.rpc.SendTransaction.Args.newBuilder()
                 .putAllTransaction( args.getTransaction() )
                 .build();
     }

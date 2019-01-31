@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.enfernuz.quik.lua.rpc.serde.protobuf.ProtobufSerdeUtils.convertToPbString;
 
-enum AddColumnArgsPbSerializer implements Serializer<AddColumn.Args>, ToPbConverter<AddColumn.Args, qlua.rpc.AddColumn.Request> {
+enum AddColumnArgsPbSerializer implements Serializer<AddColumn.Args>, ToPbConverter<AddColumn.Args, qlua.rpc.AddColumn.Args> {
 
     INSTANCE;
 
@@ -16,7 +16,7 @@ enum AddColumnArgsPbSerializer implements Serializer<AddColumn.Args>, ToPbConver
     }
 
     @Override
-    public @NotNull qlua.rpc.AddColumn.Request convert(@NotNull final AddColumn.Args args) {
+    public @NotNull qlua.rpc.AddColumn.Args convert(@NotNull final AddColumn.Args args) {
 
         final AddColumn.ColumnParameterType parType = args.getParType();
         final qlua.rpc.AddColumn.ColumnParameterType pbParType;
@@ -46,7 +46,7 @@ enum AddColumnArgsPbSerializer implements Serializer<AddColumn.Args>, ToPbConver
                 throw new IllegalArgumentException(String.format("Неподдерживаемый ColumnParameterType (тип столбца): '%s'.", parType));
         }
 
-        return qlua.rpc.AddColumn.Request.newBuilder()
+        return qlua.rpc.AddColumn.Args.newBuilder()
                 .setTId( args.getTId() )
                 .setIcode( args.getICode() )
                 .setName( convertToPbString(args.getName()) )

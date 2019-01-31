@@ -4,7 +4,9 @@ import com.enfernuz.quik.lua.rpc.api.messages.SetCell;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum SetCellArgsPbSerializer implements Serializer<SetCell.Args>, ToPbConverter<SetCell.Args, qlua.rpc.SetCell.Request> {
+import java.math.BigDecimal;
+
+enum SetCellArgsPbSerializer implements Serializer<SetCell.Args>, ToPbConverter<SetCell.Args, qlua.rpc.SetCell.Args> {
 
     INSTANCE;
 
@@ -16,10 +18,10 @@ enum SetCellArgsPbSerializer implements Serializer<SetCell.Args>, ToPbConverter<
 
     @NotNull
     @Override
-    public qlua.rpc.SetCell.Request convert(@NotNull final SetCell.Args args) {
+    public qlua.rpc.SetCell.Args convert(@NotNull final SetCell.Args args) {
 
-        final qlua.rpc.SetCell.Request.Builder result =
-                qlua.rpc.SetCell.Request.newBuilder()
+        final qlua.rpc.SetCell.Args.Builder result =
+                qlua.rpc.SetCell.Args.newBuilder()
                         .setTId( args.getTId() )
                         .setKey( args.getKey() )
                         .setCode( args.getCode() )
@@ -27,7 +29,7 @@ enum SetCellArgsPbSerializer implements Serializer<SetCell.Args>, ToPbConverter<
 
         final Number value = args.getValue();
         if (value != null) {
-            result.setValue( args.getValue().doubleValue() );
+            result.setValue( BigDecimal.valueOf(args.getValue().doubleValue()).toPlainString() );
         }
 
         return result.build();

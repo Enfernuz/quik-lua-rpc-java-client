@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetTableSize;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum GetTableSizeArgsPbSerializer implements Serializer<GetTableSize.Args>, ToPbConverter<GetTableSize.Args, qlua.rpc.GetTableSize.Request> {
+enum GetTableSizeArgsPbSerializer implements Serializer<GetTableSize.Args>, ToPbConverter<GetTableSize.Args, qlua.rpc.GetTableSize.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum GetTableSizeArgsPbSerializer implements Serializer<GetTableSize.Args>, ToPb
     }
 
     @Override
-    public @NotNull qlua.rpc.GetTableSize.Request convert(@NotNull final GetTableSize.Args request) {
+    public @NotNull qlua.rpc.GetTableSize.Args convert(@NotNull final GetTableSize.Args request) {
 
-        return qlua.rpc.GetTableSize.Request.newBuilder()
+        return qlua.rpc.GetTableSize.Args.newBuilder()
                 .setTId( request.getTId() )
                 .build();
     }

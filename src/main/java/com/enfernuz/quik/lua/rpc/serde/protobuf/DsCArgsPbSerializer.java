@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.datasource.C;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum DsCArgsPbSerializer implements Serializer<C.Args>, ToPbConverter<C.Args, qlua.rpc.datasource.C.Request> {
+enum DsCArgsPbSerializer implements Serializer<C.Args>, ToPbConverter<C.Args, qlua.rpc.datasource.C.Args> {
 
     INSTANCE;
 
@@ -16,9 +16,9 @@ enum DsCArgsPbSerializer implements Serializer<C.Args>, ToPbConverter<C.Args, ql
 
     @NotNull
     @Override
-    public qlua.rpc.datasource.C.Request convert(@NotNull final C.Args args) {
+    public qlua.rpc.datasource.C.Args convert(@NotNull final C.Args args) {
 
-        return qlua.rpc.datasource.C.Request.newBuilder()
+        return qlua.rpc.datasource.C.Args.newBuilder()
                 .setDatasourceUuid( args.getDatasourceUUID() )
                 .setCandleIndex( args.getCandleIndex() )
                 .build();

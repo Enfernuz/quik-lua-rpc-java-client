@@ -5,7 +5,7 @@ import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 import qlua.rpc.bit.Btest;
 
-enum BitTestArgsPbSerializer implements Serializer<Test.Args>, ToPbConverter<Test.Args, qlua.rpc.bit.Btest.Request> {
+enum BitTestArgsPbSerializer implements Serializer<Test.Args>, ToPbConverter<Test.Args, qlua.rpc.bit.Btest.Args> {
 
     INSTANCE;
 
@@ -17,9 +17,9 @@ enum BitTestArgsPbSerializer implements Serializer<Test.Args>, ToPbConverter<Tes
 
     @NotNull
     @Override
-    public Btest.Request convert(@NotNull final Test.Args args) {
+    public Btest.Args convert(@NotNull final Test.Args args) {
 
-        return Btest.Request.newBuilder()
+        return Btest.Args.newBuilder()
                 .setX( args.getX() )
                 .setN( args.getN() )
                 .build();

@@ -5,7 +5,7 @@ import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 import qlua.rpc.bit.Tohex;
 
-enum BitToHexArgsPbSerializer implements Serializer<ToHex.Args>, ToPbConverter<ToHex.Args, qlua.rpc.bit.Tohex.Request> {
+enum BitToHexArgsPbSerializer implements Serializer<ToHex.Args>, ToPbConverter<ToHex.Args, qlua.rpc.bit.Tohex.Args> {
 
     INSTANCE;
 
@@ -17,10 +17,10 @@ enum BitToHexArgsPbSerializer implements Serializer<ToHex.Args>, ToPbConverter<T
 
     @NotNull
     @Override
-    public Tohex.Request convert(@NotNull final ToHex.Args args) {
+    public Tohex.Args convert(@NotNull final ToHex.Args args) {
 
-        final Tohex.Request.Builder result =
-                Tohex.Request.newBuilder()
+        final Tohex.Args.Builder result =
+                Tohex.Args.newBuilder()
                     .setX( args.getX() );
 
         final Integer n = args.getN();

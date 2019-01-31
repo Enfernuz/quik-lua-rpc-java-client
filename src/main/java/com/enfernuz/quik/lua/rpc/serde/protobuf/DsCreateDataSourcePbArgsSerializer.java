@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.datasource.CreateDataSource;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum DsCreateDataSourcePbArgsSerializer implements Serializer<CreateDataSource.Args>, ToPbConverter<CreateDataSource.Args, qlua.rpc.datasource.CreateDataSource.Request> {
+enum DsCreateDataSourcePbArgsSerializer implements Serializer<CreateDataSource.Args>, ToPbConverter<CreateDataSource.Args, qlua.rpc.datasource.CreateDataSource.Args> {
 
     INSTANCE;
 
@@ -16,7 +16,7 @@ enum DsCreateDataSourcePbArgsSerializer implements Serializer<CreateDataSource.A
 
     @NotNull
     @Override
-    public qlua.rpc.datasource.CreateDataSource.Request convert(@NotNull final CreateDataSource.Args args) {
+    public qlua.rpc.datasource.CreateDataSource.Args convert(@NotNull final CreateDataSource.Args args) {
 
         final CreateDataSource.Interval interval = args.getInterval();
         final qlua.rpc.datasource.CreateDataSource.Interval pbInterval;
@@ -76,8 +76,8 @@ enum DsCreateDataSourcePbArgsSerializer implements Serializer<CreateDataSource.A
                 throw new IllegalArgumentException( String.format("Неизвестный тип интервала: %s.", interval) );
         }
 
-        final qlua.rpc.datasource.CreateDataSource.Request.Builder result =
-                qlua.rpc.datasource.CreateDataSource.Request.newBuilder()
+        final qlua.rpc.datasource.CreateDataSource.Args.Builder result =
+                qlua.rpc.datasource.CreateDataSource.Args.newBuilder()
                         .setClassCode( args.getClassCode() )
                         .setSecCode( args.getSecCode() )
                         .setInterval(pbInterval);

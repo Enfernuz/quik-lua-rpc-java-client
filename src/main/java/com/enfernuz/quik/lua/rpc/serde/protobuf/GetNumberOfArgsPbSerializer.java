@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetNumberOf;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum GetNumberOfArgsPbSerializer implements Serializer<GetNumberOf.Args>, ToPbConverter<GetNumberOf.Args, qlua.rpc.GetNumberOf.Request> {
+enum GetNumberOfArgsPbSerializer implements Serializer<GetNumberOf.Args>, ToPbConverter<GetNumberOf.Args, qlua.rpc.GetNumberOf.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum GetNumberOfArgsPbSerializer implements Serializer<GetNumberOf.Args>, ToPbCo
     }
 
     @Override
-    public @NotNull qlua.rpc.GetNumberOf.Request convert(@NotNull final GetNumberOf.Args args) {
+    public @NotNull qlua.rpc.GetNumberOf.Args convert(@NotNull final GetNumberOf.Args args) {
 
-        return qlua.rpc.GetNumberOf.Request.newBuilder()
+        return qlua.rpc.GetNumberOf.Args.newBuilder()
                 .setTableName( args.getTableName() )
                 .build();
     }

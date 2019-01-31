@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.Message;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum MessageArgsPbSerializer implements Serializer<Message.Args>, ToPbConverter<Message.Args, qlua.rpc.Message.Request> {
+enum MessageArgsPbSerializer implements Serializer<Message.Args>, ToPbConverter<Message.Args, qlua.rpc.Message.Args> {
 
     INSTANCE;
 
@@ -14,7 +14,7 @@ enum MessageArgsPbSerializer implements Serializer<Message.Args>, ToPbConverter<
     }
 
     @Override
-    public @NotNull qlua.rpc.Message.Request convert(@NotNull final Message.Args args) {
+    public @NotNull qlua.rpc.Message.Args convert(@NotNull final Message.Args args) {
 
         final Message.IconType iconType = args.getIconType();
         final qlua.rpc.Message.IconType pbIconType;
@@ -36,7 +36,7 @@ enum MessageArgsPbSerializer implements Serializer<Message.Args>, ToPbConverter<
             }
         }
 
-        return qlua.rpc.Message.Request.newBuilder()
+        return qlua.rpc.Message.Args.newBuilder()
                 .setMessage( args.getMessage() )
                 .setIconType(pbIconType)
                 .build();

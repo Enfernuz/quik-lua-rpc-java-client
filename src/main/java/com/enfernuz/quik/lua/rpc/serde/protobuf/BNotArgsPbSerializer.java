@@ -5,7 +5,7 @@ import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 import qlua.rpc.bit.Bnot;
 
-enum BNotArgsPbSerializer implements Serializer<BNot.Args>, ToPbConverter<BNot.Args, qlua.rpc.bit.Bnot.Request> {
+enum BNotArgsPbSerializer implements Serializer<BNot.Args>, ToPbConverter<BNot.Args, qlua.rpc.bit.Bnot.Args> {
 
     INSTANCE;
 
@@ -17,9 +17,9 @@ enum BNotArgsPbSerializer implements Serializer<BNot.Args>, ToPbConverter<BNot.A
 
     @NotNull
     @Override
-    public Bnot.Request convert(@NotNull final BNot.Args args) {
+    public Bnot.Args convert(@NotNull final BNot.Args args) {
 
-        return Bnot.Request.newBuilder()
+        return Bnot.Args.newBuilder()
                 .setX( args.getX() )
                 .build();
     }

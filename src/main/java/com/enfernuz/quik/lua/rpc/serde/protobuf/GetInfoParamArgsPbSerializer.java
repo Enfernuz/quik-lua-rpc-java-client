@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetInfoParam;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum GetInfoParamArgsPbSerializer implements Serializer<GetInfoParam.Args>, ToPbConverter<GetInfoParam.Args, qlua.rpc.GetInfoParam.Request> {
+enum GetInfoParamArgsPbSerializer implements Serializer<GetInfoParam.Args>, ToPbConverter<GetInfoParam.Args, qlua.rpc.GetInfoParam.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum GetInfoParamArgsPbSerializer implements Serializer<GetInfoParam.Args>, ToPb
     }
 
     @Override
-    public @NotNull qlua.rpc.GetInfoParam.Request convert(@NotNull final GetInfoParam.Args args) {
+    public @NotNull qlua.rpc.GetInfoParam.Args convert(@NotNull final GetInfoParam.Args args) {
 
-        return qlua.rpc.GetInfoParam.Request.newBuilder()
+        return qlua.rpc.GetInfoParam.Args.newBuilder()
                 .setParamName( args.getParamName() )
                 .build();
     }

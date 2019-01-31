@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetPortfolioInfoEx;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum GetPortfolioInfoExArgsPbSerializer implements Serializer<GetPortfolioInfoEx.Args>, ToPbConverter<GetPortfolioInfoEx.Args, qlua.rpc.GetPortfolioInfoEx.Request> {
+enum GetPortfolioInfoExArgsPbSerializer implements Serializer<GetPortfolioInfoEx.Args>, ToPbConverter<GetPortfolioInfoEx.Args, qlua.rpc.GetPortfolioInfoEx.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum GetPortfolioInfoExArgsPbSerializer implements Serializer<GetPortfolioInfoEx
     }
 
     @Override
-    public @NotNull qlua.rpc.GetPortfolioInfoEx.Request convert(@NotNull final GetPortfolioInfoEx.Args args) {
+    public @NotNull qlua.rpc.GetPortfolioInfoEx.Args convert(@NotNull final GetPortfolioInfoEx.Args args) {
 
-        return qlua.rpc.GetPortfolioInfoEx.Request.newBuilder()
+        return qlua.rpc.GetPortfolioInfoEx.Args.newBuilder()
                 .setFirmId( args.getFirmId() )
                 .setClientCode( args.getClientCode() )
                 .setLimitKind( args.getLimitKind() )

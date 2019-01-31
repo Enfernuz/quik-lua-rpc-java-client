@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.PrintDbgStr;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum PrintDbgStrArgsPbSerializer implements Serializer<PrintDbgStr.Args>, ToPbConverter<PrintDbgStr.Args, qlua.rpc.PrintDbgStr.Request> {
+enum PrintDbgStrArgsPbSerializer implements Serializer<PrintDbgStr.Args>, ToPbConverter<PrintDbgStr.Args, qlua.rpc.PrintDbgStr.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum PrintDbgStrArgsPbSerializer implements Serializer<PrintDbgStr.Args>, ToPbCo
     }
 
     @Override
-    public @NotNull qlua.rpc.PrintDbgStr.Request convert(@NotNull final PrintDbgStr.Args args) {
+    public @NotNull qlua.rpc.PrintDbgStr.Args convert(@NotNull final PrintDbgStr.Args args) {
 
-        return qlua.rpc.PrintDbgStr.Request.newBuilder()
+        return qlua.rpc.PrintDbgStr.Args.newBuilder()
                 .setS( args.getS() )
                 .build();
     }

@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.SetSelectedRow;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum SetSelectedRowArgsPbSerializer implements Serializer<SetSelectedRow.Args>, ToPbConverter<SetSelectedRow.Args, qlua.rpc.SetSelectedRow.Request> {
+enum SetSelectedRowArgsPbSerializer implements Serializer<SetSelectedRow.Args>, ToPbConverter<SetSelectedRow.Args, qlua.rpc.SetSelectedRow.Args> {
 
     INSTANCE;
 
@@ -16,9 +16,9 @@ enum SetSelectedRowArgsPbSerializer implements Serializer<SetSelectedRow.Args>, 
 
     @NotNull
     @Override
-    public qlua.rpc.SetSelectedRow.Request convert(@NotNull final SetSelectedRow.Args args) {
+    public qlua.rpc.SetSelectedRow.Args convert(@NotNull final SetSelectedRow.Args args) {
 
-        return qlua.rpc.SetSelectedRow.Request.newBuilder()
+        return qlua.rpc.SetSelectedRow.Args.newBuilder()
                 .setTableId( args.getTableId() )
                 .setRow( args.getRow() )
                 .build();

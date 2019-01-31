@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.SetLabelParams;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum SetLabelParamsArgsPbSerializer implements Serializer<SetLabelParams.Args>, ToPbConverter<SetLabelParams.Args, qlua.rpc.SetLabelParams.Request> {
+enum SetLabelParamsArgsPbSerializer implements Serializer<SetLabelParams.Args>, ToPbConverter<SetLabelParams.Args, qlua.rpc.SetLabelParams.Args> {
 
     INSTANCE;
 
@@ -16,9 +16,9 @@ enum SetLabelParamsArgsPbSerializer implements Serializer<SetLabelParams.Args>, 
 
     @NotNull
     @Override
-    public qlua.rpc.SetLabelParams.Request convert(@NotNull final SetLabelParams.Args args) {
+    public qlua.rpc.SetLabelParams.Args convert(@NotNull final SetLabelParams.Args args) {
 
-        return qlua.rpc.SetLabelParams.Request.newBuilder()
+        return qlua.rpc.SetLabelParams.Args.newBuilder()
                 .setChartTag( args.getChartTag() )
                 .setLabelId( args.getLabelId() )
                 .putAllLabelParams( args.getLabelParams() )

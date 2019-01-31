@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetItem;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum GetItemArgsPbSerializer implements Serializer<GetItem.Args>, ToPbConverter<GetItem.Args, qlua.rpc.GetItem.Request> {
+enum GetItemArgsPbSerializer implements Serializer<GetItem.Args>, ToPbConverter<GetItem.Args, qlua.rpc.GetItem.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum GetItemArgsPbSerializer implements Serializer<GetItem.Args>, ToPbConverter<
     }
 
     @Override
-    public @NotNull qlua.rpc.GetItem.Request convert(@NotNull final GetItem.Args args) {
+    public @NotNull qlua.rpc.GetItem.Args convert(@NotNull final GetItem.Args args) {
 
-        return qlua.rpc.GetItem.Request.newBuilder()
+        return qlua.rpc.GetItem.Args.newBuilder()
                 .setTableName( args.getTableName() )
                 .setIndex( args.getIndex() )
                 .build();

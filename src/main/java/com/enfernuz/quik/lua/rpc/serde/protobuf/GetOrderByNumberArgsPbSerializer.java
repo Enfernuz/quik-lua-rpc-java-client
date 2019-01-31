@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetOrderByNumber;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum GetOrderByNumberArgsPbSerializer implements Serializer<GetOrderByNumber.Args>, ToPbConverter<GetOrderByNumber.Args, qlua.rpc.GetOrderByNumber.Request> {
+enum GetOrderByNumberArgsPbSerializer implements Serializer<GetOrderByNumber.Args>, ToPbConverter<GetOrderByNumber.Args, qlua.rpc.GetOrderByNumber.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum GetOrderByNumberArgsPbSerializer implements Serializer<GetOrderByNumber.Arg
     }
 
     @Override
-    public @NotNull qlua.rpc.GetOrderByNumber.Request convert(@NotNull final GetOrderByNumber.Args args) {
+    public @NotNull qlua.rpc.GetOrderByNumber.Args convert(@NotNull final GetOrderByNumber.Args args) {
 
-        return qlua.rpc.GetOrderByNumber.Request.newBuilder()
+        return qlua.rpc.GetOrderByNumber.Args.newBuilder()
                 .setClassCode( args.getClassCode() )
                 .setOrderId( args.getOrderId() )
                 .build();

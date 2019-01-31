@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetMoneyEx;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum GetMoneyExArgsPbSerializer implements Serializer<GetMoneyEx.Args>, ToPbConverter<GetMoneyEx.Args, qlua.rpc.GetMoneyEx.Request> {
+enum GetMoneyExArgsPbSerializer implements Serializer<GetMoneyEx.Args>, ToPbConverter<GetMoneyEx.Args, qlua.rpc.GetMoneyEx.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum GetMoneyExArgsPbSerializer implements Serializer<GetMoneyEx.Args>, ToPbConv
     }
 
     @Override
-    public @NotNull qlua.rpc.GetMoneyEx.Request convert(@NotNull final GetMoneyEx.Args args) {
+    public @NotNull qlua.rpc.GetMoneyEx.Args convert(@NotNull final GetMoneyEx.Args args) {
 
-        return qlua.rpc.GetMoneyEx.Request.newBuilder()
+        return qlua.rpc.GetMoneyEx.Args.newBuilder()
                 .setFirmid( args.getFirmId() )
                 .setClientCode( args.getClientCode() )
                 .setTag( args.getTag() )

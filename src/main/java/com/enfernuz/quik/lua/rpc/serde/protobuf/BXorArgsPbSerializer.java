@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
 
-enum BXorArgsPbSerializer implements Serializer<BXor.Args>, ToPbConverter<BXor.Args, Bxor.Request> {
+enum BXorArgsPbSerializer implements Serializer<BXor.Args>, ToPbConverter<BXor.Args, Bxor.Args> {
 
     INSTANCE;
 
@@ -21,10 +21,10 @@ enum BXorArgsPbSerializer implements Serializer<BXor.Args>, ToPbConverter<BXor.A
 
     @NotNull
     @Override
-    public Bxor.Request convert(@NotNull final BXor.Args args) {
+    public Bxor.Args convert(@NotNull final BXor.Args args) {
 
-        final Bxor.Request.Builder result =
-                Bxor.Request.newBuilder()
+        final Bxor.Args.Builder result =
+                Bxor.Args.newBuilder()
                     .setX1( args.getX1() )
                     .setX2( args.getX2() );
 

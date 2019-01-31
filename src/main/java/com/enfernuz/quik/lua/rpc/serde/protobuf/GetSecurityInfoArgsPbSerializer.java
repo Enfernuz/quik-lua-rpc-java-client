@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetSecurityInfo;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum GetSecurityInfoArgsPbSerializer implements Serializer<GetSecurityInfo.Args>, ToPbConverter<GetSecurityInfo.Args, qlua.rpc.GetSecurityInfo.Request> {
+enum GetSecurityInfoArgsPbSerializer implements Serializer<GetSecurityInfo.Args>, ToPbConverter<GetSecurityInfo.Args, qlua.rpc.GetSecurityInfo.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum GetSecurityInfoArgsPbSerializer implements Serializer<GetSecurityInfo.Args>
     }
 
     @Override
-    public @NotNull qlua.rpc.GetSecurityInfo.Request convert(@NotNull final GetSecurityInfo.Args args) {
+    public @NotNull qlua.rpc.GetSecurityInfo.Args convert(@NotNull final GetSecurityInfo.Args args) {
 
-        return qlua.rpc.GetSecurityInfo.Request.newBuilder()
+        return qlua.rpc.GetSecurityInfo.Args.newBuilder()
                 .setClassCode( args.getClassCode() )
                 .setSecCode( args.getSecCode() )
                 .build();

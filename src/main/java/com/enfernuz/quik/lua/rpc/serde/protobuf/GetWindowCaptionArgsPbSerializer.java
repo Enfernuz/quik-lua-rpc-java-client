@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetWindowCaption;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum GetWindowCaptionArgsPbSerializer implements Serializer<GetWindowCaption.Args>, ToPbConverter<GetWindowCaption.Args, qlua.rpc.GetWindowCaption.Request> {
+enum GetWindowCaptionArgsPbSerializer implements Serializer<GetWindowCaption.Args>, ToPbConverter<GetWindowCaption.Args, qlua.rpc.GetWindowCaption.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum GetWindowCaptionArgsPbSerializer implements Serializer<GetWindowCaption.Arg
     }
 
     @Override
-    public @NotNull qlua.rpc.GetWindowCaption.Request convert(@NotNull final GetWindowCaption.Args args) {
+    public @NotNull qlua.rpc.GetWindowCaption.Args convert(@NotNull final GetWindowCaption.Args args) {
 
-        return qlua.rpc.GetWindowCaption.Request.newBuilder()
+        return qlua.rpc.GetWindowCaption.Args.newBuilder()
                 .setTId( args.getTId() )
                 .build();
     }

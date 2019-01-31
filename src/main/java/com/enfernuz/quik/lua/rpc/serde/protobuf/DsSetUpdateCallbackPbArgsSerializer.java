@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.datasource.SetUpdateCallback;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum DsSetUpdateCallbackPbArgsSerializer implements Serializer<SetUpdateCallback.Args>, ToPbConverter<SetUpdateCallback.Args, qlua.rpc.datasource.SetUpdateCallback.Request> {
+enum DsSetUpdateCallbackPbArgsSerializer implements Serializer<SetUpdateCallback.Args>, ToPbConverter<SetUpdateCallback.Args, qlua.rpc.datasource.SetUpdateCallback.Args> {
 
     INSTANCE;
 
@@ -16,10 +16,10 @@ enum DsSetUpdateCallbackPbArgsSerializer implements Serializer<SetUpdateCallback
 
     @NotNull
     @Override
-    public qlua.rpc.datasource.SetUpdateCallback.Request convert(@NotNull final SetUpdateCallback.Args args) {
+    public qlua.rpc.datasource.SetUpdateCallback.Args convert(@NotNull final SetUpdateCallback.Args args) {
 
-        final qlua.rpc.datasource.SetUpdateCallback.Request.Builder result =
-                qlua.rpc.datasource.SetUpdateCallback.Request.newBuilder()
+        final qlua.rpc.datasource.SetUpdateCallback.Args.Builder result =
+                qlua.rpc.datasource.SetUpdateCallback.Args.newBuilder()
                         .setDatasourceUuid( args.getDatasourceUUID() )
                         .setWatchingO( args.isWatchingO() )
                         .setWatchingH( args.isWatchingH() )

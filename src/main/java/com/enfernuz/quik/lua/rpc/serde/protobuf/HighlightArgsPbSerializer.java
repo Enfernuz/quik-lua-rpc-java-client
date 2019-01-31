@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.Highlight;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum HighlightArgsPbSerializer implements Serializer<Highlight.Args>, ToPbConverter<Highlight.Args, qlua.rpc.Highlight.Request> {
+enum HighlightArgsPbSerializer implements Serializer<Highlight.Args>, ToPbConverter<Highlight.Args, qlua.rpc.Highlight.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum HighlightArgsPbSerializer implements Serializer<Highlight.Args>, ToPbConver
     }
 
     @Override
-    public @NotNull qlua.rpc.Highlight.Request convert(@NotNull final Highlight.Args args) {
+    public @NotNull qlua.rpc.Highlight.Args convert(@NotNull final Highlight.Args args) {
 
-        return qlua.rpc.Highlight.Request.newBuilder()
+        return qlua.rpc.Highlight.Args.newBuilder()
                 .setTId( args.getTId() )
                 .setRow( args.getRow() )
                 .setCol( args.getCol() )

@@ -5,7 +5,7 @@ import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 import qlua.rpc.RPC;
 
-enum GetDepoExArgsPbSerializer implements Serializer<GetDepoEx.Args>, ToPbConverter<GetDepoEx.Args, qlua.rpc.GetDepoEx.Request> {
+enum GetDepoExArgsPbSerializer implements Serializer<GetDepoEx.Args>, ToPbConverter<GetDepoEx.Args, qlua.rpc.GetDepoEx.Args> {
 
     INSTANCE;
 
@@ -17,9 +17,9 @@ enum GetDepoExArgsPbSerializer implements Serializer<GetDepoEx.Args>, ToPbConver
     }
 
     @Override
-    public @NotNull qlua.rpc.GetDepoEx.Request convert(@NotNull final GetDepoEx.Args args) {
+    public @NotNull qlua.rpc.GetDepoEx.Args convert(@NotNull final GetDepoEx.Args args) {
 
-        return qlua.rpc.GetDepoEx.Request.newBuilder()
+        return qlua.rpc.GetDepoEx.Args.newBuilder()
                 .setFirmid( args.getFirmId() )
                 .setClientCode( args.getClientCode() )
                 .setSecCode( args.getSecCode() )

@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetClassInfo;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum GetClassInfoArgsPbSerializer implements Serializer<GetClassInfo.Args>, ToPbConverter<GetClassInfo.Args, qlua.rpc.GetClassInfo.Request> {
+enum GetClassInfoArgsPbSerializer implements Serializer<GetClassInfo.Args>, ToPbConverter<GetClassInfo.Args, qlua.rpc.GetClassInfo.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum GetClassInfoArgsPbSerializer implements Serializer<GetClassInfo.Args>, ToPb
     }
 
     @Override
-    public qlua.rpc.GetClassInfo.Request convert(@NotNull final GetClassInfo.Args args) {
+    public qlua.rpc.GetClassInfo.Args convert(@NotNull final GetClassInfo.Args args) {
 
-        return qlua.rpc.GetClassInfo.Request.newBuilder()
+        return qlua.rpc.GetClassInfo.Args.newBuilder()
                 .setClassCode( args.getClassCode() )
                 .build();
     }

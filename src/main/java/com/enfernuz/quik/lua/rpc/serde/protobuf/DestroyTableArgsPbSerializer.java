@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.DestroyTable;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum DestroyTableArgsPbSerializer implements Serializer<DestroyTable.Args>, ToPbConverter<DestroyTable.Args, qlua.rpc.DestroyTable.Request> {
+enum DestroyTableArgsPbSerializer implements Serializer<DestroyTable.Args>, ToPbConverter<DestroyTable.Args, qlua.rpc.DestroyTable.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum DestroyTableArgsPbSerializer implements Serializer<DestroyTable.Args>, ToPb
     }
 
     @Override
-    public @NotNull qlua.rpc.DestroyTable.Request convert(@NotNull final DestroyTable.Args args) {
+    public @NotNull qlua.rpc.DestroyTable.Args convert(@NotNull final DestroyTable.Args args) {
 
-        return qlua.rpc.DestroyTable.Request.newBuilder()
+        return qlua.rpc.DestroyTable.Args.newBuilder()
                 .setTId( args.getTId() )
                 .build();
     }

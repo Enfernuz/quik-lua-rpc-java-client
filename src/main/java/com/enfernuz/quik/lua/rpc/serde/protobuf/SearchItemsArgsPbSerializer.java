@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.SearchItems;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum SearchItemsArgsPbSerializer implements Serializer<SearchItems.Args>, ToPbConverter<SearchItems.Args, qlua.rpc.SearchItems.Request> {
+enum SearchItemsArgsPbSerializer implements Serializer<SearchItems.Args>, ToPbConverter<SearchItems.Args, qlua.rpc.SearchItems.Args> {
 
     INSTANCE;
 
@@ -14,10 +14,10 @@ enum SearchItemsArgsPbSerializer implements Serializer<SearchItems.Args>, ToPbCo
     }
 
     @Override
-    public @NotNull qlua.rpc.SearchItems.Request convert(@NotNull final SearchItems.Args args) {
+    public @NotNull qlua.rpc.SearchItems.Args convert(@NotNull final SearchItems.Args args) {
 
-        final qlua.rpc.SearchItems.Request.Builder result =
-                qlua.rpc.SearchItems.Request.newBuilder()
+        final qlua.rpc.SearchItems.Args.Builder result =
+                qlua.rpc.SearchItems.Args.newBuilder()
                         .setTableName( args.getTableName() )
                         .setStartIndex( args.getStartIndex() )
                         .setFnDef( args.getFnDef() );

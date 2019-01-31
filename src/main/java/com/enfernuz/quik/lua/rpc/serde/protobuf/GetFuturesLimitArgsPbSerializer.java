@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetFuturesLimit;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum GetFuturesLimitArgsPbSerializer implements Serializer<GetFuturesLimit.Args>, ToPbConverter< GetFuturesLimit.Args, qlua.rpc.GetFuturesLimit.Request> {
+enum GetFuturesLimitArgsPbSerializer implements Serializer<GetFuturesLimit.Args>, ToPbConverter< GetFuturesLimit.Args, qlua.rpc.GetFuturesLimit.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum GetFuturesLimitArgsPbSerializer implements Serializer<GetFuturesLimit.Args>
     }
 
     @Override
-    public @NotNull qlua.rpc.GetFuturesLimit.Request convert(@NotNull final GetFuturesLimit.Args args) {
+    public @NotNull qlua.rpc.GetFuturesLimit.Args convert(@NotNull final GetFuturesLimit.Args args) {
 
-        return qlua.rpc.GetFuturesLimit.Request.newBuilder()
+        return qlua.rpc.GetFuturesLimit.Args.newBuilder()
                 .setFirmid( args.getFirmId() )
                 .setTrdaccid( args.getTrdAccId() )
                 .setLimitType( args.getLimitType() )

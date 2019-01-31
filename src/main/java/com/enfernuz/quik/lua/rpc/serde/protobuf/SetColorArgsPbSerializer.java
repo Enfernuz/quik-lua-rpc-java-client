@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.SetColor;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum SetColorArgsPbSerializer implements Serializer<SetColor.Args>, ToPbConverter<SetColor.Args, qlua.rpc.SetColor.Request> {
+enum SetColorArgsPbSerializer implements Serializer<SetColor.Args>, ToPbConverter<SetColor.Args, qlua.rpc.SetColor.Args> {
 
     INSTANCE;
 
@@ -16,9 +16,9 @@ enum SetColorArgsPbSerializer implements Serializer<SetColor.Args>, ToPbConverte
 
     @NotNull
     @Override
-    public qlua.rpc.SetColor.Request convert(@NotNull final SetColor.Args args) {
+    public qlua.rpc.SetColor.Args convert(@NotNull final SetColor.Args args) {
 
-        return qlua.rpc.SetColor.Request.newBuilder()
+        return qlua.rpc.SetColor.Args.newBuilder()
                 .setTId( args.getTId() )
                 .setRow( args.getRow() )
                 .setCol( args.getCol() )

@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.InsertRow;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum InsertRowArgsPbSerializer implements Serializer<InsertRow.Args>, ToPbConverter<InsertRow.Args, qlua.rpc.InsertRow.Request> {
+enum InsertRowArgsPbSerializer implements Serializer<InsertRow.Args>, ToPbConverter<InsertRow.Args, qlua.rpc.InsertRow.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum InsertRowArgsPbSerializer implements Serializer<InsertRow.Args>, ToPbConver
     }
 
     @Override
-    public @NotNull qlua.rpc.InsertRow.Request convert(@NotNull final InsertRow.Args args) {
+    public @NotNull qlua.rpc.InsertRow.Args convert(@NotNull final InsertRow.Args args) {
 
-        return qlua.rpc.InsertRow.Request.newBuilder()
+        return qlua.rpc.InsertRow.Args.newBuilder()
                 .setTId( args.getTId() )
                 .setKey( args.getKey() )
                 .build();

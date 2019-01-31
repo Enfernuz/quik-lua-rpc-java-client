@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetParamEx2;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum GetParamEx2ArgsPbSerializer implements Serializer<GetParamEx2.Args>, ToPbConverter<GetParamEx2.Args, qlua.rpc.GetParamEx2.Request> {
+enum GetParamEx2ArgsPbSerializer implements Serializer<GetParamEx2.Args>, ToPbConverter<GetParamEx2.Args, qlua.rpc.GetParamEx2.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum GetParamEx2ArgsPbSerializer implements Serializer<GetParamEx2.Args>, ToPbCo
     }
 
     @Override
-    public @NotNull qlua.rpc.GetParamEx2.Request convert(@NotNull final GetParamEx2.Args args) {
+    public @NotNull qlua.rpc.GetParamEx2.Args convert(@NotNull final GetParamEx2.Args args) {
 
-        return qlua.rpc.GetParamEx2.Request.newBuilder()
+        return qlua.rpc.GetParamEx2.Args.newBuilder()
                 .setClassCode( args.getClassCode() )
                 .setSecCode( args.getSecCode() )
                 .setParamName( args.getParamName() )

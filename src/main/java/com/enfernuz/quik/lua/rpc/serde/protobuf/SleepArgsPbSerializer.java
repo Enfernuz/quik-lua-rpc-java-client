@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.Sleep;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum SleepArgsPbSerializer implements Serializer<Sleep.Args>, ToPbConverter<Sleep.Args, qlua.rpc.Sleep.Request> {
+enum SleepArgsPbSerializer implements Serializer<Sleep.Args>, ToPbConverter<Sleep.Args, qlua.rpc.Sleep.Args> {
 
     INSTANCE;
 
@@ -16,9 +16,9 @@ enum SleepArgsPbSerializer implements Serializer<Sleep.Args>, ToPbConverter<Slee
 
     @NotNull
     @Override
-    public qlua.rpc.Sleep.Request convert(@NotNull final Sleep.Args args) {
+    public qlua.rpc.Sleep.Args convert(@NotNull final Sleep.Args args) {
 
-        return qlua.rpc.Sleep.Request.newBuilder()
+        return qlua.rpc.Sleep.Args.newBuilder()
                 .setTime( args.getTime() )
                 .build();
     }

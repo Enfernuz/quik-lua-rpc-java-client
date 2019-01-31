@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.DelLabel;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-enum DelLabelArgsPbSerializer implements Serializer<DelLabel.Args>, ToPbConverter<DelLabel.Args, qlua.rpc.DelLabel.Request> {
+enum DelLabelArgsPbSerializer implements Serializer<DelLabel.Args>, ToPbConverter<DelLabel.Args, qlua.rpc.DelLabel.Args> {
 
     INSTANCE;
 
@@ -14,9 +14,9 @@ enum DelLabelArgsPbSerializer implements Serializer<DelLabel.Args>, ToPbConverte
     }
 
     @Override
-    public @NotNull qlua.rpc.DelLabel.Request convert(@NotNull final DelLabel.Args args) {
+    public @NotNull qlua.rpc.DelLabel.Args convert(@NotNull final DelLabel.Args args) {
 
-        return qlua.rpc.DelLabel.Request.newBuilder()
+        return qlua.rpc.DelLabel.Args.newBuilder()
                 .setChartTag( args.getChartTag() )
                 .setLabelId( args.getLabelId() )
                 .build();
