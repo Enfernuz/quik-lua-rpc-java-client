@@ -1,0 +1,31 @@
+{
+  "trade_num" : 123456789012345,
+  "flags" : 2,
+  "price" : "3",
+  "qty" : 4,
+  "value" : "5",
+  "accruedint" : "6",
+  "yield" : "7",
+  "settlecode" : "8",
+  "reporate" : "9",
+  "repovalue" : "10",
+  "repo2value" : "11",
+  "repoterm" : "12",
+  "sec_code" : "13",
+  "class_code" : "14",
+  "datetime" : {
+    "mcs" : 1,
+    "ms" : 2,
+    "sec" : 3,
+    "min" : 4,
+    "hour" : 5,
+    "day" : 6,
+    "week_day" : 7,
+    "month" : 8,
+    "year" : 9
+  },
+  "period" : 16,
+  "open_interest" : "17",
+  "exchange_code" : "18",
+  "exec_market": "19"
+}

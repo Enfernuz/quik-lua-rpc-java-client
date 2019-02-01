@@ -1,0 +1,11 @@
+{
+  "money" : {
+    "money_open_limit" : "1",
+    "money_limit_locked_nonmarginal_value" : "2",
+    "money_limit_locked" : "3",
+    "money_open_balance" : "4",
+    "money_current_limit" : "5",
+    "money_current_balance" : "6",
+    "money_limit_available" : "7"
+  }
+}

@@ -1,0 +1,97 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/Enfernuz/quik-lua-rpc-java-client/schema_client-config.json",
+    "title": "Схема конфигурации клиента QLua RPC-сервиса",
+    "description": "Конфигурация клиента QLua RPC-сервиса",
+    "type": "object",
+    "properties": {
+        "address": {
+            "description": "Адрес точки подключения к QLua RPC-сервису",
+            "type": "object",
+            "properties": {
+                "host": {
+                    "description": "IP-адрес/хост точки подключения к QLua RPC-сервису",
+                    "type": "string",
+                    "minLength": 1
+                },
+                "port": {
+                    "description": "Номер порта точки подключения к QLua RPC-сервису",
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 65535
+                }
+            },
+            "required": ["host", "port"]
+        },
+        "serde_protocol": {
+            "description": "Протокол сериализации/десериализации сообщений",
+            "type": "string",
+            "pattern": "protobuf|json"
+        },
+        "auth": {
+            "description": "Информация об используемом механизме аутентификации соединения",
+            "type": "object",
+            "properties": {
+                "mechanism": {
+                    "description": "Тип механизма аутентификации ZeroMQ",
+                    "type": "string",
+                    "pattern": "NULL|PLAIN|CURVE"
+                },
+                "plain": {
+                    "description": "Информация о простом механизме аутентификации соединения (пара 'пользователь/пароль')",
+                    "type": "object",
+                    "properties": {
+                        "username": {
+                            "description": "Пользователь",
+                            "type": "string",
+                            "minLength": 1
+                        },
+                        "password": {
+                            "description": "Пароль",
+                            "type": "string"
+                        }
+                    },
+                    "required": ["username", "password"]
+                },
+                "curve": {
+                    "description": "Информация о механизме аутентификации соединения с использованием шифрования",
+                    "type": "object",
+                    "properties": {
+                        "client": {
+                            "description": "Ключевая пара клиента",
+                            "type": "object",
+                            "properties": {
+                                "public": {
+                                    "description": "Публичный CURVE-ключ клиента в формате Z85",
+                                    "type": "string",
+                                    "pattern": "^[0-9a-zA-Z.\\-:+=^!/*?&<>()\\[\\]{\\}@%$#]{40}$"
+                                },
+                                "secret": {
+                                    "description": "Приватный CURVE-ключ клиента в формате Z85",
+                                    "type": "string",
+                                    "pattern": "^[0-9a-zA-Z.\\-:+=^!/*?&<>()\\[\\]{\\}@%$#]{40}$"
+                                }
+                            },
+                            "required": ["public", "secret"]
+                        },
+                        "server": {
+                            "description": "Информация о CURVE-ключе точки подключения",
+                            "type": "object",
+                            "properties": {
+                                "public": {
+                                    "description": "Публичный CURVE-ключ точки подключения в формате Z85",
+                                    "type": "string",
+                                    "pattern": "^[0-9a-zA-Z.\\-:+=^!/*?&<>()\\[\\]{\\}@%$#]{40}$"
+                                }
+                            },
+                            "required": ["public"]
+                        }
+                    },
+                    "required": ["client", "server"]
+                }
+            },
+            "required": ["mechanism"]
+        }
+    },
+    "required": ["address", "serde_protocol", "auth"]
+}

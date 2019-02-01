@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%date %-5level [%thread] %20logger - %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="QLUA_EVENTS_FILE" class="ch.qos.logback.core.FileAppender">
+        <file>./logs/qlua-events.log</file>
+
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%date %-5level [%thread] %20logger - %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="APP_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./logs/app.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>app-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>25MB</maxFileSize>
+        </rollingPolicy>
+
+
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%date %-5level [%thread] %20logger - %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="APP_LOG"/>
+    </root>
+
+    <logger name="qlua-events" level="INFO" additivity="false">
+        <appender-ref ref="QLUA_EVENTS_FILE"/>
+    </logger>
+</configuration>
+

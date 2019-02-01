@@ -1,22 +1,21 @@
 package com.enfernuz.quik.lua.rpc.application;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.zeromq.ZMQ;
 
+@Slf4j
 public class CurveKeyPairGenerator {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(CurveKeyPairGenerator.class);
 
     public static void main(final String[] args) {
 
         try {
             final ZMQ.Curve.KeyPair keyPair = ZMQ.Curve.generateKeyPair();
-            System.out.println(
-                    String.format("Public key: \n%s\n\nSecret key: \n%s", keyPair.publicKey, keyPair.secretKey)
-            );
+            final String msg =
+                    String.format("Public key: \n%s\n\nSecret key: \n%s", keyPair.publicKey, keyPair.secretKey);
+            System.out.println(msg);
+            log.info(msg);
         } catch (final RuntimeException ex) {
-            LOGGER.error("Ошибка при попытке сгенерировать ключевую пару CURVE.", ex);
+            log.error("Ошибка при попытке сгенерировать ключевую пару CURVE.", ex);
         }
     }
 }

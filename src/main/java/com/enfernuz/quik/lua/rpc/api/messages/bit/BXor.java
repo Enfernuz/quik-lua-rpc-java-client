@@ -1,0 +1,90 @@
+package com.enfernuz.quik.lua.rpc.api.messages.bit;
+
+import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
+import com.enfernuz.quik.lua.rpc.api.RpcArgs;
+import com.enfernuz.quik.lua.rpc.api.RpcResult;
+import com.fasterxml.jackson.annotation.*;
+import com.google.common.base.MoreObjects;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Value;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Arrays;
+
+public final class BXor implements RemoteProcedure {
+
+    private BXor() {}
+
+    @JsonPropertyOrder({Args.X_1, Args.X_2, Args.X_I})
+    @EqualsAndHashCode
+    public static final class Args implements RpcArgs<BXor> {
+
+        private static final String X_1 = "x1";
+        private static final String X_2 = "x2";
+        private static final String X_I = "xi";
+
+        @JsonProperty(X_1)
+        private final int x1;
+
+        @JsonProperty(X_2)
+        private final int x2;
+
+        @JsonProperty(X_I)
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        private final int[] xi;
+
+        @Builder
+        private Args(final int x1, final int x2, final int[] xi) {
+            this.x1 = x1;
+            this.x2 = x2;
+            this.xi = (xi == null) ? null : xi.clone();
+        }
+
+        @JsonIgnore
+        public int getX1() {
+            return x1;
+        }
+
+        @JsonIgnore
+        public int getX2() {
+            return x2;
+        }
+
+        @JsonIgnore
+        public int[] getXi() {
+            return (xi == null) ? null : xi.clone();
+        }
+
+        @NotNull
+        @Override
+        public String toString() {
+            return MoreObjects.toStringHelper(this)
+                    .add(X_1, x1)
+                    .add(X_2, x2)
+                    .add(X_I, Arrays.toString(xi))
+                    .toString();
+        }
+    }
+
+    @Value
+    public static class Result implements RpcResult<BXor> {
+
+        private static final String RESULT = "result";
+
+        int result;
+
+        @JsonCreator
+        public Result(final @JsonProperty(value = RESULT, required = true) int result) {
+            this.result = result;
+        }
+
+        @NotNull
+        @Override
+        public String toString() {
+            return MoreObjects.toStringHelper(this)
+                    .add(RESULT, result)
+                    .toString();
+        }
+    }
+}

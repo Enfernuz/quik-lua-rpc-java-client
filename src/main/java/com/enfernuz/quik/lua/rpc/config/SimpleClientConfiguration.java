@@ -3,20 +3,21 @@ package com.enfernuz.quik.lua.rpc.config;
 import com.enfernuz.quik.lua.rpc.api.security.zmq.AuthContext;
 import com.enfernuz.quik.lua.rpc.io.transport.NetworkAddress;
 import com.google.common.base.MoreObjects;
-
-import java.util.Objects;
-
-import static java.util.Objects.requireNonNull;
+import lombok.NonNull;
+import lombok.Value;
 
 /**
  * Базовая реализация конфигурации клиента RPC-сервиса <b>quik-lua-rpc</b>.
  *
  * @see <a href="https://github.com/Enfernuz/quik-lua-rpc">quik-lua-rpc</a>
  */
-final class SimpleClientConfiguration implements ClientConfiguration {
 
-    private final NetworkAddress networkAddress;
-    private final AuthContext authContext;
+@Value
+class SimpleClientConfiguration implements ClientConfiguration {
+
+    @NonNull NetworkAddress networkAddress;
+    @NonNull AuthContext authContext;
+    @NonNull SerdeProtocol serdeProtocol;
 
     /**
      * Создаёт новый экземпляр базовая реализации конфигурации клиента RPC-сервиса <b>quik-lua-rpc</b> с точкой
@@ -24,39 +25,16 @@ final class SimpleClientConfiguration implements ClientConfiguration {
      *
      * @param networkAddress  сетевой адрес точки подключения RPC-сервиса на стороне терминала QUIK
      * @param authContext  контекст защиты передачи данных
+     * @param serdeProtocol  прокол сериализации/десериализации сообщений
      */
-    public SimpleClientConfiguration(final NetworkAddress networkAddress, final AuthContext authContext) {
-        this.networkAddress = requireNonNull(networkAddress, "The argument \"networkAddress\" must not be null.");
-        this.authContext = requireNonNull(authContext, "The argument \"authContext\" must not be null.");
-    }
+    public SimpleClientConfiguration(
+            final NetworkAddress networkAddress,
+            final AuthContext authContext,
+            final SerdeProtocol serdeProtocol) {
 
-    @Override
-    public NetworkAddress getNetworkAddress() {
-        return networkAddress;
-    }
-
-    @Override
-    public AuthContext getAuthContext() {
-        return authContext;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-
-        if (o == this) {
-            return true;
-        } else if ( !(o instanceof SimpleClientConfiguration) ) {
-            return false;
-        } else {
-            final SimpleClientConfiguration other = (SimpleClientConfiguration) o;
-            return Objects.equals(networkAddress, other.networkAddress)
-                    && Objects.equals(authContext, other.authContext);
-        }
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(networkAddress, authContext);
+        this.networkAddress = networkAddress;
+        this.authContext = authContext;
+        this.serdeProtocol = serdeProtocol;
     }
 
     @Override
@@ -64,6 +42,7 @@ final class SimpleClientConfiguration implements ClientConfiguration {
         return MoreObjects.toStringHelper(this)
                 .add("networkAddress", networkAddress)
                 .add("authContext", authContext)
+                .add("serdeProtocol", serdeProtocol)
                 .toString();
     }
 }

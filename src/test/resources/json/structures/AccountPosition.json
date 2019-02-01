@@ -1,0 +1,20 @@
+{
+  "firmid" : "1",
+  "currcode" : "2",
+  "tag" : "3",
+  "description" : "4",
+  "openbal" : "5",
+  "currentpos" : "6",
+  "plannedpos" : "7",
+  "limit1" : "8",
+  "limit2" : "9",
+  "orderbuy" : "10",
+  "ordersell" : "11",
+  "netto" : "12",
+  "plannedbal" : "13",
+  "debit" : "14",
+  "credit" : "15",
+  "bank_acc_id" : "16",
+  "margincall" : "17",
+  "settlebal" : "18"
+}

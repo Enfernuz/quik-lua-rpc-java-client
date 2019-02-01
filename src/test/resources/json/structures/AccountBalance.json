@@ -1,0 +1,17 @@
+{
+  "firmid" : "1",
+  "sec_code" : "2",
+  "trdaccid" : "3",
+  "depaccid" : "4",
+  "openbal" : "5",
+  "currentpos" : "6",
+  "plannedpossell" : "7",
+  "plannedposbuy" : "8",
+  "planbal" : "9",
+  "usqtyb" : "10",
+  "usqtys" : "11",
+  "planned" : "12",
+  "settlebal" : "13",
+  "bank_acc_id" : "14",
+  "firmuse" : 15
+}

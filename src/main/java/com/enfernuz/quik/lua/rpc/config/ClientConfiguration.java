@@ -23,4 +23,13 @@ public interface ClientConfiguration {
      * @return  контекст защиты передачи данных для точки подключения RPC-сервиса <b>quik-lua-rpc</b>
      */
     AuthContext getAuthContext();
+
+    /**
+     * Получает протокол сериализации/десериализации сообщений к/от RPC-сервису <b>quik-lua-rpc</b>.
+     *
+     * @return  протокол сериализации/десериализации сообщений к/от RPC-сервису <b>quik-lua-rpc</b>
+     */
+    SerdeProtocol getSerdeProtocol();
+
+    enum SerdeProtocol { JSON, PROTOBUF }
 }

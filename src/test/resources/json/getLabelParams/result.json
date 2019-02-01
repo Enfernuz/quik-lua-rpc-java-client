@@ -1,0 +1,9 @@
+{
+  "label_params" : {
+    "param_1" : "value_1",
+    "param_2" : "value_2",
+    "param_3" : "value_3",
+    "param_..." : "value_...",
+    "param_n" : "value_n"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "currcode": "1",
+  "tag": "2",
+  "firmid": "3",
+  "client_code": "4",
+  "openbal": "5",
+  "openlimit": "6",
+  "currentbal": "7",
+  "currentlimit": "8",
+  "locked": "9",
+  "locked_value_coef": "10",
+  "locked_margin_value": "11",
+  "leverage": "12",
+  "limit_kind": 13,
+  "wa_position_price": "14",
+  "orders_collateral": "15",
+  "positions_collateral": "16"
+}

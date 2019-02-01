@@ -1,0 +1,21 @@
+{
+  "futures_limit" : {
+    "firmid" : "1",
+    "trdaccid" : "2",
+    "limit_type" : 3,
+    "liquidity_coef" : "4",
+    "cbp_prev_limit" : "5",
+    "cbplimit" : "6",
+    "cbplused" : "7",
+    "cbplplanned" : "8",
+    "varmargin" : "9",
+    "accruedint" : "10",
+    "cbplused_for_orders" : "11",
+    "cbplused_for_positions" : "12",
+    "options_premium" : "13",
+    "ts_comission" : "14",
+    "kgo" : "15",
+    "currcode" : "16",
+    "real_varmargin" : "17"
+  }
+}
