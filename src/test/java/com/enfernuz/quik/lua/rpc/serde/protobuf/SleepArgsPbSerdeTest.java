@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.Sleep;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class SleepArgsPbSerdeTest extends AbstractPbSerializationTest<Sleep.Args, qlua.rpc.Sleep.Request> {
+public class SleepArgsPbSerdeTest extends AbstractPbSerializationTest<Sleep.Args, qlua.rpc.Sleep.Args> {
 
     private static final int TIME = 1;
 
@@ -15,9 +15,9 @@ public class SleepArgsPbSerdeTest extends AbstractPbSerializationTest<Sleep.Args
 
     @NotNull
     @Override
-    public qlua.rpc.Sleep.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.Sleep.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.Sleep.Request.newBuilder()
+        return qlua.rpc.Sleep.Args.newBuilder()
                 .setTime(TIME)
                 .build();
     }

@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.datasource.O;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class DatasourceOArgsPbSerdeTest extends AbstractPbSerializationTest<O.Args, qlua.rpc.datasource.O.Request> {
+public class DatasourceOArgsPbSerdeTest extends AbstractPbSerializationTest<O.Args, qlua.rpc.datasource.O.Args> {
 
     private static final String DATASOURCE_UUID = "1";
     private static final int CANDLE_INDEX = 2;
@@ -16,9 +16,9 @@ public class DatasourceOArgsPbSerdeTest extends AbstractPbSerializationTest<O.Ar
 
     @NotNull
     @Override
-    public qlua.rpc.datasource.O.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.datasource.O.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.datasource.O.Request.newBuilder()
+        return qlua.rpc.datasource.O.Args.newBuilder()
                 .setDatasourceUuid(DATASOURCE_UUID)
                 .setCandleIndex(CANDLE_INDEX)
                 .build();

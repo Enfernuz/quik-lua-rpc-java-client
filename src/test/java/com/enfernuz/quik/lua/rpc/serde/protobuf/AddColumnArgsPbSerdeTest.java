@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.AddColumn;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class AddColumnArgsPbSerdeTest extends AbstractPbSerializationTest<AddColumn.Args, qlua.rpc.AddColumn.Request> {
+public class AddColumnArgsPbSerdeTest extends AbstractPbSerializationTest<AddColumn.Args, qlua.rpc.AddColumn.Args> {
 
     private static final int T_ID = 1;
     private static final int I_CODE = 2;
@@ -21,9 +21,9 @@ public class AddColumnArgsPbSerdeTest extends AbstractPbSerializationTest<AddCol
 
     @NotNull
     @Override
-    public qlua.rpc.AddColumn.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.AddColumn.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.AddColumn.Request.newBuilder()
+        return qlua.rpc.AddColumn.Args.newBuilder()
                 .setTId(T_ID)
                 .setIcode(I_CODE)
                 .setName(NAME)

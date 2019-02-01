@@ -15,7 +15,7 @@ public class DatasourceCreateDataSourceArgsPbSerdeTest  {
     private static final String PARAM = "4";
 
     public static class FullArgsDatasourceCreateDataSourceArgsPbSerdeTest
-            extends AbstractPbSerializationTest<CreateDataSource.Args, qlua.rpc.datasource.CreateDataSource.Request> {
+            extends AbstractPbSerializationTest<CreateDataSource.Args, qlua.rpc.datasource.CreateDataSource.Args> {
 
         @Override
         public @NotNull Serializer<CreateDataSource.Args> getSerializerUnderTest() {
@@ -24,9 +24,9 @@ public class DatasourceCreateDataSourceArgsPbSerdeTest  {
 
         @NotNull
         @Override
-        public qlua.rpc.datasource.CreateDataSource.Request getTargetObjectAsPbMessage() {
+        public qlua.rpc.datasource.CreateDataSource.Args getTargetObjectAsPbMessage() {
 
-            return qlua.rpc.datasource.CreateDataSource.Request.newBuilder()
+            return qlua.rpc.datasource.CreateDataSource.Args.newBuilder()
                     .setClassCode(CLASS_CODE)
                     .setSecCode(SEC_CODE)
                     .setInterval(qlua.rpc.datasource.CreateDataSource.Interval.INTERVAL_H1)
@@ -48,7 +48,7 @@ public class DatasourceCreateDataSourceArgsPbSerdeTest  {
     }
 
     public static class WithoutParamArgDatasourceCreateDataSourceArgsPbSerdeTest
-            extends AbstractPbSerializationTest<CreateDataSource.Args, qlua.rpc.datasource.CreateDataSource.Request> {
+            extends AbstractPbSerializationTest<CreateDataSource.Args, qlua.rpc.datasource.CreateDataSource.Args> {
 
         @Override
         public @NotNull Serializer<CreateDataSource.Args> getSerializerUnderTest() {
@@ -57,9 +57,9 @@ public class DatasourceCreateDataSourceArgsPbSerdeTest  {
 
         @NotNull
         @Override
-        public qlua.rpc.datasource.CreateDataSource.Request getTargetObjectAsPbMessage() {
+        public qlua.rpc.datasource.CreateDataSource.Args getTargetObjectAsPbMessage() {
 
-            return qlua.rpc.datasource.CreateDataSource.Request.newBuilder()
+            return qlua.rpc.datasource.CreateDataSource.Args.newBuilder()
                     .setClassCode(CLASS_CODE)
                     .setSecCode(SEC_CODE)
                     .setInterval(qlua.rpc.datasource.CreateDataSource.Interval.INTERVAL_H1)

@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetClassInfo;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class GetClassInfoArgsPbSerdeTest extends AbstractPbSerializationTest<GetClassInfo.Args, qlua.rpc.GetClassInfo.Request> {
+public class GetClassInfoArgsPbSerdeTest extends AbstractPbSerializationTest<GetClassInfo.Args, qlua.rpc.GetClassInfo.Args> {
 
     private static final String CLASS_CODE = "1";
 
@@ -15,9 +15,9 @@ public class GetClassInfoArgsPbSerdeTest extends AbstractPbSerializationTest<Get
 
     @NotNull
     @Override
-    public qlua.rpc.GetClassInfo.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.GetClassInfo.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.GetClassInfo.Request.newBuilder()
+        return qlua.rpc.GetClassInfo.Args.newBuilder()
                 .setClassCode(CLASS_CODE)
                 .build();
     }

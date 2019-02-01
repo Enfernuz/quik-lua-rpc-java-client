@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetBuySellInfoEx;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class GetBuySellInfoExArgsPbSerdeTest extends AbstractPbSerializationTest<GetBuySellInfoEx.Args, qlua.rpc.GetBuySellInfoEx.Request> {
+public class GetBuySellInfoExArgsPbSerdeTest extends AbstractPbSerializationTest<GetBuySellInfoEx.Args, qlua.rpc.GetBuySellInfoEx.Args> {
 
     private static final String FIRM_ID = "1";
     private static final String CLIENT_CODE = "2";
@@ -19,9 +19,9 @@ public class GetBuySellInfoExArgsPbSerdeTest extends AbstractPbSerializationTest
 
     @NotNull
     @Override
-    public qlua.rpc.GetBuySellInfoEx.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.GetBuySellInfoEx.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.GetBuySellInfoEx.Request.newBuilder()
+        return qlua.rpc.GetBuySellInfoEx.Args.newBuilder()
                 .setFirmId(FIRM_ID)
                 .setClientCode(CLIENT_CODE)
                 .setClassCode(CLASS_CODE)

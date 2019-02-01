@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 @RunWith(Enclosed.class)
 public class MessageArgsPbSerdeTest {
 
-    public static class FullMessageArgsPbSerdeTest extends AbstractPbSerializationTest<Message.Args, qlua.rpc.Message.Request> {
+    public static class FullMessageArgsPbSerdeTest extends AbstractPbSerializationTest<Message.Args, qlua.rpc.Message.Args> {
 
         private static final String MESSAGE = "1";
         private static final Message.IconType ICON_TYPE = Message.IconType.WARNING;
@@ -22,9 +22,9 @@ public class MessageArgsPbSerdeTest {
 
         @NotNull
         @Override
-        public qlua.rpc.Message.Request getTargetObjectAsPbMessage() {
+        public qlua.rpc.Message.Args getTargetObjectAsPbMessage() {
 
-            return qlua.rpc.Message.Request.newBuilder()
+            return qlua.rpc.Message.Args.newBuilder()
                     .setMessage(MESSAGE)
                     .setIconType(PB_ICON_TYPE)
                     .build();
@@ -37,7 +37,7 @@ public class MessageArgsPbSerdeTest {
         }
     }
 
-    public static class WithoutIconTypeMessageArgsPbSerdeTest extends AbstractPbSerializationTest<Message.Args, qlua.rpc.Message.Request> {
+    public static class WithoutIconTypeMessageArgsPbSerdeTest extends AbstractPbSerializationTest<Message.Args, qlua.rpc.Message.Args> {
 
         private static final String MESSAGE = "1";
 
@@ -48,9 +48,9 @@ public class MessageArgsPbSerdeTest {
 
         @NotNull
         @Override
-        public qlua.rpc.Message.Request getTargetObjectAsPbMessage() {
+        public qlua.rpc.Message.Args getTargetObjectAsPbMessage() {
 
-            return qlua.rpc.Message.Request.newBuilder()
+            return qlua.rpc.Message.Args.newBuilder()
                     .setMessage(MESSAGE)
                     .build();
         }

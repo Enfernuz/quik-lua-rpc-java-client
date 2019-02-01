@@ -4,7 +4,9 @@ import com.enfernuz.quik.lua.rpc.api.messages.SetCell;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class SetCellArgsPbSerdeTest extends AbstractPbSerializationTest<SetCell.Args, qlua.rpc.SetCell.Request> {
+import java.math.BigDecimal;
+
+public class SetCellArgsPbSerdeTest extends AbstractPbSerializationTest<SetCell.Args, qlua.rpc.SetCell.Args> {
 
     private static final int T_ID = 1;
     private static final int KEY = 2;
@@ -19,14 +21,14 @@ public class SetCellArgsPbSerdeTest extends AbstractPbSerializationTest<SetCell.
 
     @NotNull
     @Override
-    public qlua.rpc.SetCell.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.SetCell.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.SetCell.Request.newBuilder()
+        return qlua.rpc.SetCell.Args.newBuilder()
                 .setTId(T_ID)
                 .setKey(KEY)
                 .setCode(CODE)
                 .setText(TEXT)
-                .setValue(VALUE)
+                .setValue( BigDecimal.valueOf(VALUE).toPlainString() )
                 .build();
     }
 

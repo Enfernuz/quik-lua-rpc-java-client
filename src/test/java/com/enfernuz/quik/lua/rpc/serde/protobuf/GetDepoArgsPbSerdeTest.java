@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetDepo;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class GetDepoArgsPbSerdeTest extends AbstractPbSerializationTest<GetDepo.Args, qlua.rpc.GetDepo.Request> {
+public class GetDepoArgsPbSerdeTest extends AbstractPbSerializationTest<GetDepo.Args, qlua.rpc.GetDepo.Args> {
 
     private static final String CLIENT_CODE = "1";
     private static final String FIRM_ID = "2";
@@ -18,9 +18,9 @@ public class GetDepoArgsPbSerdeTest extends AbstractPbSerializationTest<GetDepo.
 
     @NotNull
     @Override
-    public qlua.rpc.GetDepo.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.GetDepo.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.GetDepo.Request.newBuilder()
+        return qlua.rpc.GetDepo.Args.newBuilder()
                 .setFirmid(FIRM_ID)
                 .setClientCode(CLIENT_CODE)
                 .setSecCode(SEC_CODE)

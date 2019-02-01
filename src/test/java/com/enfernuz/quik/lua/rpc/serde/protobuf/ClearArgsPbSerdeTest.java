@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.Clear;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class ClearArgsPbSerdeTest extends AbstractPbSerializationTest<Clear.Args, qlua.rpc.Clear.Request> {
+public class ClearArgsPbSerdeTest extends AbstractPbSerializationTest<Clear.Args, qlua.rpc.Clear.Args> {
 
     private static final int T_ID = 1;
 
@@ -15,9 +15,9 @@ public class ClearArgsPbSerdeTest extends AbstractPbSerializationTest<Clear.Args
 
     @NotNull
     @Override
-    public qlua.rpc.Clear.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.Clear.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.Clear.Request.newBuilder()
+        return qlua.rpc.Clear.Args.newBuilder()
                 .setTId(T_ID)
                 .build();
     }

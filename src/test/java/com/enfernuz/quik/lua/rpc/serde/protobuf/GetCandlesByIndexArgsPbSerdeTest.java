@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetCandlesByIndex;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class GetCandlesByIndexArgsPbSerdeTest extends AbstractPbSerializationTest<GetCandlesByIndex.Args, qlua.rpc.GetCandlesByIndex.Request> {
+public class GetCandlesByIndexArgsPbSerdeTest extends AbstractPbSerializationTest<GetCandlesByIndex.Args, qlua.rpc.GetCandlesByIndex.Args> {
 
     private static final String TAG = "1";
     private static final int LINE = 2;
@@ -18,9 +18,9 @@ public class GetCandlesByIndexArgsPbSerdeTest extends AbstractPbSerializationTes
 
     @NotNull
     @Override
-    public qlua.rpc.GetCandlesByIndex.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.GetCandlesByIndex.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.GetCandlesByIndex.Request.newBuilder()
+        return qlua.rpc.GetCandlesByIndex.Args.newBuilder()
                 .setTag(TAG)
                 .setLine(LINE)
                 .setFirstCandle(FIRST_CANDLE)

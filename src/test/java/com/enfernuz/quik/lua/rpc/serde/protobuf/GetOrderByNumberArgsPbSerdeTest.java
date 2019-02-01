@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetOrderByNumber;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class GetOrderByNumberArgsPbSerdeTest extends AbstractPbSerializationTest<GetOrderByNumber.Args, qlua.rpc.GetOrderByNumber.Request> {
+public class GetOrderByNumberArgsPbSerdeTest extends AbstractPbSerializationTest<GetOrderByNumber.Args, qlua.rpc.GetOrderByNumber.Args> {
 
     private static final String CLASS_CODE = "1";
     private static final long ORDER_ID = 12345678910L;
@@ -16,9 +16,9 @@ public class GetOrderByNumberArgsPbSerdeTest extends AbstractPbSerializationTest
 
     @NotNull
     @Override
-    public qlua.rpc.GetOrderByNumber.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.GetOrderByNumber.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.GetOrderByNumber.Request.newBuilder()
+        return qlua.rpc.GetOrderByNumber.Args.newBuilder()
                 .setClassCode(CLASS_CODE)
                 .setOrderId(ORDER_ID)
                 .build();

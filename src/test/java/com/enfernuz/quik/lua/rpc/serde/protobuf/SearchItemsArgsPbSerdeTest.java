@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 @RunWith(Enclosed.class)
 public class SearchItemsArgsPbSerdeTest {
 
-    public static class FullSearchItemsArgsPbSerdeTest extends AbstractPbSerializationTest<SearchItems.Args, qlua.rpc.SearchItems.Request> {
+    public static class FullSearchItemsArgsPbSerdeTest extends AbstractPbSerializationTest<SearchItems.Args, qlua.rpc.SearchItems.Args> {
 
         private static final String TABLE_NAME = "1";
         private static final int START_INDEX = 2;
@@ -24,9 +24,9 @@ public class SearchItemsArgsPbSerdeTest {
 
         @NotNull
         @Override
-        public qlua.rpc.SearchItems.Request getTargetObjectAsPbMessage() {
+        public qlua.rpc.SearchItems.Args getTargetObjectAsPbMessage() {
 
-            return qlua.rpc.SearchItems.Request.newBuilder()
+            return qlua.rpc.SearchItems.Args.newBuilder()
                     .setTableName(TABLE_NAME)
                     .setStartIndex(START_INDEX)
                     .setValueEndIndex(END_INDEX)
@@ -49,7 +49,7 @@ public class SearchItemsArgsPbSerdeTest {
         }
     }
 
-    public static class WithoutEndIndexSearchItemsArgsPbSerdeTest extends AbstractPbSerializationTest<SearchItems.Args, qlua.rpc.SearchItems.Request> {
+    public static class WithoutEndIndexSearchItemsArgsPbSerdeTest extends AbstractPbSerializationTest<SearchItems.Args, qlua.rpc.SearchItems.Args> {
 
         private static final String TABLE_NAME = "1";
         private static final int START_INDEX = 2;
@@ -63,9 +63,9 @@ public class SearchItemsArgsPbSerdeTest {
 
         @NotNull
         @Override
-        public qlua.rpc.SearchItems.Request getTargetObjectAsPbMessage() {
+        public qlua.rpc.SearchItems.Args getTargetObjectAsPbMessage() {
 
-            return qlua.rpc.SearchItems.Request.newBuilder()
+            return qlua.rpc.SearchItems.Args.newBuilder()
                     .setTableName(TABLE_NAME)
                     .setStartIndex(START_INDEX)
                     .setNullEndIndex(true)
@@ -87,7 +87,7 @@ public class SearchItemsArgsPbSerdeTest {
         }
     }
 
-    public static class WithoutParamsSearchItemsArgsPbSerdeTest extends AbstractPbSerializationTest<SearchItems.Args, qlua.rpc.SearchItems.Request> {
+    public static class WithoutParamsSearchItemsArgsPbSerdeTest extends AbstractPbSerializationTest<SearchItems.Args, qlua.rpc.SearchItems.Args> {
 
         private static final String TABLE_NAME = "1";
         private static final int START_INDEX = 2;
@@ -101,9 +101,9 @@ public class SearchItemsArgsPbSerdeTest {
 
         @NotNull
         @Override
-        public qlua.rpc.SearchItems.Request getTargetObjectAsPbMessage() {
+        public qlua.rpc.SearchItems.Args getTargetObjectAsPbMessage() {
 
-            return qlua.rpc.SearchItems.Request.newBuilder()
+            return qlua.rpc.SearchItems.Args.newBuilder()
                     .setTableName(TABLE_NAME)
                     .setStartIndex(START_INDEX)
                     .setValueEndIndex(END_INDEX)

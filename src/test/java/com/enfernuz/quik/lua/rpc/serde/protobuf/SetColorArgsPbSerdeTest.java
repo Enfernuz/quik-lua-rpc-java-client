@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.SetColor;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class SetColorArgsPbSerdeTest extends AbstractPbSerializationTest<SetColor.Args, qlua.rpc.SetColor.Request> {
+public class SetColorArgsPbSerdeTest extends AbstractPbSerializationTest<SetColor.Args, qlua.rpc.SetColor.Args> {
 
     private static final int T_ID = 1;
     private static final int ROW = 2;
@@ -21,9 +21,9 @@ public class SetColorArgsPbSerdeTest extends AbstractPbSerializationTest<SetColo
 
     @NotNull
     @Override
-    public qlua.rpc.SetColor.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.SetColor.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.SetColor.Request.newBuilder()
+        return qlua.rpc.SetColor.Args.newBuilder()
                 .setTId(T_ID)
                 .setRow(ROW)
                 .setCol(COL)

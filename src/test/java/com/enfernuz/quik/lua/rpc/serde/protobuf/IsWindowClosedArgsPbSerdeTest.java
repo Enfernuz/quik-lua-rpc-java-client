@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.IsWindowClosed;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class IsWindowClosedArgsPbSerdeTest extends AbstractPbSerializationTest<IsWindowClosed.Args, qlua.rpc.IsWindowClosed.Request> {
+public class IsWindowClosedArgsPbSerdeTest extends AbstractPbSerializationTest<IsWindowClosed.Args, qlua.rpc.IsWindowClosed.Args> {
 
     private static final int T_ID = 1;
 
@@ -15,9 +15,9 @@ public class IsWindowClosedArgsPbSerdeTest extends AbstractPbSerializationTest<I
 
     @NotNull
     @Override
-    public qlua.rpc.IsWindowClosed.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.IsWindowClosed.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.IsWindowClosed.Request.newBuilder()
+        return qlua.rpc.IsWindowClosed.Args.newBuilder()
                 .setTId(T_ID)
                 .build();
     }

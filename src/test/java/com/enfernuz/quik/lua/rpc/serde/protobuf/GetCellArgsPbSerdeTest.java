@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetCell;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class GetCellArgsPbSerdeTest extends AbstractPbSerializationTest<GetCell.Args, qlua.rpc.GetCell.Request> {
+public class GetCellArgsPbSerdeTest extends AbstractPbSerializationTest<GetCell.Args, qlua.rpc.GetCell.Args> {
 
     private static final int T_ID = 1;
     private static final int KEY = 2;
@@ -17,9 +17,9 @@ public class GetCellArgsPbSerdeTest extends AbstractPbSerializationTest<GetCell.
 
     @NotNull
     @Override
-    public qlua.rpc.GetCell.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.GetCell.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.GetCell.Request.newBuilder()
+        return qlua.rpc.GetCell.Args.newBuilder()
                 .setTId(T_ID)
                 .setKey(KEY)
                 .setCode(CODE)

@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.PrintDbgStr;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class PrintDbgStrArgsPbSerdeTest extends AbstractPbSerializationTest<PrintDbgStr.Args, qlua.rpc.PrintDbgStr.Request> {
+public class PrintDbgStrArgsPbSerdeTest extends AbstractPbSerializationTest<PrintDbgStr.Args, qlua.rpc.PrintDbgStr.Args> {
 
     private static final String S = "1";
 
@@ -15,9 +15,9 @@ public class PrintDbgStrArgsPbSerdeTest extends AbstractPbSerializationTest<Prin
 
     @NotNull
     @Override
-    public qlua.rpc.PrintDbgStr.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.PrintDbgStr.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.PrintDbgStr.Request.newBuilder()
+        return qlua.rpc.PrintDbgStr.Args.newBuilder()
                 .setS(S)
                 .build();
     }

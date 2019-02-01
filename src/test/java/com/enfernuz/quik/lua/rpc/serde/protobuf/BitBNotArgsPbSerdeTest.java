@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.bit.BNot;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class BitBNotArgsPbSerdeTest extends AbstractPbSerializationTest<BNot.Args, qlua.rpc.bit.Bnot.Request> {
+public class BitBNotArgsPbSerdeTest extends AbstractPbSerializationTest<BNot.Args, qlua.rpc.bit.Bnot.Args> {
 
     private static final int X = 1;
 
@@ -15,9 +15,9 @@ public class BitBNotArgsPbSerdeTest extends AbstractPbSerializationTest<BNot.Arg
 
     @NotNull
     @Override
-    public qlua.rpc.bit.Bnot.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.bit.Bnot.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.bit.Bnot.Request.newBuilder()
+        return qlua.rpc.bit.Bnot.Args.newBuilder()
                 .setX(X)
                 .build();
     }

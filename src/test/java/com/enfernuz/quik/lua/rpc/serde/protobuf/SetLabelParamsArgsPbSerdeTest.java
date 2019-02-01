@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
-public class SetLabelParamsArgsPbSerdeTest extends AbstractPbSerializationTest<SetLabelParams.Args, qlua.rpc.SetLabelParams.Request> {
+public class SetLabelParamsArgsPbSerdeTest extends AbstractPbSerializationTest<SetLabelParams.Args, qlua.rpc.SetLabelParams.Args> {
 
     private static final String CHART_TAG = "1";
     private static final int LABEL_ID = 2;
@@ -24,9 +24,9 @@ public class SetLabelParamsArgsPbSerdeTest extends AbstractPbSerializationTest<S
 
     @NotNull
     @Override
-    public qlua.rpc.SetLabelParams.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.SetLabelParams.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.SetLabelParams.Request.newBuilder()
+        return qlua.rpc.SetLabelParams.Args.newBuilder()
                 .setChartTag(CHART_TAG)
                 .setLabelId(LABEL_ID)
                 .putAllLabelParams(LABEL_PARAMS)

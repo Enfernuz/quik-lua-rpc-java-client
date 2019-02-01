@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.DeleteRow;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class DeleteRowArgsPbSerdeTest extends AbstractPbSerializationTest<DeleteRow.Args, qlua.rpc.DeleteRow.Request> {
+public class DeleteRowArgsPbSerdeTest extends AbstractPbSerializationTest<DeleteRow.Args, qlua.rpc.DeleteRow.Args> {
 
     private static final int T_ID = 1;
     private static final int KEY = 2;
@@ -16,9 +16,9 @@ public class DeleteRowArgsPbSerdeTest extends AbstractPbSerializationTest<Delete
 
     @NotNull
     @Override
-    public qlua.rpc.DeleteRow.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.DeleteRow.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.DeleteRow.Request.newBuilder()
+        return qlua.rpc.DeleteRow.Args.newBuilder()
                 .setTId(T_ID)
                 .setKey(KEY)
                 .build();

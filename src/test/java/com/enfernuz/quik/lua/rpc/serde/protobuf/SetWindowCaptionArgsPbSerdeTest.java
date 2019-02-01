@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.SetWindowCaption;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class SetWindowCaptionArgsPbSerdeTest extends AbstractPbSerializationTest<SetWindowCaption.Args, qlua.rpc.SetWindowCaption.Request> {
+public class SetWindowCaptionArgsPbSerdeTest extends AbstractPbSerializationTest<SetWindowCaption.Args, qlua.rpc.SetWindowCaption.Args> {
 
     private static final int T_ID = 1;
     private static final String STR = "2";
@@ -16,9 +16,9 @@ public class SetWindowCaptionArgsPbSerdeTest extends AbstractPbSerializationTest
 
     @NotNull
     @Override
-    public qlua.rpc.SetWindowCaption.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.SetWindowCaption.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.SetWindowCaption.Request.newBuilder()
+        return qlua.rpc.SetWindowCaption.Args.newBuilder()
                 .setTId(T_ID)
                 .setStr(STR)
                 .build();

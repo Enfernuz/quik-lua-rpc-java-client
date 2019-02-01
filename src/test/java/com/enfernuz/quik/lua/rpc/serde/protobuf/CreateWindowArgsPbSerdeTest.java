@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.CreateWindow;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class CreateWindowArgsPbSerdeTest extends AbstractPbSerializationTest<CreateWindow.Args, qlua.rpc.CreateWindow.Request> {
+public class CreateWindowArgsPbSerdeTest extends AbstractPbSerializationTest<CreateWindow.Args, qlua.rpc.CreateWindow.Args> {
 
     private static final int T_ID = 1;
 
@@ -15,9 +15,9 @@ public class CreateWindowArgsPbSerdeTest extends AbstractPbSerializationTest<Cre
 
     @NotNull
     @Override
-    public qlua.rpc.CreateWindow.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.CreateWindow.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.CreateWindow.Request.newBuilder()
+        return qlua.rpc.CreateWindow.Args.newBuilder()
                 .setTId(T_ID)
                 .build();
     }

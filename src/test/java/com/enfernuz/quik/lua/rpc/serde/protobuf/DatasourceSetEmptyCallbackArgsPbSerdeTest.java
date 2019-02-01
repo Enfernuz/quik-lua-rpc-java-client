@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.datasource.SetEmptyCallback;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class DatasourceSetEmptyCallbackArgsPbSerdeTest extends AbstractPbSerializationTest<SetEmptyCallback.Args, qlua.rpc.datasource.SetEmptyCallback.Request> {
+public class DatasourceSetEmptyCallbackArgsPbSerdeTest extends AbstractPbSerializationTest<SetEmptyCallback.Args, qlua.rpc.datasource.SetEmptyCallback.Args> {
 
     private static final String DATASOURCE_UUID = "1";
 
@@ -15,9 +15,9 @@ public class DatasourceSetEmptyCallbackArgsPbSerdeTest extends AbstractPbSeriali
 
     @NotNull
     @Override
-    public qlua.rpc.datasource.SetEmptyCallback.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.datasource.SetEmptyCallback.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.datasource.SetEmptyCallback.Request.newBuilder()
+        return qlua.rpc.datasource.SetEmptyCallback.Args.newBuilder()
                 .setDatasourceUuid(DATASOURCE_UUID)
                 .build();
     }

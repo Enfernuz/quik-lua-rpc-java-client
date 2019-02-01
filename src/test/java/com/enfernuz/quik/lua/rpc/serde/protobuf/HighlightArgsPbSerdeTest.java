@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.Highlight;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class HighlightArgsPbSerdeTest extends AbstractPbSerializationTest<Highlight.Args, qlua.rpc.Highlight.Request> {
+public class HighlightArgsPbSerdeTest extends AbstractPbSerializationTest<Highlight.Args, qlua.rpc.Highlight.Args> {
 
     private static final int T_ID = 1;
     private static final int ROW = 2;
@@ -20,9 +20,9 @@ public class HighlightArgsPbSerdeTest extends AbstractPbSerializationTest<Highli
 
     @NotNull
     @Override
-    public qlua.rpc.Highlight.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.Highlight.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.Highlight.Request.newBuilder()
+        return qlua.rpc.Highlight.Args.newBuilder()
                 .setTId(T_ID)
                 .setRow(ROW)
                 .setCol(COL)

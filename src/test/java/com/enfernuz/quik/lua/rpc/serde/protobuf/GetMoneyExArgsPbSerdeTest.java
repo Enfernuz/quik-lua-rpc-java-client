@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetMoneyEx;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class GetMoneyExArgsPbSerdeTest extends AbstractPbSerializationTest<GetMoneyEx.Args, qlua.rpc.GetMoneyEx.Request> {
+public class GetMoneyExArgsPbSerdeTest extends AbstractPbSerializationTest<GetMoneyEx.Args, qlua.rpc.GetMoneyEx.Args> {
 
     private static final String FIRM_ID = "1";
     private static final String CLIENT_CODE = "2";
@@ -19,9 +19,9 @@ public class GetMoneyExArgsPbSerdeTest extends AbstractPbSerializationTest<GetMo
 
     @NotNull
     @Override
-    public qlua.rpc.GetMoneyEx.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.GetMoneyEx.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.GetMoneyEx.Request.newBuilder()
+        return qlua.rpc.GetMoneyEx.Args.newBuilder()
                 .setFirmid(FIRM_ID)
                 .setClientCode(CLIENT_CODE)
                 .setTag(TAG)

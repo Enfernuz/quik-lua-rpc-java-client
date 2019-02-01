@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetFuturesLimit;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class GetFuturesLimitArgsPbSerdeTest extends AbstractPbSerializationTest<GetFuturesLimit.Args, qlua.rpc.GetFuturesLimit.Request> {
+public class GetFuturesLimitArgsPbSerdeTest extends AbstractPbSerializationTest<GetFuturesLimit.Args, qlua.rpc.GetFuturesLimit.Args> {
 
     private static final String FIRM_ID = "1";
     private static final String TRD_ACC_ID = "2";
@@ -18,9 +18,9 @@ public class GetFuturesLimitArgsPbSerdeTest extends AbstractPbSerializationTest<
 
     @NotNull
     @Override
-    public qlua.rpc.GetFuturesLimit.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.GetFuturesLimit.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.GetFuturesLimit.Request.newBuilder()
+        return qlua.rpc.GetFuturesLimit.Args.newBuilder()
                 .setFirmid(FIRM_ID)
                 .setTrdaccid(TRD_ACC_ID)
                 .setLimitType(LIMIT_TYPE)

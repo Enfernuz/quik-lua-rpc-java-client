@@ -11,7 +11,7 @@ import java.util.Arrays;
 @RunWith(Enclosed.class)
 public class BitBAndArgsPbSerdeTest {
 
-    public static class FullArgsBitBAndArgsPbSerdeTest extends AbstractPbSerializationTest<BAnd.Args, qlua.rpc.bit.Band.Request> {
+    public static class FullArgsBitBAndArgsPbSerdeTest extends AbstractPbSerializationTest<BAnd.Args, qlua.rpc.bit.Band.Args> {
 
 
         private static final int X1 = 1;
@@ -25,9 +25,9 @@ public class BitBAndArgsPbSerdeTest {
 
         @NotNull
         @Override
-        public qlua.rpc.bit.Band.Request getTargetObjectAsPbMessage() {
+        public qlua.rpc.bit.Band.Args getTargetObjectAsPbMessage() {
 
-            return qlua.rpc.bit.Band.Request.newBuilder()
+            return qlua.rpc.bit.Band.Args.newBuilder()
                     .setX1(X1)
                     .setX2(X2)
                     .addAllXi( Arrays.asList(3, 4, 5) )
@@ -45,7 +45,7 @@ public class BitBAndArgsPbSerdeTest {
         }
     }
 
-    public static class WithoutXiBitBAndArgsPbSerdeTest extends AbstractPbSerializationTest<BAnd.Args, qlua.rpc.bit.Band.Request> {
+    public static class WithoutXiBitBAndArgsPbSerdeTest extends AbstractPbSerializationTest<BAnd.Args, qlua.rpc.bit.Band.Args> {
 
 
         private static final int X1 = 1;
@@ -58,9 +58,9 @@ public class BitBAndArgsPbSerdeTest {
 
         @NotNull
         @Override
-        public qlua.rpc.bit.Band.Request getTargetObjectAsPbMessage() {
+        public qlua.rpc.bit.Band.Args getTargetObjectAsPbMessage() {
 
-            return qlua.rpc.bit.Band.Request.newBuilder()
+            return qlua.rpc.bit.Band.Args.newBuilder()
                     .setX1(X1)
                     .setX2(X2)
                     .build();

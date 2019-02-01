@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.CancelParamRequest;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class CancelParamRequestArgsPbSerdeTest extends AbstractPbSerializationTest<CancelParamRequest.Args, qlua.rpc.CancelParamRequest.Request> {
+public class CancelParamRequestArgsPbSerdeTest extends AbstractPbSerializationTest<CancelParamRequest.Args, qlua.rpc.CancelParamRequest.Args> {
 
     private static final String CLASS_CODE = "1";
     private static final String SEC_CODE = "2";
@@ -17,9 +17,9 @@ public class CancelParamRequestArgsPbSerdeTest extends AbstractPbSerializationTe
 
     @NotNull
     @Override
-    public qlua.rpc.CancelParamRequest.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.CancelParamRequest.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.CancelParamRequest.Request.newBuilder()
+        return qlua.rpc.CancelParamRequest.Args.newBuilder()
                 .setClassCode(CLASS_CODE)
                 .setSecCode(SEC_CODE)
                 .setDbName(DB_NAME)

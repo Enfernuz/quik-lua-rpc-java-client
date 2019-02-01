@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.DestroyTable;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class DestroyTableArgsPbSerdeTest extends AbstractPbSerializationTest<DestroyTable.Args, qlua.rpc.DestroyTable.Request> {
+public class DestroyTableArgsPbSerdeTest extends AbstractPbSerializationTest<DestroyTable.Args, qlua.rpc.DestroyTable.Args> {
 
     private static final int T_ID = 1;
 
@@ -15,9 +15,9 @@ public class DestroyTableArgsPbSerdeTest extends AbstractPbSerializationTest<Des
 
     @NotNull
     @Override
-    public qlua.rpc.DestroyTable.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.DestroyTable.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.DestroyTable.Request.newBuilder()
+        return qlua.rpc.DestroyTable.Args.newBuilder()
                 .setTId(T_ID)
                 .build();
     }

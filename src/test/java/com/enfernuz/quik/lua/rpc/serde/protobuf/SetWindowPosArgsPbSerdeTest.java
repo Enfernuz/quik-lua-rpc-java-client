@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.SetWindowPos;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class SetWindowPosArgsPbSerdeTest extends AbstractPbSerializationTest<SetWindowPos.Args, qlua.rpc.SetWindowPos.Request> {
+public class SetWindowPosArgsPbSerdeTest extends AbstractPbSerializationTest<SetWindowPos.Args, qlua.rpc.SetWindowPos.Args> {
 
     private static final int T_ID = 1;
     private static final int X = 2;
@@ -19,9 +19,9 @@ public class SetWindowPosArgsPbSerdeTest extends AbstractPbSerializationTest<Set
 
     @NotNull
     @Override
-    public qlua.rpc.SetWindowPos.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.SetWindowPos.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.SetWindowPos.Request.newBuilder()
+        return qlua.rpc.SetWindowPos.Args.newBuilder()
                 .setTId(T_ID)
                 .setX(X)
                 .setY(Y)

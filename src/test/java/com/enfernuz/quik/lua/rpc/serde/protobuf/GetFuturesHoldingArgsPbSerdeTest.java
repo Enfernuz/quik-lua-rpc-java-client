@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetFuturesHolding;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class GetFuturesHoldingArgsPbSerdeTest extends AbstractPbSerializationTest<GetFuturesHolding.Args, qlua.rpc.GetFuturesHolding.Request> {
+public class GetFuturesHoldingArgsPbSerdeTest extends AbstractPbSerializationTest<GetFuturesHolding.Args, qlua.rpc.GetFuturesHolding.Args> {
 
     private static final String FIRM_ID = "1";
     private static final String TRD_ACC_ID = "2";
@@ -18,9 +18,9 @@ public class GetFuturesHoldingArgsPbSerdeTest extends AbstractPbSerializationTes
 
     @NotNull
     @Override
-    public qlua.rpc.GetFuturesHolding.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.GetFuturesHolding.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.GetFuturesHolding.Request.newBuilder()
+        return qlua.rpc.GetFuturesHolding.Args.newBuilder()
                 .setFirmid(FIRM_ID)
                 .setTrdaccid(TRD_ACC_ID)
                 .setSecCode(SEC_CODE)

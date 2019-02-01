@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.datasource.Size;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class DatasourceSizeArgsPbSerdeTest extends AbstractPbSerializationTest<Size.Args, qlua.rpc.datasource.Size.Request> {
+public class DatasourceSizeArgsPbSerdeTest extends AbstractPbSerializationTest<Size.Args, qlua.rpc.datasource.Size.Args> {
 
     private static final String DATASOURCE_UUID = "1";
 
@@ -15,9 +15,9 @@ public class DatasourceSizeArgsPbSerdeTest extends AbstractPbSerializationTest<S
 
     @NotNull
     @Override
-    public qlua.rpc.datasource.Size.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.datasource.Size.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.datasource.Size.Request.newBuilder()
+        return qlua.rpc.datasource.Size.Args.newBuilder()
                 .setDatasourceUuid(DATASOURCE_UUID)
                 .build();
     }

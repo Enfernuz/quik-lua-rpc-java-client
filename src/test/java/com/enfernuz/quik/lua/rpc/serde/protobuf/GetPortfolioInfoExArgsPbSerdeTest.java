@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetPortfolioInfoEx;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class GetPortfolioInfoExArgsPbSerdeTest extends AbstractPbSerializationTest<GetPortfolioInfoEx.Args, qlua.rpc.GetPortfolioInfoEx.Request> {
+public class GetPortfolioInfoExArgsPbSerdeTest extends AbstractPbSerializationTest<GetPortfolioInfoEx.Args, qlua.rpc.GetPortfolioInfoEx.Args> {
 
     private static final String FIRM_ID = "1";
     private static final String CLIENT_CODE = "2";
@@ -17,9 +17,9 @@ public class GetPortfolioInfoExArgsPbSerdeTest extends AbstractPbSerializationTe
 
     @NotNull
     @Override
-    public qlua.rpc.GetPortfolioInfoEx.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.GetPortfolioInfoEx.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.GetPortfolioInfoEx.Request.newBuilder()
+        return qlua.rpc.GetPortfolioInfoEx.Args.newBuilder()
                 .setFirmId(FIRM_ID)
                 .setClientCode(CLIENT_CODE)
                 .setLimitKind(LIMIT_KIND)

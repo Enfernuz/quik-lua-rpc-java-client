@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
-public class SendTransactionArgsPbSerdeTest extends AbstractPbSerializationTest<SendTransaction.Args, qlua.rpc.SendTransaction.Request> {
+public class SendTransactionArgsPbSerdeTest extends AbstractPbSerializationTest<SendTransaction.Args, qlua.rpc.SendTransaction.Args> {
 
     private static final Map<String, String> TRANSACTION = createTransaction();
 
@@ -18,9 +18,9 @@ public class SendTransactionArgsPbSerdeTest extends AbstractPbSerializationTest<
 
     @NotNull
     @Override
-    public qlua.rpc.SendTransaction.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.SendTransaction.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.SendTransaction.Request.newBuilder()
+        return qlua.rpc.SendTransaction.Args.newBuilder()
                 .putAllTransaction(TRANSACTION)
                 .build();
     }

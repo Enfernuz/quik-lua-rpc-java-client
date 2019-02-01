@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetLinesCount;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class GetLinesCountArgsPbSerdeTest extends AbstractPbSerializationTest<GetLinesCount.Args, qlua.rpc.GetLinesCount.Request> {
+public class GetLinesCountArgsPbSerdeTest extends AbstractPbSerializationTest<GetLinesCount.Args, qlua.rpc.GetLinesCount.Args> {
 
     private static final String TAG = "1";
 
@@ -15,9 +15,9 @@ public class GetLinesCountArgsPbSerdeTest extends AbstractPbSerializationTest<Ge
 
     @NotNull
     @Override
-    public qlua.rpc.GetLinesCount.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.GetLinesCount.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.GetLinesCount.Request.newBuilder()
+        return qlua.rpc.GetLinesCount.Args.newBuilder()
                 .setTag(TAG)
                 .build();
     }

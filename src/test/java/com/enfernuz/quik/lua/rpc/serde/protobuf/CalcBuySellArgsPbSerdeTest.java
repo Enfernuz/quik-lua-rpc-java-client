@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.CalcBuySell;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class CalcBuySellArgsPbSerdeTest extends AbstractPbSerializationTest<CalcBuySell.Args, qlua.rpc.CalcBuySell.Request> {
+public class CalcBuySellArgsPbSerdeTest extends AbstractPbSerializationTest<CalcBuySell.Args, qlua.rpc.CalcBuySell.Args> {
 
     private static final String CLASS_CODE = "1";
     private static final String SEC_CODE = "2";
@@ -21,9 +21,9 @@ public class CalcBuySellArgsPbSerdeTest extends AbstractPbSerializationTest<Calc
 
     @NotNull
     @Override
-    public qlua.rpc.CalcBuySell.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.CalcBuySell.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.CalcBuySell.Request.newBuilder()
+        return qlua.rpc.CalcBuySell.Args.newBuilder()
                 .setClassCode(CLASS_CODE)
                 .setSecCode(SEC_CODE)
                 .setClientCode(CLIENT_CODE)

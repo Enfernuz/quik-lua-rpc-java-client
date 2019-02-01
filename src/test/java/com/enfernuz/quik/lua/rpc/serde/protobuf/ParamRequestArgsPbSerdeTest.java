@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.ParamRequest;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class ParamRequestArgsPbSerdeTest extends AbstractPbSerializationTest<ParamRequest.Args, qlua.rpc.ParamRequest.Request> {
+public class ParamRequestArgsPbSerdeTest extends AbstractPbSerializationTest<ParamRequest.Args, qlua.rpc.ParamRequest.Args> {
 
     private static final String CLASS_CODE = "1";
     private static final String SEC_CODE = "2";
@@ -17,9 +17,9 @@ public class ParamRequestArgsPbSerdeTest extends AbstractPbSerializationTest<Par
 
     @NotNull
     @Override
-    public qlua.rpc.ParamRequest.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.ParamRequest.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.ParamRequest.Request.newBuilder()
+        return qlua.rpc.ParamRequest.Args.newBuilder()
                 .setClassCode(CLASS_CODE)
                 .setSecCode(SEC_CODE)
                 .setDbName(DB_NAME)

@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetSecurityInfo;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class GetSecurityInfoArgsPbSerdeTest extends AbstractPbSerializationTest<GetSecurityInfo.Args, qlua.rpc.GetSecurityInfo.Request> {
+public class GetSecurityInfoArgsPbSerdeTest extends AbstractPbSerializationTest<GetSecurityInfo.Args, qlua.rpc.GetSecurityInfo.Args> {
 
     private static final String CLASS_CODE = "1";
     private static final String SEC_CODE = "2";
@@ -16,9 +16,9 @@ public class GetSecurityInfoArgsPbSerdeTest extends AbstractPbSerializationTest<
 
     @NotNull
     @Override
-    public qlua.rpc.GetSecurityInfo.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.GetSecurityInfo.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.GetSecurityInfo.Request.newBuilder()
+        return qlua.rpc.GetSecurityInfo.Args.newBuilder()
                 .setClassCode(CLASS_CODE)
                 .setSecCode(SEC_CODE)
                 .build();

@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.DelAllLabels;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class DelAllLabelsArgsPbSerdeTest extends AbstractPbSerializationTest<DelAllLabels.Args, qlua.rpc.DelAllLabels.Request> {
+public class DelAllLabelsArgsPbSerdeTest extends AbstractPbSerializationTest<DelAllLabels.Args, qlua.rpc.DelAllLabels.Args> {
 
     private static final String CHART_TAG = "1";
 
@@ -15,9 +15,9 @@ public class DelAllLabelsArgsPbSerdeTest extends AbstractPbSerializationTest<Del
 
     @NotNull
     @Override
-    public qlua.rpc.DelAllLabels.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.DelAllLabels.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.DelAllLabels.Request.newBuilder()
+        return qlua.rpc.DelAllLabels.Args.newBuilder()
                 .setChartTag(CHART_TAG)
                 .build();
     }

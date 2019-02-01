@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetInfoParam;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class GetInfoParamArgsPbSerdeTest extends AbstractPbSerializationTest<GetInfoParam.Args, qlua.rpc.GetInfoParam.Request> {
+public class GetInfoParamArgsPbSerdeTest extends AbstractPbSerializationTest<GetInfoParam.Args, qlua.rpc.GetInfoParam.Args> {
 
     private static final String PARAM_NAME = "1";
 
@@ -15,9 +15,9 @@ public class GetInfoParamArgsPbSerdeTest extends AbstractPbSerializationTest<Get
 
     @NotNull
     @Override
-    public qlua.rpc.GetInfoParam.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.GetInfoParam.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.GetInfoParam.Request.newBuilder()
+        return qlua.rpc.GetInfoParam.Args.newBuilder()
                 .setParamName(PARAM_NAME)
                 .build();
     }

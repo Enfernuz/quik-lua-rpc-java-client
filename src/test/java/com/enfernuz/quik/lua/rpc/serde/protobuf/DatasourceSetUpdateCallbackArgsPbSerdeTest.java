@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.datasource.SetUpdateCallback;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class DatasourceSetUpdateCallbackArgsPbSerdeTest extends AbstractPbSerializationTest<SetUpdateCallback.Args, qlua.rpc.datasource.SetUpdateCallback.Request> {
+public class DatasourceSetUpdateCallbackArgsPbSerdeTest extends AbstractPbSerializationTest<SetUpdateCallback.Args, qlua.rpc.datasource.SetUpdateCallback.Args> {
 
     private static final String DATASOURCE_UUID = "1";
     private static final String F_CB_DEF = "2";
@@ -23,9 +23,9 @@ public class DatasourceSetUpdateCallbackArgsPbSerdeTest extends AbstractPbSerial
 
     @NotNull
     @Override
-    public qlua.rpc.datasource.SetUpdateCallback.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.datasource.SetUpdateCallback.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.datasource.SetUpdateCallback.Request.newBuilder()
+        return qlua.rpc.datasource.SetUpdateCallback.Args.newBuilder()
                 .setDatasourceUuid(DATASOURCE_UUID)
                 .setFCbDef(F_CB_DEF)
                 .setWatchingO(WATCHING_O)

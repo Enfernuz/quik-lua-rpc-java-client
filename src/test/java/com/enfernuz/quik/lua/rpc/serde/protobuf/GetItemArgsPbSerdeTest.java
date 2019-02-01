@@ -4,7 +4,7 @@ import com.enfernuz.quik.lua.rpc.api.messages.GetItem;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
 
-public class GetItemArgsPbSerdeTest extends AbstractPbSerializationTest<GetItem.Args, qlua.rpc.GetItem.Request> {
+public class GetItemArgsPbSerdeTest extends AbstractPbSerializationTest<GetItem.Args, qlua.rpc.GetItem.Args> {
 
     private static final String TABLE_NAME = "1";
     private static final int INDEX = 2;
@@ -16,9 +16,9 @@ public class GetItemArgsPbSerdeTest extends AbstractPbSerializationTest<GetItem.
 
     @NotNull
     @Override
-    public qlua.rpc.GetItem.Request getTargetObjectAsPbMessage() {
+    public qlua.rpc.GetItem.Args getTargetObjectAsPbMessage() {
 
-        return qlua.rpc.GetItem.Request.newBuilder()
+        return qlua.rpc.GetItem.Args.newBuilder()
                 .setTableName(TABLE_NAME)
                 .setIndex(INDEX)
                 .build();

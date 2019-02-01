@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 @RunWith(Enclosed.class)
 public class BitToHexArgsPbSerdeTest {
 
-    public static class FullArgsBitToHexArgsPbSerdeTest extends AbstractPbSerializationTest<ToHex.Args, qlua.rpc.bit.Tohex.Request> {
+    public static class FullArgsBitToHexArgsPbSerdeTest extends AbstractPbSerializationTest<ToHex.Args, qlua.rpc.bit.Tohex.Args> {
 
         private static final int X = 1;
         private static final int N = 2;
@@ -21,9 +21,9 @@ public class BitToHexArgsPbSerdeTest {
 
         @NotNull
         @Override
-        public qlua.rpc.bit.Tohex.Request getTargetObjectAsPbMessage() {
+        public qlua.rpc.bit.Tohex.Args getTargetObjectAsPbMessage() {
 
-            return qlua.rpc.bit.Tohex.Request.newBuilder()
+            return qlua.rpc.bit.Tohex.Args.newBuilder()
                     .setX(X)
                     .setValueN(N)
                     .build();
@@ -39,7 +39,7 @@ public class BitToHexArgsPbSerdeTest {
         }
     }
 
-    public static class WithoutNBitToHexArgsPbSerdeTest extends AbstractPbSerializationTest<ToHex.Args, qlua.rpc.bit.Tohex.Request> {
+    public static class WithoutNBitToHexArgsPbSerdeTest extends AbstractPbSerializationTest<ToHex.Args, qlua.rpc.bit.Tohex.Args> {
 
         private static final int X = 1;
 
@@ -50,9 +50,9 @@ public class BitToHexArgsPbSerdeTest {
 
         @NotNull
         @Override
-        public qlua.rpc.bit.Tohex.Request getTargetObjectAsPbMessage() {
+        public qlua.rpc.bit.Tohex.Args getTargetObjectAsPbMessage() {
 
-            return qlua.rpc.bit.Tohex.Request.newBuilder()
+            return qlua.rpc.bit.Tohex.Args.newBuilder()
                     .setX(X)
                     .setNullN(true)
                     .build();
