@@ -25,7 +25,7 @@ public class AddColumnArgsPbSerdeTest extends AbstractPbSerializationTest<AddCol
 
         return qlua.rpc.AddColumn.Args.newBuilder()
                 .setTId(T_ID)
-                .setIcode(I_CODE)
+                .setICode(I_CODE)
                 .setName(NAME)
                 .setParType(PB_PAR_TYPE) // TODO: add tests for all the enum values
                 .setIsDefault(IS_DEFAULT)

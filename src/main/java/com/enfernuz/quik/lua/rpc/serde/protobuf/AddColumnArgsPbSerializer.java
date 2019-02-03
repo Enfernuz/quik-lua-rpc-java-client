@@ -48,7 +48,7 @@ enum AddColumnArgsPbSerializer implements Serializer<AddColumn.Args>, ToPbConver
 
         return qlua.rpc.AddColumn.Args.newBuilder()
                 .setTId( args.getTId() )
-                .setIcode( args.getICode() )
+                .setICode( args.getICode() )
                 .setName( convertToPbString(args.getName()) )
                 .setIsDefault( args.isDefault() )
                 .setParTypeValue( pbParType.getNumber() )

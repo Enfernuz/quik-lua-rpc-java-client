@@ -23,7 +23,7 @@ public final class AddColumn implements RemoteProcedure {
     public static class Args implements RpcArgs<AddColumn> {
 
         private static final String T_ID = "t_id";
-        private static final String I_CODE = "icode";
+        private static final String I_CODE = "iCode";
         private static final String NAME = "name";
         private static final String IS_DEFAULT = "is_default";
         private static final String PAR_TYPE = "par_type";
