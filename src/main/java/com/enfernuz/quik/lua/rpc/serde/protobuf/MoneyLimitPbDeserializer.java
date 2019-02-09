@@ -37,6 +37,9 @@ enum MoneyLimitPbDeserializer implements Deserializer<MoneyLimit>, FromPbConvert
                 .lockedMarginValue( convertFromPbString(moneyLimit.getLockedMarginValue()) )
                 .leverage( convertFromPbString(moneyLimit.getLeverage()) )
                 .limitKind( moneyLimit.getLimitKind() )
+                .waPositionPrice( convertFromPbString(moneyLimit.getWaPositionPrice()) )
+                .ordersCollateral( convertFromPbString(moneyLimit.getOrdersCollateral()) )
+                .positionsCollateral( convertFromPbString(moneyLimit.getPositionsCollateral()) )
                 .build();
     }
 }
