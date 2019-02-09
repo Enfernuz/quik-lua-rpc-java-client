@@ -24,6 +24,9 @@ public class GetMoneyExResultPbSerdeTest  {
     private static final String LOCKED_MARGIN_VALUE = "11";
     private static final String LEVERAGE = "12";
     private static final int LIMIT_KIND = 13;
+    private static final String WA_POSITION_PRICE = "14";
+    private static final String ORDERS_COLLATERAL = "15";
+    private static final String POSITIONS_COLLATERAL = "16";
 
     public static class NormalGetMoneyExResultPbSerdeTest extends AbstractPbDeserializationTest<qlua.rpc.GetMoneyEx.Result, GetMoneyEx.Result> {
 
@@ -50,6 +53,9 @@ public class GetMoneyExResultPbSerdeTest  {
                     .lockedMarginValue(LOCKED_MARGIN_VALUE)
                     .leverage(LEVERAGE)
                     .limitKind(LIMIT_KIND)
+                    .waPositionPrice(WA_POSITION_PRICE)
+                    .ordersCollateral(ORDERS_COLLATERAL)
+                    .positionsCollateral(POSITIONS_COLLATERAL)
                     .build();
 
             return GetMoneyEx.Result.getInstance(moneyLimit);
@@ -73,6 +79,9 @@ public class GetMoneyExResultPbSerdeTest  {
                     .setLockedMarginValue(LOCKED_MARGIN_VALUE)
                     .setLeverage(LEVERAGE)
                     .setLimitKind(LIMIT_KIND)
+                    .setWaPositionPrice(WA_POSITION_PRICE)
+                    .setOrdersCollateral(ORDERS_COLLATERAL)
+                    .setPositionsCollateral(POSITIONS_COLLATERAL)
                     .build();
 
             return qlua.rpc.GetMoneyEx.Result.newBuilder()

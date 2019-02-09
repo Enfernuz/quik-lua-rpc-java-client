@@ -52,6 +52,9 @@ public class GetMoneyExJsonSerdeTests {
                     .lockedMarginValue("11")
                     .leverage("12")
                     .limitKind(13)
+                    .waPositionPrice("14")
+                    .ordersCollateral("15")
+                    .positionsCollateral("16")
                     .build();
 
 
