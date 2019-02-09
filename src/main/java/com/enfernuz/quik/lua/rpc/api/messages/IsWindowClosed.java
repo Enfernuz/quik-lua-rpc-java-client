@@ -45,42 +45,42 @@ public final class IsWindowClosed implements RemoteProcedure {
     @Value
     public static class Result implements RpcResult<IsWindowClosed> {
 
-        private static final String WINDOW_CLOSED = "window_closed";
+        private static final String RESULT = "result";
 
-        Boolean windowClosed;
+        Boolean result;
 
         @JsonCreator
-        public static Result getInstance(@JsonProperty(WINDOW_CLOSED) final Boolean windowClosed) {
+        public static Result getInstance(@JsonProperty(RESULT) final Boolean result) {
 
-            if (isError(windowClosed)) {
+            if (isError(result)) {
                 return InstanceHolder.ERROR;
             }
 
-            return windowClosed ? InstanceHolder.TRUE : InstanceHolder.FALSE;
+            return result ? InstanceHolder.TRUE : InstanceHolder.FALSE;
         }
 
         public static Result getErrorInstance() {
             return InstanceHolder.ERROR;
         }
 
-        private Result(final Boolean windowClosed) {
-            this.windowClosed = windowClosed;
+        private Result(final Boolean result) {
+            this.result = result;
         }
 
         public boolean isError() {
-            return isError(windowClosed);
+            return isError(result);
         }
 
         @Contract(value = "null -> true; !null -> false", pure = true)
-        private static boolean isError(final Boolean windowClosed) {
-            return windowClosed == null;
+        private static boolean isError(final Boolean result) {
+            return result == null;
         }
 
         @NotNull
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add(WINDOW_CLOSED, windowClosed)
+                    .add(RESULT, result)
                     .toString();
         }
 
@@ -92,8 +92,8 @@ public final class IsWindowClosed implements RemoteProcedure {
 
             // sanity check
             static {
-                assert !TRUE.isError() && TRUE.windowClosed;
-                assert !FALSE.isError() && !FALSE.windowClosed;
+                assert !TRUE.isError() && TRUE.result;
+                assert !FALSE.isError() && !FALSE.result;
                 assert ERROR.isError();
             }
         }

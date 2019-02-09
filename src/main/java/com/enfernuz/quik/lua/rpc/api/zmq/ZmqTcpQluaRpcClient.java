@@ -337,7 +337,7 @@ public final class ZmqTcpQluaRpcClient extends AbstractTcpZmqClient implements R
 
     @Override
     public Boolean qlua_IsWindowClosed(final int tId) {
-        return makeRPC(IsWindowClosed.class, new IsWindowClosed.Args(tId), IsWindowClosed.Result.class).getWindowClosed();
+        return makeRPC(IsWindowClosed.class, new IsWindowClosed.Args(tId), IsWindowClosed.Result.class).getResult();
     }
 
     @Override
