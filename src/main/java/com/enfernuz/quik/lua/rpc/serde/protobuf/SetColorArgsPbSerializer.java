@@ -18,14 +18,52 @@ enum SetColorArgsPbSerializer implements Serializer<SetColor.Args>, ToPbConverte
     @Override
     public qlua.rpc.SetColor.Args convert(@NotNull final SetColor.Args args) {
 
-        return qlua.rpc.SetColor.Args.newBuilder()
-                .setTId( args.getTId() )
-                .setRow( args.getRow() )
-                .setCol( args.getCol() )
-                .setBColor( args.getbColor() )
-                .setFColor( args.getfColor() )
-                .setSelBColor( args.getSelBColor() )
-                .setSelFColor( args.getSelFColor() )
-                .build();
+        final qlua.rpc.SetColor.Args.Builder pbResult =
+                qlua.rpc.SetColor.Args.newBuilder()
+                        .setTId( args.getTId() );
+
+        final Integer row = args.getRow();
+        if (row == null) {
+            pbResult.setNullRow(true);
+        } else {
+            pbResult.setValueRow(row);
+        }
+
+        final Integer col = args.getCol();
+        if (col == null) {
+            pbResult.setNullCol(true);
+        } else {
+            pbResult.setValueCol(col);
+        }
+
+        final Integer bColor = args.getBColor();
+        if (bColor == null) {
+            pbResult.setNullBColor(true);
+        } else {
+            pbResult.setValueBColor(bColor);
+        }
+
+        final Integer fColor = args.getFColor();
+        if (fColor == null) {
+            pbResult.setNullFColor(true);
+        } else {
+            pbResult.setValueFColor(fColor);
+        }
+
+        final Integer selBColor = args.getSelBColor();
+        if (selBColor == null) {
+            pbResult.setNullSelBColor(true);
+        } else {
+            pbResult.setValueSelBColor(selBColor);
+        }
+
+        final Integer selFColor = args.getSelFColor();
+        if (selFColor == null) {
+            pbResult.setNullSelFColor(true);
+        } else {
+            pbResult.setValueSelFColor(selFColor);
+        }
+
+        return pbResult.build();
     }
 }

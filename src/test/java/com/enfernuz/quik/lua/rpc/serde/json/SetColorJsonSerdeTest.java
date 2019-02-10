@@ -5,7 +5,7 @@ import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
 @RunWith(Enclosed.class)
-public class SetColorJsonSerdeTests {
+public class SetColorJsonSerdeTest {
 
     public static class RpcArgsSerializationTest extends AbstractJsonRpcArgsSerializationTest<SetColor.Args> {
 

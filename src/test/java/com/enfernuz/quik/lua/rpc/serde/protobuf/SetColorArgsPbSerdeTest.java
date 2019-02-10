@@ -25,12 +25,12 @@ public class SetColorArgsPbSerdeTest extends AbstractPbSerializationTest<SetColo
 
         return qlua.rpc.SetColor.Args.newBuilder()
                 .setTId(T_ID)
-                .setRow(ROW)
-                .setCol(COL)
-                .setBColor(B_COLOR)
-                .setFColor(F_COLOR)
-                .setSelBColor(SEL_B_COLOR)
-                .setSelFColor(SEL_F_COLOR)
+                .setValueRow(ROW)
+                .setValueCol(COL)
+                .setValueBColor(B_COLOR)
+                .setValueFColor(F_COLOR)
+                .setValueSelBColor(SEL_B_COLOR)
+                .setValueSelFColor(SEL_F_COLOR)
                 .build();
     }
 

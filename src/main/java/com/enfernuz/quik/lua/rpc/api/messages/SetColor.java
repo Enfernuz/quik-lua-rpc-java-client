@@ -3,10 +3,7 @@ package com.enfernuz.quik.lua.rpc.api.messages;
 import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
 import com.enfernuz.quik.lua.rpc.api.RpcArgs;
 import com.enfernuz.quik.lua.rpc.api.RpcResult;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.*;
 import com.google.common.base.MoreObjects;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
@@ -28,38 +25,41 @@ public final class SetColor implements RemoteProcedure {
         private static final String SEL_B_COLOR = "sel_b_color";
         private static final String SEL_F_COLOR = "sel_f_color";
 
-        public static final int QTABLE_NO_INDEX = -1;
-        public static final int QTABLE_DEFAULT_COLOR = -1;
-
         @JsonProperty(T_ID)
         private final int tId;
 
         @JsonProperty(ROW)
-        private final int row;
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        private final Integer row;
 
         @JsonProperty(COL)
-        private final int col;
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        private final Integer col;
 
         @JsonProperty(B_COLOR)
-        private final int bColor;
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        private final Integer bColor;
 
         @JsonProperty(F_COLOR)
-        private final int fColor;
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        private final Integer fColor;
 
         @JsonProperty(SEL_B_COLOR)
-        private final int selBColor;
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        private final Integer selBColor;
 
         @JsonProperty(SEL_F_COLOR)
-        private final int selFColor;
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        private final Integer selFColor;
 
         private Args(
                 final int tId,
-                final int row,
-                final int col,
-                final int bColor,
-                final int fColor,
-                final int selBColor,
-                final int selFColor) {
+                final Integer row,
+                final Integer col,
+                final Integer bColor,
+                final Integer fColor,
+                final Integer selBColor,
+                final Integer selFColor) {
 
             this.tId = tId;
             this.row = row;
@@ -80,32 +80,32 @@ public final class SetColor implements RemoteProcedure {
         }
 
         @JsonIgnore
-        public int getRow() {
+        public Integer getRow() {
             return row;
         }
 
         @JsonIgnore
-        public int getCol() {
+        public Integer getCol() {
             return col;
         }
 
         @JsonIgnore
-        public int getbColor() {
+        public Integer getBColor() {
             return bColor;
         }
 
         @JsonIgnore
-        public int getfColor() {
+        public Integer getFColor() {
             return fColor;
         }
 
         @JsonIgnore
-        public int getSelBColor() {
+        public Integer getSelBColor() {
             return selBColor;
         }
 
         @JsonIgnore
-        public int getSelFColor() {
+        public Integer getSelFColor() {
             return selFColor;
         }
 
@@ -126,12 +126,12 @@ public final class SetColor implements RemoteProcedure {
         public static final class ArgsBuilder {
 
             private int tId;
-            private int row = QTABLE_NO_INDEX;
-            private int col = QTABLE_NO_INDEX;
-            private int bColor = QTABLE_DEFAULT_COLOR;
-            private int fColor = QTABLE_DEFAULT_COLOR;
-            private int selBColor = QTABLE_DEFAULT_COLOR;
-            private int selFColor = QTABLE_DEFAULT_COLOR;
+            private Integer row;
+            private Integer col;
+            private Integer bColor;
+            private Integer fColor;
+            private Integer selBColor;
+            private Integer selFColor;
 
             ArgsBuilder() {}
 
@@ -140,32 +140,32 @@ public final class SetColor implements RemoteProcedure {
                 return this;
             }
 
-            public ArgsBuilder row(final int row) {
+            public ArgsBuilder row(final Integer row) {
                 this.row = row;
                 return this;
             }
 
-            public ArgsBuilder col(final int col) {
+            public ArgsBuilder col(final Integer col) {
                 this.col = col;
                 return this;
             }
 
-            public ArgsBuilder bColor(final int bColor) {
+            public ArgsBuilder bColor(final Integer bColor) {
                 this.bColor = bColor;
                 return this;
             }
 
-            public ArgsBuilder fColor(final int fColor) {
+            public ArgsBuilder fColor(final Integer fColor) {
                 this.fColor = fColor;
                 return this;
             }
 
-            public ArgsBuilder selBColor(final int selBColor) {
+            public ArgsBuilder selBColor(final Integer selBColor) {
                 this.selBColor = selBColor;
                 return this;
             }
 
-            public ArgsBuilder selFColor(final int selFColor) {
+            public ArgsBuilder selFColor(final Integer selFColor) {
                 this.selFColor = selFColor;
                 return this;
             }
