@@ -16,13 +16,39 @@ enum HighlightArgsPbSerializer implements Serializer<Highlight.Args>, ToPbConver
     @Override
     public @NotNull qlua.rpc.Highlight.Args convert(@NotNull final Highlight.Args args) {
 
-        return qlua.rpc.Highlight.Args.newBuilder()
-                .setTId( args.getTId() )
-                .setRow( args.getRow() )
-                .setCol( args.getCol() )
-                .setBColor( args.getBColor() )
-                .setFColor( args.getFColor() )
-                .setTimeout( args.getTimeout() )
-                .build();
+        final qlua.rpc.Highlight.Args.Builder pbResult =
+                qlua.rpc.Highlight.Args.newBuilder()
+                        .setTId( args.getTId() )
+                        .setTimeout( args.getTimeout() );
+
+        final Integer row = args.getRow();
+        if (row == null) {
+            pbResult.setNullRow(true);
+        } else {
+            pbResult.setValueRow(row);
+        }
+
+        final Integer col = args.getCol();
+        if (col == null) {
+            pbResult.setNullCol(true);
+        } else {
+            pbResult.setValueCol(col);
+        }
+
+        final Integer bColor = args.getBColor();
+        if (bColor == null) {
+            pbResult.setNullBColor(true);
+        } else {
+            pbResult.setValueBColor(bColor);
+        }
+
+        final Integer fColor = args.getFColor();
+        if (fColor == null) {
+            pbResult.setNullFColor(true);
+        } else {
+            pbResult.setValueFColor(fColor);
+        }
+
+        return pbResult.build();
     }
 }

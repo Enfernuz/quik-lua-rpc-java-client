@@ -3,10 +3,7 @@ package com.enfernuz.quik.lua.rpc.api.messages;
 import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
 import com.enfernuz.quik.lua.rpc.api.RpcArgs;
 import com.enfernuz.quik.lua.rpc.api.RpcResult;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.*;
 import com.google.common.base.MoreObjects;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -32,16 +29,20 @@ public final class Highlight implements RemoteProcedure {
         private final int tId;
 
         @JsonProperty(ROW)
-        private final int row;
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        private final Integer row;
 
         @JsonProperty(COL)
-        private final int col;
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        private final Integer col;
 
         @JsonProperty(B_COLOR)
-        private final int bColor;
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        private final Integer bColor;
 
         @JsonProperty(F_COLOR)
-        private final int fColor;
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        private final Integer fColor;
 
         @JsonProperty(TIMEOUT)
         private final int timeout;
@@ -49,10 +50,10 @@ public final class Highlight implements RemoteProcedure {
         @Builder
         private Args(
                 final int tId,
-                final int row,
-                final int col,
-                final int bColor,
-                final int fColor,
+                final Integer row,
+                final Integer col,
+                final Integer bColor,
+                final Integer fColor,
                 final int timeout) {
 
             this.tId = tId;
@@ -69,22 +70,22 @@ public final class Highlight implements RemoteProcedure {
         }
 
         @JsonIgnore
-        public int getRow() {
+        public Integer getRow() {
             return row;
         }
 
         @JsonIgnore
-        public int getCol() {
+        public Integer getCol() {
             return col;
         }
 
         @JsonIgnore
-        public int getBColor() {
+        public Integer getBColor() {
             return bColor;
         }
 
         @JsonIgnore
-        public int getFColor() {
+        public Integer getFColor() {
             return fColor;
         }
 

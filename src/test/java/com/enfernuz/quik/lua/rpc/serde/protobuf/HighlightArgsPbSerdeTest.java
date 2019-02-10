@@ -24,10 +24,10 @@ public class HighlightArgsPbSerdeTest extends AbstractPbSerializationTest<Highli
 
         return qlua.rpc.Highlight.Args.newBuilder()
                 .setTId(T_ID)
-                .setRow(ROW)
-                .setCol(COL)
-                .setBColor(B_COLOR)
-                .setFColor(F_COLOR)
+                .setValueRow(ROW)
+                .setValueCol(COL)
+                .setValueBColor(B_COLOR)
+                .setValueFColor(F_COLOR)
                 .setTimeout(TIMEOUT)
                 .build();
     }

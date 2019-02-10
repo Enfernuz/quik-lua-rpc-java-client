@@ -5,7 +5,7 @@ import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
 @RunWith(Enclosed.class)
-public class HighlightJsonSerdeTests {
+public class HighlightJsonSerdeTest {
 
     public static class RpcArgsSerializationTest extends AbstractJsonRpcArgsSerializationTest<Highlight.Args> {
 
@@ -25,6 +25,23 @@ public class HighlightJsonSerdeTests {
         @Override
         public String getArgsJsonPath() {
             return "json/Highlight/args.json";
+        }
+    }
+
+    public static class RpcDefaultArgsSerializationTest extends AbstractJsonRpcArgsSerializationTest<Highlight.Args> {
+
+        @Override
+        public Highlight.Args getArgsObject() {
+
+            return Highlight.Args.builder()
+                    .tId(1)
+                    .timeout(6)
+                    .build();
+        }
+
+        @Override
+        public String getArgsJsonPath() {
+            return "json/Highlight/default.args.json";
         }
     }
 
