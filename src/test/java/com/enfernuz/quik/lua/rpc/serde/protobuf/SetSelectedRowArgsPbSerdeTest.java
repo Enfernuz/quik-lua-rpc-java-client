@@ -3,33 +3,67 @@ package com.enfernuz.quik.lua.rpc.serde.protobuf;
 import com.enfernuz.quik.lua.rpc.api.messages.SetSelectedRow;
 import com.enfernuz.quik.lua.rpc.serde.Serializer;
 import org.jetbrains.annotations.NotNull;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 
-public class SetSelectedRowArgsPbSerdeTest extends AbstractPbSerializationTest<SetSelectedRow.Args, qlua.rpc.SetSelectedRow.Args> {
+@RunWith(Enclosed.class)
+public class SetSelectedRowArgsPbSerdeTest  {
 
-    private static final int TABLE_ID = 1;
-    private static final int ROW = 2;
+    public static class FullArgs_SetSelectedRowArgsPbSerdeTest extends AbstractPbSerializationTest<SetSelectedRow.Args, qlua.rpc.SetSelectedRow.Args> {
 
-    @Override
-    public @NotNull Serializer<SetSelectedRow.Args> getSerializerUnderTest() {
-        return SetSelectedRowArgsPbSerializer.INSTANCE;
+        private static final int TABLE_ID = 1;
+        private static final int ROW = 2;
+
+        @Override
+        public @NotNull Serializer<SetSelectedRow.Args> getSerializerUnderTest() {
+            return SetSelectedRowArgsPbSerializer.INSTANCE;
+        }
+
+        @NotNull
+        @Override
+        public qlua.rpc.SetSelectedRow.Args getTargetObjectAsPbMessage() {
+
+            return qlua.rpc.SetSelectedRow.Args.newBuilder()
+                    .setTableId(TABLE_ID)
+                    .setValueRow(ROW)
+                    .build();
+        }
+
+        @NotNull
+        @Override
+        public SetSelectedRow.Args getTargetObject() {
+            return SetSelectedRow.Args.builder()
+                    .tableId(TABLE_ID)
+                    .row(ROW)
+                    .build();
+        }
     }
 
-    @NotNull
-    @Override
-    public qlua.rpc.SetSelectedRow.Args getTargetObjectAsPbMessage() {
+    public static class WithoutRow_SetSelectedRowArgsPbSerdeTest extends AbstractPbSerializationTest<SetSelectedRow.Args, qlua.rpc.SetSelectedRow.Args> {
 
-        return qlua.rpc.SetSelectedRow.Args.newBuilder()
-                .setTableId(TABLE_ID)
-                .setRow(ROW)
-                .build();
-    }
+        private static final int TABLE_ID = 1;
 
-    @NotNull
-    @Override
-    public SetSelectedRow.Args getTargetObject() {
-        return SetSelectedRow.Args.builder()
-                .tableId(TABLE_ID)
-                .row(ROW)
-                .build();
+        @Override
+        public @NotNull Serializer<SetSelectedRow.Args> getSerializerUnderTest() {
+            return SetSelectedRowArgsPbSerializer.INSTANCE;
+        }
+
+        @NotNull
+        @Override
+        public qlua.rpc.SetSelectedRow.Args getTargetObjectAsPbMessage() {
+
+            return qlua.rpc.SetSelectedRow.Args.newBuilder()
+                    .setTableId(TABLE_ID)
+                    .setNullRow(true)
+                    .build();
+        }
+
+        @NotNull
+        @Override
+        public SetSelectedRow.Args getTargetObject() {
+            return SetSelectedRow.Args.builder()
+                    .tableId(TABLE_ID)
+                    .build();
+        }
     }
 }

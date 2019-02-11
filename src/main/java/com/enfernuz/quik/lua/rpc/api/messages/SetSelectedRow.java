@@ -3,10 +3,8 @@ package com.enfernuz.quik.lua.rpc.api.messages;
 import com.enfernuz.quik.lua.rpc.api.RemoteProcedure;
 import com.enfernuz.quik.lua.rpc.api.RpcArgs;
 import com.enfernuz.quik.lua.rpc.api.RpcResult;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.google.common.base.MoreObjects;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
@@ -23,15 +21,14 @@ public final class SetSelectedRow implements RemoteProcedure {
         private static final String TABLE_ID = "table_id";
         private static final String ROW = "row";
 
-        public static final int LAST_VISIBLE_ROW = -1;
-
-        @JsonProperty(TABLE_ID)
+        @JsonProperty(value = TABLE_ID, required = true)
         private final int tableId;
 
         @JsonProperty(ROW)
-        private final int row;
+        @JsonInclude(Include.NON_NULL)
+        private final Integer row;
 
-        private Args(final int tableId, final int row) {
+        private Args(final int tableId, final Integer row) {
 
             this.tableId = tableId;
             this.row = row;
@@ -47,7 +44,7 @@ public final class SetSelectedRow implements RemoteProcedure {
         }
 
         @JsonIgnore
-        public int getRow() {
+        public Integer getRow() {
             return row;
         }
 
@@ -63,7 +60,7 @@ public final class SetSelectedRow implements RemoteProcedure {
         public static final class ArgsBuilder {
 
             private int tableId;
-            private int row = LAST_VISIBLE_ROW;
+            private Integer row;
 
             ArgsBuilder() {}
 
@@ -72,7 +69,7 @@ public final class SetSelectedRow implements RemoteProcedure {
                 return this;
             }
 
-            public ArgsBuilder row(final int row) {
+            public ArgsBuilder row(final Integer row) {
                 this.row = row;
                 return this;
             }

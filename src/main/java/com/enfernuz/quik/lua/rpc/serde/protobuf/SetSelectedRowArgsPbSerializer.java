@@ -18,9 +18,17 @@ enum SetSelectedRowArgsPbSerializer implements Serializer<SetSelectedRow.Args>, 
     @Override
     public qlua.rpc.SetSelectedRow.Args convert(@NotNull final SetSelectedRow.Args args) {
 
-        return qlua.rpc.SetSelectedRow.Args.newBuilder()
-                .setTableId( args.getTableId() )
-                .setRow( args.getRow() )
-                .build();
+        final qlua.rpc.SetSelectedRow.Args.Builder pbResult =
+                qlua.rpc.SetSelectedRow.Args.newBuilder()
+                        .setTableId( args.getTableId() );
+
+        final Integer row = args.getRow();
+        if (row == null) {
+            pbResult.setNullRow(true);
+        } else {
+            pbResult.setValueRow(row);
+        }
+
+        return pbResult.build();
     }
 }
