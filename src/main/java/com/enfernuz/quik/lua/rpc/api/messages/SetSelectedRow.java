@@ -21,7 +21,7 @@ public final class SetSelectedRow implements RemoteProcedure {
         private static final String TABLE_ID = "table_id";
         private static final String ROW = "row";
 
-        @JsonProperty(value = TABLE_ID, required = true)
+        @JsonProperty(TABLE_ID)
         private final int tableId;
 
         @JsonProperty(ROW)
