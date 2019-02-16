@@ -544,7 +544,16 @@ public final class ZmqTcpQluaRpcClient extends AbstractTcpZmqClient implements R
                     if (result == null) {
                         throw new RpcException("В ответе на вызов удалённой процедуры отсутствует результат.");
                     } else {
-                        return serdeModule.deserialize(resultClass, result);
+                        final U ret = serdeModule.deserialize(resultClass, result);
+                        if (ret == null) {
+                            throw new RpcException(
+                                    String.format(
+                                            "Десериализация результата, находящегося в ответе на вызов удалённой процедуры, в экземпляр класса %s вернула null.",
+                                            resultClass.getName()
+                                    )
+                            );
+                        }
+                        return ret;
                     }
                 }
             } else {
