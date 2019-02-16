@@ -46,10 +46,7 @@ final class ZmqUtils {
                 break;
             default:
                 throw new IllegalStateException(
-                        String.format(
-                                "Неподдерживаемый механизм аутентификации: \"s\".",
-                                authContext.getAuthMechanism()
-                        )
+                        "Неподдерживаемый механизм аутентификации: '" + authContext.getAuthMechanism() + "'."
                 );
         }
     }
