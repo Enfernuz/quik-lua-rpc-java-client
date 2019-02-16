@@ -8,13 +8,13 @@ option optimize_for = SPEED;
 option java_package = "qlua.rpc";
 
 message Args {
-    int32 time = 1;
+    uint64 time = 1;
 }
 
 message Result {
 
     oneof result {
         bool null_result = 1;
-        int32 value_result = 2;
+        uint64 value_result = 2;
     }
 }

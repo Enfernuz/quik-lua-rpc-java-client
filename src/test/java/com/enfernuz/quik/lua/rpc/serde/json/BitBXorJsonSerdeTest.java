@@ -13,9 +13,9 @@ public class BitBXorJsonSerdeTest {
         public BXor.Args getArgsObject() {
 
             return BXor.Args.builder()
-                    .x1(1)
-                    .x2(2)
-                    .xi(new int[] {3, 5, 7, 9})
+                    .x1(1L)
+                    .x2(2L)
+                    .xi(new long[] {3L, 5L, 7L, 9L})
                     .build();
         }
 
@@ -31,8 +31,8 @@ public class BitBXorJsonSerdeTest {
         public BXor.Args getArgsObject() {
 
             return BXor.Args.builder()
-                    .x1(1)
-                    .x2(2)
+                    .x1(1L)
+                    .x2(2L)
                     .build();
         }
 

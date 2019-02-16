@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import qlua.rpc.bit.Band;
 
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -28,10 +29,10 @@ enum BAndArgsPbSerializer implements Serializer<BAnd.Args>, ToPbConverter<BAnd.A
                     .setX1( args.getX1() )
                     .setX2( args.getX2() );
 
-        final int[] xi = args.getXi();
+        final long[] xi = args.getXi();
         if (xi != null) {
             result.addAllXi(
-                    IntStream.of(xi)
+                    LongStream.of(xi)
                             .boxed()
                             .collect( toList() )
             );

@@ -143,21 +143,91 @@ public interface QluaRpcClient extends Gateway, Securable {
 
     boolean qlua_SetWindowPos(SetWindowPos.Args args);
 
-    Integer qlua_sleep(int time);
+    Long qlua_sleep(long time);
 
     boolean qlua_SubscribeLevelIIQuotes(SubscribeLevel2Quotes.Args args);
 
     boolean qlua_UnsubscribeLevelIIQuotes(UnsubscribeLevel2Quotes.Args args);
 
-    int bit_band(int x1, int x2, int... xi);
+    /**
+     * Вызывает QLua-функцию <em>bit.band</em> с указанными аргументами.
+     * <p>Числа с плавающей точкой нужно преобразовать с помощью {@link Double#doubleToRawLongBits(double)} или
+     * {@link Float#floatToRawIntBits(float)}. В этом случае, результат вызова <em>bit.band</em> нужно преобразовать обратно в
+     * число с плавающей точкой с помощью {@link Double#longBitsToDouble(long)} или {@link Float#intBitsToFloat(int)}.</p>
+     * <br/>
+     * <b>Внимание!</b> В Java эквивалентом вызова функции <em>bit.band</em> будет использование оператора <b>&</b>:
+     * <br/>
+     * <code>result = x1 & x2 & ...</code>
+     * @param x1 число x1
+     * @param x2 число x2
+     * @param xi остальные числа, опционально
+     * @return результат вызова QLua-функции <em>bit.band</em> с указанными аргументами
+     */
+    long bit_band(long x1, long x2, long... xi);
 
-    int bit_bnot(int x);
+    /**
+     * Вызывает QLua-функцию <em>bit.bnot</em> с указанным аргументом.
+     * <p>Числа с плавающей точкой нужно преобразовать с помощью {@link Double#doubleToRawLongBits(double)} или
+     * {@link Float#floatToRawIntBits(float)}. В этом случае, результат вызова <em>bit.bnot</em> нужно преобразовать обратно в
+     * число с плавающей точкой с помощью {@link Long# Double#longBitsToDouble(long)} или {@link Float#intBitsToFloat(int)}.</p>
+     * <br/>
+     * <b>Внимание!</b> В Java эквивалентом вызова функции <em>bit.bnot</em> будет использование оператора <b>~</b>:
+     * <br/>
+     * <code>result = ~x;</code>
+     * @param x число x
+     * @return результат вызова QLua-функции <em>bit.bnot</em> с указанным аргументом
+     */
+    long bit_bnot(long x);
 
-    int bit_bor(int x1, int x2, int... xi);
+    /**
+     * Вызывает QLua-функцию <em>bit.bor</em> с указанными аргументами.
+     * <p>Числа с плавающей точкой нужно преобразовать с помощью {@link Double#doubleToRawLongBits(double)} или
+     * {@link Float#floatToRawIntBits(float)}. В этом случае, результат вызова <em>bit.bor</em> нужно преобразовать обратно в
+     * число с плавающей точкой с помощью {@link Double#longBitsToDouble(long)} или {@link Float#intBitsToFloat(int)}.</p>
+     * <br/>
+     * <b>Внимание!</b> В Java эквивалентом вызова функции <em>bit.bor</em> будет использование оператора <b>|</b>:
+     * <br/>
+     * <code>result = x1 | x2 | ...</code>
+     * @param x1 число x1
+     * @param x2 число x2
+     * @param xi остальные числа, опционально
+     * @return результат вызова QLua-функции <em>bit.bor</em> с указанными аргументами
+     */
+    long bit_bor(long x1, long x2, long... xi);
 
-    int bit_bxor(int x1, int x2, int... xi);
+    /**
+     * Вызывает QLua-функцию <em>bit.bxor</em> с указанными аргументами.
+     * <p>Числа с плавающей точкой нужно преобразовать с помощью {@link Double#doubleToRawLongBits(double)} или
+     * {@link Float#floatToRawIntBits(float)}. В этом случае, результат вызова <em>bit.bxor</em> нужно преобразовать обратно в
+     * число с плавающей точкой с помощью {@link Double#longBitsToDouble(long)} или {@link Float#intBitsToFloat(int)}.</p>
+     * <br/>
+     * <b>Внимание!</b> В Java эквивалентом вызова функции <em>bit.bxor</em> будет использование оператора <b>^</b>:
+     * <br/>
+     * <code>result = x1 ^ x2 ^ ...</code>
+     * @param x1 число x1
+     * @param x2 число x2
+     * @param xi остальные числа, опционально
+     * @return результат вызова QLua-функции <em>bit.bxor</em> с указанными аргументами
+     */
+    long bit_bxor(long x1, long x2, long... xi);
 
     String bit_tohex(ToHex.Args args);
+
+    /**
+     * Вызывает QLua-функцию <em>bit.test</em> с указанными аргументами.
+     * <p>Числа с плавающей точкой нужно преобразовать с помощью {@link Double#doubleToRawLongBits(double)} или
+     * {@link Float#floatToRawIntBits(float)}.</p>
+     * <br/>
+     * <b>Внимание!</b> В Java эквивалентом вызова функции <em>bit.test</em> будет использование следующей конструкции:
+     * <br/>
+     * <code>
+     *     boolean result = ((x & (1L << n)) != 0L);
+     * </code>
+     * @param x число x
+     * @param n индекс тестируемого бита в битовом представлении числа x
+     * @return результат вызова QLua-функции <em>bit.test</em> с указанными аргументами
+     */
+    boolean bit_test(long x, int n);
 
     String datasource_C(C.Args args);
 

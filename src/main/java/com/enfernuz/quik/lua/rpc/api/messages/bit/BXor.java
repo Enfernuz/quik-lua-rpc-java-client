@@ -25,34 +25,34 @@ public final class BXor implements RemoteProcedure {
         private static final String X_I = "xi";
 
         @JsonProperty(X_1)
-        private final int x1;
+        private final long x1;
 
         @JsonProperty(X_2)
-        private final int x2;
+        private final long x2;
 
         @JsonProperty(X_I)
         @JsonInclude(JsonInclude.Include.NON_NULL)
-        private final int[] xi;
+        private final long[] xi;
 
         @Builder
-        private Args(final int x1, final int x2, final int[] xi) {
+        private Args(final long x1, final long x2, final long[] xi) {
             this.x1 = x1;
             this.x2 = x2;
             this.xi = (xi == null) ? null : xi.clone();
         }
 
         @JsonIgnore
-        public int getX1() {
+        public long getX1() {
             return x1;
         }
 
         @JsonIgnore
-        public int getX2() {
+        public long getX2() {
             return x2;
         }
 
         @JsonIgnore
-        public int[] getXi() {
+        public long[] getXi() {
             return (xi == null) ? null : xi.clone();
         }
 
@@ -72,10 +72,10 @@ public final class BXor implements RemoteProcedure {
 
         private static final String RESULT = "result";
 
-        int result;
+        long result;
 
         @JsonCreator
-        public Result(final @JsonProperty(value = RESULT, required = true) int result) {
+        public Result(final @JsonProperty(value = RESULT, required = true) long result) {
             this.result = result;
         }
 

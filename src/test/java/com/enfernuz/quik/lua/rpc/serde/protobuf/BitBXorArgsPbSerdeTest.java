@@ -14,9 +14,9 @@ public class BitBXorArgsPbSerdeTest {
     public static class FullArgsBitBXorArgsPbSerdeTest extends AbstractPbSerializationTest<BXor.Args, qlua.rpc.bit.Bxor.Args> {
 
 
-        private static final int X1 = 1;
-        private static final int X2 = 2;
-        private static final int[] XI = new int[] {3, 4, 5};
+        private static final long X1 = 1L;
+        private static final long X2 = 2L;
+        private static final long[] XI = new long[] {3L, 4L, 5L};
 
         @Override
         public @NotNull Serializer<BXor.Args> getSerializerUnderTest() {
@@ -30,7 +30,7 @@ public class BitBXorArgsPbSerdeTest {
             return qlua.rpc.bit.Bxor.Args.newBuilder()
                     .setX1(X1)
                     .setX2(X2)
-                    .addAllXi( Arrays.asList(3, 4, 5) )
+                    .addAllXi( Arrays.asList(3L, 4L, 5L) )
                     .build();
         }
 
@@ -48,8 +48,8 @@ public class BitBXorArgsPbSerdeTest {
     public static class WithoutXiBitBXorArgsPbSerdeTest extends AbstractPbSerializationTest<BXor.Args, qlua.rpc.bit.Bxor.Args> {
 
 
-        private static final int X1 = 1;
-        private static final int X2 = 2;
+        private static final long X1 = 1L;
+        private static final long X2 = 2L;
 
         @Override
         public @NotNull Serializer<BXor.Args> getSerializerUnderTest() {

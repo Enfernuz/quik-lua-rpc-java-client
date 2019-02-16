@@ -21,14 +21,14 @@ public final class BNot implements RemoteProcedure {
         private static final String X = "x";
 
         @JsonProperty(X)
-        private final int x;
+        private final long x;
 
-        public Args(final int x) {
+        public Args(final long x) {
             this.x = x;
         }
 
         @JsonIgnore
-        public int getX() {
+        public long getX() {
             return x;
         }
 
@@ -46,10 +46,10 @@ public final class BNot implements RemoteProcedure {
 
         private static final String RESULT = "result";
 
-        int result;
+        long result;
 
         @JsonCreator
-        public Result(final @JsonProperty(value = RESULT, required = true) int result) {
+        public Result(final @JsonProperty(value = RESULT, required = true) long result) {
             this.result = result;
         }
 

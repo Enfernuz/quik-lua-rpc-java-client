@@ -29,7 +29,7 @@ public class SleepJsonSerdeTest {
 
         @Override
         public Sleep.Result getExpectedObject() {
-            return Sleep.Result.getInstance(1);
+            return Sleep.Result.getInstance(1L);
         }
     }
 

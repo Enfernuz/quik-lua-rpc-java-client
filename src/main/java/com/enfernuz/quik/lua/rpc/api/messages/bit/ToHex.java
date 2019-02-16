@@ -23,20 +23,20 @@ public final class ToHex implements RemoteProcedure {
         private static final String N = "n";
 
         @JsonProperty(X)
-        private final int x;
+        private final long x;
 
         @JsonProperty(N)
         @JsonInclude(JsonInclude.Include.NON_NULL)
         private final Integer n;
 
         @Builder
-        private Args(final int x, final Integer n) {
+        private Args(final long x, final Integer n) {
             this.x = x;
             this.n = n;
         }
 
         @JsonIgnore
-        public int getX() {
+        public long getX() {
             return x;
         }
 

@@ -9,8 +9,8 @@ import org.junit.runner.RunWith;
 @RunWith(Enclosed.class)
 public class SleepResultPbSerdeTest {
 
-    private static final Integer OK = 12345;
-    private static final Integer NOT_OK = null;
+    private static final Long OK = 12345L;
+    private static final Long NOT_OK = null;
 
     // sanity check
     static {

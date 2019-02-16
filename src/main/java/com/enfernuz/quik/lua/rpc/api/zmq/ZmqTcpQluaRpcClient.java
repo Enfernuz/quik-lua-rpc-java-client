@@ -411,7 +411,7 @@ public final class ZmqTcpQluaRpcClient extends AbstractTcpZmqClient implements R
     }
 
     @Override
-    public @Nullable Integer qlua_sleep(final int time) {
+    public @Nullable Long qlua_sleep(final long time) {
         return makeRPC(Sleep.class, new Sleep.Args(time), Sleep.Result.class).getResult();
     }
 
@@ -426,28 +426,33 @@ public final class ZmqTcpQluaRpcClient extends AbstractTcpZmqClient implements R
     }
 
     @Override
-    public int bit_band(final int x1, final int x2, final int... xi) {
+    public long bit_band(final long x1, final long x2, final long... xi) {
         return makeRPC(BAnd.class, BAnd.Args.builder().x1(x1).x2(x2).xi(xi).build(), BAnd.Result.class).getResult();
     }
 
     @Override
-    public int bit_bnot(final int x) {
+    public long bit_bnot(final long x) {
         return makeRPC(BNot.class, new BNot.Args(x), BNot.Result.class).getResult();
     }
 
     @Override
-    public int bit_bor(final int x1, final int x2, final int... xi) {
+    public long bit_bor(final long x1, final long x2, final long... xi) {
         return makeRPC(BOr.class, BOr.Args.builder().x1(x1).x2(x2).xi(xi).build(), BOr.Result.class).getResult();
     }
 
     @Override
-    public int bit_bxor(final int x1, final int x2, final int... xi) {
+    public long bit_bxor(final long x1, final long x2, final long... xi) {
         return makeRPC(BXor.class, BXor.Args.builder().x1(x1).x2(x2).xi(xi).build(), BXor.Result.class).getResult();
     }
 
     @Override
     public @NotNull String bit_tohex(@NotNull final ToHex.Args args) {
         return makeRPC(ToHex.class, args, ToHex.Result.class).getResult();
+    }
+
+    @Override
+    public boolean bit_test(final long x, final int n) {
+        return makeRPC(Test.class, Test.Args.builder().x(x).n(n).build(), Test.Result.class).isResult();
     }
 
     @Override

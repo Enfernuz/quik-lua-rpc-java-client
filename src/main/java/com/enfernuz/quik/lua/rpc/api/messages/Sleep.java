@@ -21,13 +21,13 @@ public final class Sleep implements RemoteProcedure {
         private static final String TIME = "time";
 
         @JsonProperty(TIME)
-        private final int time;
+        private final long time;
 
-        public Args(final int time) {
+        public Args(final long time) {
             this.time = time;
         }
 
-        public int getTime() {
+        public long getTime() {
             return time;
         }
 
@@ -45,10 +45,10 @@ public final class Sleep implements RemoteProcedure {
 
         private static final String RESULT = "result";
 
-        Integer result;
+        Long result;
 
         @JsonCreator
-        public static Result getInstance(@JsonProperty(RESULT) final Integer result) {
+        public static Result getInstance(@JsonProperty(RESULT) final Long result) {
 
             if ( isError(result) ) {
                 return InstanceHolder.ERROR;
@@ -61,7 +61,7 @@ public final class Sleep implements RemoteProcedure {
             return InstanceHolder.ERROR;
         }
 
-        private Result(final Integer result) {
+        private Result(final Long result) {
             this.result = result;
         }
 
@@ -70,7 +70,7 @@ public final class Sleep implements RemoteProcedure {
         }
 
         @Contract(value = "null -> true; !null -> false", pure = true)
-        private static boolean isError(final Integer result) {
+        private static boolean isError(final Long result) {
             return result == null;
         }
 

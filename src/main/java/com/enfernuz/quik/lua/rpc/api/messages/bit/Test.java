@@ -25,19 +25,19 @@ public final class Test implements RemoteProcedure {
         private static final String N = "n";
 
         @JsonProperty(X)
-        private final int x;
+        private final long x;
 
         @JsonProperty(N)
         private final int n;
 
         @Builder
-        private Args(final int x, final int n) {
+        private Args(final long x, final int n) {
             this.x = x;
             this.n = n;
         }
 
         @JsonIgnore
-        public int getX() {
+        public long getX() {
             return x;
         }
 
