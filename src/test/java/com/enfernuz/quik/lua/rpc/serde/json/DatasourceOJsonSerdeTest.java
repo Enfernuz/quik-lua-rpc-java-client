@@ -11,7 +11,7 @@ public class DatasourceOJsonSerdeTest {
 
         @Override
         public O.Args getArgsObject() {
-            return new O.Args("1", 2);
+            return new O.Args("e6dee73b-fe1f-4d98-9d46-0d13697105c3", 2);
         }
 
         @Override
@@ -29,7 +29,7 @@ public class DatasourceOJsonSerdeTest {
 
         @Override
         public O.Result getExpectedObject() {
-            return new O.Result("1");
+            return new O.Result("6.022e23");
         }
     }
 }
