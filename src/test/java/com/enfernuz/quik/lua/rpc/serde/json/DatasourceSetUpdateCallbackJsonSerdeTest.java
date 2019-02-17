@@ -13,7 +13,7 @@ public class DatasourceSetUpdateCallbackJsonSerdeTest {
         public SetUpdateCallback.Args getArgsObject() {
 
             return SetUpdateCallback.Args.builder()
-                    .datasourceUUID("1")
+                    .datasourceUUID("5ee9d8b1-0e69-410d-bc74-2499acb40018")
                     .fCbDef("2")
                     .watchingO(true)
                     .watchingH(true)
