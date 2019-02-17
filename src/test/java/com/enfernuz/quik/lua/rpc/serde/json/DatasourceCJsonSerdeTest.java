@@ -11,7 +11,7 @@ public class DatasourceCJsonSerdeTest {
 
         @Override
         public C.Args getArgsObject() {
-            return new C.Args("1", 2);
+            return new C.Args("36e255d0-3356-4418-a2be-3024fff9ea7f", 2);
         }
 
         @Override
@@ -29,7 +29,7 @@ public class DatasourceCJsonSerdeTest {
 
         @Override
         public C.Result getExpectedObject() {
-            return new C.Result("1");
+            return new C.Result("1.23");
         }
     }
 }
