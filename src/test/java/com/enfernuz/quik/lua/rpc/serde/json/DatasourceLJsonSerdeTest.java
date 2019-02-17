@@ -11,7 +11,7 @@ public class DatasourceLJsonSerdeTest {
 
         @Override
         public L.Args getArgsObject() {
-            return new L.Args("1", 2);
+            return new L.Args("e7bf6bae-9f16-4d87-aec3-a02ca994c35f", 2);
         }
 
         @Override
@@ -29,7 +29,7 @@ public class DatasourceLJsonSerdeTest {
 
         @Override
         public L.Result getExpectedObject() {
-            return new L.Result("1");
+            return new L.Result("123.456789");
         }
     }
 }
