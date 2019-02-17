@@ -11,7 +11,7 @@ public class DatasourceVJsonSerdeTest {
 
         @Override
         public V.Args getArgsObject() {
-            return new V.Args("1", 2);
+            return new V.Args("b5f2e439-0b43-4ed0-923f-2b7a3820a158", 2);
         }
 
         @Override
@@ -29,7 +29,7 @@ public class DatasourceVJsonSerdeTest {
 
         @Override
         public V.Result getExpectedObject() {
-            return new V.Result("1");
+            return new V.Result("9.8e-4");
         }
     }
 }
