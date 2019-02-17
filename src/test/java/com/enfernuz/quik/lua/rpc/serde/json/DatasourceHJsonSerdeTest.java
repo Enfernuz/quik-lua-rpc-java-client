@@ -11,7 +11,7 @@ public class DatasourceHJsonSerdeTest {
 
         @Override
         public H.Args getArgsObject() {
-            return new H.Args("1", 2);
+            return new H.Args("6a2f41a3-c54c-fce8-32d2-0324e1c32e22", 2);
         }
 
         @Override
@@ -29,7 +29,7 @@ public class DatasourceHJsonSerdeTest {
 
         @Override
         public H.Result getExpectedObject() {
-            return new H.Result("1");
+            return new H.Result("0.321");
         }
     }
 }
