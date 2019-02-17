@@ -11,7 +11,7 @@ public class DatasourceCloseJsonSerdeTest {
 
         @Override
         public Close.Args getArgsObject() {
-            return new Close.Args("1");
+            return new Close.Args("7547b76c-c8a8-4b66-b2d5-e12b926b068d");
         }
 
         @Override
