@@ -11,7 +11,7 @@ public class DatasourceSizeJsonSerdeTest {
 
         @Override
         public Size.Args getArgsObject() {
-            return new Size.Args("1");
+            return new Size.Args("92560f2b-27c0-4683-b436-deaf1a986a1d");
         }
 
         @Override
