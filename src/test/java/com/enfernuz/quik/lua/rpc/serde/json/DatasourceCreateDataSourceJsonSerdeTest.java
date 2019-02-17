@@ -55,7 +55,7 @@ public class DatasourceCreateDataSourceJsonSerdeTest {
         public CreateDataSource.Result getExpectedObject() {
 
             return CreateDataSource.Result.builder()
-                    .datasourceUUID("1")
+                    .datasourceUUID("1f902707-0797-4311-b5be-647e1e309031")
                     .error(false)
                     .build();
         }
