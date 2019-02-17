@@ -12,7 +12,7 @@ public class DatasourceTJsonSerdeTest {
 
         @Override
         public T.Args getArgsObject() {
-            return new T.Args("1", 2);
+            return new T.Args("fe80a9f5-74f6-410c-bd3a-dbe5d2473c2a", 2);
         }
 
         @Override
