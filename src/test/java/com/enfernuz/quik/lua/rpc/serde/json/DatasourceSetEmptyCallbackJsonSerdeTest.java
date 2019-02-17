@@ -11,7 +11,7 @@ public class DatasourceSetEmptyCallbackJsonSerdeTest {
 
         @Override
         public SetEmptyCallback.Args getArgsObject() {
-            return new SetEmptyCallback.Args("1");
+            return new SetEmptyCallback.Args("17d49832-5c7c-4a2e-a526-193e9de6e73c");
         }
 
         @Override
