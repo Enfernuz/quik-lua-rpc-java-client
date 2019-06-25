@@ -18,7 +18,7 @@ public class CandleEntry implements Comparable<CandleEntry> {
     private static final String LOW = "low";
     private static final String VOLUME = "volume";
     private static final String DATETIME = "datetime";
-    private static final String DOES_EXIST = "does_exist";
+    private static final String DOES_EXIST = "doesExist";
 
     String open;
     String close;
