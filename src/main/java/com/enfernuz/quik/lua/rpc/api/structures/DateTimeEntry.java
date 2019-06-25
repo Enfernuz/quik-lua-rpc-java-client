@@ -47,7 +47,7 @@ public class DateTimeEntry implements Comparable<DateTimeEntry> {
     @JsonCreator
     @Builder
     private DateTimeEntry(
-            @JsonProperty(value = MCS, required = true) final int mcs,
+            @JsonProperty(value = MCS) final int mcs,
             @JsonProperty(value = MS, required = true) final int ms,
             @JsonProperty(value = SEC, required = true) final int sec,
             @JsonProperty(value = MIN, required = true) final int min,
