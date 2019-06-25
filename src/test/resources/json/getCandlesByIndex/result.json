@@ -17,7 +17,7 @@
         "month" : 8,
         "year" : 2009
       },
-      "does_exist" : 1
+      "doesExist" : 1
     },
     {
       "open" : "21",
@@ -36,7 +36,7 @@
         "month" : 3,
         "year" : 2015
       },
-      "does_exist" : 0
+      "doesExist" : 0
     }
   ],
   "n" : 2,
