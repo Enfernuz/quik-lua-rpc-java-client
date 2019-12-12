@@ -23,7 +23,7 @@ jobs:
         uses: actions/cache@v1
         id: protobuf_cache
         with:
-          path: ~/protobuf
+          path: $HOME/protobuf
           key: ${{ runner.os }}-protobuf-${{ hashFiles('**/.travis/install-protobuf.sh') }}
             
       - name: Set up Protobuf
@@ -34,8 +34,8 @@ jobs:
           
       - name: Update env
         run: |
-          chmod +x ~/protobuf/bin/protoc
-          echo "::add-path::~/protobuf/bin"
+          chmod +x $HOME/protobuf/bin/protoc
+          echo "::add-path::$HOME/protobuf/bin"
         shell: bash
             
       - name: Set up JDK 1.8
