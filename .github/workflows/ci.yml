@@ -21,10 +21,10 @@ jobs:
             
       - name: Set up Protobuf
         run: |
-          sudo apt-get install unzip
-          sudo chmod +x ./.travis/install-protobuf.sh
-          sudo ./.travis/install-protobuf.sh
-          sudo chmod +x $HOME/protobuf/bin/protoc
+          chmod +x ./.travis/install-protobuf.sh
+          ./.travis/install-protobuf.sh
+      - run: |
+          chmod +x $HOME/protobuf/bin/protoc
           export PATH=$PATH:$HOME/protobuf/bin
             
       - name: Set up JDK 1.8
